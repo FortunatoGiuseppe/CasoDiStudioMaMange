@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <EditText
         android:id="@+id/username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/edit_text_bg"
         android:hint="@string/username"
         android:importantForAutofill="no"
@@ -29,7 +29,7 @@
         android:id="@+id/uniscitiGroupOrder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@color/white"
         android:text="@string/unisciti"
         android:textColor="@color/primaryColor"

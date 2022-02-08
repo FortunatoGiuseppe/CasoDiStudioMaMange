@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <EditText
         android:id="@+id/pass"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/edit_text_bg"
         android:hint="@string/password"
         android:importantForAutofill="no"
@@ -18,18 +19,17 @@ android:layout_height="match_parent">
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textColorHint="#757575"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.119"
         app:layout_constraintWidth_percent=".8" />
 
     <EditText
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="32dp"
         android:autofillHints=""
         android:background="@drawable/edit_text_bg"
         android:hint="@string/email"
@@ -54,6 +54,7 @@ android:layout_height="match_parent">
         android:onClick="onClick"
         android:text="@string/passdimenticata"
         android:textSize="16sp"
+        android:textStyle="italic"
         app:layout_constraintBaseline_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.854"
@@ -64,18 +65,17 @@ android:layout_height="match_parent">
         android:id="@+id/loginBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/white"
         android:text="@string/accedi"
         android:textColor="@color/primaryColor"
         android:textSize="16sp"
         android:textStyle="bold"
         app:cornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forget_pass"
-        app:layout_constraintVertical_bias="0.282"
         app:layout_constraintWidth_percent=".8" />
 
 
