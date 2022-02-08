@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "665902641956",
+    "firebase_url": "https://mamange-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "mamange",
+    "storage_bucket": "mamange.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665902641956:android:91b28244529ad37eba79b1",
+        "android_client_info": {
+          "package_name": "com.example.casodistudiomamange"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665902641956-ek77ecidl74c5l58fbrsbi7okupqsm3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVIMb3XfuRsvCm07u5gJIwcUWVywZQ0r0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665902641956-ek77ecidl74c5l58fbrsbi7okupqsm3l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665902641956:android:6c7a8e57a6eb4d09ba79b1",
+        "android_client_info": {
+          "package_name": "com.example.mamange"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665902641956-ek77ecidl74c5l58fbrsbi7okupqsm3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVIMb3XfuRsvCm07u5gJIwcUWVywZQ0r0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665902641956-ek77ecidl74c5l58fbrsbi7okupqsm3l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
