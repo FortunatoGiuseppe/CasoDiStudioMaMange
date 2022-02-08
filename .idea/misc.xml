@@ -3,12 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14814814814814814" />
-        <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14814814814814814" />
-        <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/scheda_rotonda.xml" value="0.16018518518518518" />
-        <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_main.xml" value="0.259375" />
-        <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_splash_screen.xml" value="0.72" />
-        <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14814814814814814" />
+        <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_qrcode.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_splash_screen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_guest.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_sign_up.xml" value="0.33" />
       </map>
     </option>
   </component>
