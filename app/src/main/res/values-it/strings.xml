@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">MaMange</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="registrati">Registrati</string>
+    <string name="crea">Crea Group Order</string>
+    <string name="unisciti">Unisciti</string>
+    <string name="accedi">Accedi</string>
+    <string name="passconf">Conferma Password</string>
+    <string name="passdimenticata">Hai dimenticato la password?</string>
+    <string name="username">Username</string>
+    <string name="ospite">Ospite</string>
+    <string name="emailRichiestaErr">email richiesta!</string>
+    <string name="passwordRichiestaErr">password richiesta!</string>
+    <string name="emailValidaErr">Fornisci una mail valida!</string>
+    <string name="seiCaratteriErr">Inserisci almeno 6 caratteri</string>
+    <string name="stessaPassErr">Le due password non combaciano</string>
+    <string name="logout">Logout</string>
+    <string name="cerca">Cerca</string>
+    <string name="aggiungi">Aggiungi</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logo">Logo</string>
+</resources>
