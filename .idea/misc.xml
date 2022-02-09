@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_logged_user.xml" value="0.33" />
         <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_qrcode.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_qrcode.xml" value="0.25" />
         <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_splash_screen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_switch_login_signup_guest.xml" value="0.33" />
         <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_guest.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Giuseppe/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_sign_up.xml" value="0.33" />
       </map>

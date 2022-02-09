@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.QRCodeActivity;
+import com.example.casodistudiomamange.activity.SwitchLoginSignupGuestActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -104,7 +105,7 @@ public class SignUpFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(getActivity(),"User has been registered successfully!",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getActivity(), QRCodeActivity.class));
+                            startActivity(new Intent(getActivity(), SwitchLoginSignupGuestActivity.class));
                         } else {
                             Toast.makeText(getActivity(),"Failed to register",Toast.LENGTH_SHORT).show();
                         }

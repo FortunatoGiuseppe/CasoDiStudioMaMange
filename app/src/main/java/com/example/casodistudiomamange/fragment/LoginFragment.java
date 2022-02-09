@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.QRCodeActivity;
+import com.example.casodistudiomamange.activity.SwitchLoginSignupGuestActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -90,7 +91,7 @@ public class LoginFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(getActivity(),"Logged in successfully!",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getActivity(), QRCodeActivity.class));
+                    startActivity(new Intent(getActivity(), SwitchLoginSignupGuestActivity.class));
 
                 } else {
                     Toast.makeText(getActivity(),"Failed to login",Toast.LENGTH_SHORT).show();

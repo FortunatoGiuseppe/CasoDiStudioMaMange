@@ -26,8 +26,9 @@ public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
                 return  new LoginFragment();
             case 2:
                 return new SignUpFragment();
+            default:
+                return  new GuestFragment();
         }
-        return  new GuestFragment();
     }
 
     @Override
