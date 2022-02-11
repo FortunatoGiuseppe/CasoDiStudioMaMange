@@ -97,25 +97,31 @@ public class CategoryActivity extends AppCompatActivity {
                 return "ANTIPASTI";
             }
             case "1":{
-                return "FUTOMAKI";
+                return "BEVANDE";
             }
             case "2":{
-                return "GUNKAN";
+                return "FUTOMAKI";
             }
             case "3":{
-                return "HOSOMAKI";
+                return "GUNKAN";
             }
             case "4":{
-                return "NIGIRI";
+                return "HOSOMAKI";
             }
             case "5":{
-                return "SASHIMI";
+                return "NIGIRI";
             }
             case "6":{
-                return "URAMAKI";
+                return "PASTA";
             }
             case "7":{
-                return "BEVANDE";
+                return "RISO";
+            }
+            case "8":{
+                return "SASHIMI";
+            }
+            case "9":{
+                return "URAMAKI";
             }
         }
         return "NO";
