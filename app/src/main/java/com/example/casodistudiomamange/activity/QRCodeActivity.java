@@ -102,12 +102,25 @@ public class QRCodeActivity extends AppCompatActivity {
         }
     }
 
+
     private void controlCode(String QrCode){
         if (QrCode.contains(Code1)){
-            Toast.makeText(this, "okay", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.tavoloTrovato , Toast.LENGTH_LONG).show();
             startActivity(new Intent(getApplicationContext(), RestaurantActivity.class));
         } else{
-            Toast.makeText(this, "no", Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(QRCodeActivity.this);
+            builder1.setMessage(R.string.tavoloNonTrovato);
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder1.create();
+            alert.show();
         }
     }
 
