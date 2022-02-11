@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f2f2f2"
@@ -14,43 +14,40 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-
         android:layout_alignParentBottom="true"
-
-
-        android:layout_marginEnd="36dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="@color/white"
         android:hint="@string/conferma"
         android:textColorHint="#c62828"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:cornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toEndOf="@+id/insertQrCode"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.701"
+        app:layout_constraintTop_toBottomOf="@+id/oppure"
         app:layout_constraintWidth_percent=".8" />
 
     <EditText
         android:id="@+id/insertQrCode"
-        android:layout_width="144dp"
-        android:layout_height="wrap_content"
+        android:layout_width="194dp"
+        android:layout_height="56dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="40dp"
+        android:layout_marginTop="36dp"
         android:hint="@string/inserisciCodice"
         android:minHeight="48dp"
-        android:paddingVertical="10dp"
+        android:paddingVertical="0dp"
         android:paddingLeft="5dp"
-        android:paddingTop="10dp"
+        android:paddingTop="0dp"
         android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.165"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.701"
+        app:layout_constraintTop_toBottomOf="@+id/oppure"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent=".8" />
 
     <Button
@@ -60,23 +57,19 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-
         android:layout_alignParentBottom="true"
-
         android:layout_centerInParent="true"
-        android:layout_marginBottom="36dp"
+        android:layout_marginTop="0dp"
         android:backgroundTint="@color/white"
+        android:drawableEnd="@drawable/ic_baseline_qr_code_scanner_24"
         android:hint="@string/scannerizza"
         android:textColorHint="#c62828"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:cornerRadius="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/confirmBtn"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_benvenuto"
-        app:layout_constraintVertical_bias="0.716"
         app:layout_constraintWidth_percent=".8" />
 
     <Button
@@ -86,31 +79,28 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-
         android:layout_alignParentBottom="true"
-
         android:layout_centerInParent="true"
         android:layout_marginStart="90dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="90dp"
         android:backgroundTint="@color/white"
         android:hint="@string/logout"
         android:textColorHint="#c62828"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:cornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirmBtn"
-        app:layout_constraintVertical_bias="0.426"
         app:layout_constraintWidth_percent=".8" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="210dp"
-        android:layout_height="189dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="176dp"
+        android:layout_height="156dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -118,16 +108,29 @@
 
     <TextView
         android:id="@+id/textView_benvenuto"
-        android:layout_width="223dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="296dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="36dp"
         android:text="TextView"
         android:textAlignment="center"
         android:textColor="@color/primaryColor"
-        android:textSize="22sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <TextView
+        android:id="@+id/oppure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/oppure"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scanQrCodeBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

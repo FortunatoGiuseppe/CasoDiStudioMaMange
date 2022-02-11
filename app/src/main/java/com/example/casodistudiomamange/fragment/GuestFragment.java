@@ -1,8 +1,10 @@
 package com.example.casodistudiomamange.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,12 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.activity.LoggedUser;
 import com.example.casodistudiomamange.activity.QRCodeActivity;
 import com.example.casodistudiomamange.activity.SwitchLoginSignupGuestActivity;
 
 
 public class GuestFragment extends Fragment {
 
+    private static final int MAX_LENGTH = 10;
     private Button unirsiTavolo;
     private EditText tw_username;
 
@@ -41,8 +45,29 @@ public class GuestFragment extends Fragment {
     }
 
     private void uniscitiAlTavolo(){
-        Intent intent= new Intent(getActivity(),QRCodeActivity.class);
-        intent.putExtra("UsernameInserito",tw_username.getText().toString());
-        startActivity(intent);
+        String username_ins=tw_username.getText().toString();
+
+        if(username_ins.length()==0 || username_ins.length()>MAX_LENGTH){
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+            builder1.setTitle(R.string.username_nonvalido);
+            builder1.setMessage(R.string.username_nonvalido_descr);
+
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder1.create();
+            alert.show();
+        }else {
+            Intent intent= new Intent(getActivity(),QRCodeActivity.class);
+            intent.putExtra("UsernameInserito",username_ins);
+            startActivity(intent);
+        }
+
     }
 }
