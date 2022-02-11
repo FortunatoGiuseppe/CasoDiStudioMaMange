@@ -13,12 +13,15 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Locale;
+
 public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
 
     ViewPagerFragmentAdapter viewPagerFragmentAdapter;
     TabLayout tabLayout;
     ViewPager2 viewPager2;
     private  String[] titles = {"Guest", "Login", "Signup"};
+    private String[] titles_it = {"Ospite", "Login", "Registrati"};
     private FirebaseAuth lAuth;
 
     @Override
@@ -38,7 +41,13 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
             startActivity(new Intent(this,LoggedUser.class));
             finish();
         }
-        new TabLayoutMediator(tabLayout, viewPager2, ((tab, position) -> tab.setText(titles[position]))).attach();
+
+        if(Locale.getDefault().getLanguage().equals("it")){
+            new TabLayoutMediator(tabLayout, viewPager2, ((tab, position) -> tab.setText(titles_it[position]))).attach();
+        }else{
+            new TabLayoutMediator(tabLayout, viewPager2, ((tab, position) -> tab.setText(titles[position]))).attach();
+        }
+
 
     }
 }
