@@ -18,6 +18,10 @@
     <string name="logout">Logout</string>
     <string name="cerca">Search a restaurant</string>
     <string name="aggiungi">Add to cart</string>
+    <string name="inserisciCodice">Insert code</string>
+    <string name="conferma">Confirm</string>
+    <string name="scannerizza">Scan</string>
+    <string name="scegliUsername">Choose your username</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo">Logo</string>

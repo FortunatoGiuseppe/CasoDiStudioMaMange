@@ -78,7 +78,7 @@
             android:background="@color/primaryColor"
 
             android:paddingTop="16dp"
-            android:text="Scegli il tuo username"
+            android:text="@string/scegliUsername"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
