@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.example.casodistudiomamange.R;
@@ -45,6 +46,7 @@ public class RestaurantActivity extends AppCompatActivity {
         actionBar.setTitle("Metti nome ristorante");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+
         dataref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -69,6 +71,16 @@ public class RestaurantActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         recyclerView.setAdapter(adapter_category);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
