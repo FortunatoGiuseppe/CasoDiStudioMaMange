@@ -24,6 +24,7 @@ public class QRCodeActivity extends AppCompatActivity {
 
     private Button scanQrCodeBtn;
     private Button confirmBtn;
+    private TextView benvenuto;
     private EditText insertQrCode;
     private String Code1 = "MST001";
     private Button logout;
@@ -37,6 +38,12 @@ public class QRCodeActivity extends AppCompatActivity {
         confirmBtn = findViewById(R.id.confirmBtn);
         insertQrCode = findViewById(R.id.insertQrCode);
         logout = findViewById(R.id.logout);
+        benvenuto=findViewById(R.id.textView_benvenuto);
+
+        Intent intent = getIntent();
+        String usernameInserito = intent.getStringExtra("UsernameInserito");
+
+        benvenuto.setText("Benvenuto "+usernameInserito);
 
         scanQrCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
