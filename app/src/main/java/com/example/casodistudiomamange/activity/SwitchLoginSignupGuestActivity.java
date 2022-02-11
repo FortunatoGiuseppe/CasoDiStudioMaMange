@@ -30,6 +30,8 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
         tabLayout=findViewById(R.id.tab_layout);
         viewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this);
 
+        getSupportActionBar().hide();
+
         viewPager2.setAdapter(viewPagerFragmentAdapter);
         if(lAuth.getCurrentUser() != null){
             Toast.makeText(this,"Logged in successfully!",Toast.LENGTH_SHORT).show();

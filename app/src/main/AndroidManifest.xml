@@ -16,14 +16,16 @@
         android:theme="@style/Theme.CasoDiStudioMaMange">
         <activity
             android:name=".activity.LoggedUser"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.CasoDiStudioMaMange.NoActionBar"/>
         <activity
             android:name=".activity.SwitchLoginSignupGuestActivity"
-            android:exported="false" />
+            android:exported="false"
+            />
         <activity
             android:name=".activity.SplashScreenActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.CasoDiStudioMaMange.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

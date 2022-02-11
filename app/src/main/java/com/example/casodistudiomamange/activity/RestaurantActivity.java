@@ -40,10 +40,10 @@ public class RestaurantActivity extends AppCompatActivity {
         dataref= FirebaseDatabase.getInstance().getReference().child("Mamange");
         categories = new ArrayList<String>();
         adapter_category = new Adapter_category(this, categories);
-/*
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Metti nome ristorante");
-        actionBar.setDisplayHomeAsUpEnabled(true);*/
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         dataref.addValueEventListener(new ValueEventListener() {
             @Override

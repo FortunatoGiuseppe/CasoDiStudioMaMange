@@ -46,10 +46,10 @@ public class CategoryActivity extends AppCompatActivity {
         platesImg= new ArrayList<String>();
         platesDescription= new ArrayList<String>();
         adapter_plates = new Adapter_plates(this,platesName,platesImg,platesDescription);
-/*
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(nameConverted);
-        actionBar.setDisplayHomeAsUpEnabled(true);*/
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
 
         dataref_plates.addValueEventListener(new ValueEventListener() {
