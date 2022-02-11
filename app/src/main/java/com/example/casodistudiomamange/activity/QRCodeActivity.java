@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.casodistudiomamange.R;
 
+import com.example.casodistudiomamange.model.Restaurant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -48,6 +49,7 @@ public class QRCodeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 controlCode(insertQrCode.getText().toString());
+
             }
         });
 
@@ -57,6 +59,8 @@ public class QRCodeActivity extends AppCompatActivity {
                 logout();
             }
         });
+
+
     }
 
     private void scanQrCode(){
@@ -101,6 +105,7 @@ public class QRCodeActivity extends AppCompatActivity {
     private void controlCode(String QrCode){
         if (QrCode.contains(Code1)){
             Toast.makeText(this, "okay", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getApplicationContext(), RestaurantActivity.class));
         } else{
             Toast.makeText(this, "no", Toast.LENGTH_LONG).show();
         }
