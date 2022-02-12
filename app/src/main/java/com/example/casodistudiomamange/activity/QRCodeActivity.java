@@ -85,22 +85,20 @@ public class QRCodeActivity extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null){
             if(result.getContents() != null){
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(result.getContents());
-                builder.setTitle("Scanning result");
-                builder.setPositiveButton("Scan Again", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        scanQrCode();
-                    }
-                }).setPositiveButton("finish", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                if(result.getContents().equals(Code1)){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(result.getContents());
+                    builder.setTitle("Scanning result");
+                    builder.setPositiveButton("finish", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(QRCodeActivity.this, RestaurantActivity.class));
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+
             } else {
                 Toast.makeText(this, "No result", Toast.LENGTH_LONG).show();
             }
