@@ -2,6 +2,9 @@ package com.example.casodistudiomamange.model;
 /* model del piatto */
 public class Plate {
     public String img;
+    public String nome;
+    public String descrizione;
+    public String flag;
 
     public String getImg() {
         return img;
@@ -27,8 +30,15 @@ public class Plate {
         this.descrizione = descrizione;
     }
 
-    public String nome;
-    public String descrizione;
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+
 
 
 }

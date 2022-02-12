@@ -29,6 +29,7 @@ public class CategoryActivity extends AppCompatActivity {
     private List<String> platesName;    //contenitore nomi dei piatti
     private List<String> platesImg;     //contenitore immagini dei piatti
     private List<String> platesDescription; //contenitore descrizioni dei piatti
+    private List<String> plateFlag; //flag delle bevande
     private Adapter_plates adapter_plates;
     DatabaseReference dataref_plates;
 
@@ -46,7 +47,8 @@ public class CategoryActivity extends AppCompatActivity {
         platesName= new ArrayList<String>();
         platesImg= new ArrayList<String>();
         platesDescription= new ArrayList<String>();
-        adapter_plates = new Adapter_plates(this,platesName,platesImg,platesDescription);
+        plateFlag = new ArrayList<String>();
+        adapter_plates = new Adapter_plates(this,platesName,platesImg,platesDescription,plateFlag);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(nameConverted);
@@ -73,6 +75,7 @@ public class CategoryActivity extends AppCompatActivity {
                     platesImg.add(plate.img);
                     platesName.add(plate.nome);
                     platesDescription.add(plate.descrizione);
+                    plateFlag.add(plate.flag);
                 }
                 adapter_plates.notifyDataSetChanged();
             }
