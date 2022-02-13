@@ -3,19 +3,20 @@ package com.example.casodistudiomamange.adapter;
 import com.example.casodistudiomamange.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.AdaptiveIconDrawable;
-import android.graphics.drawable.Drawable;
+import android.content.DialogInterface;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.casodistudiomamange.activity.QRCodeActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -60,6 +61,29 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             });
         }
 
+        holder.addPlateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                builder1.setMessage(R.string.piattoAggiunto);
+                builder1.setCancelable(true);
+                AlertDialog alert = builder1.create();
+                alert.show();
+
+
+                // Chiudi automaticamente dopo un secondo e mezzo
+                final Handler handler  = new Handler();
+                final Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        if (alert.isShowing()) {
+                            alert.dismiss();
+                        }
+                    }
+                };
+                handler.postDelayed(runnable, 1500);
+            }
+        });
        /*FARE SELEZIONE DEL PIATTO !!! */
 
     }
@@ -74,6 +98,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         TextView textView_plate;
         TextView textView_plate_description;
         ImageView imageView_plate_flag;
+        Button addPlateBtn;
 
 
         public myViewHolder(@NonNull View itemView) {
@@ -82,6 +107,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             textView_plate = itemView.findViewById(R.id.textView_plate);
             textView_plate_description= itemView.findViewById(R.id.textView_plate_description);
             imageView_plate_flag = itemView.findViewById(R.id.imageViewGlobal);
+            addPlateBtn =itemView.findViewById(R.id.aggiungiBtn);
         }
     }
 }

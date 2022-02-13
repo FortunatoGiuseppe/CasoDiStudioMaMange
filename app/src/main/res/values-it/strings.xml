@@ -27,6 +27,8 @@
     <string name="oppure">Oppure</string>
     <string name="username_nonvalido">Username non valido! </string>
     <string name="username_nonvalido_descr">Inserisci una parola formata da 1 a 10 caratteri</string>
+    <string name="piattoAggiunto">Piatto aggiunto correttamente al tuo ordine!</string>
+    <string name="bevandaAggiunta">Bevanda aggiunta correttamente al tuo ordine!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo">Logo</string>
