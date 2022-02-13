@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="170dp"
+    android:layout_height="220dp"
     android:layout_margin="10dp"
     android:background="@drawable/categories_background"
     android:textAlignment="center"
@@ -11,13 +11,13 @@
 
     <TextView
         android:id="@+id/textView_plate"
-        android:layout_width="277dp"
+        android:layout_width="188dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="29dp"
         android:layout_marginTop="26dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginEnd="49dp"
         android:layout_marginBottom="5dp"
         android:layout_toEndOf="@+id/imageView_plate"
         android:text="Piatto"
@@ -26,28 +26,28 @@
 
     <ImageView
         android:id="@+id/imageView_plate"
-        android:layout_width="111dp"
-        android:layout_height="112dp"
+        android:layout_width="109dp"
+        android:layout_height="116dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="27dp"
-        android:layout_marginBottom="31dp"
+        android:layout_marginBottom="77dp"
         android:scaleType="fitXY"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textView_plate_description"
-        android:layout_width="244dp"
-        android:layout_height="42dp"
+        android:layout_width="wrap_content"
+        android:layout_height="76dp"
         android:layout_below="@+id/textView_plate"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="28dp"
         android:layout_marginTop="9dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="57dp"
         android:layout_toEndOf="@+id/imageView_plate"
         android:text="testo"
         android:textColor="@color/secondaryTextColor"
@@ -60,7 +60,19 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="11dp"
-        android:layout_marginBottom="138dp"
-       />
+        android:layout_marginBottom="187dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="127dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="244dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/aggiungi"
+        android:textSize="12sp" />
 
 </RelativeLayout>

@@ -69,13 +69,14 @@ public class CategoryActivity extends AppCompatActivity {
                     if(i== dataSnapshot.getChildrenCount()-1){
                         break;
                     }
-                    i++;
 
                     Plate plate = snapshot.getValue(Plate.class);
                     platesImg.add(plate.img);
                     platesName.add(plate.nome);
                     platesDescription.add(plate.descrizione);
                     plateFlag.add(plate.flag);
+
+                    i++;
                 }
                 adapter_plates.notifyDataSetChanged();
             }

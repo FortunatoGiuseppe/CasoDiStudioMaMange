@@ -50,31 +50,23 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         holder.textView_plate_description.setText(platesDescription.get(position));
         Picasso.get().load(platesImg.get(position)).into(holder.imageView_plate);
 
-        if(position < plateFlag.size()){
-            if(plateFlag.get(position).equals("1")){
-                holder.imageView_plate_flag.setImageResource(R.drawable.ic_baseline_public_24);
-
-                //Picasso.get().load(plateFlag.get(position)).into(holder.imageView_plate_flag);
-                // holder.imageView_plate_flag.setVisibility(View.GONE);
-            } else {
-                holder.imageView_plate_flag.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
-            }
+        if((plateFlag.get(position) != null) && plateFlag.get(position).equals("1")){
+            holder.imageView_plate_flag.setImageResource(R.drawable.ic_baseline_public_24);
+            holder.imageView_plate_flag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //creazione nuovo fragment per visualizzazione dati
+                }
+            });
         }
 
-
-
-        /*FARE SELEZIONE DEL PIATTO !!! */
+       /*FARE SELEZIONE DEL PIATTO !!! */
 
     }
 
     @Override
     public int getItemCount() {
-        return platesName.size();
+        return  platesName.size();
     }
 
     public  static  class myViewHolder extends RecyclerView.ViewHolder{
