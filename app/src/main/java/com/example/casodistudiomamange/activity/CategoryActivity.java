@@ -43,7 +43,7 @@ public class CategoryActivity extends AppCompatActivity {
         String nameConverted= convertToName(CategoryKey);
 
         recyclerView_plates = findViewById(R.id.recycleview_plates);
-        dataref_plates= FirebaseDatabase.getInstance().getReference().child("Mamange").child(nameConverted);
+        dataref_plates= FirebaseDatabase.getInstance().getReference().child("Categorie").child(nameConverted);
         platesName= new ArrayList<String>();
         platesImg= new ArrayList<String>();
         platesDescription= new ArrayList<String>();

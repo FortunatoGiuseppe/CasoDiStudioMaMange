@@ -38,7 +38,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycleview);  //riferimento alla lista che conterrà le categorie lette
         //Ottiene riferimento al db per le categorie
-        dataref= FirebaseDatabase.getInstance().getReference().child("Mamange");
+        dataref= FirebaseDatabase.getInstance().getReference().child("Categorie");
         categories = new ArrayList<String>();
         adapter_category = new Adapter_category(this, categories);
 
