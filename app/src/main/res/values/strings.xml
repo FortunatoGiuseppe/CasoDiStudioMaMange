@@ -32,4 +32,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo">Logo</string>
+    <string name="Menu">Menu</string>
+    <string name="SingleOrder">Single Order</string>
+    <string name="GroupOrder">Group Order</string>
 </resources>

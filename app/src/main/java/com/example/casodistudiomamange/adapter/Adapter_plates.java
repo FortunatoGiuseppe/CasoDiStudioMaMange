@@ -51,6 +51,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         holder.textView_plate_description.setText(platesDescription.get(position));
         Picasso.get().load(platesImg.get(position)).into(holder.imageView_plate);
 
+
         if((plateFlag.get(position) != null) && plateFlag.get(position).equals("1")){
             holder.imageView_plate_flag.setImageResource(R.drawable.ic_baseline_public_24);
             holder.imageView_plate_flag.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +61,6 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 }
             });
         }
-
         holder.addPlateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

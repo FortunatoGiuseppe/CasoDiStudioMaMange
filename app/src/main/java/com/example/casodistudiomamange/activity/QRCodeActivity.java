@@ -111,7 +111,7 @@ public class QRCodeActivity extends AppCompatActivity {
     private void controlCode(String QrCode){
         if (QrCode.contains(Code1)){
             Toast.makeText(this,R.string.tavoloTrovato , Toast.LENGTH_LONG).show();
-            startActivity(new Intent(getApplicationContext(), RestaurantActivity.class));
+            startActivity(new Intent(getApplicationContext(), MaMangeNavigationActivity.class));
         } else{
             AlertDialog.Builder builder1 = new AlertDialog.Builder(QRCodeActivity.this);
             builder1.setMessage(R.string.tavoloNonTrovato);

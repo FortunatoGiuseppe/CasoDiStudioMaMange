@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/restaurant_menu"
+        android:icon="@drawable/ic_restaurant_menu_24"
+        android:title="@string/Menu"/>
+    <item
+        android:id="@+id/single_order"
+        android:icon="@drawable/ic_single_order_24"
+        android:title="@string/SingleOrder"/>
+    <item
+        android:id="@+id/group_order"
+        android:icon="@drawable/ic_group_order_24"
+        android:title="@string/GroupOrder"/>
+</menu>

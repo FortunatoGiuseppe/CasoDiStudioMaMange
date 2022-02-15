@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/MaMange/app/src/main/res/layout/activity_ma_mange_navigation.xml" value="0.371875" />
+        <entry key="..\:/MaMange/app/src/main/res/layout/activity_qrcode.xml" value="0.19166666666666668" />
+        <entry key="..\:/MaMange/app/src/main/res/layout/fragment_category.xml" value="0.371875" />
+        <entry key="..\:/MaMange/app/src/main/res/layout/fragment_group_order.xml" value="0.371875" />
+        <entry key="..\:/MaMange/app/src/main/res/layout/fragment_menu.xml" value="0.371875" />
+        <entry key="..\:/MaMange/app/src/main/res/layout/fragment_single_order.xml" value="0.371875" />
+        <entry key="..\:/MaMange/app/src/main/res/layout/single_plate.xml" value="0.371875" />
+        <entry key="..\:/MaMange/app/src/main/res/menu/bottom_navigation_bar.xml" value="0.371875" />
         <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14814814814814814" />
         <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/activity_categoria.xml" value="0.24479166666666666" />
         <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/activity_restaurant.xml" value="0.11851851851851852" />

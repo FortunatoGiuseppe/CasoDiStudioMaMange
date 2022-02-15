@@ -15,13 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CasoDiStudioMaMange">
         <activity
+            android:name=".activity.MaMangeNavigationActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.LoggedUser"
             android:exported="true"
-            android:theme="@style/Theme.CasoDiStudioMaMange.NoActionBar"/>
+            android:theme="@style/Theme.CasoDiStudioMaMange.NoActionBar" />
         <activity
             android:name=".activity.SwitchLoginSignupGuestActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".activity.SplashScreenActivity"
             android:exported="true"
@@ -39,7 +41,7 @@
             android:name=".activity.CaptureAct"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activity.CategoryActivity"
             android:exported="true" />
