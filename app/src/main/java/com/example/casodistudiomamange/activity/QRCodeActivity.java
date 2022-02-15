@@ -1,5 +1,6 @@
 package com.example.casodistudiomamange.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,8 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.casodistudiomamange.R;
 
+import com.example.casodistudiomamange.model.GroupOrder;
 import com.example.casodistudiomamange.model.Restaurant;
+import com.example.casodistudiomamange.model.Table;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -28,6 +36,8 @@ public class QRCodeActivity extends AppCompatActivity {
     private EditText insertQrCode;
     private String Code1 = "MST001";
     private Button logout;
+    DatabaseReference dataref_guest;
+    DatabaseReference ref;  //riferimento per scrittura
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +66,39 @@ public class QRCodeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 controlCode(insertQrCode.getText().toString());
+                dataref_guest = FirebaseDatabase.getInstance().getReference().child("Ordini");
+
+                /*Partendo da ordini vedi tutti i tavoli presenti, quando trovi tavolo con codice inserito (da modificare nell'if)
+                 allora vedi se è libero, cioè se flag=0.
+                 Se lo è allora l'utente corrente è il primo e imposta il flag =1 e si crea il group order
+                 Se non lo è allora il group order esiste già e perciò gli altri si devono solo aggiungere
+                */
+
+                dataref_guest.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                            Table table = dataSnapshot.getValue(Table.class);
+                            if(table.getCodicetavolo().equals("MST001")) { // da modificare con codiceTavoloInserito invece di MST001
+                                if (table.getFlag() == 0) {
+                                    //sono nel caso in cui devo creare il group order
+                                    dataref_guest.child("Tavolo1").child("flag").getRef().setValue(1); //imposta tavolo a occupato
+                                    ref=dataref_guest.child("Tavolo1"); //riferimento a figlio di tavolo1
+                                    //creo un nuovo group order con attributo codice che ha valore generato a partire dall'username che si suppone univoco
+                                    ref.push().setValue(new GroupOrder(Math.abs(usernameInserito.hashCode())));
+                                }else{
+                                    //mi unisco al group order
+                                }
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
             }
         });
@@ -66,9 +109,12 @@ public class QRCodeActivity extends AppCompatActivity {
                 logout();
             }
         });
-
-
     }
+/*
+    private long generateNumber() {
+
+    }*/
+
 
     private void scanQrCode(){
         IntentIntegrator integrator = new IntentIntegrator(this);
@@ -77,7 +123,6 @@ public class QRCodeActivity extends AppCompatActivity {
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
         integrator.setPrompt("Scanning code");
         integrator.initiateScan();
-
     }
 
     @Override
