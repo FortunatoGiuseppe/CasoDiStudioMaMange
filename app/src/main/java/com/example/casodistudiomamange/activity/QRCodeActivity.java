@@ -78,6 +78,7 @@ public class QRCodeActivity extends AppCompatActivity {
                 */
 
                 dataref_guest.addListenerForSingleValueEvent(new ValueEventListener() {
+                    String codiceTav1;
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
@@ -100,8 +101,8 @@ public class QRCodeActivity extends AppCompatActivity {
                                         @Override
                                         public void onChildAdded(@NonNull DataSnapshot Dsnapshot, @Nullable String previousChildName) {
                                             if(i==0) {
-                                                String codice = Dsnapshot.getKey();
-                                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1").child(codice);
+                                                codiceTav1 = Dsnapshot.getKey();
+                                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1").child(codiceTav1);
                                                 SingleOrder singleOrder = new SingleOrder("aaa", "02/02/2022", usernameInserito);
                                                 ref.push().setValue(singleOrder);
                                                 i++;
@@ -132,6 +133,42 @@ public class QRCodeActivity extends AppCompatActivity {
 
                                 }else{
                                     //mi unisco al group order
+                                    dataref_guest=FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1");
+
+                                    ChildEventListener childEventListener= new ChildEventListener() {
+                                        int i=0;
+                                        @Override
+                                        public void onChildAdded(@NonNull DataSnapshot Dsnapshot, @Nullable String previousChildName) {
+                                            if(i==0) {
+                                                codiceTav1 = Dsnapshot.getKey();
+                                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1").child(codiceTav1);
+                                                SingleOrder singleOrder = new SingleOrder("aaa", "02/02/2022", usernameInserito);
+                                                ref.push().setValue(singleOrder);
+                                                i++;
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                        }
+
+                                        @Override
+                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                        }
+
+                                        @Override
+                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    };
+                                    dataref_guest.addChildEventListener(childEventListener);
                                 }
 
                             }
