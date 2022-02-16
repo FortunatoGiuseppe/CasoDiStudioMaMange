@@ -40,7 +40,7 @@ public class QRCodeActivity extends AppCompatActivity {
     private String Code1 = "MST001";
     private Button logout;
     DatabaseReference dataref_guest;
-     //riferimento per scrittura
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,25 +85,27 @@ public class QRCodeActivity extends AppCompatActivity {
                             if(table.getCodicetavolo().equals("MST001")) { // da modificare con codiceTavoloInserito invece di MST001
                                 if (table.getFlag() == 0) {
                                     //sono nel caso in cui devo creare il group order
-                                    //dataref_guest.child("Tavolo1").child("flag").getRef().setValue(1); //imposta tavolo a occupato
-                                    dataref_guest=dataref_guest.child("Tavolo1"); //riferimento a figlio di tavolo1
+                                    dataref_guest.child("Tavolo1").child("flag").getRef().setValue(1); //imposta tavolo a occupato
+                                    dataref_guest=FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1"); //riferimento a figlio di tavolo1 DA RENDERE GENERICO
 
                                     //creo un nuovo group order con attributo codice che ha valore generato a partire dall'username che si suppone univoco
                                     GroupOrder groupOrder=new GroupOrder(Math.abs(usernameInserito.hashCode()));
                                     dataref_guest.push().setValue(groupOrder);
 
                                     //creo single order relativo alla persona che ha creato il group order
-
+                                    dataref_guest=FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1");
 
                                     ChildEventListener childEventListener= new ChildEventListener() {
+                                        int i=0;
                                         @Override
                                         public void onChildAdded(@NonNull DataSnapshot Dsnapshot, @Nullable String previousChildName) {
-
-                                            String codice = Dsnapshot.getKey();
-                                            dataref_guest = dataref_guest.child(codice);
-                                            SingleOrder singleOrder = new SingleOrder("aaa", "02/02/2022", usernameInserito);
-                                            dataref_guest.push().setValue(singleOrder);
-
+                                            if(i==0) {
+                                                String codice = Dsnapshot.getKey();
+                                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1").child(codice);
+                                                SingleOrder singleOrder = new SingleOrder("aaa", "02/02/2022", usernameInserito);
+                                                ref.push().setValue(singleOrder);
+                                                i++;
+                                            }
                                         }
 
                                         @Override
@@ -133,6 +135,7 @@ public class QRCodeActivity extends AppCompatActivity {
                                 }
 
                             }
+
                         }
                     }
 
