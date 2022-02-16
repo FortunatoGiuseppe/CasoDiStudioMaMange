@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.example.casodistudiomamange.R;
 
 import com.example.casodistudiomamange.model.GroupOrder;
-import com.example.casodistudiomamange.model.Restaurant;
 import com.example.casodistudiomamange.model.SingleOrder;
 import com.example.casodistudiomamange.model.Table;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +28,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.io.BufferedOutputStream;
+import java.util.Calendar;
+
+
+
 
 public class QRCodeActivity extends AppCompatActivity {
 
@@ -93,18 +95,29 @@ public class QRCodeActivity extends AppCompatActivity {
                                     GroupOrder groupOrder=new GroupOrder(Math.abs(usernameInserito.hashCode()));
                                     dataref_guest.push().setValue(groupOrder);
 
-                                    //creo single order relativo alla persona che ha creato il group order
+                                    /*creo single order relativo alla persona che ha creato il group order,
+                                    Posso farlo accorgendomi che è stato inserito un figlio di Tavolo1 (cioè group order)
+                                    e creo un figlio di group order creato, cioè un single order
+                                    Mi accorgo dell'aggiunta con Child Evemt Listener
+                                    */
                                     dataref_guest=FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1");
-
                                     ChildEventListener childEventListener= new ChildEventListener() {
                                         int i=0;
+                                        //Dsnapshot è l'insieme dei figli di Tavolo 1, occorre fermarmi al primo figlio letto che sarebbe proprio il group order aggiunto
                                         @Override
                                         public void onChildAdded(@NonNull DataSnapshot Dsnapshot, @Nullable String previousChildName) {
                                             if(i==0) {
-                                                codiceTav1 = Dsnapshot.getKey();
-                                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1").child(codiceTav1);
-                                                SingleOrder singleOrder = new SingleOrder("aaa", "02/02/2022", usernameInserito);
-                                                ref.push().setValue(singleOrder);
+                                                codiceTav1 = Dsnapshot.getKey();//ottengo chiave identificativa del group ordeer inserito
+                                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1").child(codiceTav1); //aggiorno riferimento a db
+                                                String date = Calendar.getInstance().getTime().toString(); //ottengo data corrente per metterla nel DB
+
+                                                /*
+                                                Il codice dell'ordine singolo è numerico ma viene registrato nel DB come stringa, pertanto occorre fare il toString.
+                                                Il suddetto codice viene generato a partire dalla stringa ottenuta dalla concatenazione di username e data, prendendo l'hash code
+                                                in valore assoluto
+                                                 */
+                                                SingleOrder singleOrder = new SingleOrder(Integer.toString(Math.abs((usernameInserito+date).hashCode())),date, usernameInserito); //creo un single order
+                                                ref.push().setValue(singleOrder); //carico il single order sul db
                                                 i++;
                                             }
                                         }
@@ -134,6 +147,7 @@ public class QRCodeActivity extends AppCompatActivity {
                                 }else{
                                     //mi unisco al group order
                                     dataref_guest=FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1");
+                                    //STESSA LOGICA E FUNZIONAMENTO DEL CASO PRECEDENTE, cambiano solo i riferimenti
 
                                     ChildEventListener childEventListener= new ChildEventListener() {
                                         int i=0;
@@ -142,7 +156,8 @@ public class QRCodeActivity extends AppCompatActivity {
                                             if(i==0) {
                                                 codiceTav1 = Dsnapshot.getKey();
                                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1").child(codiceTav1);
-                                                SingleOrder singleOrder = new SingleOrder("aaa", "02/02/2022", usernameInserito);
+                                                String date = Calendar.getInstance().getTime().toString();
+                                                SingleOrder singleOrder = new SingleOrder(Integer.toString(Math.abs((usernameInserito+date).hashCode())),date, usernameInserito);
                                                 ref.push().setValue(singleOrder);
                                                 i++;
                                             }
