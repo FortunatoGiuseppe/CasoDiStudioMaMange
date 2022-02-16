@@ -1,6 +1,7 @@
 package com.example.casodistudiomamange.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,8 +17,10 @@ import com.example.casodistudiomamange.R;
 
 import com.example.casodistudiomamange.model.GroupOrder;
 import com.example.casodistudiomamange.model.Restaurant;
+import com.example.casodistudiomamange.model.SingleOrder;
 import com.example.casodistudiomamange.model.Table;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +40,7 @@ public class QRCodeActivity extends AppCompatActivity {
     private String Code1 = "MST001";
     private Button logout;
     DatabaseReference dataref_guest;
-    DatabaseReference ref;  //riferimento per scrittura
+     //riferimento per scrittura
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,7 @@ public class QRCodeActivity extends AppCompatActivity {
                 controlCode(insertQrCode.getText().toString());
                 dataref_guest = FirebaseDatabase.getInstance().getReference().child("Ordini");
 
-                /*Partendo da ordini vedi tutti i tavoli presenti, quando trovi tavolo con codice inserito (da modificare nell'if)
+                /*Partendo da ordini vedi tutti i tavoli presenti, quando trovi tavolo con codice inserito (MST001) (da modificare nell'if)
                  allora vedi se è libero, cioè se flag=0.
                  Se lo è allora l'utente corrente è il primo e imposta il flag =1 e si crea il group order
                  Se non lo è allora il group order esiste già e perciò gli altri si devono solo aggiungere
@@ -82,10 +85,49 @@ public class QRCodeActivity extends AppCompatActivity {
                             if(table.getCodicetavolo().equals("MST001")) { // da modificare con codiceTavoloInserito invece di MST001
                                 if (table.getFlag() == 0) {
                                     //sono nel caso in cui devo creare il group order
-                                    dataref_guest.child("Tavolo1").child("flag").getRef().setValue(1); //imposta tavolo a occupato
-                                    ref=dataref_guest.child("Tavolo1"); //riferimento a figlio di tavolo1
+                                    //dataref_guest.child("Tavolo1").child("flag").getRef().setValue(1); //imposta tavolo a occupato
+                                    dataref_guest=dataref_guest.child("Tavolo1"); //riferimento a figlio di tavolo1
+
                                     //creo un nuovo group order con attributo codice che ha valore generato a partire dall'username che si suppone univoco
-                                    ref.push().setValue(new GroupOrder(Math.abs(usernameInserito.hashCode())));
+                                    GroupOrder groupOrder=new GroupOrder(Math.abs(usernameInserito.hashCode()));
+                                    dataref_guest.push().setValue(groupOrder);
+
+                                    //creo single order relativo alla persona che ha creato il group order
+
+
+                                    ChildEventListener childEventListener= new ChildEventListener() {
+                                        @Override
+                                        public void onChildAdded(@NonNull DataSnapshot Dsnapshot, @Nullable String previousChildName) {
+
+                                            String codice = Dsnapshot.getKey();
+                                            dataref_guest = dataref_guest.child(codice);
+                                            SingleOrder singleOrder = new SingleOrder("aaa", "02/02/2022", usernameInserito);
+                                            dataref_guest.push().setValue(singleOrder);
+
+                                        }
+
+                                        @Override
+                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                        }
+
+                                        @Override
+                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                        }
+
+                                        @Override
+                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    };
+                                    dataref_guest.addChildEventListener(childEventListener);
+
                                 }else{
                                     //mi unisco al group order
                                 }
