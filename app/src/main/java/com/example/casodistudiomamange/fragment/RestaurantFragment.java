@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuFragment extends Fragment {
+public class RestaurantFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private List<String> categories;    //lista che conterrà i nomi delle categorie
@@ -34,7 +34,7 @@ public class MenuFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_menu,null);
+        View v = inflater.inflate(R.layout.fragment_restaurant,null);
         getActivity().setTitle("Menu");
         recyclerView = v.findViewById(R.id.recycleview);
         adapter_category = new Adapter_category(getContext(), categories);

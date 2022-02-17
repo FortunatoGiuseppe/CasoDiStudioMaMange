@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.fragment.GroupOrderFragment;
-import com.example.casodistudiomamange.fragment.MenuFragment;
+import com.example.casodistudiomamange.fragment.RestaurantFragment;
 import com.example.casodistudiomamange.fragment.SingleOrderFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -19,10 +19,13 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_ma_mange_navigation);
+
         Fragment fragment = null;
-        fragment = new MenuFragment();
+        fragment = new RestaurantFragment();
         loadFragment(fragment);
+
         NavigationBarView navigationBarView = findViewById(R.id.bottom_navigation_bar);
         navigationBarView.setOnItemSelectedListener(this);
     }
@@ -37,7 +40,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         Fragment fragment = null;
         switch (item.getItemId()){
             case R.id.restaurant_menu:
-                fragment = new MenuFragment();
+                fragment = new RestaurantFragment();
                 break;
             case R.id.single_order:
                 fragment = new SingleOrderFragment();

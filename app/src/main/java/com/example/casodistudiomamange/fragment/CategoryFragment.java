@@ -40,6 +40,7 @@ public class CategoryFragment extends Fragment {
 
         Bundle bundle = getArguments();
         String CategoryKey = bundle.getString("CategoryKey");
+
         String nameConverted= convertToName(CategoryKey);
 
 

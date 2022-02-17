@@ -1,4 +1,4 @@
-package com.example.casodistudiomamange.activity;
+package com.example.casodistudiomamange.model;
 
 import com.journeyapps.barcodescanner.CaptureActivity;
 

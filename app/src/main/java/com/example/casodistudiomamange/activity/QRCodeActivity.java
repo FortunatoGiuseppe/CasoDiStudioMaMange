@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.casodistudiomamange.R;
 
+import com.example.casodistudiomamange.model.CaptureAct;
 import com.example.casodistudiomamange.model.GroupOrder;
 import com.example.casodistudiomamange.model.SingleOrder;
 import com.example.casodistudiomamange.model.Table;
@@ -234,7 +235,7 @@ public class QRCodeActivity extends AppCompatActivity {
                     builder.setPositiveButton("finish", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            startActivity(new Intent(QRCodeActivity.this, RestaurantActivity.class));
+                            startActivity(new Intent(QRCodeActivity.this, MaMangeNavigationActivity.class));
                         }
                     });
                     AlertDialog dialog = builder.create();

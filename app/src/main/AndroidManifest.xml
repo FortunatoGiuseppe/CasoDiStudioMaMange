@@ -38,7 +38,7 @@
             android:name=".activity.QRCodeActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.CaptureAct"
+            android:name=".model.CaptureAct"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
