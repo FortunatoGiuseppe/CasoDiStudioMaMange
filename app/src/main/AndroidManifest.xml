@@ -42,12 +42,6 @@
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".activity.CategoryActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activity.RestaurantActivity"
-            android:exported="true" />
     </application>
 
 </manifest>

@@ -3,19 +3,16 @@ package com.example.casodistudiomamange.adapter;
 import com.example.casodistudiomamange.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.casodistudiomamange.activity.CategoryActivity;
 import com.example.casodistudiomamange.fragment.CategoryFragment;
 import com.squareup.picasso.Picasso;
 

@@ -109,7 +109,7 @@ public class CategoryFragment extends Fragment {
                 return "ANTIPASTI";
             }
             case "1":{
-                return "FUTOMAKI";
+                return "BEVANDE";
             }
             case "2":{
                 return "GUNKAN";
@@ -127,7 +127,7 @@ public class CategoryFragment extends Fragment {
                 return "URAMAKI";
             }
             case "7":{
-                return "BEVANDE";
+                return "FUTOMAKI";
             }
         }
         return "NO";

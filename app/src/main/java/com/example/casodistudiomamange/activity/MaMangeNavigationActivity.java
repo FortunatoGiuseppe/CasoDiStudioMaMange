@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -11,8 +12,15 @@ import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.fragment.GroupOrderFragment;
 import com.example.casodistudiomamange.fragment.RestaurantFragment;
 import com.example.casodistudiomamange.fragment.SingleOrderFragment;
+import com.example.casodistudiomamange.model.DatabaseController;
+import com.example.casodistudiomamange.model.Table;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
 
@@ -22,9 +30,37 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         setContentView(R.layout.activity_ma_mange_navigation);
 
+        Intent intent = getIntent();
+        String usernameInserito = intent.getStringExtra("UsernameInserito");
+
+        DatabaseController dbc = new DatabaseController();
+
+        dbc.dataref_guest.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Table table = dataSnapshot.getValue(Table.class);
+                    if(table.getCodicetavolo().equals("MST001")) {
+                        if (!groupOrderExists(table)){
+                            dbc.createOrders(usernameInserito);
+                        }else{
+                            dbc.joinOrder(usernameInserito);
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
         Fragment fragment = null;
         fragment = new RestaurantFragment();
         loadFragment(fragment);
+
+
+
+
 
         NavigationBarView navigationBarView = findViewById(R.id.bottom_navigation_bar);
         navigationBarView.setOnItemSelectedListener(this);
@@ -59,4 +95,9 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         }
         return false;
     }
+
+    private boolean groupOrderExists(Table table){
+        return table.getFlag()==1;
+    }
+
 }
