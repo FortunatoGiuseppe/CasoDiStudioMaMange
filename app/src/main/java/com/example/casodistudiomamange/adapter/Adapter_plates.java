@@ -14,9 +14,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.activity.QRCodeActivity;
+import com.example.casodistudiomamange.model.DatabaseController;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -28,6 +31,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     private List<String> platesImg;
     private List<String> platesDescription;
     private List<String> plateFlag;
+
 
     public  Adapter_plates(Context context, List<String> platesName,List<String> platesImg, List<String> platesDescription, List<String> plateFlag){
         this.context =context;
@@ -70,7 +74,6 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 AlertDialog alert = builder1.create();
                 alert.show();
 
-
                 // Chiudi automaticamente dopo un secondo e mezzo
                 final Handler handler  = new Handler();
                 final Runnable runnable = new Runnable() {
@@ -82,9 +85,12 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                     }
                 };
                 handler.postDelayed(runnable, 1500);
+
+                //Aggiunta del piatto nel DB
+                ((MaMangeNavigationActivity) context).dbc.addPlate(platesName.get(position),1);
             }
         });
-       /*FARE SELEZIONE DEL PIATTO !!! */
+
 
     }
 

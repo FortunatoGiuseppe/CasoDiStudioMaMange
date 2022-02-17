@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.adapter.Adapter_plates;
 import com.example.casodistudiomamange.model.Plate;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +33,8 @@ public class CategoryFragment extends Fragment {
     private List<String> plateFlag; //flag delle bevande
     private Adapter_plates adapter_plates;
     DatabaseReference dataref_plates;
+    String codiceSingleOrder;
+    String codiceGroupOrder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,10 @@ public class CategoryFragment extends Fragment {
 
         String nameConverted= convertToName(CategoryKey);
 
+        /*
+        MaMangeNavigationActivity m =(MaMangeNavigationActivity) getActivity();
+        codiceSingleOrder=m.codiceSingleOrder;
+        codiceGroupOrder=m.codiceGroupOrder;*/
 
         dataref_plates= FirebaseDatabase.getInstance().getReference().child("Categorie").child(nameConverted);
         platesName= new ArrayList<String>();

@@ -18,11 +18,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
+    public String codiceSingleOrder;
+    public String codiceGroupOrder;
+    public DatabaseController dbc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +34,12 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         Intent intent = getIntent();
         String usernameInserito = intent.getStringExtra("UsernameInserito");
 
-        DatabaseController dbc = new DatabaseController();
+        dbc = new DatabaseController();
 
-        dbc.dataref_guest.addListenerForSingleValueEvent(new ValueEventListener() {
+        /*codiceSingleOrder=dbc.codiceSingleOrder;
+        codiceGroupOrder=dbc.codiceGroupOrder;*/
+
+        dbc.dataref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -54,13 +58,11 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             }
         });
 
+
+
         Fragment fragment = null;
         fragment = new RestaurantFragment();
         loadFragment(fragment);
-
-
-
-
 
         NavigationBarView navigationBarView = findViewById(R.id.bottom_navigation_bar);
         navigationBarView.setOnItemSelectedListener(this);
