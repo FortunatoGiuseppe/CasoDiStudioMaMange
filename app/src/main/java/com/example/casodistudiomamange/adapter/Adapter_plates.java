@@ -125,6 +125,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 }else{
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                     builder1.setMessage(R.string.massimoPiatti);
+                    total--;
                     builder1.setCancelable(true);
                     AlertDialog alert = builder1.create();
                     alert.show();
