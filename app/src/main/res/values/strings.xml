@@ -40,4 +40,5 @@
     <string name="Menu">Menu</string>
     <string name="SingleOrder">Single Order</string>
     <string name="GroupOrder">Group Order</string>
+    <string name="Confirm">Confirm</string>
 </resources>
