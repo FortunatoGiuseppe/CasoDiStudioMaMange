@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
@@ -146,9 +147,9 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         ImageView imageView_plate_flag;
         Button addPlateBtn;
         // view per aggiunta piatti
+        ConstraintLayout addMoreLayout;
         ImageView imageMinus;
         ImageView imageAddOne;
-        LinearLayout addMoreLayout;
         TextView  tvCount;
 
 
@@ -164,8 +165,8 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             imageMinus = itemView.findViewById(R.id.imageMinus);
             imageAddOne = itemView.findViewById(R.id.imageAddOne);
             tvCount = itemView.findViewById(R.id.tvCount);
+            addMoreLayout  = itemView.findViewById(R.id.constraintLayoutPeM);
 
-            addMoreLayout  = itemView.findViewById(R.id.addMoreLayout);
         }
     }
 }
