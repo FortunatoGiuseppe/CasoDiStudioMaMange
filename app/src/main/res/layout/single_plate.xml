@@ -7,88 +7,97 @@
     android:layout_margin="10dp"
     android:background="@drawable/categories_background"
     android:textAlignment="center"
-    >
+    tools:layout_constraintWidth_percent=".8">
 
     <TextView
         android:id="@+id/textView_plate"
-        android:layout_width="188dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="49dp"
-        android:layout_marginBottom="5dp"
-        android:layout_toEndOf="@+id/imageView_plate"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="161dp"
         android:text="Piatto"
         android:textColor="@color/primaryColor"
-        android:textSize="20dp" />
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/imageView_plate"
-        android:layout_width="109dp"
-        android:layout_height="116dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginBottom="77dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginBottom="75dp"
         android:scaleType="fitXY"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textView_plate_description"
-        android:layout_width="wrap_content"
-        android:layout_height="76dp"
-        android:layout_below="@+id/textView_plate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginBottom="57dp"
-        android:layout_toEndOf="@+id/imageView_plate"
+        android:layout_marginStart="142dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="60dp"
         android:text="testo"
         android:textColor="@color/secondaryTextColor"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/imageViewGlobal"
-        android:layout_width="26dp"
-        android:layout_height="24dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="187dp" />
+        android:layout_marginStart="354dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="185dp" />
 
     <Button
         android:id="@+id/aggiungiBtn"
-        android:layout_width="127dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="244dp"
-        android:layout_marginEnd="22dp"
+        android:layout_marginStart="230dp"
+        android:layout_marginTop="165dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:text="@string/aggiungi"
         android:textSize="12sp" />
 
     <LinearLayout
         android:id="@+id/addMoreLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:visibility="gone"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:layout_marginStart="267dp"
-        android:layout_marginTop="171dp"
-        android:layout_marginEnd="46dp"
-        android:layout_marginBottom="19dp"
+        android:layout_marginStart="253dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="18dp"
         android:orientation="horizontal">
 
         <ImageView
