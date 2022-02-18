@@ -29,6 +29,10 @@
     <string name="username_nonvalido_descr">Enter a word from 1 to 10 characrters</string>
     <string name="piattoAggiunto">Plate added to your order!</string>
     <string name="bevandaAggiunta">Drink added to your order!</string>
+    <string name="benvenuto">Welcome </string>
+    <string name="scannerizzando">Scanning...</string>
+    <string name="norisultati">No result</string>
+    <string name="termina">Finish</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo">Logo</string>

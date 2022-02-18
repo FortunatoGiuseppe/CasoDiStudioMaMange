@@ -60,7 +60,8 @@ public class QRCodeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         usernameInserito = intent.getStringExtra("UsernameInserito");
 
-        benvenuto.setText("Benvenuto "+usernameInserito);
+        String benv = getResources().getString(R.string.benvenuto);
+        benvenuto.setText(benv+" "+usernameInserito);
 
         scanQrCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,11 +84,6 @@ public class QRCodeActivity extends AppCompatActivity {
             }
         });
     }
-/*
-    private long generateNumber() {
-
-    }*/
-
 
     private void scanQrCode(){
         IntentIntegrator integrator = new IntentIntegrator(this);
@@ -106,8 +102,8 @@ public class QRCodeActivity extends AppCompatActivity {
                 if(result.getContents().equals(Code1)){
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(result.getContents());
-                    builder.setTitle("Scanning result");
-                    builder.setPositiveButton("finish", new DialogInterface.OnClickListener() {
+                    builder.setTitle(getResources().getString(R.string.scannerizzando));
+                    builder.setPositiveButton(getResources().getString(R.string.termina), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             startActivity(new Intent(QRCodeActivity.this, MaMangeNavigationActivity.class));
@@ -118,7 +114,7 @@ public class QRCodeActivity extends AppCompatActivity {
                 }
 
             } else {
-                Toast.makeText(this, "No result", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,getResources().getString(R.string.norisultati), Toast.LENGTH_LONG).show();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
