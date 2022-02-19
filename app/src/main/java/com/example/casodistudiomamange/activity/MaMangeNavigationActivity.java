@@ -43,9 +43,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         dbc = new DatabaseController();
 
-        /*codiceSingleOrder=dbc.codiceSingleOrder;
-        codiceGroupOrder=dbc.codiceGroupOrder;*/
-
         dbc.dataref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

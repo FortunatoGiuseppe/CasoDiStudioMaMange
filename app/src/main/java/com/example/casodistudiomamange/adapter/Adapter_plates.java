@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
@@ -31,6 +33,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     private List<String> platesImg;
     private List<String> platesDescription;
     private List<String> plateFlag;
+    private int total=0;
 
 
     public  Adapter_plates(Context context, List<String> platesName,List<String> platesImg, List<String> platesDescription, List<String> plateFlag){
@@ -87,11 +90,49 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 handler.postDelayed(runnable, 1500);
 
                 //Aggiunta del piatto nel DB
-                ((MaMangeNavigationActivity) context).dbc.addPlate(platesName.get(position),1);
+                //((MaMangeNavigationActivity) context).dbc.addPlate(platesName.get(position),1);
+
+                //aggiornamento icona aggiunta
+                holder.addMoreLayout.setVisibility(View.VISIBLE);
+                holder.addPlateBtn.setVisibility(View.GONE);
+                holder.tvCount.setText("1");
+                total=1;
             }
         });
 
+        holder.imageMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // vedi la quantità del piatto
+                total--;
+                if(total > 0 ) {
+                    //aggiorna quantità nel db
+                    holder.tvCount.setText(total +"");
+                } else {
+                    holder.addMoreLayout.setVisibility(View.GONE);
+                    holder.addPlateBtn.setVisibility(View.VISIBLE);
+                    //aggiorna quantità nel db
+                }
+            }
+        });
 
+        holder.imageAddOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                total++;
+                if(total <= 10 ) {
+                    //aggiorna quantità nel db
+                    holder.tvCount.setText(total +"");
+                }else{
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                    builder1.setMessage(R.string.massimoPiatti);
+                    total--;
+                    builder1.setCancelable(true);
+                    AlertDialog alert = builder1.create();
+                    alert.show();
+                }
+            }
+        });
     }
 
     @Override
@@ -105,6 +146,11 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         TextView textView_plate_description;
         ImageView imageView_plate_flag;
         Button addPlateBtn;
+        // view per aggiunta piatti
+        ConstraintLayout addMoreLayout;
+        ImageView imageMinus;
+        ImageView imageAddOne;
+        TextView  tvCount;
 
 
         public myViewHolder(@NonNull View itemView) {
@@ -114,6 +160,13 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             textView_plate_description= itemView.findViewById(R.id.textView_plate_description);
             imageView_plate_flag = itemView.findViewById(R.id.imageViewGlobal);
             addPlateBtn =itemView.findViewById(R.id.aggiungiBtn);
+
+            // aggiunta piatti
+            imageMinus = itemView.findViewById(R.id.imageMinus);
+            imageAddOne = itemView.findViewById(R.id.imageAddOne);
+            tvCount = itemView.findViewById(R.id.tvCount);
+            addMoreLayout  = itemView.findViewById(R.id.constraintLayoutPeM);
+
         }
     }
 }

@@ -119,23 +119,30 @@ public class CategoryFragment extends Fragment {
                 return "BEVANDE";
             }
             case "2":{
-                return "GUNKAN";
-            }
-            case "3":{
-                return "HOSOMAKI";
-            }
-            case "4":{
-                return "NIGIRI";
-            }
-            case "5":{
-                return "SASHIMI";
-            }
-            case "6":{
-                return "URAMAKI";
-            }
-            case "7":{
                 return "FUTOMAKI";
             }
+            case "3":{
+                return "GUNKAN";
+            }
+            case "4":{
+                return "HOSOMAKI";
+            }
+            case "5":{
+                return "NIGIRI";
+            }
+            case "6":{
+                return "PASTA";
+            }
+            case "7":{
+                return "RISO";
+            }
+            case "8":{
+                return "SASHIMI";
+            }
+            case "9":{
+                return "URAMAKI";
+            }
+
         }
         return "NO";
     }
