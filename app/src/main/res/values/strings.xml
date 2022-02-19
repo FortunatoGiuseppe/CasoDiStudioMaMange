@@ -41,4 +41,9 @@
     <string name="SingleOrder">Single Order</string>
     <string name="GroupOrder">Group Order</string>
     <string name="Confirm">Confirm</string>
+    <string name="profile">Profile</string>
+    <string name="ultimo_ordine">insert last order</string>
+    <string name="others">Others</string>
+    <string name="support">Support</string>
+    <string name="about_us">About Us</string>
 </resources>

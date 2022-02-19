@@ -2,6 +2,8 @@ package com.example.casodistudiomamange.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
@@ -10,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.fragment.GroupOrderFragment;
@@ -32,8 +35,16 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_ma_mange_navigation);
+
+        final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+
+        findViewById(R.id.imageMenu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
         Intent intent = getIntent();
         String usernameInserito = intent.getStringExtra("UsernameInserito");
