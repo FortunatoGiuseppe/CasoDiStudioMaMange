@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -38,7 +39,6 @@ public class RestaurantFragment extends Fragment {
         getActivity().setTitle("Menu");
         recyclerView = v.findViewById(R.id.recycleview);
         adapter_category = new Adapter_category(getContext(), categories);
-
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2 , LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -78,4 +78,9 @@ public class RestaurantFragment extends Fragment {
             }
         });
     }
+
+
+
+
+
 }

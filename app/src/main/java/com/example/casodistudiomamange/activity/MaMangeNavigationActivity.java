@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.casodistudiomamange.R;
@@ -25,6 +28,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public String codiceGroupOrder;
     public DatabaseController dbc;
 
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,9 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         Intent intent = getIntent();
         String usernameInserito = intent.getStringExtra("UsernameInserito");
+
+        bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
+
 
         dbc = new DatabaseController();
 
@@ -69,10 +76,11 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }
-
+    public Fragment fragment = null;
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment fragment = null;
+
         switch (item.getItemId()){
             case R.id.restaurant_menu:
                 fragment = new RestaurantFragment();
@@ -83,6 +91,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             case R.id.group_order:
                 fragment = new GroupOrderFragment();
                 break;
+
         }
         return loadFragment(fragment);
     }
@@ -95,8 +104,46 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         return false;
     }
 
+
+
+
+    @Override
+    public void onBackPressed() {
+
+        /*
+        Una volta entrato nella sezione menù non è più possibile tornare indietro alla selezione del tavolo
+         */
+
+        if(bottomNavigationView.getSelectedItemId()==R.id.restaurant_menu){
+            bottomNavigationView.setSelectedItemId(R.id.restaurant_menu);
+        }
+
+        /*
+        Una volta entrato nella sezione del singolo ordine o dell'ordine collettivo nel momento in cui clicco sul tasto "Indietro" sono reindirizzato al menù
+         */
+
+
+        if((bottomNavigationView.getSelectedItemId()==R.id.single_order) || (bottomNavigationView.getSelectedItemId()==R.id.group_order)){
+            bottomNavigationView.setSelectedItemId(R.id.restaurant_menu);
+        }
+
+
+        /*
+        Una volta entrato nella categoria di un piatto nel momento in cui clicco "Indietro" vengo riendirizzato alla sezione menù
+         */
+
+        if(bottomNavigationView.getSelectedItemId()==R.id.recycleview_plates){
+            bottomNavigationView.setSelectedItemId(R.id.restaurant_menu);
+        }
+    }
+
+
+
     private boolean groupOrderExists(Table table){
         return table.getFlag()==1;
     }
+
+
+
 
 }

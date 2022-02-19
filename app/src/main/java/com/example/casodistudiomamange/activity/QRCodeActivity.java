@@ -101,19 +101,21 @@ public class QRCodeActivity extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null){
             if(result.getContents() != null){
-                if(result.getContents().equals(Code1)){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(result.getContents());
-                    builder.setTitle(getResources().getString(R.string.scannerizzando));
-                    builder.setPositiveButton(getResources().getString(R.string.termina), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            startActivity(new Intent(QRCodeActivity.this, MaMangeNavigationActivity.class));
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
+
+                    if(result.getContents().equals(Code1)){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage(result.getContents());
+                        builder.setTitle(getResources().getString(R.string.scannerizzando));
+                        builder.setPositiveButton(getResources().getString(R.string.termina), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                startActivity(new Intent(QRCodeActivity.this, MaMangeNavigationActivity.class));
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+
 
             } else {
                 Toast.makeText(this,getResources().getString(R.string.norisultati), Toast.LENGTH_LONG).show();
@@ -125,7 +127,7 @@ public class QRCodeActivity extends AppCompatActivity {
 
 
     private void controlCode(String QrCode){
-        if (QrCode.contains(Code1)){
+        if (QrCode.equals(Code1)){
             Toast.makeText(this,R.string.tavoloTrovato , Toast.LENGTH_LONG).show();
 
 
