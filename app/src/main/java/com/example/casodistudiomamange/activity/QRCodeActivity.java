@@ -56,6 +56,8 @@ public class QRCodeActivity extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         benvenuto=findViewById(R.id.textView_benvenuto);
 
+        getSupportActionBar().hide();
+
 
         Intent intent = getIntent();
         usernameInserito = intent.getStringExtra("UsernameInserito");

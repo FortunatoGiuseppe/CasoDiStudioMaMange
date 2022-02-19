@@ -20,7 +20,7 @@
     <string name="aggiungi">Aggiungi</string>
     <string name="inserisciCodice">Inserisci codice</string>
     <string name="conferma">Conferma</string>
-    <string name="scannerizza">Scannerizza</string>
+    <string name="scannerizza">Scannerizza Codice QR </string>
     <string name="scegliUsername">Scegli il tuo username</string>
     <string name="tavoloTrovato">Tavolo trovato con successo!</string>
     <string name="tavoloNonTrovato">Tavolo non trovato!</string>
@@ -41,4 +41,5 @@
     <string name="SingleOrder">Ordine Personale</string>
     <string name="GroupOrder">Ordine Collettivo</string>
     <string name="Confirm">Conferma</string>
+    <string name="codice_tavolo">Codice Tavolo</string>
 </resources>

@@ -20,7 +20,7 @@
     <string name="aggiungi">Add to cart</string>
     <string name="inserisciCodice">Insert code</string>
     <string name="conferma">Confirm</string>
-    <string name="scannerizza">Scan</string>
+    <string name="scannerizza">Scan QR Code</string>
     <string name="scegliUsername">Choose your username</string>
     <string name="tavoloTrovato">Table found!</string>
     <string name="tavoloNonTrovato">Table not found!</string>
@@ -41,4 +41,5 @@
     <string name="SingleOrder">Single Order</string>
     <string name="GroupOrder">Group Order</string>
     <string name="Confirm">Confirm</string>
+    <string name="codice_tavolo">Table Code</string>
 </resources>
