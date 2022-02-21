@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CasoDiStudioMaMange">
         <activity
+            android:name=".activity.SupportActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.MaMangeNavigationActivity"
             android:exported="false" />
         <activity

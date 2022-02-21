@@ -7,10 +7,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -22,9 +20,11 @@ import com.example.casodistudiomamange.model.DatabaseController;
 import com.example.casodistudiomamange.model.Table;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
 
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
     public String codiceSingleOrder;
@@ -43,6 +43,23 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             @Override
             public void onClick(View view) {
                 drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.Support:
+                        launchSupportActivity();
+                        break;
+
+                    default:
+                        Intent intent = new Intent(MaMangeNavigationActivity.this, SupportActivity.class);
+                        startActivity(intent);
+                }
+                return false;
             }
         });
 
@@ -154,7 +171,10 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         return table.getFlag()==1;
     }
 
-
+    private void launchSupportActivity(){
+        Intent intent1 = new Intent(MaMangeNavigationActivity.this, SupportActivity.class);
+        startActivity(intent1);
+    }
 
 
 }
