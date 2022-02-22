@@ -27,10 +27,19 @@ public class SupportActivity extends AppCompatActivity {
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + etTo.getText().toString()));
-                intent.putExtra(Intent.EXTRA_SUBJECT,etSubject.getText().toString());
-                intent.putExtra(Intent.EXTRA_TEXT,etMessage.getText().toString());
-                startActivity(intent);
+                String recipientList = etTo.getText().toString();
+                String[] recipients = recipientList.split(",");
+
+                String subject = etSubject.getText().toString();
+                String message = etMessage.getText().toString();
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_EMAIL, recipients);
+                intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                intent.putExtra(Intent.EXTRA_TEXT, message);
+
+                intent.setType("message/rfc822");
+                startActivity(Intent.createChooser(intent, "Choose an email client"));
             }
         });
     }
