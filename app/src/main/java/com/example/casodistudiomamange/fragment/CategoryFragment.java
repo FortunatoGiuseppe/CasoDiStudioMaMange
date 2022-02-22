@@ -83,7 +83,7 @@ public class CategoryFragment extends Fragment {
 
                         for (DocumentChange dc : value.getDocumentChanges()) {
                             if (dc.getType() == DocumentChange.Type.ADDED) {
-                                if(dc.getDocument().get("categoria").equals(CategoryKey)) {
+                                if(dc.getDocument().get("categoria")!=null && dc.getDocument().get("categoria").equals(CategoryKey)) {
                                     plates.add(dc.getDocument().toObject(Plate.class));
                                 }
                             }
