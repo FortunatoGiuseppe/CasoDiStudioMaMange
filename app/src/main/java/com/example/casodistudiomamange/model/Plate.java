@@ -1,10 +1,11 @@
 package com.example.casodistudiomamange.model;
 /* model del piatto */
 public class Plate {
-    public String img;
-    public String nome;
-    public String descrizione;
-    public String flag;
+    private String img;
+    private String nome;
+    private String descrizione;
+    private Long flag;
+    private String categoria;
 
     public String getImg() {
         return img;
@@ -30,15 +31,19 @@ public class Plate {
         this.descrizione = descrizione;
     }
 
-    public String getFlag() {
+    public Long getFlag() {
         return flag;
     }
 
-    public void setFlag(String flag) {
+    public void setFlag(Long flag) {
         this.flag = flag;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
 
-
-
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
 }

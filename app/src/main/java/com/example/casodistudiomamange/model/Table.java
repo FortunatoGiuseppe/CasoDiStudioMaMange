@@ -19,4 +19,12 @@ public class Table {
     public void setFlag(long flag) {
         this.flag = flag;
     }
+
+    public Table() {
+    }
+
+    public Table(String codicetavolo, long flag) {
+        this.codicetavolo = codicetavolo;
+        this.flag = flag;
+    }
 }
