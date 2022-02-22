@@ -2,11 +2,9 @@ package com.example.casodistudiomamange.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.adapter.ViewPagerFragmentAdapter;
 import com.google.android.material.tabs.TabLayout;

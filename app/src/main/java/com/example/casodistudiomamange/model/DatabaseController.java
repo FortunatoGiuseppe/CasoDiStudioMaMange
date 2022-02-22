@@ -1,188 +1,82 @@
 package com.example.casodistudiomamange.model;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.Calendar;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DatabaseController {
-
-    public DatabaseReference dataref;
-    public String codiceGroupOrder;
-    public String codiceSingleOrder;
+    public FirebaseFirestore df;
+    private Table table;
 
     public DatabaseController() {
-        this.dataref = FirebaseDatabase.getInstance().getReference().child("Ordini");
+        this.df= FirebaseFirestore.getInstance();
     }
 
-    public void createOrders(String usernameInserito) {
-        //sono nel caso in cui devo creare il group order
-        dataref.child("Tavolo1").child("flag").getRef().setValue(1); //imposta tavolo a occupato
-        dataref = FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1"); //riferimento a figlio di tavolo1 DA RENDERE GENERICO
-
-        //creo un nuovo group order con attributo codice che ha valore generato a partire dall'username che si suppone univoco
-        GroupOrder groupOrder = new GroupOrder(Math.abs(usernameInserito.hashCode()));
-        dataref.push().setValue(groupOrder);
-
-        /*creo single order relativo alla persona che ha creato il group order,
-        Posso farlo accorgendomi che è stato inserito un figlio di Tavolo1 (cioè group order)
-        e creo un figlio di group order creato, cioè un single order
-        Mi accorgo dell'aggiunta con Child Evemt Listener
-        */
-
-        dataref = FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1");
-        ChildEventListener childEventListener = new ChildEventListener() {
-            int i = 0;
-            int k=0;
-
-            //Dsnapshot è l'insieme dei figli di Tavolo 1, occorre fermarmi al primo figlio letto che sarebbe proprio il group order aggiunto
+    //false-> tavolo occupato  true-> tavolo libero
+    public void createOrdersFirestore(String usernameInserito, String codiceTavolo){
+        DocumentReference docRef = df.collection("TAVOLI").document(codiceTavolo);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot Dsnapshot, @Nullable String previousChildName) {
-                if (i == 0) {
-                    codiceGroupOrder = Dsnapshot.getKey();//ottengo chiave identificativa del group ordeer inserito
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1").child(codiceGroupOrder); //aggiorno riferimento a db
-                    String date = Calendar.getInstance().getTime().toString(); //ottengo data corrente per metterla nel DB
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                table= documentSnapshot.toObject(Table.class);
+                if(table.getFlag()==0){
+                    //Allora il tavolo è libero, perciò devo impostare il tavolo a occupato sul db, creare group order
+                    // e creare single order relativo al group order esistente
 
-                    /*
-                    Il codice dell'ordine singolo è numerico ma viene registrato nel DB come stringa, pertanto occorre fare il toString.
-                    Il suddetto codice viene generato a partire dalla stringa ottenuta dalla concatenazione di username e data, prendendo l'hash code
-                    in valore assoluto
-                     */
-                    SingleOrder singleOrder = new SingleOrder(Integer.toString(Math.abs((usernameInserito + date).hashCode())), date, usernameInserito); //creo un single order
-                    ref.push().setValue(singleOrder); //carico il single order sul db
+                    //imposto tavolo a occupato
+                    docRef.update("flag",1);
 
-                    ChildEventListener childEventListener1= new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                            if(k==0) {
-                                codiceSingleOrder = snapshot.getKey();
-                                k++;
-                            }
-                        }
+                    //creo group order
+                    Map<String, Object> nuovoGroupOrder = new HashMap<>();
+                    nuovoGroupOrder.put("codice", "GO2");       //ricorda di modificare generando in modo casuale il codice
+                    nuovoGroupOrder.put("codiceTavolo", codiceTavolo);
+                    nuovoGroupOrder.put("stato", true); //STATO TRUE-> G.O. attivo, tutti gli altri avranno stato falso.
+                    //aggiungo group order
+                    df.collection("GROUP ORDERS").add(nuovoGroupOrder);
 
-                        @Override
-                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    //creo single order
+                    Map<String, Object> nuovoSingleOrder = new HashMap<>();
+                    nuovoSingleOrder.put("codice", "SO2");       //ricorda di modificare generando in modo casuale il codice
+                    nuovoSingleOrder.put("codiceGroupOrder", "GO2"); //qui va il codice generato in automatico che hai inserito in riga 61
+                    //aggiungo single order
+                    df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
 
-                        }
+                }else{
+                    //Allora il tavolo è occupato, perciò esiste già il group order (che devo leggere) e devo solo
+                    // creare il single order che si deve unire al group order già presente
 
-                        @Override
-                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    //Prendo il document corrispondente al group order con stato true, cioè quello attivo
+                    df.collection("GROUP ORDERS")
+                            .whereEqualTo("stato", true)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            //ho trovato il group order, adesso devo creare il sigle order che ha come chiave esterna al group order
+                                            //il codice del group order stesso.
 
-                        }
-
-                        @Override
-                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    };
-                    ref.addChildEventListener(childEventListener1);
-                    i++;
+                                            Map<String, Object> nuovoSingleOrder = new HashMap<>();
+                                            nuovoSingleOrder.put("codice", "SO4"); //ricorda di modificare generando in modo casuale il codice
+                                            nuovoSingleOrder.put("codiceGroupOrder", document.get("codice").toString()); //qui metto chiave esterna
+                                            //aggiungo single order
+                                            df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
+                                        }
+                                    }
+                                }
+                            });
                 }
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        dataref.addChildEventListener(childEventListener);
-    }
-
-
-    public void joinOrder(String usernameInserito){
-
-
-        //mi unisco al group order
-        dataref =FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1");
-        //STESSA LOGICA E FUNZIONAMENTO DEL CASO PRECEDENTE, cambiano solo i riferimenti
-
-        ChildEventListener childEventListener= new ChildEventListener() {
-            int i=0;
-            int j=0;
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot Dsnapshot, @Nullable String previousChildName) {
-                if(i==0) {
-                    codiceGroupOrder = Dsnapshot.getKey();
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1").child(codiceGroupOrder);
-                    String date = Calendar.getInstance().getTime().toString();
-                    SingleOrder singleOrder = new SingleOrder(Integer.toString(Math.abs((usernameInserito+date).hashCode())),date, usernameInserito);
-                    ref.push().setValue(singleOrder);
-                    ValueEventListener getValueListener = new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if(j==0){
-                                codiceSingleOrder=dataSnapshot.getKey();
-                                j++;
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-
-                    };
-                    ref.addValueEventListener(getValueListener );
-                    i++;
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        dataref.addChildEventListener(childEventListener);
-    }
-
-
-    public void addPlate(String nome, long quantita){
-        dataref=FirebaseDatabase.getInstance().getReference().child("Ordini").child("Tavolo1").child(codiceGroupOrder).child(codiceSingleOrder);
-        PlateInOrder plateToAdd = new PlateInOrder(nome,quantita);
-        dataref.push().setValue(plateToAdd);
+        });
     }
 
 }
