@@ -30,12 +30,15 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public String codiceSingleOrder;
     public String codiceGroupOrder;
     public DatabaseController dbc;
+    public String username;
 
     BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ma_mange_navigation);
+
+        getSupportActionBar().hide();
 
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
@@ -65,6 +68,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         Intent intent = getIntent();
         String usernameInserito = intent.getStringExtra("UsernameInserito");
+        username = usernameInserito;
 
         bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
 

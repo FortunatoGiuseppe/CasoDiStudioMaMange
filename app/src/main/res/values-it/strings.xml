@@ -47,4 +47,5 @@
     <string name="support">Supporto</string>
     <string name="about_us">Chi siamo</string>
     <string name="codice_tavolo">Codice Tavolo</string>
+    <string name="ordinazione">Ordine di </string>
 </resources>
