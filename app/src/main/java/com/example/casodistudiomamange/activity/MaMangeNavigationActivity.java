@@ -17,17 +17,19 @@ import com.example.casodistudiomamange.fragment.SingleOrderFragment;
 import com.example.casodistudiomamange.model.DatabaseController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.navigation.NavigationView;
 
 
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
     public DatabaseController dbc;
     BottomNavigationView bottomNavigationView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ma_mange_navigation);
+        getSupportActionBar().hide();
+
 
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
@@ -37,6 +39,25 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.Support:
+                        launchSupportActivity();
+                        break;
+
+                    case R.id.menuProfile:
+                        launchSupportActivity2();
+                        break;
+                }
+                return false;
+            }
+        });
+
+
 
         Intent intent = getIntent();
         String usernameInserito = intent.getStringExtra("UsernameInserito");
@@ -108,5 +129,15 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         if(bottomNavigationView.getSelectedItemId()==R.id.recycleview_plates){
             bottomNavigationView.setSelectedItemId(R.id.restaurant_menu);
         }
+    }
+
+    private void launchSupportActivity(){
+        Intent intent1 = new Intent(MaMangeNavigationActivity.this, SupportActivity.class);
+        startActivity(intent1);
+    }
+
+    private void launchSupportActivity2(){
+        Intent intent2 = new Intent(MaMangeNavigationActivity.this, ProfileActivity.class);
+        startActivity(intent2);
     }
 }
