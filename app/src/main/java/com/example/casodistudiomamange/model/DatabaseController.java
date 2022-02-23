@@ -84,6 +84,7 @@ public class DatabaseController {
         });
     }
 
+    /*Metodo che crea il piatto associato al codice sel singleOrder */
     public void createSoPlateFirestore(String plate,long quantita){
        df.collection("SO-PIATTO")
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -101,6 +102,7 @@ public class DatabaseController {
                 });
     }
 
+    /*Metodo che aumenta la quantita del piatto*/
     public void addPlateFirestore(String plate,long quantita){
        df.collection("SO-PIATTO")
                 .whereEqualTo("codiceSingleOrder","SO4")
@@ -120,6 +122,7 @@ public class DatabaseController {
         });
     }
 
+    /*Metodo che diminuisce la quantita del piatto*/
     public void removePlateFirestore(String plate,long quantita){
         df.collection("SO-PIATTO")
                 .whereEqualTo("codiceSingleOrder","SO4")
@@ -139,6 +142,7 @@ public class DatabaseController {
         });
     }
 
+    /*Metodo che elimina totalmente il piatto se la quantita è pari a 0*/
     public void deletePlateFirestore(String plate,long quantita){
         df.collection("SO-PIATTO")
                 .whereEqualTo("codiceSingleOrder","SO4")
