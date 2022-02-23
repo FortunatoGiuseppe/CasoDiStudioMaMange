@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
     public DatabaseController dbc;
     BottomNavigationView bottomNavigationView;
+    public String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         Intent intent = getIntent();
         String usernameInserito = intent.getStringExtra("UsernameInserito");
+        username = usernameInserito;
 
         bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
 
