@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.model.Plate;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -78,7 +80,8 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 handler.postDelayed(runnable, 1500);
 
                 //Aggiunta del piatto nel DB
-                //((MaMangeNavigationActivity) context).dbc.addPlate(platesName.get(position),1);
+
+                ((MaMangeNavigationActivity) context).dbc.createSoPlateFirestore(plate.getNome(),1);
 
                 //aggiornamento icona aggiunta
                 holder.addMoreLayout.setVisibility(View.VISIBLE);
@@ -94,9 +97,10 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 // vedi la quantità del piatto
                 total--;
                 if(total > 0 ) {
-                    //aggiorna quantità nel db
+                   ((MaMangeNavigationActivity) context).dbc.removePlateFirestore(plate.getNome(),1);
                     holder.tvCount.setText(total +"");
                 } else {
+                    ((MaMangeNavigationActivity) context).dbc.deletePlateFirestore(plate.getNome(),1);
                     holder.addMoreLayout.setVisibility(View.GONE);
                     holder.addPlateBtn.setVisibility(View.VISIBLE);
                     //aggiorna quantità nel db
@@ -109,7 +113,8 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             public void onClick(View v) {
                 total++;
                 if(total <= 10 ) {
-                    //aggiorna quantità nel db
+                    ((MaMangeNavigationActivity) context).dbc.addPlateFirestore(plate.getNome(),1);
+
                     holder.tvCount.setText(total +"");
                 }else{
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
