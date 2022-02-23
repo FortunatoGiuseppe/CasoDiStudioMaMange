@@ -67,7 +67,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         dbc = new DatabaseController();
         dbc.createOrdersFirestore(usernameInserito,"MST001");
-
+        getSupportActionBar().hide();
 
         Fragment fragment = null;
         fragment = new RestaurantFragment();

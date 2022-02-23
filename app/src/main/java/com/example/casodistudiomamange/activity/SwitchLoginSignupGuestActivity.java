@@ -46,6 +46,5 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
             new TabLayoutMediator(tabLayout, viewPager2, ((tab, position) -> tab.setText(titles[position]))).attach();
         }
 
-
     }
 }
