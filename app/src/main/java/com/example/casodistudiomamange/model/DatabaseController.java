@@ -9,9 +9,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +22,11 @@ public class DatabaseController {
     public FirebaseFirestore df;
     private Table table;
     private SoPlate singleOrderPlate;
+    private GroupOrder groupOrder;
+    private int codiceGroup;
+    private int codiceGroupOrder;
+    private String codiceGO;
+
 
     public DatabaseController() {
         this.df= FirebaseFirestore.getInstance();
@@ -39,20 +46,49 @@ public class DatabaseController {
                     //imposto tavolo a occupato
                     docRef.update("flag",1);
 
-                    //creo group order
-                    Map<String, Object> nuovoGroupOrder = new HashMap<>();
-                    nuovoGroupOrder.put("codice", "GO2");       //ricorda di modificare generando in modo casuale il codice
-                    nuovoGroupOrder.put("codiceTavolo", codiceTavolo);
-                    nuovoGroupOrder.put("stato", true); //STATO TRUE-> G.O. attivo, tutti gli altri avranno stato falso.
-                    //aggiungo group order
-                    df.collection("GROUP ORDERS").add(nuovoGroupOrder);
+                    //Vado ad ordinare in ordine decrescente lo snapshot limitandolo ad 1, quindi prendo l'ultimo elemento presente con il valore più alto. Incremento l'ultimo elemento e costruisco la stringa per creaare il nuovo grouporder
 
-                    //creo single order
-                    Map<String, Object> nuovoSingleOrder = new HashMap<>();
-                    nuovoSingleOrder.put("codice", "SO2");       //ricorda di modificare generando in modo casuale il codice
-                    nuovoSingleOrder.put("codiceGroupOrder", "GO2"); //qui va il codice generato in automatico che hai inserito in riga 61
-                    //aggiungo single order
-                    df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
+                    df.collection("GROUP ORDERS").orderBy("codice", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+
+
+                                groupOrder=(task.getResult().toObjects(GroupOrder.class)).get(0);
+                                //prendo l'ultimo elemento della lista
+                                codiceGroupOrder=Integer.parseInt(task.getResult().toObjects(GroupOrder.class).get(0).getCodice().substring(2));
+                                codiceGroupOrder+=1;
+                                //costruisco la stringa
+                                groupOrder.setCodice("GO"+String.valueOf(codiceGroupOrder));
+
+
+
+                                //creo group order
+                                Map<String, Object> nuovoGroupOrder = new HashMap<>();
+                                nuovoGroupOrder.put("codice", groupOrder.getCodice());       //ricorda di modificare generando in modo casuale il codice
+                                nuovoGroupOrder.put("codiceTavolo", codiceTavolo);
+                                nuovoGroupOrder.put("stato", true); //STATO TRUE-> G.O. attivo, tutti gli altri avranno stato falso.
+                                //aggiungo group order
+                                df.collection("GROUP ORDERS").add(nuovoGroupOrder);
+
+                                //creo single order
+                                Map<String, Object> nuovoSingleOrder = new HashMap<>();
+                                nuovoSingleOrder.put("codice", "SO0");       //ricorda di modificare generando in modo casuale il codice
+                                nuovoSingleOrder.put("codiceGroupOrder", groupOrder.getCodice()); //qui va il codice generato in automatico che hai inserito in riga 61
+                                //aggiungo single order
+                                df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
+                            }
+                        }
+                    });
+
+
+
+
+
+
+
+
+
 
                 }else{
                     //Allora il tavolo è occupato, perciò esiste già il group order (che devo leggere) e devo solo
