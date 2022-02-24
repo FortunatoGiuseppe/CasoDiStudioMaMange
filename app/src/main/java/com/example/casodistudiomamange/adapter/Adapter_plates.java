@@ -3,6 +3,7 @@ package com.example.casodistudiomamange.adapter;
 import com.example.casodistudiomamange.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.model.Plate;
 import com.squareup.picasso.Picasso;
@@ -23,9 +25,10 @@ import java.util.ArrayList;
 
 public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHolder> {
 
+    public static final String SHARED_PREFS = "sharedPrefs";
     private Context context;
     private ArrayList<Plate> plateArrayList;
-    private int total=0;
+    private ArrayList<Integer> total= new ArrayList<>();//lista delle quantità, in ogni posizione c'è la quantità di un piatto (o bevanda)
 
     public  Adapter_plates(Context context, ArrayList<Plate> plateArrayList){
         this.context =context;
@@ -43,13 +46,28 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     public void onBindViewHolder(@NonNull myViewHolder holder, @SuppressLint("RecyclerView") int position) {
         /* attribuisco i valori letti alle textview corrispondenti*/
         Plate plate = plateArrayList.get(position);
-        String s=plate.getNome();
         holder.textView_plate.setText(plate.getNome());
         holder.textView_plate_description.setText(plate.getDescrizione());
         Picasso.get().load(plate.getImg()).into(holder.imageView_plate);
 
+        total.add(position,0);
+        //Appena creo view devo vedere se il totale nello shared preferences è 0 oppure no
+        // se non è zero devo rendere gone il tasto aggiungi e devo visualizzare +- con il numero che devo leggere dallo shared
+        if(loadData(plate.getNome())!=0){
+            holder.addMoreLayout.setVisibility(View.VISIBLE);
+            holder.addPlateBtn.setVisibility(View.GONE);
+            //imposto nell'array list alla quantità del piatto selezionato il valore letto dallo shared preferences
+            total.set(position,loadData(plate.getNome()));
+            //imposto alla textView che visualizza la quantità già aggiunta il valore appena letto dallo shared preferences
+            holder.tvCount.setText(total.get(position).toString());
+        }else{
+            holder.addMoreLayout.setVisibility(View.GONE);
+            holder.addPlateBtn.setVisibility(View.VISIBLE);
+        }
 
-        if((plate.getFlag() != null) && plate.getFlag().equals("1")){
+
+        //visualizzazione icona mondo
+        if((plate.getFlag() != null) && plate.getFlag()==1){
             holder.imageView_plate_flag.setImageResource(R.drawable.ic_baseline_public_24);
             holder.imageView_plate_flag.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -58,6 +76,8 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 }
             });
         }
+
+
         holder.addPlateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,19 +106,25 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 //aggiornamento icona aggiunta
                 holder.addMoreLayout.setVisibility(View.VISIBLE);
                 holder.addPlateBtn.setVisibility(View.GONE);
+
+                //siccome ho potuto cliccare sul tasto aggiungi vuol dire che prima la quantità era 0 perciò ora è sicuramente 1
                 holder.tvCount.setText("1");
-                total=1;
+                total.set(position,1);
+                //salvo la quantità nello shared preferences
+                saveData(plate.getNome(),total.get(position));
             }
         });
 
         holder.imageMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // vedi la quantità del piatto
-                total--;
-                if(total > 0 ) {
+                // decremento quantità
+                total.set(position,total.get(position)-1);
+                //salvo la nuova quantità nello shared preferences
+                saveData(plate.getNome(),total.get(position));
+                if(total.get(position) > 0 ) {
                    ((MaMangeNavigationActivity) context).dbc.removePlateFirestore(plate.getNome(),1);
-                    holder.tvCount.setText(total +"");
+                    holder.tvCount.setText(total.get(position) +"");
                 } else {
                     ((MaMangeNavigationActivity) context).dbc.deletePlateFirestore(plate.getNome(),1);
                     holder.addMoreLayout.setVisibility(View.GONE);
@@ -111,15 +137,20 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         holder.imageAddOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                total++;
-                if(total <= 10 ) {
+                //incremento quantità
+                total.set(position,total.get(position)+1);
+                //salvo la nuova quantità nello shared preferences
+                saveData(plate.getNome(),total.get(position));
+                if(total.get(position) <= 10 ) {
                     ((MaMangeNavigationActivity) context).dbc.addPlateFirestore(plate.getNome(),1);
-
-                    holder.tvCount.setText(total +"");
+                    //aggiorno visualizzatore contatore quantità
+                    holder.tvCount.setText(total.get(position) +"");
                 }else{
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                     builder1.setMessage(R.string.massimoPiatti);
-                    total--;
+                    total.set(position,total.get(position)-1);
+                    //salvo la nuova quantità nello shared preferences
+                    saveData(plate.getNome(),total.get(position));
                     builder1.setCancelable(true);
                     AlertDialog alert = builder1.create();
                     alert.show();
@@ -161,5 +192,21 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             addMoreLayout  = itemView.findViewById(R.id.constraintLayoutPeM);
 
         }
+    }
+
+    //metodo per salvare nello shared preferences la quantità relativa al piatto passato come parametro
+    public void saveData(String nomePiatto,int total) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt(nomePiatto,total);   //salvataggio nello shared preference del piatto la quantità
+        editor.apply();
+    }
+
+    //metodo per caricare dallo shared preferences la quantità relativa al piatto passato come parametro
+    public int loadData(String nomePiatto) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
+        //0 è il valore passato di default, cioè se nello shared preferences non esiste una quantità precedentemente aggiunta per quel piatto
+        return sharedPreferences.getInt(nomePiatto,0);
     }
 }
