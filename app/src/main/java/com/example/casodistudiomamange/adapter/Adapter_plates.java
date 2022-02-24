@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.model.Plate;
 import com.squareup.picasso.Picasso;
@@ -43,13 +42,12 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     public void onBindViewHolder(@NonNull myViewHolder holder, @SuppressLint("RecyclerView") int position) {
         /* attribuisco i valori letti alle textview corrispondenti*/
         Plate plate = plateArrayList.get(position);
-        String s=plate.getNome();
         holder.textView_plate.setText(plate.getNome());
         holder.textView_plate_description.setText(plate.getDescrizione());
         Picasso.get().load(plate.getImg()).into(holder.imageView_plate);
 
 
-        if((plate.getFlag() != null) && plate.getFlag().equals("1")){
+        if((plate.getFlag() != null) && plate.getFlag()==1){
             holder.imageView_plate_flag.setImageResource(R.drawable.ic_baseline_public_24);
             holder.imageView_plate_flag.setOnClickListener(new View.OnClickListener() {
                 @Override
