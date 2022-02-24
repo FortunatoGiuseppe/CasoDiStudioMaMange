@@ -60,6 +60,9 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             total.set(position,loadData(plate.getNome()));
             //imposto alla textView che visualizza la quantità già aggiunta il valore appena letto dallo shared preferences
             holder.tvCount.setText(total.get(position).toString());
+        }else{
+            holder.addMoreLayout.setVisibility(View.GONE);
+            holder.addPlateBtn.setVisibility(View.VISIBLE);
         }
 
 
