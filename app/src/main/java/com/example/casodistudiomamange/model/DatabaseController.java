@@ -43,7 +43,7 @@ public class DatabaseController {
                     //Allora il tavolo è libero, perciò devo impostare il tavolo a occupato sul db, creare group order
                     // e creare single order relativo al group order esistente
 
-                    //imposto tavolo a occupatoa
+                    //imposto tavolo a occupato
                     docRef.update("flag",1);
 
                     //Vado ad ordinare in ordine decrescente lo snapshot limitandolo ad 1, quindi prendo l'ultimo elemento presente con il valore più alto. Incremento l'ultimo elemento e costruisco la stringa per creaare il nuovo grouporder
