@@ -1,37 +1,30 @@
 package com.example.casodistudiomamange.model;
 
 public class SingleOrder {
-    private String codiceordsin;
-    private String data;
-    private String username;
+    private String codiceSingleOrder;
+    private String codiceGroupOrder;
 
-    public String getCodiceordsin() {
-        return codiceordsin;
+    public SingleOrder() {
     }
 
-    public void setCodiceordsin(String codiceordsin) {
-        this.codiceordsin = codiceordsin;
+    public SingleOrder(String codiceSingleOrder, String codiceGroupOrder) {
+        this.codiceSingleOrder = codiceSingleOrder;
+        this.codiceGroupOrder = codiceGroupOrder;
     }
 
-    public String getData() {
-        return data;
+    public String getCodiceSingleOrder() {
+        return codiceSingleOrder;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setCodiceSingleOrder(String codiceSingleOrder) {
+        this.codiceSingleOrder = codiceSingleOrder;
     }
 
-    public String getUsername() {
-        return username;
+    public String getCodiceGroupOrder() {
+        return codiceGroupOrder;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public SingleOrder(String codiceordsin, String data, String username) {
-        this.codiceordsin = codiceordsin;
-        this.data = data;
-        this.username = username;
+    public void setCodiceGroupOrder(String codiceGroupOrder) {
+        this.codiceGroupOrder = codiceGroupOrder;
     }
 }

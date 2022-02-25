@@ -3,6 +3,8 @@ package com.example.casodistudiomamange.model;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import com.example.casodistudiomamange.activity.QRCodeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -13,19 +15,22 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.format.SignStyle;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseController {
     public FirebaseFirestore df;
+    public FirebaseFirestore datafire;
     private Table table;
     private SoPlate singleOrderPlate;
     private GroupOrder groupOrder;
-    private int codiceGroup;
     private int codiceGroupOrder;
-    private String codiceGO;
+    private SingleOrder singleOrder;
+    private int codiceSingleOrder;
 
 
     public DatabaseController() {
@@ -48,20 +53,17 @@ public class DatabaseController {
 
                     //Vado ad ordinare in ordine decrescente lo snapshot limitandolo ad 1, quindi prendo l'ultimo elemento presente con il valore più alto. Incremento l'ultimo elemento e costruisco la stringa per creaare il nuovo grouporder
 
-                    df.collection("GROUP ORDERS").orderBy("codice", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    df.collection("GROUP ORDERS").whereEqualTo("codiceTavolo",codiceTavolo).orderBy("codice", Query.Direction.DESCENDING).limit(1)
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-
-
                                 groupOrder=(task.getResult().toObjects(GroupOrder.class)).get(0);
                                 //prendo l'ultimo elemento della lista
                                 codiceGroupOrder=Integer.parseInt(task.getResult().toObjects(GroupOrder.class).get(0).getCodice().substring(2));
                                 codiceGroupOrder+=1;
                                 //costruisco la stringa
                                 groupOrder.setCodice("GO"+String.valueOf(codiceGroupOrder));
-
-
 
                                 //creo group order
                                 Map<String, Object> nuovoGroupOrder = new HashMap<>();
@@ -73,48 +75,55 @@ public class DatabaseController {
 
                                 //creo single order
                                 Map<String, Object> nuovoSingleOrder = new HashMap<>();
-                                nuovoSingleOrder.put("codice", "SO0");       //ricorda di modificare generando in modo casuale il codice
+                                nuovoSingleOrder.put("codiceSingleOrder", "SO0");       //ricorda di modificare generando in modo casuale il codice
                                 nuovoSingleOrder.put("codiceGroupOrder", groupOrder.getCodice()); //qui va il codice generato in automatico che hai inserito in riga 61
                                 //aggiungo single order
                                 df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
                             }
                         }
                     });
-
-
-
-
-
-
-
-
-
-
                 }else{
                     //Allora il tavolo è occupato, perciò esiste già il group order (che devo leggere) e devo solo
                     // creare il single order che si deve unire al group order già presente
 
                     //Prendo il document corrispondente al group order con stato true, cioè quello attivo
-                    df.collection("GROUP ORDERS")
-                            .whereEqualTo("stato", true)
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            //ho trovato il group order, adesso devo creare il sigle order che ha come chiave esterna al group order
-                                            //il codice del group order stesso.
+                   // System.out.println(codiceTavolo);
+                    System.out.println(codiceTavolo);
+                    df.collection("GROUP ORDERS").whereEqualTo("codiceTavolo",codiceTavolo).orderBy("codice",Query.Direction.DESCENDING).limit(1)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task2) {
+                                if (task2.isSuccessful()) {
 
-                                            Map<String, Object> nuovoSingleOrder = new HashMap<>();
-                                            nuovoSingleOrder.put("codice", "SO4"); //ricorda di modificare generando in modo casuale il codice
-                                            nuovoSingleOrder.put("codiceGroupOrder", document.get("codice").toString()); //qui metto chiave esterna
-                                            //aggiungo single order
-                                            df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
+
+                                   groupOrder = task2.getResult().toObjects(GroupOrder.class).get(0);
+                                    df.collection("SINGLE ORDERS").whereEqualTo("codiceGroupOrder",groupOrder.getCodice()).orderBy("codiceSingleOrder",Query.Direction.DESCENDING).limit(1)
+                                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if(task.isSuccessful()){
+                                                singleOrder=(task.getResult().toObjects(SingleOrder.class)).get(0);
+                                                Log.d("TAG",singleOrder.getCodiceSingleOrder());
+                                                Log.d("TAG",singleOrder.getCodiceGroupOrder());
+                                                codiceSingleOrder=Integer.parseInt(task.getResult().toObjects(SingleOrder.class).get(0).getCodiceSingleOrder().substring(2));
+                                                codiceSingleOrder+=1;
+                                                //costruisco la stringa
+                                                singleOrder.setCodiceSingleOrder("SO"+String.valueOf(codiceSingleOrder));
+                                                //creo single order
+                                                Map<String, Object> nuovoSingleOrder = new HashMap<>();
+                                                nuovoSingleOrder.put("codiceSingleOrder", singleOrder.getCodiceSingleOrder());       //ricorda di modificare generando in modo casuale il codice
+                                                nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder()); //qui va il codice generato in automatico che hai inserito in riga 61
+                                                //aggiungo single order
+                                                df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
+                                            }
+
                                         }
-                                    }
+                                    });
+
                                 }
-                            });
+                            }
+                        });
                 }
             }
         });

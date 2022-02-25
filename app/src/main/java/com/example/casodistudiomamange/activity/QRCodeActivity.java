@@ -24,7 +24,6 @@ public class QRCodeActivity extends AppCompatActivity {
     private Button confirmBtn;
     private TextView benvenuto;
     private EditText insertQrCode;
-    private String Code1 = "MST001";
     private Button logout;
     String usernameInserito;
 
@@ -85,7 +84,7 @@ public class QRCodeActivity extends AppCompatActivity {
         if(result != null){
             if(result.getContents() != null){
 
-                if(result.getContents().equals(Code1)){
+                if(result.getContents().equals("MST002")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(result.getContents());
                     builder.setTitle(getResources().getString(R.string.scannerizzando));
@@ -109,10 +108,11 @@ public class QRCodeActivity extends AppCompatActivity {
 
 
     private void controlCode(String QrCode){
-        if (QrCode.equals(Code1)){
+        if (QrCode.equals("MST002")){
             Toast.makeText(this,R.string.tavoloTrovato , Toast.LENGTH_LONG).show();
             Intent intent= new Intent(getApplicationContext(),MaMangeNavigationActivity.class);
             intent.putExtra("UsernameInserito",usernameInserito);
+            intent.putExtra("CodiceTavolo",insertQrCode.getText().toString());
             startActivity(intent);
         } else{
             AlertDialog.Builder builder1 = new AlertDialog.Builder(QRCodeActivity.this);
