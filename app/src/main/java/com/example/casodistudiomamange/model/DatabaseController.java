@@ -121,7 +121,7 @@ public class DatabaseController {
     }
 
     /*Metodo che crea il piatto associato al codice sel singleOrder */
-    public void createSoPlateFirestore(String plate,long quantita){
+    public void createSoPlateFirestore(String plate){
        df.collection("SO-PIATTO")
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -131,7 +131,7 @@ public class DatabaseController {
                                 Map<String, Object> creaSoPiatto = new HashMap<>();
                             creaSoPiatto.put("codiceSingleOrder", "SO4");
                             creaSoPiatto.put("nomePiatto", plate);
-                            creaSoPiatto.put("quantita",quantita);
+                            creaSoPiatto.put("quantita",1);
                                 df.collection("SO-PIATTO").add(creaSoPiatto);
                         }
                     }
@@ -139,7 +139,7 @@ public class DatabaseController {
     }
 
     /*Metodo che aumenta la quantita del piatto*/
-    public void addPlateFirestore(String plate,long quantita){
+    public void addPlateFirestore(String plate){
        df.collection("SO-PIATTO")
                 .whereEqualTo("codiceSingleOrder","SO4")
                 .whereEqualTo("nomePiatto",plate)
@@ -150,7 +150,7 @@ public class DatabaseController {
 
                     for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
                         singleOrderPlate = documentSnapshot.toObject(SoPlate.class);
-                        df.collection("SO-PIATTO").document(documentSnapshot.getId()).update("quantita",quantita+ singleOrderPlate.getQuantita());
+                        df.collection("SO-PIATTO").document(documentSnapshot.getId()).update("quantita",1+ singleOrderPlate.getQuantita());
                     }
 
                 }
@@ -159,7 +159,7 @@ public class DatabaseController {
     }
 
     /*Metodo che diminuisce la quantita del piatto*/
-    public void removePlateFirestore(String plate,long quantita){
+    public void removePlateFirestore(String plate){
         df.collection("SO-PIATTO")
                 .whereEqualTo("codiceSingleOrder","SO4")
                 .whereEqualTo("nomePiatto",plate)
@@ -170,7 +170,7 @@ public class DatabaseController {
 
                     for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
                         singleOrderPlate = documentSnapshot.toObject(SoPlate.class);
-                        df.collection("SO-PIATTO").document(documentSnapshot.getId()).update("quantita",singleOrderPlate.getQuantita() - quantita);
+                        df.collection("SO-PIATTO").document(documentSnapshot.getId()).update("quantita",singleOrderPlate.getQuantita() - 1);
                     }
 
                 }
@@ -179,7 +179,7 @@ public class DatabaseController {
     }
 
     /*Metodo che elimina totalmente il piatto se la quantita è pari a 0*/
-    public void deletePlateFirestore(String plate,long quantita){
+    public void deletePlateFirestore(String plate){
         df.collection("SO-PIATTO")
                 .whereEqualTo("codiceSingleOrder","SO4")
                 .whereEqualTo("nomePiatto",plate)
