@@ -31,6 +31,9 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         setContentView(R.layout.activity_ma_mange_navigation);
         getSupportActionBar().hide();
 
+        Intent intent = getIntent();
+        String usernameInserito = intent.getStringExtra("UsernameInserito");
+        username = usernameInserito;
 
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
@@ -51,18 +54,12 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
                         break;
 
                     case R.id.menuProfile:
-                        launchSupportActivity2();
+                        launchProfileActivity(username);
                         break;
                 }
                 return false;
             }
         });
-
-
-
-        Intent intent = getIntent();
-        String usernameInserito = intent.getStringExtra("UsernameInserito");
-        username = usernameInserito;
 
         bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
 
@@ -138,8 +135,9 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         startActivity(intent1);
     }
 
-    private void launchSupportActivity2(){
+    private void launchProfileActivity(String username){
         Intent intent2 = new Intent(MaMangeNavigationActivity.this, ProfileActivity.class);
+        intent2.putExtra("username",username);
         startActivity(intent2);
     }
 }
