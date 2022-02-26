@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.casodistudiomamange.R;
@@ -22,6 +23,8 @@ public class ProfileActivity extends AppCompatActivity {
     private Button logout;
     private Button changePsw;
     private FirebaseAuth lAuth;
+    private TextView name;
+    private TextView email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,14 @@ public class ProfileActivity extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         changePsw = findViewById(R.id.changePsw);
         lAuth = FirebaseAuth.getInstance();
+        name = findViewById(R.id.nomeUtente);
+        email = findViewById(R.id.showEmailUtente);
+
+        Intent intent = getIntent();
+        String usernameInserito = intent.getStringExtra("username");
+        String emailInserito = getEmail();
+        name.setText(usernameInserito);
+        email.setText(emailInserito);
 
         changePsw.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,5 +98,12 @@ public class ProfileActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(this,SwitchLoginSignupGuestActivity.class));
         finish();
+    }
+
+    private String getEmail(){
+        if(lAuth.getCurrentUser()!=null){
+            return lAuth.getCurrentUser().getEmail();
+        }
+        return null;
     }
 }
