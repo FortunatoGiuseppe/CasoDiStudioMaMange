@@ -1,15 +1,15 @@
 package com.example.casodistudiomamange.model;
 
 public class Table {
-    private String codicetavolo;
+    private String codiceTavolo;
     private long flag;
 
-    public String getCodicetavolo() {
-        return codicetavolo;
+    public String getCodiceTavolo() {
+        return codiceTavolo;
     }
 
-    public void setCodicetavolo(String codicetavolo) {
-        this.codicetavolo = codicetavolo;
+    public void setCodiceTavolo(String codiceTavolo) {
+        this.codiceTavolo = codiceTavolo;
     }
 
     public long getFlag() {
@@ -23,8 +23,8 @@ public class Table {
     public Table() {
     }
 
-    public Table(String codicetavolo, long flag) {
-        this.codicetavolo = codicetavolo;
+    public Table(String codiceTavolo, long flag) {
+        this.codiceTavolo = codiceTavolo;
         this.flag = flag;
     }
 }

@@ -24,7 +24,6 @@ import java.util.Map;
 
 public class DatabaseController {
     public FirebaseFirestore df;
-    public FirebaseFirestore datafire;
     private Table table;
     private SoPlate singleOrderPlate;
     private GroupOrder groupOrder;
@@ -64,6 +63,7 @@ public class DatabaseController {
                                 codiceGroupOrder+=1;
                                 //costruisco la stringa
                                 groupOrder.setCodice("GO"+String.valueOf(codiceGroupOrder));
+
 
                                 //creo group order
                                 Map<String, Object> nuovoGroupOrder = new HashMap<>();
