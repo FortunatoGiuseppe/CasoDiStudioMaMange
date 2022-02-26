@@ -3,31 +3,40 @@ package com.example.casodistudiomamange.model;
 import java.util.ArrayList;
 
 public class GroupOrder {
-    private long codice;
-    private ArrayList<SingleOrder> singleOrders;
+    private String codice;
+    private boolean stato;
+    private String codiceTavolo;
 
-    public long getCodice() {
+    public GroupOrder(String codice, boolean stato, String codiceTavolo) {
+        this.codice = codice;
+        this.stato = stato;
+        this.codiceTavolo = codiceTavolo;
+    }
+
+    public GroupOrder() {
+    }
+
+    public String getCodice() {
         return codice;
     }
 
-    public void setCodice(long codice) {
+    public void setCodice(String codice) {
         this.codice = codice;
     }
 
-    public ArrayList<SingleOrder> getSingleOrders() {
-        return singleOrders;
+    public boolean isStato() {
+        return stato;
     }
 
-    public void setSingleOrders(ArrayList<SingleOrder> singleOrders) {
-        this.singleOrders = singleOrders;
+    public void setState(boolean stato) {
+        this.stato = stato;
     }
 
-    public GroupOrder(long codice, ArrayList<SingleOrder> singleOrders) {
-        this.codice = codice;
-        this.singleOrders = singleOrders;
+    public String getCodiceTavolo() {
+        return codiceTavolo;
     }
 
-    public GroupOrder(long codice){
-        this.codice = codice;
+    public void setCodiceTavolo(String codiceTavolo) {
+        this.codiceTavolo = codiceTavolo;
     }
 }

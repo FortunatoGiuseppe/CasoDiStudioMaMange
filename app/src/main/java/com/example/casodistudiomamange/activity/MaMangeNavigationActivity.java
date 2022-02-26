@@ -24,6 +24,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public DatabaseController dbc;
     BottomNavigationView bottomNavigationView;
     public String username;
+    public String codiceTavolo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +62,16 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             }
         });
 
+
+
+        intent = getIntent();
+        codiceTavolo =intent.getStringExtra("CodiceTavolo");
+
         bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
 
 
         dbc = new DatabaseController();
-        dbc.createOrdersFirestore(usernameInserito,"MST001");
+        dbc.createOrdersFirestore(username,codiceTavolo);
         getSupportActionBar().hide();
 
         Fragment fragment = null;
