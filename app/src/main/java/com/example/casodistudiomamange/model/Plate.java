@@ -7,6 +7,18 @@ public class Plate {
     private Long flag;
     private String categoria;
 
+    public Plate(String img, String nome, String descrizione, Long flag, String categoria) {
+        this.img = img;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.flag = flag;
+        this.categoria = categoria;
+    }
+
+    public Plate(){
+
+    }
+
     public String getImg() {
         return img;
     }
