@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
+import com.example.casodistudiomamange.adapter.Adapter_Plates_Ordered;
 import com.example.casodistudiomamange.adapter.Adapter_plates;
 import com.example.casodistudiomamange.model.Plate;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,7 +34,7 @@ public class SingleOrderFragment extends Fragment {
 
 
     private RecyclerView recyclerView_plates;
-    private Adapter_plates adapter_plates;
+    private Adapter_Plates_Ordered adapter_plates;
     private ArrayList<Plate> plates;
     private TextView username;
 
@@ -43,7 +44,7 @@ public class SingleOrderFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         plates= new ArrayList<Plate>();
-        adapter_plates = new Adapter_plates(getContext(), plates);
+        adapter_plates = new Adapter_Plates_Ordered(getContext(), plates);
 
 
     }
