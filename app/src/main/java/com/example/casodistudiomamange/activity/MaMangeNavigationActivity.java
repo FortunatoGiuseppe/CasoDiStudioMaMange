@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.example.casodistudiomamange.R;
@@ -18,6 +19,7 @@ import com.example.casodistudiomamange.model.DatabaseController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
@@ -25,12 +27,14 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     BottomNavigationView bottomNavigationView;
     public String username;
     public String codiceTavolo;
+    private FirebaseAuth lAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ma_mange_navigation);
         getSupportActionBar().hide();
+        lAuth = FirebaseAuth.getInstance();
 
         Intent intent = getIntent();
         String usernameInserito = intent.getStringExtra("UsernameInserito");
@@ -46,6 +50,12 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         });
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
+
+        String email = getEmail();
+        if (email.equals("Guest")) {
+            navigationView.getMenu().removeItem(R.id.menuProfile);
+        }
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -145,5 +155,13 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         Intent intent2 = new Intent(MaMangeNavigationActivity.this, ProfileActivity.class);
         intent2.putExtra("username",username);
         startActivity(intent2);
+    }
+
+    private String getEmail(){
+        String guest = "Guest";
+        if(lAuth.getCurrentUser()!=null){
+            return lAuth.getCurrentUser().getEmail();
+        }
+        return guest;
     }
 }
