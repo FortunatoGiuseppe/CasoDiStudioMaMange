@@ -15,11 +15,15 @@ import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.fragment.GroupOrderFragment;
 import com.example.casodistudiomamange.fragment.RestaurantFragment;
 import com.example.casodistudiomamange.fragment.SingleOrderFragment;
+import com.example.casodistudiomamange.model.Database;
 import com.example.casodistudiomamange.model.DatabaseController;
+import com.example.casodistudiomamange.model.GroupOrder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
 
 
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
@@ -28,6 +32,9 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public String username;
     public String codiceTavolo;
     private FirebaseAuth lAuth;
+
+    /*Nuovo riferimento alla nuova classe Database.java*/
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +86,16 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
 
+        db = new Database();
+        db.readGroupOrders();
+        db.getGroupOrders();
 
-        dbc = new DatabaseController();
-        dbc.createOrdersFirestore(username,codiceTavolo);
+
+
+
+
+        /*dbc = new DatabaseController();
+        dbc.createOrdersFirestore(username,codiceTavolo);*/
         getSupportActionBar().hide();
 
         Fragment fragment = null;
