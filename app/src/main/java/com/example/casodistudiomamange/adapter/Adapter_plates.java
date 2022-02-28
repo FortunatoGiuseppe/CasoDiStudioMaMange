@@ -49,6 +49,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         holder.textView_plate_description.setText(plate.getDescrizione());
         Picasso.get().load(plate.getImg()).into(holder.imageView_plate);
 
+
         total.add(position,0);
         //Appena creo view devo vedere se il totale nello shared preferences è 0 oppure no
         // se non è zero devo rendere gone il tasto aggiungi e devo visualizzare +- con il numero che devo leggere dallo shared
