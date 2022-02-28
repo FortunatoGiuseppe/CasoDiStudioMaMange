@@ -84,12 +84,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
 
-        db = new Database();
-        db.readGroupOrders();
-        db.getGroupOrders();
-
-
-
 
         dbc = new DatabaseController();
         dbc.createOrdersFirestore(username,codiceTavolo);
