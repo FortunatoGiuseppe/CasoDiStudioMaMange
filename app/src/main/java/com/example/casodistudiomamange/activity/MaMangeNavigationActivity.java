@@ -15,9 +15,7 @@ import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.fragment.GroupOrderFragment;
 import com.example.casodistudiomamange.fragment.RestaurantFragment;
 import com.example.casodistudiomamange.fragment.SingleOrderFragment;
-import com.example.casodistudiomamange.model.Database;
 import com.example.casodistudiomamange.model.DatabaseController;
-import com.example.casodistudiomamange.model.GroupOrder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -93,9 +91,8 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
 
 
-
-        /*dbc = new DatabaseController();
-        dbc.createOrdersFirestore(username,codiceTavolo);*/
+        dbc = new DatabaseController();
+        dbc.createOrdersFirestore(username,codiceTavolo);
         getSupportActionBar().hide();
 
         Fragment fragment = null;
@@ -169,13 +166,5 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         Intent intent2 = new Intent(MaMangeNavigationActivity.this, ProfileActivity.class);
         intent2.putExtra("username",username);
         startActivity(intent2);
-    }
-
-    private String getEmail(){
-        String guest = "Guest";
-        if(lAuth.getCurrentUser()!=null){
-            return lAuth.getCurrentUser().getEmail();
-        }
-        return guest;
     }
 }
