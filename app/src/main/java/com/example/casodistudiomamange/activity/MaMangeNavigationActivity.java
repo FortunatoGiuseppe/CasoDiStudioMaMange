@@ -21,8 +21,6 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-
 
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
     public DatabaseController dbc;
@@ -30,9 +28,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public String username;
     public String codiceTavolo;
     private FirebaseAuth lAuth;
-
-    /*Nuovo riferimento alla nuova classe Database.java*/
-    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,5 +155,13 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         Intent intent2 = new Intent(MaMangeNavigationActivity.this, ProfileActivity.class);
         intent2.putExtra("username",username);
         startActivity(intent2);
+    }
+
+    private String getEmail(){
+        String guest = "Guest";
+        if(lAuth.getCurrentUser()!=null){
+            return lAuth.getCurrentUser().getEmail();
+        }
+        return guest;
     }
 }
