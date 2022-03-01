@@ -37,7 +37,7 @@ public class DatabaseController {
     }
 
     //false-> tavolo occupato  true-> tavolo libero
-    public void createOrdersFirestore(String usernameInserito, String codiceTavolo){
+    public void createOrdersFirestore(String usernameInserito, String codiceTavolo, metododiCallback mycallBack){
         DocumentReference docRef = df.collection("TAVOLI").document(codiceTavolo);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -79,6 +79,11 @@ public class DatabaseController {
                                 nuovoSingleOrder.put("codiceGroupOrder", groupOrder.getCodice()); //qui va il codice generato in automatico che hai inserito in riga 61
                                 //aggiungo single order
                                 df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
+                                singleOrder = new SingleOrder();
+                                singleOrder.setCodiceSingleOrder("SO0");
+                                singleOrder.setCodiceSingleOrder(groupOrder.getCodice());
+
+                                mycallBack.onCallback(singleOrder.getCodiceSingleOrder());
                             }
                         }
                     });
@@ -116,6 +121,7 @@ public class DatabaseController {
                                                 nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder()); //qui va il codice generato in automatico che hai inserito in riga 61
                                                 //aggiungo single order
                                                 df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
+                                                mycallBack.onCallback(singleOrder.getCodiceSingleOrder());
                                             }
 
                                         }
@@ -207,5 +213,7 @@ public class DatabaseController {
         });
     }
 
-
+public interface metododiCallback{
+        void onCallback(String codiceSingleOrderCheMiServe);
+}
 }

@@ -19,6 +19,7 @@ import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.adapter.Adapter_Plates_Ordered;
 import com.example.casodistudiomamange.adapter.Adapter_plates;
 import com.example.casodistudiomamange.model.Plate;
+import com.example.casodistudiomamange.model.SoPlate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
@@ -37,13 +38,15 @@ public class SingleOrderFragment extends Fragment {
     private Adapter_Plates_Ordered adapter_plates;
     private ArrayList<Plate> plates;
     private TextView username;
+    private FirebaseFirestore db;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        plates= new ArrayList<Plate>();
+        db = FirebaseFirestore.getInstance();
+        plates = new ArrayList<Plate>();
         adapter_plates = new Adapter_Plates_Ordered(getContext(), plates);
 
 
@@ -52,50 +55,108 @@ public class SingleOrderFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_single_order,null);
+        View v = inflater.inflate(R.layout.fragment_single_order, null);
         getActivity().setTitle("Single Order");
 
         username = v.findViewById(R.id.usernameTextView);
 
         String ordinazione = getResources().getString(R.string.ordinazione);
-        String usernameInserito = ((MaMangeNavigationActivity)getActivity()).username;
-        username.setText(ordinazione + " "+ usernameInserito);
+        String usernameInserito = ((MaMangeNavigationActivity) getActivity()).username;
+        username.setText(ordinazione + " " + usernameInserito);
+
+
 
         recyclerView_plates = v.findViewById(R.id.recyclerViewSingleOrderPlates);
 
         recyclerView_plates.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1 , LinearLayoutManager.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, LinearLayoutManager.VERTICAL, false);
         recyclerView_plates.setLayoutManager(gridLayoutManager);
 
         recyclerView_plates.setAdapter(adapter_plates);
-
         loadSingleOrderPlates();
 
         return v;
     }
 
     private void loadSingleOrderPlates() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
+        ArrayList<SoPlate> soPlate = new ArrayList<SoPlate>();
 
-        db.collection("PIATTI").limit(5)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            Log.e("Firestone error", error.getMessage());
-                            return;
-                        }
+        db.collection("SO-PIATTO").whereEqualTo("codiceSingleOrder","SO4").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                        soPlate.add(documentSnapshot.toObject(SoPlate.class));
+                    }
+                    for(int i =0; i<soPlate.size();i++){
+                        db.collection("PIATTI").whereEqualTo("nome",soPlate.get(i).getNomePiatto()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task2) {
+                                if (task2.isSuccessful()) {
+                                    for (QueryDocumentSnapshot doc : task2.getResult()) {
+                                        plates.add(doc.toObject(Plate.class));
+                                        adapter_plates.notifyDataSetChanged();
 
-                        for (DocumentChange dc : value.getDocumentChanges()) {
-                            if (dc.getType() == DocumentChange.Type.ADDED) {
-                                if(dc.getDocument().get("categoria")!=null&& dc.getDocument().get("categoria").equals("BEVANDE")) {
-                                    plates.add(dc.getDocument().toObject(Plate.class));
+                                    }
                                 }
                             }
-                            adapter_plates.notifyDataSetChanged();
-                        }
+                        });
                     }
-                });
+
+                }
+            }
+        });
+
+        //Query
+        /*db.collection("SO-PIATTO").whereEqualTo("codiceSingleOrder","SO4")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for(QueryDocumentSnapshot dc: task.getResult()){
+                        soPlate.add(dc.toObject(SoPlate.class));
+                    }
+
+                    for(int i =0; i<soPlate.size(); i++) {
+                        db.collection("PIATTI").whereEqualTo("nome", soPlate.get(i).getNomePiatto())
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    for (QueryDocumentSnapshot dc2 : task.getResult()) {
+                                        plates.add(dc2.toObject(Plate.class));
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+                }
+
+            }
+        });
+        }*/
+
+/*        db.collection("SO-PIATTO").whereEqualTo("codiceSingleOrder",codiceSingleOrder)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for(QueryDocumentSnapshot dc: task.getResult()){
+                    db.collection("PIATTI").whereEqualTo("nome",dc.get("nome"))
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            for(QueryDocumentSnapshot dc2: task.getResult()) {
+                                plates.add(dc2.toObject(Plate.class));
+                            }
+                        }
+                    });
+                }
+            }
+        });*/
+
 
     }
 }

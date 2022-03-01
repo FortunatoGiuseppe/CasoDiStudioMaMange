@@ -29,6 +29,8 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public String codiceTavolo;
     private FirebaseAuth lAuth;
 
+    public String codiceSingleOrder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +83,12 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
 
         dbc = new DatabaseController();
-        dbc.createOrdersFirestore(username,codiceTavolo);
+        dbc.createOrdersFirestore(username, codiceTavolo, new DatabaseController.metododiCallback() {
+            @Override
+            public void onCallback(String codiceSingleOrderCheMiServe) {
+                codiceSingleOrder = codiceSingleOrderCheMiServe;
+            }
+        });
         getSupportActionBar().hide();
 
         Fragment fragment = null;
