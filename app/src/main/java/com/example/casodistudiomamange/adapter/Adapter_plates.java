@@ -4,6 +4,7 @@ import com.example.casodistudiomamange.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.example.casodistudiomamange.fragment.RestaurantFragment;
+import com.example.casodistudiomamange.fragment.SensorFragment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.model.Plate;
@@ -72,7 +78,21 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             holder.imageView_plate_flag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //creazione nuovo fragment per visualizzazione dati
+
+                    Fragment fragment=new SensorFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("PlateName", plate.getNome());
+                    bundle.putString("Img", plate.getImg());
+                    bundle.putString("Descrizione", plate.getDescrizione());
+
+                    fragment.setArguments(bundle);
+                    FragmentManager manager = ((AppCompatActivity)
+                            context).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+
                 }
             });
         }
