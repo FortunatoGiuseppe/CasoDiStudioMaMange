@@ -1,5 +1,9 @@
 package com.example.casodistudiomamange.fragment;
 
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,6 +41,8 @@ public class SensorFragment extends Fragment {
     String name;
     String descrizione;
     String image;
+    private BluetoothAdapter bluetoothAdapter;
+    int REQUEST_ENABLE_BLUETOOTH = 0;
 
     public SensorFragment() {
         // Required empty public constructor
@@ -50,10 +56,6 @@ public class SensorFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
-
-
-
-
         db = FirebaseFirestore.getInstance();
         plates= new ArrayList<Plate>();
         adapter_plates = new Adapter_plates(getContext(), plates);
@@ -65,6 +67,15 @@ public class SensorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_sensor, container, false);
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if(!bluetoothAdapter.isEnabled()){
+            Intent richiesta = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(richiesta, REQUEST_ENABLE_BLUETOOTH);
+        }
+
+
         PlateName=v.findViewById(R.id.nomePiatto);
         Descrizione=v.findViewById(R.id.descrizione);
         img=v.findViewById(R.id.imagePlate);
@@ -85,33 +96,5 @@ public class SensorFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-
-
-
-    public void caricaDati() {
-
-        db.collection("PIATTI")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            Log.e("Firestone error", error.getMessage());
-                            return;
-                        }
-
-                        for (DocumentChange dc : value.getDocumentChanges()) {
-                            if (dc.getType() == DocumentChange.Type.ADDED) {
-                                if(dc.getDocument().get("nome")!=null && dc.getDocument().get("nome").equals(PlateName)
-                                && dc.getDocument().get("img")!=null && dc.getDocument().get("img").equals(img)
-                                && dc.getDocument().get("descrizione")!=null && dc.getDocument().get("descrizione").equals(Descrizione)) {
-                                    plates.add(dc.getDocument().toObject(Plate.class));
-                                }
-
-                            }
-                            adapter_plates.notifyDataSetChanged();
-                        }
-                    }
-                });
     }
 }
