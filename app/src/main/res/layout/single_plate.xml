@@ -14,7 +14,7 @@
     <TextView
         android:id="@+id/textView_plate"
         android:layout_width="217dp"
-        android:layout_height="25dp"
+        android:layout_height="50dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
@@ -23,15 +23,16 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/textView_plate_description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toEndOf="@+id/imageView_plate"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
+
 
     <TextView
         android:id="@+id/textView_plate_description"
         android:layout_width="217dp"
-        android:layout_height="94dp"
+        android:layout_height="80dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="8dp"
         android:text="testo"
@@ -39,10 +40,9 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toEndOf="@+id/imageView_plate"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.579" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView_plate"
@@ -55,8 +55,9 @@
         app:layout_constraintHorizontal_bias="0.031"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.533"
+        app:layout_constraintVertical_bias="0.255"
         tools:srcCompat="@tools:sample/avatars" />
+
 
     <ImageView
         android:id="@+id/imageViewGlobal"
