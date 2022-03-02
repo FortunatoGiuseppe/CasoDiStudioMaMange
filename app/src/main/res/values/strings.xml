@@ -19,7 +19,7 @@
     <string name="cerca">Search a restaurant</string>
     <string name="aggiungi">Add to cart</string>
     <string name="inserisciCodice">Insert code</string>
-    <string name="conferma">Confirm</string>
+    <string name="confermaOrdine">Confirm Order</string>
     <string name="scannerizza">Scan QR Code</string>
     <string name="scegliUsername">Choose your username</string>
     <string name="tavoloTrovato">Table found!</string>

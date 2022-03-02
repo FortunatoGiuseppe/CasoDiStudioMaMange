@@ -45,7 +45,6 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     public void onBindViewHolder(@NonNull Adapter_Plates_Ordered.myViewHolder holder,@SuppressLint("RecyclerView") int position) {
         Plate plate = plateArrayList.get(position);
         holder.textView_plate.setText(plate.getNome());
-        Picasso.get().load(plate.getImg()).into(holder.imageView_plate);
 
         total.add(position,0);
 
@@ -62,18 +61,6 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
             holder.addMoreLayout.setVisibility(View.GONE);
 
         }
-
-        //visualizzazione icona mondo
-        if((plate.getFlag() != null) && plate.getFlag()==1){
-            holder.imageView_plate_flag.setImageResource(R.drawable.ic_baseline_public_24);
-            holder.imageView_plate_flag.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //creazione nuovo fragment per visualizzazione dati
-                }
-            });
-        }
-
 
         holder.imageMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,9 +113,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
 
     public class myViewHolder extends RecyclerView.ViewHolder {
         TextView textView_plate;
-        ImageView imageView_plate;
 
-        ImageView imageView_plate_flag;
         // view per aggiunta piatti
         ConstraintLayout addMoreLayout;
         ImageView imageMinus;
@@ -137,11 +122,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView_plate = itemView.findViewById(R.id.imageView_plate3);
             textView_plate = itemView.findViewById(R.id.textView_NamePlate);
-
-            imageView_plate_flag = itemView.findViewById(R.id.imageViewGlobal3);
-
 
             // aggiunta piatti
             imageMinus = itemView.findViewById(R.id.imageMinus);

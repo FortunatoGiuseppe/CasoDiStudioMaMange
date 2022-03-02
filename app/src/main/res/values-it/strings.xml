@@ -19,7 +19,7 @@
     <string name="cerca">Cerca</string>
     <string name="aggiungi">Aggiungi</string>
     <string name="inserisciCodice">Inserisci codice</string>
-    <string name="conferma">Conferma</string>
+    <string name="confermaOrdine">Conferma Ordine</string>
     <string name="scannerizza">Scannerizza Codice QR </string>
     <string name="scegliUsername">Scegli il tuo username</string>
     <string name="tavoloTrovato">Tavolo trovato con successo!</string>

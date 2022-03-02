@@ -77,7 +77,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="4dp"
                 android:backgroundTint="@color/white"
-                android:hint="@string/conferma"
+                android:hint="@string/confermaOrdine"
                 android:textColorHint="#c62828"
                 android:textSize="16sp"
                 android:textStyle="bold"
