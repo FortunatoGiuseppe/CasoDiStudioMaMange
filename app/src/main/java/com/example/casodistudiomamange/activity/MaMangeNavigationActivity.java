@@ -83,12 +83,16 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
 
         dbc = new DatabaseController();
+
+
         dbc.createOrdersFirestore(username, codiceTavolo, new DatabaseController.metododiCallback() {
             @Override
-            public void onCallback(String codiceSingleOrderCheMiServe) {
-                codiceSingleOrder = codiceSingleOrderCheMiServe;
+            //metodo per assegnare pubblicamente il singleOrder letto da DatabaseController
+            public void onCallback(String singleOrder) {
+                codiceSingleOrder = singleOrder;
             }
         });
+
         getSupportActionBar().hide();
 
         Fragment fragment = null;
