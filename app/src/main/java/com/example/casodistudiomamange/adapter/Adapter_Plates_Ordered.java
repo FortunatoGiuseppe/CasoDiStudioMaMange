@@ -83,10 +83,10 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 //salvo la nuova quantità nello shared preferences
                 saveData(plate.getNome(),total.get(position));
                 if(total.get(position) > 0 ) {
-                    ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
+                    ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo);
                     holder.tvCount.setText(total.get(position) +"");
                 } else {
-                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
+                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo);
                     holder.addMoreLayout.setVisibility(View.GONE);
 
                     //aggiorna quantità nel db
@@ -102,7 +102,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 //salvo la nuova quantità nello shared preferences
                 saveData(plate.getNome(),total.get(position));
                 if(total.get(position) <= 10 ) {
-                    ((MaMangeNavigationActivity) context).dbc.incrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
+                    ((MaMangeNavigationActivity) context).dbc.incrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo);
                     //aggiorno visualizzatore contatore quantità
                     holder.tvCount.setText(total.get(position) +"");
                 }else{

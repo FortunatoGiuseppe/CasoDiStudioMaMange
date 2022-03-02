@@ -3,13 +3,15 @@ package com.example.casodistudiomamange.model;
 public class SingleOrder {
     private String codiceSingleOrder;
     private String codiceGroupOrder;
+    private String codiceTavolo;
 
     public SingleOrder() {
     }
 
-    public SingleOrder(String codiceSingleOrder, String codiceGroupOrder) {
+    public SingleOrder(String codiceSingleOrder, String codiceGroupOrder, String codiceTavolo) {
         this.codiceSingleOrder = codiceSingleOrder;
         this.codiceGroupOrder = codiceGroupOrder;
+        this.codiceTavolo = codiceTavolo;
     }
 
     public String getCodiceSingleOrder() {
@@ -26,5 +28,13 @@ public class SingleOrder {
 
     public void setCodiceGroupOrder(String codiceGroupOrder) {
         this.codiceGroupOrder = codiceGroupOrder;
+    }
+
+    public String getCodiceTavolo() {
+        return codiceTavolo;
+    }
+
+    public void setCodiceTavolo(String codiceTavolo) {
+        this.codiceTavolo = codiceTavolo;
     }
 }

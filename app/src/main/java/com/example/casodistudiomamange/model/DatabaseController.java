@@ -74,10 +74,11 @@ public class DatabaseController {
                                 singleOrder = new SingleOrder();
                                 singleOrder.setCodiceSingleOrder("SO0");
                                 singleOrder.setCodiceGroupOrder(groupOrder.getCodice());
+                                singleOrder.setCodiceTavolo(codiceTavolo);
                                 Map<String, Object> nuovoSingleOrder = new HashMap<>();
                                 nuovoSingleOrder.put("codiceSingleOrder", singleOrder.getCodiceSingleOrder());
                                 nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder());
-                                nuovoSingleOrder.put("codiceTavolo",codiceTavolo);
+                                nuovoSingleOrder.put("codiceTavolo",singleOrder.getCodiceTavolo());
                                 df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
                                 
                                 //Assegno al metodo di CallBack il codice del SingleOrder e GroupOrder
@@ -147,7 +148,7 @@ public class DatabaseController {
     }
 
     /*Metodo che associa il piatto selezionato al codice del singleOrder*/
-    public void orderPlate(String plate, String codiceSingleOrder){
+    public void orderPlate(String plate, String codiceSingleOrder, String codiceGroupOrder, String codiceTavolo){
         
         df.collection("SO-PIATTO")
         .get()
@@ -162,6 +163,8 @@ public class DatabaseController {
                     creaSoPiatto.put("codiceSingleOrder", codiceSingleOrder);
                     creaSoPiatto.put("nomePiatto", plate);
                     creaSoPiatto.put("quantita",1);
+                    creaSoPiatto.put("codiceGroupOrder",codiceGroupOrder);
+                    creaSoPiatto.put("codiceTavolo",codiceTavolo);
                     df.collection("SO-PIATTO").add(creaSoPiatto);
                     
                 }
@@ -172,11 +175,13 @@ public class DatabaseController {
     }
 
     /*Metodo che aumenta la quantita del piatto aggiunto in base al codice del SingleOrder*/
-    public void incrementQuantityPlateOrdered(String plate, String codiceSingleOrder){
+    public void incrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo){
        
         df.collection("SO-PIATTO")
             .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
             .whereEqualTo("nomePiatto",plate)
+            .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+            .whereEqualTo("codiceTavolo", codiceTavolo)
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 
@@ -198,11 +203,13 @@ public class DatabaseController {
     }
 
     /*Metodo che diminuisce la quantita del piatto in base al codice del SingleOrder*/
-    public void decrementQuantityPlateOrdered(String plate, String codiceSingleOrder){
+    public void decrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder, String codiceTavolo){
 
         df.collection("SO-PIATTO")
             .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
             .whereEqualTo("nomePiatto",plate)
+            .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+            .whereEqualTo("codiceTavolo", codiceTavolo)
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
@@ -223,11 +230,13 @@ public class DatabaseController {
     }
 
     /*Metodo che elimina totalmente il piatto se la quantita è pari a 0*/
-    public void deletePlateOrdered(String plate, String codiceSingleOrder){
+    public void deletePlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo){
 
         df.collection("SO-PIATTO")
             .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
             .whereEqualTo("nomePiatto",plate)
+            .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+            .whereEqualTo("codiceTavolo", codiceTavolo)
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
@@ -250,6 +259,5 @@ public class DatabaseController {
         //metodo che permette di utilizzare il codiceSingleOrder e codiceGroupOrder letto dal db
         void onCallback(String codiceSingleOrderCheMiServe,String codiceGroupOrder);
     }
-    
 
 }
