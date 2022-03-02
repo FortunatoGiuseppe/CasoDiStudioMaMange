@@ -7,8 +7,6 @@
     tools:context=".fragment.SensorFragment">
 
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
@@ -25,31 +23,31 @@
 
         <ImageView
             android:id="@+id/imagePlate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.13"
+            app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.110000014"
+            app:layout_constraintVertical_bias="0.07999998"
             tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/descrizione"
-            android:layout_width="206dp"
-            android:layout_height="117dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
             android:gravity="left"
             android:text="Descrizione"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.37"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintHorizontal_bias="0.78"
+            app:layout_constraintStart_toStartOf="@+id/imagePlate"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.108" />
+            app:layout_constraintVertical_bias="0.07999998" />
 
         <TextView
             android:id="@+id/temperatura"
@@ -63,7 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/imagePlate"
             app:layout_constraintVertical_bias="0.16000003" />
 
         <TextView
@@ -112,7 +110,7 @@
 
     <TextView
         android:id="@+id/nomePiatto"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center"
         android:text="NOME_PIATTO"
@@ -124,7 +122,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.744" />
+        app:layout_constraintVertical_bias="0.75" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,12 @@
 package com.example.casodistudiomamange.adapter;
 
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
 import com.example.casodistudiomamange.R;
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;

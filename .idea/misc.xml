@@ -13,13 +13,18 @@
         <entry key="..\:/MaMange/app/src/main/res/layout/single_plate_ordered.xml" value="0.5" />
         <entry key="..\:/MaMange/app/src/main/res/menu/bottom_navigation_bar.xml" value="0.371875" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/categories_background.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/ic_baseline_public_24.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/insert_rounded_white.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/scheda_rotonda.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_logged_user.xml" value="0.25" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_ma_mange_navigation.xml" value="0.264" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_profile.xml" value="0.2359375" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_qrcode.xml" value="0.25" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_support.xml" value="0.4" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_switch_login_signup_guest.xml" value="0.25" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_category.xml" value="0.12708333333333333" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_sensor.xml" value="0.25" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_sensore.xml" value="0.264" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_sign_up.xml" value="0.25" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_single_order.xml" value="0.25" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/menu/bottom_navigation_bar.xml" value="0.2359375" />
@@ -43,11 +48,6 @@
         <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_sign_up.xml" value="0.24375" />
         <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/single_plate.xml" value="0.536" />
         <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14814814814814814" />
-        <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/round_image.xml" value="0.358" />
-        <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/round_outline.xml" value="0.358" />
-        <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_category.xml" value="0.20153985507246377" />
-        <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_sensor.xml" value="0.2196969696969697" />
-        <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/single_plate.xml" value="0.20153985507246377" />
       </map>
     </option>
   </component>
