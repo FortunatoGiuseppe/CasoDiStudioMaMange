@@ -44,11 +44,9 @@ public class SingleOrderFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         db = FirebaseFirestore.getInstance();
         plates = new ArrayList<Plate>();
         adapter_plates = new Adapter_Plates_Ordered(getContext(), plates);
-
 
     }
 
@@ -82,7 +80,7 @@ public class SingleOrderFragment extends Fragment {
         String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
         ArrayList<SoPlate> soPlate = new ArrayList<SoPlate>();
 
-        db.collection("SO-PIATTO").whereEqualTo("codiceSingleOrder","SO4").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("SO-PIATTO").whereEqualTo("codiceSingleOrder",codiceSingleOrder).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {

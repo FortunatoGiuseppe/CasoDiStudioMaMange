@@ -36,7 +36,7 @@ public class DatabaseController {
         this.df= FirebaseFirestore.getInstance();
     }
 
-    //false-> tavolo occupato  true-> tavolo libero
+    /*Metodo per la creazione del GroupOrder e SingleOrder*/
     public void createOrdersFirestore(String usernameInserito, String codiceTavolo, metododiCallback mycallBack){
         DocumentReference docRef = df.collection("TAVOLI").document(codiceTavolo);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -73,7 +73,7 @@ public class DatabaseController {
                                 //aggiungo group order
                                 df.collection("GROUP ORDERS").add(nuovoGroupOrder);
 
-                                //creo single order
+                                //creo single order supponendo che il primo single order abbia come primo codice "SO0"
                                 Map<String, Object> nuovoSingleOrder = new HashMap<>();
                                 nuovoSingleOrder.put("codiceSingleOrder", "SO0");       //ricorda di modificare generando in modo casuale il codice
                                 nuovoSingleOrder.put("codiceGroupOrder", groupOrder.getCodice()); //qui va il codice generato in automatico che hai inserito in riga 61
@@ -83,7 +83,7 @@ public class DatabaseController {
                                 singleOrder.setCodiceSingleOrder("SO0");
                                 singleOrder.setCodiceSingleOrder(groupOrder.getCodice());
 
-                                mycallBack.onCallback(singleOrder.getCodiceSingleOrder());
+                                mycallBack.onCallback(singleOrder.getCodiceSingleOrder(),groupOrder.getCodice());
                             }
                         }
                     });
@@ -121,7 +121,7 @@ public class DatabaseController {
                                                 nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder()); //qui va il codice generato in automatico che hai inserito in riga 61
                                                 //aggiungo single order
                                                 df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
-                                                mycallBack.onCallback(singleOrder.getCodiceSingleOrder());
+                                                mycallBack.onCallback(singleOrder.getCodiceSingleOrder(),groupOrder.getCodice());
                                             }
 
                                         }
@@ -136,7 +136,7 @@ public class DatabaseController {
     }
 
     /*Metodo che crea il piatto associato al codice sel singleOrder */
-    public void createSoPlateFirestore(String plate){
+    public void createSoPlateFirestore(String plate, String codiceSingleOrder){
        df.collection("SO-PIATTO")
         .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -144,7 +144,7 @@ public class DatabaseController {
 
                         if(task.isSuccessful()){
                                 Map<String, Object> creaSoPiatto = new HashMap<>();
-                            creaSoPiatto.put("codiceSingleOrder", "SO4");
+                            creaSoPiatto.put("codiceSingleOrder", codiceSingleOrder);
                             creaSoPiatto.put("nomePiatto", plate);
                             creaSoPiatto.put("quantita",1);
                                 df.collection("SO-PIATTO").add(creaSoPiatto);
@@ -154,9 +154,9 @@ public class DatabaseController {
     }
 
     /*Metodo che aumenta la quantita del piatto*/
-    public void addPlateFirestore(String plate){
+    public void addPlateFirestore(String plate, String codiceSingleOrder){
        df.collection("SO-PIATTO")
-                .whereEqualTo("codiceSingleOrder","SO4")
+                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
                 .whereEqualTo("nomePiatto",plate)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -174,9 +174,9 @@ public class DatabaseController {
     }
 
     /*Metodo che diminuisce la quantita del piatto*/
-    public void removePlateFirestore(String plate){
+    public void removePlateFirestore(String plate,String codiceSingleOrder){
         df.collection("SO-PIATTO")
-                .whereEqualTo("codiceSingleOrder","SO4")
+                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
                 .whereEqualTo("nomePiatto",plate)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -194,9 +194,9 @@ public class DatabaseController {
     }
 
     /*Metodo che elimina totalmente il piatto se la quantita è pari a 0*/
-    public void deletePlateFirestore(String plate){
+    public void deletePlateFirestore(String plate,String codiceSingleOrder){
         df.collection("SO-PIATTO")
-                .whereEqualTo("codiceSingleOrder","SO4")
+                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
                 .whereEqualTo("nomePiatto",plate)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -213,7 +213,7 @@ public class DatabaseController {
         });
     }
 
-public interface metododiCallback{
-        void onCallback(String codiceSingleOrderCheMiServe);
-}
+    public interface metododiCallback{
+        void onCallback(String codiceSingleOrderCheMiServe,String codiceGroupOrder);
+    }
 }
