@@ -165,7 +165,8 @@ public class DatabaseController {
 
                     for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
                         singleOrderPlate = documentSnapshot.toObject(SoPlate.class);
-                        df.collection("SO-PIATTO").document(documentSnapshot.getId()).update("quantita",1+ singleOrderPlate.getQuantita());
+                        df.collection("SO-PIATTO").document(documentSnapshot.getId())
+                                .update("quantita",1+ singleOrderPlate.getQuantita());
                     }
 
                 }
@@ -185,7 +186,8 @@ public class DatabaseController {
 
                     for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
                         singleOrderPlate = documentSnapshot.toObject(SoPlate.class);
-                        df.collection("SO-PIATTO").document(documentSnapshot.getId()).update("quantita",singleOrderPlate.getQuantita() - 1);
+                        df.collection("SO-PIATTO").document(documentSnapshot.getId())
+                                .update("quantita",singleOrderPlate.getQuantita() - 1);
                     }
 
                 }
@@ -215,5 +217,11 @@ public class DatabaseController {
 
     public interface metododiCallback{
         void onCallback(String codiceSingleOrderCheMiServe,String codiceGroupOrder);
+    }
+    //Interfaccia che permette di chiamare il metodo di Callback
+    public interface metododiCallback{
+        //metodo senza implementazione (deve essere fatto l'override nel momento in cui serve) che
+        // permette di utilizzare il singleOrder preso dal db
+        void onCallback(String singleOrder);
     }
 }

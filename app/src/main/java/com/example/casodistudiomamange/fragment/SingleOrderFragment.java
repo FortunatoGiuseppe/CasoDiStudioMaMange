@@ -71,15 +71,18 @@ public class SingleOrderFragment extends Fragment {
         recyclerView_plates.setLayoutManager(gridLayoutManager);
 
         recyclerView_plates.setAdapter(adapter_plates);
-        loadSingleOrderPlates();
+        caricaOrdinazione();
 
         return v;
     }
 
-    private void loadSingleOrderPlates() {
+
+    private void caricaOrdinazione() {
         String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
         ArrayList<SoPlate> soPlate = new ArrayList<SoPlate>();
 
+        //il value SO4 deve essere sostituito da codiceSingleOrder della riga 82 (messo così momentanamente perchè il db scrive solo in SO4)
+        db.collection("SO-PIATTO").whereEqualTo("codiceSingleOrder","SO4").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
         db.collection("SO-PIATTO").whereEqualTo("codiceSingleOrder",codiceSingleOrder).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -105,56 +108,5 @@ public class SingleOrderFragment extends Fragment {
                 }
             }
         });
-
-        //Query
-        /*db.collection("SO-PIATTO").whereEqualTo("codiceSingleOrder","SO4")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for(QueryDocumentSnapshot dc: task.getResult()){
-                        soPlate.add(dc.toObject(SoPlate.class));
-                    }
-
-                    for(int i =0; i<soPlate.size(); i++) {
-                        db.collection("PIATTI").whereEqualTo("nome", soPlate.get(i).getNomePiatto())
-                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    for (QueryDocumentSnapshot dc2 : task.getResult()) {
-                                        plates.add(dc2.toObject(Plate.class));
-                                    }
-                                }
-                            }
-                        });
-                    }
-
-                }
-
-            }
-        });
-        }*/
-
-/*        db.collection("SO-PIATTO").whereEqualTo("codiceSingleOrder",codiceSingleOrder)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for(QueryDocumentSnapshot dc: task.getResult()){
-                    db.collection("PIATTI").whereEqualTo("nome",dc.get("nome"))
-                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            for(QueryDocumentSnapshot dc2: task.getResult()) {
-                                plates.add(dc2.toObject(Plate.class));
-                            }
-                        }
-                    });
-                }
-            }
-        });*/
-
-
     }
 }
