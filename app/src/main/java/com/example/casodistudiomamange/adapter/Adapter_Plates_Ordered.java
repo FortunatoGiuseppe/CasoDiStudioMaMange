@@ -3,11 +3,9 @@ package com.example.casodistudiomamange.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -85,10 +83,10 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 //salvo la nuova quantità nello shared preferences
                 saveData(plate.getNome(),total.get(position));
                 if(total.get(position) > 0 ) {
-                    ((MaMangeNavigationActivity) context).dbc.removePlateFirestore(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
+                    ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
                     holder.tvCount.setText(total.get(position) +"");
                 } else {
-                    ((MaMangeNavigationActivity) context).dbc.deletePlateFirestore(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
+                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
                     holder.addMoreLayout.setVisibility(View.GONE);
 
                     //aggiorna quantità nel db
@@ -104,7 +102,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 //salvo la nuova quantità nello shared preferences
                 saveData(plate.getNome(),total.get(position));
                 if(total.get(position) <= 10 ) {
-                    ((MaMangeNavigationActivity) context).dbc.addPlateFirestore(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
+                    ((MaMangeNavigationActivity) context).dbc.incrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
                     //aggiorno visualizzatore contatore quantità
                     holder.tvCount.setText(total.get(position) +"");
                 }else{

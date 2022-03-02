@@ -88,12 +88,10 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         dbc.createOrdersFirestore(username, codiceTavolo, new DatabaseController.metododiCallback() {
             @Override
+            //metodo per assegnare pubblicamente il singleOrder e groupOrder letto da DatabaseController
             public void onCallback(String codiceSingleOrderCheMiServe, String codiceGroupOrderCheMiServe) {
                 codiceSingleOrder = codiceSingleOrderCheMiServe;
                 codiceGroupOrder = codiceGroupOrderCheMiServe;
-            //metodo per assegnare pubblicamente il singleOrder letto da DatabaseController
-            public void onCallback(String singleOrder) {
-                codiceSingleOrder = singleOrder;
             }
         });
 
@@ -105,6 +103,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         NavigationBarView navigationBarView = findViewById(R.id.bottom_navigation_bar);
         navigationBarView.setOnItemSelectedListener(this);
+
     }
 
     @Override

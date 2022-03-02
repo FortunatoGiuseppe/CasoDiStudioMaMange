@@ -1,12 +1,8 @@
 package com.example.casodistudiomamange.adapter;
 
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-
 import com.example.casodistudiomamange.R;
 import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.casodistudiomamange.fragment.RestaurantFragment;
+
 import com.example.casodistudiomamange.fragment.SensorFragment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -125,7 +121,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
 
                 //Aggiunta del piatto nel DB
 
-                ((MaMangeNavigationActivity) context).dbc.createSoPlateFirestore(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
+                ((MaMangeNavigationActivity) context).dbc.orderPlate(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
 
                 //aggiornamento icona aggiunta
                 holder.addMoreLayout.setVisibility(View.VISIBLE);
@@ -147,10 +143,10 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 //salvo la nuova quantità nello shared preferences
                 saveData(plate.getNome(),total.get(position));
                 if(total.get(position) > 0 ) {
-                   ((MaMangeNavigationActivity) context).dbc.removePlateFirestore(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
+                   ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
                     holder.tvCount.setText(total.get(position) +"");
                 } else {
-                    ((MaMangeNavigationActivity) context).dbc.deletePlateFirestore(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
+                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
                     holder.addMoreLayout.setVisibility(View.GONE);
                     holder.addPlateBtn.setVisibility(View.VISIBLE);
                     //aggiorna quantità nel db
@@ -166,7 +162,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 //salvo la nuova quantità nello shared preferences
                 saveData(plate.getNome(),total.get(position));
                 if(total.get(position) <= 10 ) {
-                    ((MaMangeNavigationActivity) context).dbc.addPlateFirestore(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
+                    ((MaMangeNavigationActivity) context).dbc.incrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder);
                     //aggiorno visualizzatore contatore quantità
                     holder.tvCount.setText(total.get(position) +"");
                 }else{
