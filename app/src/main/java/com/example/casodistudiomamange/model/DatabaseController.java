@@ -41,7 +41,7 @@ public class DatabaseController {
 
                 if(table.isTableFree()){    //modificato
                     
-                    docRef.update("isTableFree",false);//Imposta il tavolo come occupato
+                    docRef.update("tableFree",false);//Imposta il tavolo come occupato
 
                     //Vado ad ordinare in ordine decrescente lo snapshot limitandolo ad 1, quindi prendo l'ultimo elemento presente con il valore più alto.
                     //Incremento l'ultimo elemento e costruisco la stringa per creare il nuovo grouporder
