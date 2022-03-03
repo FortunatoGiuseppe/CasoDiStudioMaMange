@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.example.casodistudiomamange.R;
@@ -20,6 +19,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
@@ -36,12 +37,11 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ma_mange_navigation);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         lAuth = FirebaseAuth.getInstance();
 
         Intent intent = getIntent();
-        String usernameInserito = intent.getStringExtra("UsernameInserito");
-        username = usernameInserito;
+        username= intent.getStringExtra("UsernameInserito");
 
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
@@ -52,7 +52,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             }
         });
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
+        NavigationView navigationView = findViewById(R.id.navigationView);
 
         String email = getEmail();
         if (email.equals("Guest")) {
@@ -95,15 +95,13 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             }
         });
 
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
-        Fragment fragment = null;
+        Fragment fragment;
         fragment = new RestaurantFragment();
         loadFragment(fragment);
 
-        NavigationBarView navigationBarView = findViewById(R.id.bottom_navigation_bar);
-        navigationBarView.setOnItemSelectedListener(this);
-
+        bottomNavigationView.setOnItemSelectedListener(this);
     }
 
     @Override

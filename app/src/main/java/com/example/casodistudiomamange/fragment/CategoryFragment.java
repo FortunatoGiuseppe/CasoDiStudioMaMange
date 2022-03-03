@@ -39,7 +39,7 @@ public class CategoryFragment extends Fragment {
         CategoryKey = bundle.getString("CategoryKey");
 
         db = FirebaseFirestore.getInstance();
-        plates= new ArrayList<Plate>();
+        plates= new ArrayList<>();
         adapter_plates = new Adapter_plates(getContext(), plates);
 
     }

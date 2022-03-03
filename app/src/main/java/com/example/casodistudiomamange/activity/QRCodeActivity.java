@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.model.CaptureAct;
-import com.example.casodistudiomamange.model.SingleOrder;
 import com.example.casodistudiomamange.model.Table;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,18 +24,14 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class QRCodeActivity extends AppCompatActivity {
 
-    private Button scanQrCodeBtn;
-    private Button confirmBtn;
-    private TextView benvenuto;
     private EditText insertQrCode;
-    private Button logout;
     String usernameInserito;
     private FirebaseFirestore db;
-    private Table table;
 
 
     @Override
@@ -44,11 +39,11 @@ public class QRCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
         db = FirebaseFirestore.getInstance();
-        scanQrCodeBtn = findViewById(R.id.scanQrCodeBtn);
-        confirmBtn = findViewById(R.id.confirmBtn);
+        Button scanQrCodeBtn = findViewById(R.id.scanQrCodeBtn);
+        Button confirmBtn = findViewById(R.id.confirmBtn);
         insertQrCode = findViewById(R.id.insertQrCode);
-        logout = findViewById(R.id.logout);
-        benvenuto=findViewById(R.id.textView_benvenuto);
+        Button logout = findViewById(R.id.logout);
+        TextView benvenuto = findViewById(R.id.textView_benvenuto);
 
         getSupportActionBar().hide();
 
@@ -98,8 +93,8 @@ public class QRCodeActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            ArrayList<Table> tables = new ArrayList<Table>();
-                            for(QueryDocumentSnapshot doc : task.getResult()){
+                            ArrayList<Table> tables = new ArrayList<>();
+                            for(QueryDocumentSnapshot doc : Objects.requireNonNull(task.getResult())){
                                 tables.add(doc.toObject(Table.class));
                             }
                             for(int i = 0; i < tables.size(); i++){
@@ -136,8 +131,8 @@ public class QRCodeActivity extends AppCompatActivity {
                 boolean isFound=false;  //indica se il tavolo è stato trovato, necessario per far comparire alert tavolo non trovato
 
                 if(task.isSuccessful()){
-                    ArrayList<Table> tables = new ArrayList<Table>();
-                    for(QueryDocumentSnapshot doc : task.getResult()){
+                    ArrayList<Table> tables = new ArrayList<>();
+                    for(QueryDocumentSnapshot doc : Objects.requireNonNull(task.getResult())){
                         tables.add(doc.toObject(Table.class));
                     }
                     for(int i = 0; i < tables.size(); i++){
@@ -150,7 +145,7 @@ public class QRCodeActivity extends AppCompatActivity {
                             isFound=true;
                         }
                     }
-                    if(isFound==false){
+                    if(!isFound){
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(QRCodeActivity.this);
                         builder1.setMessage(R.string.tavoloNonTrovato);
                         builder1.setCancelable(true);
