@@ -133,6 +133,8 @@ public class QRCodeActivity extends AppCompatActivity {
         db.collection("TAVOLI").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                boolean isFound=false;  //indica se il tavolo è stato trovato, necessario per far comparire alert tavolo non trovato
+
                 if(task.isSuccessful()){
                     ArrayList<Table> tables = new ArrayList<Table>();
                     for(QueryDocumentSnapshot doc : task.getResult()){
@@ -145,21 +147,23 @@ public class QRCodeActivity extends AppCompatActivity {
                             intent.putExtra("UsernameInserito",usernameInserito);
                             intent.putExtra("CodiceTavolo",insertQrCode.getText().toString());
                             startActivity(intent);
-                        } else{
-                            AlertDialog.Builder builder1 = new AlertDialog.Builder(QRCodeActivity.this);
-                            builder1.setMessage(R.string.tavoloNonTrovato);
-                            builder1.setCancelable(true);
-
-                            builder1.setPositiveButton(
-                                    "Ok",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                            AlertDialog alert = builder1.create();
-                            alert.show();
+                            isFound=true;
                         }
+                    }
+                    if(isFound==false){
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(QRCodeActivity.this);
+                        builder1.setMessage(R.string.tavoloNonTrovato);
+                        builder1.setCancelable(true);
+
+                        builder1.setPositiveButton(
+                                "Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder1.create();
+                        alert.show();
                     }
                 }
             }
