@@ -149,7 +149,11 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                     ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
                     holder.addMoreLayout.setVisibility(View.GONE);
                     holder.addPlateBtn.setVisibility(View.VISIBLE);
-                    //aggiorna quantità nel db
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                    builder1.setMessage(R.string.piattoRimosso);
+                    builder1.setCancelable(true);
+                    AlertDialog alert = builder1.create();
+                    alert.show();
                 }
             }
         });

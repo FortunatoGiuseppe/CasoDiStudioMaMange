@@ -4,11 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.casodistudiomamange.R;
-import com.example.casodistudiomamange.activity.QRCodeActivity;
 import com.example.casodistudiomamange.activity.SwitchLoginSignupGuestActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,7 +24,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment {
-
     TextView email;
     TextView pass;
     TextView forgetPass;
@@ -59,12 +53,10 @@ public class LoginFragment extends Fragment {
                 forgetPass();
             }
         });
-
         return root;
     }
 
     private void login(){
-
         if(email.getText().toString().trim().isEmpty()){
             email.setError("email is required");
             email.requestFocus();
@@ -128,10 +120,8 @@ public class LoginFragment extends Fragment {
         passResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
             }
         });
-
         passResetDialog.create().show();
     }
 }

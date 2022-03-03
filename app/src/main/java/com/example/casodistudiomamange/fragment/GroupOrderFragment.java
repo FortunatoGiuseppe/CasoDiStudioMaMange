@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.adapter.Adapter_Plates_Ordered;
@@ -18,25 +16,18 @@ import com.example.casodistudiomamange.adapter.Adapter_Profile;
 import com.example.casodistudiomamange.model.Plate;
 import com.example.casodistudiomamange.model.Profile;
 import com.example.casodistudiomamange.model.SoPlate;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupOrderFragment extends Fragment {
 
     RecyclerView recyclerView;
-
     List<Profile> profileList;
     Adapter_Profile adapter_profile;
     Adapter_Plates_Ordered adapter_plates_ordered;
     FirebaseFirestore ffdb;
     ArrayList<Plate> plates;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +36,7 @@ public class GroupOrderFragment extends Fragment {
         profileList = new ArrayList<>();
         plates = new ArrayList<>();
         adapter_plates_ordered = new Adapter_Plates_Ordered(getContext(),plates);
+
         adapter_profile = new Adapter_Profile(profileList,getContext(),adapter_plates_ordered);
     }
 
@@ -71,6 +63,7 @@ public class GroupOrderFragment extends Fragment {
 
 
         ArrayList<SoPlate> listaUtentiDelGroupOrder = new ArrayList<SoPlate>();
+    private void caricaProfileEdOrdini(){
 
         //Query 1: dobbiamo selezionare tutti gli utenti di quel group order
         //Query 2: Per ogni utente dobbiamo selezionare tutti gli so-plate associati a lui che ha ordinato
@@ -103,6 +96,9 @@ public class GroupOrderFragment extends Fragment {
 
 
         ArrayList<SoPlate> soPlate = new ArrayList<SoPlate>();
+        ArrayList<SoPlate> soPlate = new ArrayList<>();
+        soPlate.add(new SoPlate(codiceSingleOrder,"EDAMAME",2,codiceGroupOrder,codiceTavolo));
+        // public SoPlate(String codiceSingleOrder, String nomePiatto, long quantita, String codiceGroupOrder, String codiceTavolo) {
 
         ffdb.collection("SO-PIATTO")
                 .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
@@ -137,4 +133,5 @@ public class GroupOrderFragment extends Fragment {
 
     }*/
 
+    }
 }

@@ -16,7 +16,6 @@ import com.example.casodistudiomamange.fragment.RestaurantFragment;
 import com.example.casodistudiomamange.fragment.SingleOrderFragment;
 import com.example.casodistudiomamange.model.DatabaseController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 

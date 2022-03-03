@@ -20,11 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private Button logout;
-    private Button changePsw;
     private FirebaseAuth lAuth;
-    private TextView name;
-    private TextView email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +28,11 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         getSupportActionBar().hide();
 
-        logout = findViewById(R.id.logout);
-        changePsw = findViewById(R.id.changePsw);
+        Button logout = findViewById(R.id.logout);
+        Button changePsw = findViewById(R.id.changePsw);
         lAuth = FirebaseAuth.getInstance();
-        name = findViewById(R.id.nomeUtente);
-        email = findViewById(R.id.showEmailUtente);
+        TextView name = findViewById(R.id.nomeUtente);
+        TextView email = findViewById(R.id.showEmailUtente);
 
         Intent intent = getIntent();
         String usernameInserito = intent.getStringExtra("username");

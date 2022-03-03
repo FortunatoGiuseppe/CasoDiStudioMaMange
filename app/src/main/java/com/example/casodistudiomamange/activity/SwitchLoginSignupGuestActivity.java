@@ -18,15 +18,14 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
     ViewPagerFragmentAdapter viewPagerFragmentAdapter;
     TabLayout tabLayout;
     ViewPager2 viewPager2;
-    private  String[] titles = {"Guest", "Login", "Signup"};
-    private String[] titles_it = {"Ospite", "Login", "Registrati"};
-    private FirebaseAuth lAuth;
+    private final String[] titles = {"Guest", "Login", "Signup"};
+    private final String[] titles_it = {"Ospite", "Login", "Registrati"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_switch_login_signup_guest);
-        lAuth = FirebaseAuth.getInstance();
+        FirebaseAuth lAuth = FirebaseAuth.getInstance();
         viewPager2=findViewById(R.id.view_pager);
         tabLayout=findViewById(R.id.tab_layout);
         viewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this);

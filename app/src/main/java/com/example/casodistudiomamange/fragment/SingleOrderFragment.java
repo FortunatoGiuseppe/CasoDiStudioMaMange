@@ -69,8 +69,6 @@ public class SingleOrderFragment extends Fragment {
 
     private void caricaOrdinazione() {
 
-
-
         String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
         String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
