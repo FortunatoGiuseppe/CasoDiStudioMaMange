@@ -16,7 +16,12 @@ import com.example.casodistudiomamange.adapter.Adapter_Profile;
 import com.example.casodistudiomamange.model.Plate;
 import com.example.casodistudiomamange.model.Profile;
 import com.example.casodistudiomamange.model.SoPlate;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,8 +68,6 @@ public class GroupOrderFragment extends Fragment {
 
 
         ArrayList<SoPlate> listaUtentiDelGroupOrder = new ArrayList<SoPlate>();
-    private void caricaProfileEdOrdini(){
-
         //Query 1: dobbiamo selezionare tutti gli utenti di quel group order
         //Query 2: Per ogni utente dobbiamo selezionare tutti gli so-plate associati a lui che ha ordinato
 
@@ -133,5 +136,5 @@ public class GroupOrderFragment extends Fragment {
 
     }*/
 
-    }
+
 }
