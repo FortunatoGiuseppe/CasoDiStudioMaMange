@@ -85,6 +85,7 @@ public class GroupOrderFragment extends Fragment {
                         Profile profile = new Profile();
                         profile.setNomeProfilo(listaUtentiDelGroupOrder.get(i).getUsername());
                         profileList.add(profile);
+                        caricaPiatti(profile);
                         adapter_profile.notifyDataSetChanged();
                     }
 
@@ -92,22 +93,12 @@ public class GroupOrderFragment extends Fragment {
 
             }
         });
-
     }
 
-    /*private void caricaOrdinazione(String username,String codiceGroupOrder, String codiceSingleOrder, String codiceTavolo) {
-
-
+    private void caricaPiatti(Profile profile){
         ArrayList<SoPlate> soPlate = new ArrayList<SoPlate>();
-        ArrayList<SoPlate> soPlate = new ArrayList<>();
-        soPlate.add(new SoPlate(codiceSingleOrder,"EDAMAME",2,codiceGroupOrder,codiceTavolo));
-        // public SoPlate(String codiceSingleOrder, String nomePiatto, long quantita, String codiceGroupOrder, String codiceTavolo) {
-
         ffdb.collection("SO-PIATTO")
-                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
-                .whereEqualTo("codiceGroupOrder",codiceGroupOrder)
-                .whereEqualTo("codiceTavolo",codiceTavolo)
-                .whereEqualTo("username",username)
+                .whereEqualTo("username", profile.getNomeProfilo())
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -133,8 +124,6 @@ public class GroupOrderFragment extends Fragment {
                 }
             }
         });
-
-    }*/
-
+    }
 
 }
