@@ -1,5 +1,6 @@
 package com.example.casodistudiomamange.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,12 @@ import java.util.List;
 public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myViewHolder> {
 
     private List<Profile> profileList;
+    private Context context;
 
-    public Adapter_Profile(List<Profile> profileList) {
+    public Adapter_Profile(List<Profile> profileList, Context context) {
+
         this.profileList = profileList;
+        this.context = context;
     }
 
 
@@ -53,7 +57,7 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
 
     public class myViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView nomeProfilo, testoProva;
+        TextView nomeProfilo, testoProva;
         CardView cardView;
         LinearLayout linearLayout;
         RelativeLayout expandableLayout;
@@ -70,9 +74,9 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
                 @Override
                 public void onClick(View view) {
 
-                    Profile profile = profileList.get(getAdapterPosition());
+                    Profile profile = profileList.get(getBindingAdapterPosition());
                     profile.setExpandable(!profile.isExpandable());
-                    notifyItemChanged(getAdapterPosition());
+                    notifyItemChanged(getBindingAdapterPosition());
 
                 }
             });

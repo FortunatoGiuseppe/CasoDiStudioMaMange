@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casodistudiomamange.R;
-import com.example.casodistudiomamange.activity.ProfileActivity;
 import com.example.casodistudiomamange.adapter.Adapter_Profile;
 import com.example.casodistudiomamange.model.Profile;
 
@@ -22,7 +22,15 @@ public class GroupOrderFragment extends Fragment {
 
     RecyclerView recyclerView;
     List<Profile> profileList;
+    Adapter_Profile adapter_profile;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        profileList = new ArrayList<Profile>();
+
+        adapter_profile = new Adapter_Profile(profileList,getContext());
+    }
 
     @Nullable
     @Override
@@ -31,9 +39,12 @@ public class GroupOrderFragment extends Fragment {
         getActivity().setTitle("Group Order");
 
         recyclerView = v.findViewById(R.id.recyclerGroupOrder);
-        Adapter_Profile adapter_profile = new Adapter_Profile(profileList);
-        recyclerView.setAdapter(adapter_profile);
+
         recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter_profile);
+
         caricaProfileEdOrdini();
 
 
@@ -42,9 +53,8 @@ public class GroupOrderFragment extends Fragment {
 
 
     private void caricaProfileEdOrdini(){
-
-        profileList = new ArrayList<Profile>();
         profileList.add(new Profile("nomeUtente","listaOrdinazione"));
+        profileList.add(new Profile("nomeUtente2","listaOrdinazione2"));
 
     }
 }
