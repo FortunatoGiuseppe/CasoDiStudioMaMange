@@ -4,6 +4,7 @@ public class SingleOrder {
     private String codiceSingleOrder;
     private String codiceGroupOrder;
     private String codiceTavolo;
+    private String username;
 
     public SingleOrder() {
     }

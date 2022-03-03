@@ -22,13 +22,13 @@ public class DatabaseController {
     private SoPlate singleOrderPlate;
     private int codiceGroupOrder;
     private int codiceSingleOrder;
-    
+
     public DatabaseController() {
         this.df= FirebaseFirestore.getInstance();
     }
 
     /*Metodo per la creazione del GroupOrder e SingleOrder*/
-    public void createOrdersFirestore(String usernameInserito, String codiceTavolo, metododiCallback mycallBack){
+    public void createOrdersFirestore(String usernameInserito, String codiceTavolo,String username, metododiCallback mycallBack){
         
         DocumentReference docRef = df.collection("TAVOLI").document(codiceTavolo);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -79,6 +79,7 @@ public class DatabaseController {
                                 nuovoSingleOrder.put("codiceSingleOrder", singleOrder.getCodiceSingleOrder());
                                 nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder());
                                 nuovoSingleOrder.put("codiceTavolo",singleOrder.getCodiceTavolo());
+
                                 df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
                                 
                                 //Assegno al metodo di CallBack il codice del SingleOrder e GroupOrder

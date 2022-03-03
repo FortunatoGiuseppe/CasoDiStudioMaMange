@@ -1,26 +1,22 @@
 package com.example.casodistudiomamange.model;
 
+import java.util.ArrayList;
+
 public class Profile {
 
     private String nomeProfilo;
-    private String testoProva;
+
     private boolean expandable;
+    private ArrayList<SoPlate> soPlates;
 
     public Profile() {
     }
 
-    public String getTestoProva() {
-        return testoProva;
-    }
-
-    public void setTestoProva(String testoProva) {
-        this.testoProva = testoProva;
-    }
-
-    public Profile(String nomeProfilo, String testoProva) {
+    public Profile(String nomeProfilo, ArrayList<SoPlate> soPlates) {
         this.nomeProfilo = nomeProfilo;
         this.expandable = false;
-        this.testoProva = testoProva;
+
+        this.soPlates = soPlates;
     }
 
     public String getNomeProfilo() {
@@ -36,5 +32,13 @@ public class Profile {
 
     public void setExpandable(boolean expandable) {
         this.expandable = expandable;
+    }
+
+    public ArrayList<SoPlate> getSoPlates() {
+        return soPlates;
+    }
+
+    public void setSoPlates(ArrayList<SoPlate> soPlates) {
+        this.soPlates = soPlates;
     }
 }
