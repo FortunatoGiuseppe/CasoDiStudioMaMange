@@ -2,7 +2,15 @@ package com.example.casodistudiomamange.model;
 
 public class Table {
     private String codiceTavolo;
-    private long flag;
+    private boolean tableFree;
+
+    public Table(String codiceTavolo, boolean tableFree) {
+        this.codiceTavolo = codiceTavolo;
+        this.tableFree = tableFree;
+    }
+
+    public Table() {
+    }
 
     public String getCodiceTavolo() {
         return codiceTavolo;
@@ -12,19 +20,13 @@ public class Table {
         this.codiceTavolo = codiceTavolo;
     }
 
-    public long getFlag() {
-        return flag;
+    public boolean isTableFree() {
+        return tableFree;
     }
 
-    public void setFlag(long flag) {
-        this.flag = flag;
+    public void setTableFree(boolean tableFree) {
+        this.tableFree = tableFree;
     }
 
-    public Table() {
-    }
 
-    public Table(String codiceTavolo, long flag) {
-        this.codiceTavolo = codiceTavolo;
-        this.flag = flag;
-    }
 }
