@@ -1,15 +1,13 @@
 package com.example.casodistudiomamange.model;
 
-import java.util.ArrayList;
-
 public class GroupOrder {
     private String codice;
-    private boolean stato;
+    private boolean tableFree;
     private String codiceTavolo;
 
-    public GroupOrder(String codice, boolean stato, String codiceTavolo) {
+    public GroupOrder(String codice, boolean tableFree, String codiceTavolo) {
         this.codice = codice;
-        this.stato = stato;
+        this.tableFree = tableFree;
         this.codiceTavolo = codiceTavolo;
     }
 
@@ -24,12 +22,12 @@ public class GroupOrder {
         this.codice = codice;
     }
 
-    public boolean isStato() {
-        return stato;
+    public boolean isTableFree() {
+        return tableFree;
     }
 
-    public void setState(boolean stato) {
-        this.stato = stato;
+    public void setTableFree(boolean tableFree) {
+        this.tableFree = tableFree;
     }
 
     public String getCodiceTavolo() {

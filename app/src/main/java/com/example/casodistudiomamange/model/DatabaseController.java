@@ -22,13 +22,13 @@ public class DatabaseController {
     private SoPlate singleOrderPlate;
     private int codiceGroupOrder;
     private int codiceSingleOrder;
-
+    
     public DatabaseController() {
         this.df= FirebaseFirestore.getInstance();
     }
 
     /*Metodo per la creazione del GroupOrder e SingleOrder*/
-    public void createOrdersFirestore(String usernameInserito, String codiceTavolo,String username, metododiCallback mycallBack){
+    public void createOrdersFirestore(String usernameInserito, String codiceTavolo, metododiCallback mycallBack){
         
         DocumentReference docRef = df.collection("TAVOLI").document(codiceTavolo);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -36,11 +36,12 @@ public class DatabaseController {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 table= documentSnapshot.toObject(Table.class);
-                
+
                 /*Se il tavolo è libero avvia la creazione del nuovo GroupOrder e SingleOrder*/
-                if(table.getFlag()==0){
+
+                if(table.isTableFree()){    //modificato
                     
-                    docRef.update("flag",1);//Imposta il tavolo come occupato
+                    docRef.update("isTableFree",false);//Imposta il tavolo come occupato
 
                     //Vado ad ordinare in ordine decrescente lo snapshot limitandolo ad 1, quindi prendo l'ultimo elemento presente con il valore più alto.
                     //Incremento l'ultimo elemento e costruisco la stringa per creare il nuovo grouporder
@@ -67,7 +68,7 @@ public class DatabaseController {
                                 Map<String, Object> nuovoGroupOrder = new HashMap<>();
                                 nuovoGroupOrder.put("codice", groupOrder.getCodice());
                                 nuovoGroupOrder.put("codiceTavolo", codiceTavolo);
-                                nuovoGroupOrder.put("stato", true);
+                                nuovoGroupOrder.put("isTableFree", false);  //modificato
                                 df.collection("GROUP ORDERS").add(nuovoGroupOrder);
 
                                 //creo single order supponendo che il primo single order abbia come codice "SO0"
@@ -79,7 +80,7 @@ public class DatabaseController {
                                 nuovoSingleOrder.put("codiceSingleOrder", singleOrder.getCodiceSingleOrder());
                                 nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder());
                                 nuovoSingleOrder.put("codiceTavolo",singleOrder.getCodiceTavolo());
-
+                                nuovoSingleOrder.put("isSingleOrderConfirmed",false);
                                 df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
                                 
                                 //Assegno al metodo di CallBack il codice del SingleOrder e GroupOrder
@@ -132,6 +133,7 @@ public class DatabaseController {
                                                 nuovoSingleOrder.put("codiceSingleOrder", singleOrder.getCodiceSingleOrder());
                                                 nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder());
                                                 nuovoSingleOrder.put("codiceTavolo",codiceTavolo);
+                                                nuovoSingleOrder.put("isSingleOrderConfirmed",false);
                                                 df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
 
                                                 //Assegno al metodo di CallBack il codice del SingleOrder e GroupOrder
