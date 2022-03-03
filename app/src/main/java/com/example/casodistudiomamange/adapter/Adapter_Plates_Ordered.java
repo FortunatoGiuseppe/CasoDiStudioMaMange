@@ -28,6 +28,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     private Context context;
     private ArrayList<Plate> plateArrayList;
     private ArrayList<Integer> total= new ArrayList<>();
+    private View v_gen;
 
     public Adapter_Plates_Ordered(Context context, ArrayList<Plate> plateArrayList) {
         this.context = context;
@@ -37,8 +38,8 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     @NonNull
     @Override
     public Adapter_Plates_Ordered.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.single_plate_ordered,parent,false);
-        return new myViewHolder(v);
+        v_gen = LayoutInflater.from(context).inflate(R.layout.single_plate_ordered,parent,false);
+        return new myViewHolder(v_gen);
     }
 
     @Override
@@ -51,12 +52,13 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
         //Appena creo view devo vedere se il totale nello shared preferences è 0 oppure no
         // se non è zero devo rendere gone il tasto aggiungi e devo visualizzare +- con il numero che devo leggere dallo shared
         if(loadData(plate.getNome())!=0){
-            holder.addMoreLayout.setVisibility(View.VISIBLE);
 
+            holder.addMoreLayout.setVisibility(View.VISIBLE);
             //imposto nell'array list alla quantità del piatto selezionato il valore letto dallo shared preferences
             total.set(position,loadData(plate.getNome()));
             //imposto alla textView che visualizza la quantità già aggiunta il valore appena letto dallo shared preferences
             holder.tvCount.setText(total.get(position).toString());
+
         }else{
             holder.addMoreLayout.setVisibility(View.GONE);
 
@@ -75,8 +77,12 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 } else {
                     ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo);
                     holder.addMoreLayout.setVisibility(View.GONE);
-
-                    //aggiorna quantità nel db
+                    v_gen.setVisibility(View.GONE);
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                    builder1.setMessage(R.string.piattoRimosso);
+                    builder1.setCancelable(true);
+                    AlertDialog alert = builder1.create();
+                    alert.show();
                 }
             }
         });

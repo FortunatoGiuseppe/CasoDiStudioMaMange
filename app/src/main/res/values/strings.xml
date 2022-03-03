@@ -34,6 +34,7 @@
     <string name="norisultati">No result</string>
     <string name="termina">Finish</string>
     <string name="massimoPiatti">You cannot add more than 10 dishes</string>
+    <string name="piattoRimosso">The plate has been removed from your order</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo">Logo</string>
