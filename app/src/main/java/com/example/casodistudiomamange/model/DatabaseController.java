@@ -151,7 +151,7 @@ public class DatabaseController {
     }
 
     /*Metodo che associa il piatto selezionato al codice del singleOrder*/
-    public void orderPlate(String plate, String codiceSingleOrder, String codiceGroupOrder, String codiceTavolo){
+    public void orderPlate(String plate, String codiceSingleOrder, String codiceGroupOrder, String codiceTavolo,String username){
         
         df.collection("SO-PIATTO")
         .get()
@@ -168,6 +168,7 @@ public class DatabaseController {
                     creaSoPiatto.put("quantita",1);
                     creaSoPiatto.put("codiceGroupOrder",codiceGroupOrder);
                     creaSoPiatto.put("codiceTavolo",codiceTavolo);
+                    creaSoPiatto.put("username",username);
                     df.collection("SO-PIATTO").add(creaSoPiatto);
                     
                 }
@@ -178,13 +179,14 @@ public class DatabaseController {
     }
 
     /*Metodo che aumenta la quantita del piatto aggiunto in base al codice del SingleOrder*/
-    public void incrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo){
+    public void incrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo,String username){
        
         df.collection("SO-PIATTO")
             .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
             .whereEqualTo("nomePiatto",plate)
             .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
             .whereEqualTo("codiceTavolo", codiceTavolo)
+            .whereEqualTo("username",username)
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 
@@ -206,13 +208,14 @@ public class DatabaseController {
     }
 
     /*Metodo che diminuisce la quantita del piatto in base al codice del SingleOrder*/
-    public void decrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder, String codiceTavolo){
+    public void decrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder, String codiceTavolo,String username){
 
         df.collection("SO-PIATTO")
             .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
             .whereEqualTo("nomePiatto",plate)
             .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
             .whereEqualTo("codiceTavolo", codiceTavolo)
+            .whereEqualTo("username",username)
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
@@ -233,13 +236,14 @@ public class DatabaseController {
     }
 
     /*Metodo che elimina totalmente il piatto se la quantita è pari a 0*/
-    public void deletePlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo){
+    public void deletePlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo,String username){
 
         df.collection("SO-PIATTO")
             .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
             .whereEqualTo("nomePiatto",plate)
             .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
             .whereEqualTo("codiceTavolo", codiceTavolo)
+            .whereEqualTo("username",username)
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 

@@ -6,17 +6,19 @@ public class SoPlate {
     private long quantita;
     private String codiceGroupOrder;
     private String codiceTavolo;
+    private String username;
 
     public SoPlate() {
 
     }
 
-    public SoPlate(String codiceSingleOrder, String nomePiatto, long quantita, String codiceGroupOrder, String codiceTavolo) {
+    public SoPlate(String codiceSingleOrder, String nomePiatto, long quantita, String codiceGroupOrder, String codiceTavolo, String username) {
         this.codiceSingleOrder = codiceSingleOrder;
         this.nomePiatto = nomePiatto;
         this.quantita = quantita;
         this.codiceGroupOrder = codiceGroupOrder;
         this.codiceTavolo = codiceTavolo;
+        this.username = username;
     }
 
     public String getCodiceSingleOrder() {
@@ -57,5 +59,13 @@ public class SoPlate {
 
     public void setCodiceTavolo(String codiceTavolo) {
         this.codiceTavolo = codiceTavolo;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

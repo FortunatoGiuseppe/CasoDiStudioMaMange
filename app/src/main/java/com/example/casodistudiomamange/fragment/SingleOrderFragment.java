@@ -74,12 +74,14 @@ public class SingleOrderFragment extends Fragment {
         String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
         String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
+        String username = ((MaMangeNavigationActivity) getActivity()).username;
         ArrayList<SoPlate> soPlate = new ArrayList<SoPlate>();
 
         db.collection("SO-PIATTO")
                 .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
                 .whereEqualTo("codiceGroupOrder",codiceGroupOrder)
                 .whereEqualTo("codiceTavolo",codiceTavolo)
+                .whereEqualTo("username",username)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

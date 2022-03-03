@@ -12,6 +12,10 @@ public class Profile {
     public Profile() {
     }
 
+    public Profile(String nomeProfilo) {
+        this.nomeProfilo = nomeProfilo;
+    }
+
     public Profile(String nomeProfilo, ArrayList<SoPlate> soPlates) {
         this.nomeProfilo = nomeProfilo;
         this.expandable = false;

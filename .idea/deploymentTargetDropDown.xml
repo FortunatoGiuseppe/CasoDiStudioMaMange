@@ -7,22 +7,11 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\salva.DESKTOP-G8QU051\.android\avd\Pixel_5_API_27.avd" />
+            <value value="C:\Users\fortu\.android\avd\Pixel_5_API_27.avd" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <targetSelectedWithDropDown>
-      <Target>
-        <type value="QUICK_BOOT_TARGET" />
-        <deviceKey>
-          <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\salva.DESKTOP-G8QU051\.android\avd\Pixel_5_API_27.avd" />
-          </Key>
-        </deviceKey>
-      </Target>
-    </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2022-03-03T09:46:04.279012200Z" />
+    <timeTargetWasSelectedWithDropDown value="2022-03-03T17:05:08.316095800Z" />
   </component>
 </project>
