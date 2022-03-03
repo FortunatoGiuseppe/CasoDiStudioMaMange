@@ -78,7 +78,9 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/white"
                 android:drawableEnd="@drawable/ic_baseline_qr_code_scanner_24"
                 android:hint="@string/scannerizza"
@@ -130,13 +132,14 @@
 
             <EditText
                 android:id="@+id/insertQrCode"
-                android:layout_width="180dp"
+                android:layout_width="170dp"
                 android:layout_height="48dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="36dp"
+                android:layout_marginEnd="40dp"
                 android:background="@drawable/edit_text_bg"
                 android:hint="@string/inserisciCodice"
                 android:importantForAutofill="no"
@@ -148,6 +151,8 @@
                 android:textAlignment="center"
                 android:textColorHint="#757575"
                 android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/confirmBtn"
+                app:layout_constraintHorizontal_bias="0.209"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/CodiceTavolo"
                 app:layout_constraintWidth_percent=".8"
@@ -155,14 +160,13 @@
 
             <Button
                 android:id="@+id/confirmBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="52dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="24dp"
                 android:layout_marginTop="36dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/white"
                 android:hint="@string/Confirm"
                 android:textAlignment="center"
@@ -171,7 +175,8 @@
                 android:textStyle="bold"
                 app:cornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/insertQrCode"
+                app:layout_constraintHorizontal_bias="0.94"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/CodiceTavolo" />
 
             <TextView
