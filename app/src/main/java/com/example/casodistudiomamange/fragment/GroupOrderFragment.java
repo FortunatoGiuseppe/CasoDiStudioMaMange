@@ -67,7 +67,7 @@ public class GroupOrderFragment extends Fragment {
         String groupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
 
 
-        ArrayList<SoPlate> listaUtentiDelGroupOrder = new ArrayList<SoPlate>();
+        ArrayList<SoPlate> listaUtentiDelGroupOrder = new ArrayList<>(); //lista che conterrà i document di soplate letti dal db
         //Query 1: dobbiamo selezionare tutti gli utenti di quel group order
         //Query 2: Per ogni utente dobbiamo selezionare tutti gli so-plate associati a lui che ha ordinato
 
@@ -76,10 +76,26 @@ public class GroupOrderFragment extends Fragment {
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                 if(task.isSuccessful()){
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                        listaUtentiDelGroupOrder.add(documentSnapshot.toObject(SoPlate.class));
-
+                        if(listaUtentiDelGroupOrder.size()==0){ //se è vuota aggiungi quello appena letto
+                            listaUtentiDelGroupOrder.add(documentSnapshot.toObject(SoPlate.class));
+                        }else{
+                            //variabile che serve a capire se esiste già nella lista un username
+                            boolean trovato=false;
+                            //per tutti gli elementi della lista vedi se esiste un document di soplate che ha come username
+                            // quello del document che si ha appena letto
+                            for(int j=0;j<listaUtentiDelGroupOrder.size();j++) {
+                                if (listaUtentiDelGroupOrder.get(j).getUsername().equals(documentSnapshot.toObject(SoPlate.class).getUsername())) {
+                                    trovato=true;
+                                }
+                            }
+                            //se non esiste un suddetto documento allora quello appena letto va aggiunto alla lista
+                            if (!trovato){
+                                listaUtentiDelGroupOrder.add(documentSnapshot.toObject(SoPlate.class));
+                            }
+                        }
                     }
                     for (int i = 0; i < listaUtentiDelGroupOrder.size(); i++){
                         Profile profile = new Profile();
