@@ -72,7 +72,8 @@ public class GroupOrderFragment extends Fragment {
         //Query 2: Per ogni utente dobbiamo selezionare tutti gli so-plate associati a lui che ha ordinato
 
 
-        ffdb.collection("SO-PIATTO").whereEqualTo("codiceGroupOrder",groupOrder)
+        ffdb.collection("SO-PIATTO")
+                .whereEqualTo("codiceGroupOrder",groupOrder)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
