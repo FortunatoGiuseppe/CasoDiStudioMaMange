@@ -21,7 +21,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
-
 public class RestaurantFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -79,5 +78,4 @@ public class RestaurantFragment extends Fragment {
                     }
                 });
     }
-
 }
