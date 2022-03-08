@@ -30,19 +30,17 @@ public class GroupOrderFragment extends Fragment {
     RecyclerView recyclerView;
     List<Profile> profileList;
     Adapter_Profile adapter_profile;
-    Adapter_Plates_Ordered adapter_plates_ordered;
-    FirebaseFirestore ffdb;
-    ArrayList<Plate> plates;
+    FirebaseFirestore db;
+    ArrayList<ArrayList<SoPlate>>listadiLista;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ffdb = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         profileList = new ArrayList<>();
-        plates = new ArrayList<>();
-        adapter_plates_ordered = new Adapter_Plates_Ordered(getContext(),plates);
+        listadiLista = new ArrayList<>();
+        adapter_profile = new Adapter_Profile(profileList);
 
-        adapter_profile = new Adapter_Profile(profileList,getContext(),adapter_plates_ordered);
     }
 
     @Nullable
@@ -57,12 +55,95 @@ public class GroupOrderFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter_profile);
 
+        leggiUsername();
 
-        caricaProfili();
 
         return v;
     }
 
+    private void leggiUsername(){
+        String groupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
+
+
+        ArrayList<SoPlate> listaUtentiDelGroupOrder = new ArrayList<>(); //lista che conterrà i document di soplate letti dal db
+        //Query 1: dobbiamo selezionare tutti gli utenti di quel group order
+        //Query 2: Per ogni utente dobbiamo selezionare tutti gli so-plate associati a lui che ha ordinato
+
+
+        db.collection("SO-PIATTO")
+                .whereEqualTo("codiceGroupOrder",groupOrder)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                        if (listaUtentiDelGroupOrder.size() == 0) { //se è vuota aggiungi quello appena letto
+                            listaUtentiDelGroupOrder.add(documentSnapshot.toObject(SoPlate.class));
+                            Profile profile = new Profile();
+                            profile.setNomeProfilo(documentSnapshot.toObject(SoPlate.class).getUsername());
+                            profileList.add(profile);
+                            leggiOrdinazioni(profileList);
+
+                            adapter_profile.notifyDataSetChanged();
+                        } else {
+                            //variabile che serve a capire se esiste già nella lista un username
+                            boolean trovato = false;
+                            //per tutti gli elementi della lista vedi se esiste un document di soplate che ha come username
+                            // quello del document che si ha appena letto
+                            for (int j = 0; j < listaUtentiDelGroupOrder.size(); j++) {
+                                if (listaUtentiDelGroupOrder.get(j).getUsername().equals(documentSnapshot.toObject(SoPlate.class).getUsername())) {
+                                    trovato = true;
+                                }
+                            }
+                            //se non esiste un suddetto documento allora quello appena letto va aggiunto alla lista
+                            if (!trovato) {
+                                listaUtentiDelGroupOrder.add(documentSnapshot.toObject(SoPlate.class));
+                                Profile profile = new Profile();
+                                profile.setNomeProfilo(documentSnapshot.toObject(SoPlate.class).getUsername());
+                                profileList.add(profile);
+                                leggiOrdinazioni(profileList);
+                                adapter_profile.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                }
+
+            }
+        });
+
+    }
+
+    private void leggiOrdinazioni(List<Profile> profileList){
+        ArrayList<SoPlate>listaDiAppoggio = new ArrayList<>();
+        for(int i=0; i<profileList.size();i++){
+            db.collection("SO-PIATTO")
+                    .whereEqualTo("username",profileList.get(i).getNomeProfilo())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                for(QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
+                                    listaDiAppoggio.add(queryDocumentSnapshot.toObject(SoPlate.class));
+                                }
+                                listadiLista.add(listaDiAppoggio);
+                                associaTutto(profileList, listadiLista);
+                            }
+
+                        }
+                    });
+        }
+    }
+
+    private void associaTutto(List<Profile> profileList, ArrayList<ArrayList<SoPlate>>listadiLista){
+        for(int i=0; i<profileList.size(); i++){
+            profileList.get(i).setSoPlates(listadiLista.get(i));
+            adapter_profile.notifyDataSetChanged();
+        }
+    }
+
+    /*
     private void caricaProfili(){
         String groupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
 
@@ -125,5 +206,5 @@ public class GroupOrderFragment extends Fragment {
             }
         });
     }
-
+*/
 }

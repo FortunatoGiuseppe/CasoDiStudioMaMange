@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.model.Plate;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -128,12 +127,12 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView_plate = itemView.findViewById(R.id.textView_NamePlate);
+            textView_plate = itemView.findViewById(R.id.textView_NamePlateGO);
 
             // aggiunta piatti
             imageMinus = itemView.findViewById(R.id.imageMinus);
             imageAddOne = itemView.findViewById(R.id.imageAddOne);
-            tvCount = itemView.findViewById(R.id.tvCount);
+            tvCount = itemView.findViewById(R.id.tvCountGO);
             addMoreLayout  = itemView.findViewById(R.id.constraintLayoutPeM2);
 
         }

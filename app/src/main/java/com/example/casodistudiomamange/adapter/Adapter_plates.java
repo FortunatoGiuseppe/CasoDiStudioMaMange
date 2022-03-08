@@ -212,7 +212,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             // aggiunta piatti
             imageMinus = itemView.findViewById(R.id.imageMinus);
             imageAddOne = itemView.findViewById(R.id.imageAddOne);
-            tvCount = itemView.findViewById(R.id.tvCount);
+            tvCount = itemView.findViewById(R.id.tvCountGO);
             addMoreLayout  = itemView.findViewById(R.id.constraintLayoutPeM2);
 
         }

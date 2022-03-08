@@ -104,7 +104,7 @@
             app:tint="@color/primaryColor" />
 
         <TextView
-            android:id="@+id/tvCount"
+            android:id="@+id/tvCountGO"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
