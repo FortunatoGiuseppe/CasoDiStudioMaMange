@@ -66,7 +66,6 @@ public class GroupOrderFragment extends Fragment {
     private void caricaProfili(){
         String groupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
 
-
         ArrayList<SoPlate> listaUtentiDelGroupOrder = new ArrayList<>(); //lista che conterrà i document di soplate letti dal db
         //Query 1: dobbiamo selezionare tutti gli utenti di quel group order
         //Query 2: Per ogni utente dobbiamo selezionare tutti gli so-plate associati a lui che ha ordinato
@@ -82,6 +81,12 @@ public class GroupOrderFragment extends Fragment {
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
                         if(listaUtentiDelGroupOrder.size()==0){ //se è vuota aggiungi quello appena letto
                             listaUtentiDelGroupOrder.add(documentSnapshot.toObject(SoPlate.class));
+
+                            Profile profile = new Profile();
+                            profile.setNomeProfilo(documentSnapshot.toObject(SoPlate.class).getUsername());
+                            profileList.add(profile);
+                            //caricaPiatti(profile);
+                            adapter_profile.notifyDataSetChanged();
                         }else{
                             //variabile che serve a capire se esiste già nella lista un username
                             boolean trovato=false;
@@ -95,16 +100,18 @@ public class GroupOrderFragment extends Fragment {
                             //se non esiste un suddetto documento allora quello appena letto va aggiunto alla lista
                             if (!trovato){
                                 listaUtentiDelGroupOrder.add(documentSnapshot.toObject(SoPlate.class));
+
+                                Profile profile = new Profile();
+                                profile.setNomeProfilo(documentSnapshot.toObject(SoPlate.class).getUsername());
+                                profileList.add(profile);
+                                //caricaPiatti(profile);
+                                adapter_profile.notifyDataSetChanged();
                             }
                         }
                     }
-                    for (int i = 0; i < listaUtentiDelGroupOrder.size(); i++){
-                        Profile profile = new Profile();
-                        profile.setNomeProfilo(listaUtentiDelGroupOrder.get(i).getUsername());
-                        profileList.add(profile);
-                        caricaPiatti(profile);
-                        adapter_profile.notifyDataSetChanged();
-                    }
+                 //   for (int i = 0; i < listaUtentiDelGroupOrder.size(); i++){
+
+                 //   }
 
                 }
 
@@ -112,35 +119,6 @@ public class GroupOrderFragment extends Fragment {
         });
     }
 
-    private void caricaPiatti(Profile profile){
-        ArrayList<SoPlate> soPlate = new ArrayList<SoPlate>();
-        ffdb.collection("SO-PIATTO")
-                .whereEqualTo("username", profile.getNomeProfilo())
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                        soPlate.add(documentSnapshot.toObject(SoPlate.class));
-                    }
-                    for(int i =0; i<soPlate.size();i++){
-                        ffdb.collection("PIATTI").whereEqualTo("nome",soPlate.get(i).getNomePiatto()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task2) {
-                                if (task2.isSuccessful()) {
-                                    for (QueryDocumentSnapshot doc : task2.getResult()) {
-                                        plates.add(doc.toObject(Plate.class));
-                                        adapter_plates_ordered.notifyDataSetChanged();
 
-                                    }
-                                }
-                            }
-                        });
-                    }
-
-                }
-            }
-        });
-    }
 
 }

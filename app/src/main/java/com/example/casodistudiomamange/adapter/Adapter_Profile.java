@@ -15,9 +15,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.model.Plate;
 import com.example.casodistudiomamange.model.Profile;
+import com.example.casodistudiomamange.model.SoPlate;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myViewHolder> {
 
@@ -25,12 +34,16 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
     private Context context;
     private Adapter_Plates_Ordered adapter_plates_ordered;
     RecyclerView recyclerView_plates;
+    FirebaseFirestore ffdb;
+    ArrayList<Plate> plates;
 
     public Adapter_Profile(List<Profile> profileList, Context context,Adapter_Plates_Ordered adapter_plates_ordered) {
 
         this.profileList = profileList;
         this.context = context;
         this.adapter_plates_ordered = adapter_plates_ordered;
+        ffdb = FirebaseFirestore.getInstance();
+        plates = new ArrayList<>();
     }
 
 
@@ -50,8 +63,6 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
 
     @Override
     public void onBindViewHolder(@NonNull Adapter_Profile.myViewHolder holder, int position) {
-
-
 
         Profile profile = profileList.get(position);
         holder.nomeProfilo.setText(profile.getNomeProfilo());
@@ -89,9 +100,45 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
                 public void onClick(View view) {
 
                     Profile profile = profileList.get(getBindingAdapterPosition());
+                    caricaPiatti(profile);  //passo profilo corrispondente all'username su cui ho cliccato nella lista
                     profile.setExpandable(!profile.isExpandable());
                     notifyItemChanged(getBindingAdapterPosition());
+                    //fin qui ok
+                }
+            });
+        }
 
+        private void caricaPiatti(Profile profile){
+            ArrayList<SoPlate> soPlate = new ArrayList<>();
+            //vedo quali sono i piatti aggiunti all'ordine da quell'utente
+            ffdb.collection("SO-PIATTO")
+                    .whereEqualTo("username", profile.getNomeProfilo())
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot documentSnapshot : Objects.requireNonNull(task.getResult())) {
+                            soPlate.add(documentSnapshot.toObject(SoPlate.class));  //aggiungo i piatti alla lista FUNZIONA
+                        }
+                        for(int i =0; i<soPlate.size();i++){
+                            //vedo quali sono i piatti con nome uguale a quello del piatto aggiunto all'ordine
+                            ffdb.collection("PIATTI")
+                                    .whereEqualTo("nome",soPlate.get(i).getNomePiatto())
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task2) {
+                                    if (task2.isSuccessful()) {
+                                        for (QueryDocumentSnapshot doc : Objects.requireNonNull(task2.getResult())) {
+                                            plates.add(doc.toObject(Plate.class)); //aggiungo i piatti alla lista  FUNZIONA
+                                            adapter_plates_ordered.notifyDataSetChanged();
+                                        }
+                                    }
+                                }
+                            });
+                        }
+
+                    }
                 }
             });
         }
