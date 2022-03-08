@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Profile {
 
     private String nomeProfilo;
-
     private boolean expandable;
     private ArrayList<SoPlate> soPlates;
 
@@ -19,7 +18,6 @@ public class Profile {
     public Profile(String nomeProfilo, ArrayList<SoPlate> soPlates) {
         this.nomeProfilo = nomeProfilo;
         this.expandable = false;
-
         this.soPlates = soPlates;
     }
 
