@@ -49,4 +49,5 @@
     <string name="about_us">Chi siamo</string>
     <string name="codice_tavolo">Codice Tavolo</string>
     <string name="ordinazione">Ordine di </string>
+    <string name="filename">lastOrder</string>
 </resources>

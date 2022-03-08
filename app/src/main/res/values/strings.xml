@@ -49,4 +49,5 @@
     <string name="about_us">About Us</string>
     <string name="codice_tavolo">Table Code</string>
     <string name="ordinazione">Order of </string>
+    <string name="filename">lastOrder</string>
 </resources>
