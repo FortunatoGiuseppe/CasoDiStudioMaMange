@@ -77,6 +77,11 @@ public class SingleOrderFragment extends Fragment {
         recyclerView_plates.setLayoutManager(gridLayoutManager);
         recyclerView_plates.setAdapter(adapter_plates);
 
+
+        if (getArguments().getString("chiamante").equals("lastOrder") ){
+            load(v);
+        }
+
         caricaOrdinazione();
 
         Button conferma= v.findViewById(R.id.confirm);
@@ -88,18 +93,17 @@ public class SingleOrderFragment extends Fragment {
                 //IL FILE CONTIENE NOME PIATTO E QUANTITÀ
                 save(v,soPlate);
 
-
             }
         });
 
 
-        Button load= v.findViewById((R.id.load));
+     /*   Button load= v.findViewById((R.id.load));
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                load(v);
+
             }
-        });
+        });*/
 
         return v;
 

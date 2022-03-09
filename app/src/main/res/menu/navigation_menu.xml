@@ -6,7 +6,7 @@
         android:title="@string/profile"/>
 
     <item
-        android:id="@+id/menuOrdine"
+        android:id="@+id/lastOrder"
         android:icon="@drawable/ic_ordine_ultimo"
         android:title="@string/ultimo_ordine"/>
 
