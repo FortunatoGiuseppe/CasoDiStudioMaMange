@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.model.Plate;
+import com.example.casodistudiomamange.model.SoPlate;
 
 import java.util.ArrayList;
 
@@ -25,11 +26,11 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
 
     public static final String SHARED_PREFS = "sharedPrefs";
     private Context context;
-    private ArrayList<Plate> plateArrayList;
+    private ArrayList<SoPlate> plateArrayList;
     private ArrayList<Integer> total= new ArrayList<>();
     private View v_gen;
 
-    public Adapter_Plates_Ordered(Context context, ArrayList<Plate> plateArrayList) {
+    public Adapter_Plates_Ordered(Context context, ArrayList<SoPlate> plateArrayList) {
         this.context = context;
         this.plateArrayList = plateArrayList;
     }
@@ -43,18 +44,18 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
 
     @Override
     public void onBindViewHolder(@NonNull Adapter_Plates_Ordered.myViewHolder holder,@SuppressLint("RecyclerView") int position) {
-        Plate plate = plateArrayList.get(position);
-        holder.textView_plate.setText(plate.getNome());
+        SoPlate soplate = plateArrayList.get(position);
+        holder.textView_plate.setText(soplate.getNomePiatto());
 
         total.add(position,0);
 
         //Appena creo view devo vedere se il totale nello shared preferences è 0 oppure no
         // se non è zero devo rendere gone il tasto aggiungi e devo visualizzare +- con il numero che devo leggere dallo shared
-        if(loadData(plate.getNome())!=0){
+        if(loadData(soplate.getNomePiatto())!=0){
 
             holder.addMoreLayout.setVisibility(View.VISIBLE);
             //imposto nell'array list alla quantità del piatto selezionato il valore letto dallo shared preferences
-            total.set(position,loadData(plate.getNome()));
+            total.set(position,loadData(soplate.getNomePiatto()));
             //imposto alla textView che visualizza la quantità già aggiunta il valore appena letto dallo shared preferences
             holder.tvCount.setText(total.get(position).toString());
 
@@ -69,12 +70,12 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 // decremento quantità
                 total.set(position,total.get(position)-1);
                 //salvo la nuova quantità nello shared preferences
-                saveData(plate.getNome(),total.get(position));
+                saveData(soplate.getNomePiatto(),total.get(position));
                 if(total.get(position) > 0 ) {
-                    ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
+                    ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
                     holder.tvCount.setText(total.get(position) +"");
                 } else {
-                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
+                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
                     holder.addMoreLayout.setVisibility(View.GONE);
                     v_gen.setVisibility(View.GONE);
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
@@ -92,9 +93,9 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 //incremento quantità
                 total.set(position,total.get(position)+1);
                 //salvo la nuova quantità nello shared preferences
-                saveData(plate.getNome(),total.get(position));
+                saveData(soplate.getNomePiatto(),total.get(position));
                 if(total.get(position) <= 10 ) {
-                    ((MaMangeNavigationActivity) context).dbc.incrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
+                    ((MaMangeNavigationActivity) context).dbc.incrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
                     //aggiorno visualizzatore contatore quantità
                     holder.tvCount.setText(total.get(position) +"");
                 }else{
@@ -102,7 +103,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                     builder1.setMessage(R.string.massimoPiatti);
                     total.set(position,total.get(position)-1);
                     //salvo la nuova quantità nello shared preferences
-                    saveData(plate.getNome(),total.get(position));
+                    saveData(soplate.getNomePiatto(),total.get(position));
                     builder1.setCancelable(true);
                     AlertDialog alert = builder1.create();
                     alert.show();

@@ -41,10 +41,9 @@ public class SingleOrderFragment extends Fragment {
     private static final String FILE_NAME = "lastOrder.txt";
     private RecyclerView recyclerView_plates;
     private Adapter_Plates_Ordered adapter_plates;
-    private ArrayList<Plate> plates;
     private TextView username;
     private FirebaseFirestore db;
-    private ArrayList<SoPlate> soPlate = new ArrayList<SoPlate>();
+    private ArrayList<SoPlate> soPlate;
     private boolean wantsLastOrder=false;   //variabile che serve a determinare se l'utente vuole vedere il single order caricato dal file oppure quello fatto al momento
 
 
@@ -54,8 +53,8 @@ public class SingleOrderFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
-        plates = new ArrayList<Plate>();
-        adapter_plates = new Adapter_Plates_Ordered(getContext(), plates);
+        soPlate = new ArrayList<SoPlate>();
+        adapter_plates = new Adapter_Plates_Ordered(getContext(), soPlate);
 
     }
 
@@ -150,23 +149,7 @@ public class SingleOrderFragment extends Fragment {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                             soPlate.add(documentSnapshot.toObject(SoPlate.class));
-                        }
-                        for(int i =0; i<soPlate.size();i++){
-                            db.collection("PIATTI")
-                                    .whereEqualTo("nome",soPlate.get(i).getNomePiatto())
-                                    .get()
-                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task2) {
-                                    if (task2.isSuccessful()) {
-                                        for (QueryDocumentSnapshot doc : task2.getResult()) {
-                                            plates.add(doc.toObject(Plate.class));
-                                            adapter_plates.notifyDataSetChanged();
-
-                                        }
-                                    }
-                                }
-                            });
+                            adapter_plates.notifyDataSetChanged();
                         }
 
                     }
@@ -228,14 +211,14 @@ public class SingleOrderFragment extends Fragment {
 
             while ((text = br.readLine()) != null) {
                 sb.append(text).append("\n");
-                Plate plateOrdered= new Plate();
-                plateOrdered.setNome(text.substring(0, text.indexOf(",")));   //seleziono nomepiatto e lo metto nell'oggetto
-                plates.add(plateOrdered);   //aggiungo il piatto appena letto alla lista dei piatti da stampare
+                SoPlate plateOrdered= new SoPlate();
+                plateOrdered.setNomePiatto(text.substring(0, text.indexOf(",")));   //seleziono nomepiatto e lo metto nell'oggetto
+                soPlate.add(plateOrdered);   //aggiungo il piatto appena letto alla lista dei piatti da stampare
 
                 //aggiungi piatto ordinato al db
                 //se il piatto non esiste già nell'ordine dell'utente lo aggiungo
-                if(!((MaMangeNavigationActivity) getActivity()).dbc.checkIfPlateHasAlreadyBeenOrdered(plateOrdered.getNome(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username)){
-                    ((MaMangeNavigationActivity) getActivity()).dbc.orderPlate(plateOrdered.getNome(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username);
+                if(!((MaMangeNavigationActivity) getActivity()).dbc.checkIfPlateHasAlreadyBeenOrdered(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username)){
+                    ((MaMangeNavigationActivity) getActivity()).dbc.orderPlate(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username);
                 }
             }
         } catch (IOException e) {
