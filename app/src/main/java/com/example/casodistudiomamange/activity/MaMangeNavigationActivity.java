@@ -123,7 +123,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             case R.id.single_order:
                 fragment = new SingleOrderFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("chiamante", "tastoSingleOrder");
+                bundle.putString("chiamante", "tastoSingleOrder"); //specifica a singleOrderFragment che deve caricare l'ordine corrente
                 fragment.setArguments(bundle);
                 break;
             case R.id.group_order:
@@ -180,11 +180,9 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         //carica dati dal file e apri single order con i piatti presenti nel file
         Fragment fragment = new SingleOrderFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("chiamante", "lastOrder");
+        bundle.putString("chiamante", "lastOrder"); //specifica in singleOrderFragment che deve caricare l'ultimo ordine salvato
         fragment.setArguments(bundle);
         loadFragment(fragment);
-
-
     }
 
     private String getEmail(){

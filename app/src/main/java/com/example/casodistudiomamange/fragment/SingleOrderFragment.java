@@ -45,8 +45,7 @@ public class SingleOrderFragment extends Fragment {
     private TextView username;
     private FirebaseFirestore db;
     private ArrayList<SoPlate> soPlate = new ArrayList<SoPlate>();
-
-
+    private boolean wantsLastOrder=false;   //variabile che serve a determinare se l'utente vuole vedere il single order caricato dal file oppure quello fatto al momento
 
 
     @Override
@@ -78,8 +77,10 @@ public class SingleOrderFragment extends Fragment {
         recyclerView_plates.setAdapter(adapter_plates);
 
 
+        //Vedo se sono arrivato qui da una chiamata dal tasto inserisci ultimo ordine
         if (getArguments().getString("chiamante").equals("lastOrder") ){
-            load(v);
+            //se è vero allora voglio caricare l'ultimo ordine
+            wantsLastOrder=true;
         }
 
         caricaOrdinazione();
@@ -89,6 +90,12 @@ public class SingleOrderFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(getResources().getString(R.string.ordineSalvato));
+                builder.setMessage(" ");
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
                 //crea file contenente i piatti ordinati (salvataggio ultimo ordine)
                 //IL FILE CONTIENE NOME PIATTO E QUANTITÀ
                 save(v,soPlate);
@@ -96,16 +103,73 @@ public class SingleOrderFragment extends Fragment {
             }
         });
 
-
-     /*   Button load= v.findViewById((R.id.load));
-        load.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });*/
-
         return v;
+
+    }
+
+    private void caricaOrdinazione() {
+
+        //se l'utente vuole caricare l'ultimo ordine fatto
+        if(wantsLastOrder){
+
+            //carico l'array globale plates con i nomi dei piatti letti dal file
+            //NOTA: NON VIENE LETTA LA QUANTITÀ PERCHÈ IN OGGETTI DI PLATES NON È POSSIBILE INSERIRLA
+            //occorrerebbe stampare la lista degli soplate piuttosto che la lista di plates, modifica che impatterebbe anche su singlePlates corrente e non letto dal file
+            load();
+
+            //devo stampare nelle view ciò che leggo dal file
+            adapter_plates.notifyDataSetChanged();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(getResources().getString(R.string.ordineCaricato));
+            builder.setMessage(" ");
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+
+        }else{
+
+            String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
+            String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
+            String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
+            String username = ((MaMangeNavigationActivity) getActivity()).username;
+
+
+            db.collection("SO-PIATTO")
+                    .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
+                    .whereEqualTo("codiceGroupOrder",codiceGroupOrder)
+                    .whereEqualTo("codiceTavolo",codiceTavolo)
+                    .whereEqualTo("username",username)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                            soPlate.add(documentSnapshot.toObject(SoPlate.class));
+                        }
+                        for(int i =0; i<soPlate.size();i++){
+                            db.collection("PIATTI")
+                                    .whereEqualTo("nome",soPlate.get(i).getNomePiatto())
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task2) {
+                                    if (task2.isSuccessful()) {
+                                        for (QueryDocumentSnapshot doc : task2.getResult()) {
+                                            plates.add(doc.toObject(Plate.class));
+                                            adapter_plates.notifyDataSetChanged();
+
+                                        }
+                                    }
+                                }
+                            });
+                        }
+
+                    }
+                }
+            });
+
+        }
 
     }
 
@@ -142,7 +206,7 @@ public class SingleOrderFragment extends Fragment {
     }
 
     //Metodo per caricare i piatti dell'ultimo ordine effettuato
-    public void load(View v) {
+    public void load() {
         FileInputStream fis = null;
 
         try {
@@ -154,13 +218,11 @@ public class SingleOrderFragment extends Fragment {
 
             while ((text = br.readLine()) != null) {
                 sb.append(text).append("\n");
+                Plate plateOrdered= new Plate();
+                plateOrdered.setNome(text.substring(0, text.indexOf(",")));   //seleziono nomepiatto e lo metto nell'oggetto
+                plates.add(plateOrdered);   //aggiungo il piatto appena letto alla lista dei piatti da stampare
             }
 
-            //stampa alert con piatti salvati
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(sb.toString());
-            AlertDialog dialog = builder.create();
-            dialog.show();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -173,48 +235,7 @@ public class SingleOrderFragment extends Fragment {
                 }
             }
         }
-    }
-
-
-
-    private void caricaOrdinazione() {
-
-        String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
-        String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
-        String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
-        String username = ((MaMangeNavigationActivity) getActivity()).username;
-
-
-        db.collection("SO-PIATTO")
-                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
-                .whereEqualTo("codiceGroupOrder",codiceGroupOrder)
-                .whereEqualTo("codiceTavolo",codiceTavolo)
-                .whereEqualTo("username",username)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                        soPlate.add(documentSnapshot.toObject(SoPlate.class));
-                    }
-                    for(int i =0; i<soPlate.size();i++){
-                        db.collection("PIATTI").whereEqualTo("nome",soPlate.get(i).getNomePiatto()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task2) {
-                                if (task2.isSuccessful()) {
-                                    for (QueryDocumentSnapshot doc : task2.getResult()) {
-                                        plates.add(doc.toObject(Plate.class));
-                                        adapter_plates.notifyDataSetChanged();
-
-                                    }
-                                }
-                            }
-                        });
-                    }
-
-                }
-            }
-        });
 
     }
+
 }
