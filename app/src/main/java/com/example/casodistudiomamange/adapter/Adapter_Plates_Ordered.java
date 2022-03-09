@@ -17,7 +17,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
-import com.example.casodistudiomamange.model.Plate;
 import com.example.casodistudiomamange.model.SoPlate;
 
 import java.util.ArrayList;
@@ -51,17 +50,19 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
 
         //Appena creo view devo vedere se il totale nello shared preferences è 0 oppure no
         // se non è zero devo rendere gone il tasto aggiungi e devo visualizzare +- con il numero che devo leggere dallo shared
-        if(loadData(soplate.getNomePiatto())!=0){
+        if(loadDataSharedPref(soplate.getNomePiatto())!=0){
 
             holder.addMoreLayout.setVisibility(View.VISIBLE);
             //imposto nell'array list alla quantità del piatto selezionato il valore letto dallo shared preferences
-            total.set(position,loadData(soplate.getNomePiatto()));
-            //imposto alla textView che visualizza la quantità già aggiunta il valore appena letto dallo shared preferences
+            total.set(position, loadDataSharedPref(soplate.getNomePiatto()));
+            //imposto alla textView che visualizza la quantità già aggiunta il valore appena letto dallo shared preferences o dal file letto
             holder.tvCount.setText(total.get(position).toString());
-
         }else{
-            holder.addMoreLayout.setVisibility(View.GONE);
-
+            if(total.get(position)==0){
+                holder.tvCount.setText(String.valueOf(soplate.getQuantita()));
+            }else{
+                holder.addMoreLayout.setVisibility(View.GONE);
+            }
         }
 
         holder.imageMinus.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +71,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 // decremento quantità
                 total.set(position,total.get(position)-1);
                 //salvo la nuova quantità nello shared preferences
-                saveData(soplate.getNomePiatto(),total.get(position));
+                saveDataSharedPref(soplate.getNomePiatto(),total.get(position));
                 if(total.get(position) > 0 ) {
                     ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
                     holder.tvCount.setText(total.get(position) +"");
@@ -93,7 +94,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 //incremento quantità
                 total.set(position,total.get(position)+1);
                 //salvo la nuova quantità nello shared preferences
-                saveData(soplate.getNomePiatto(),total.get(position));
+                saveDataSharedPref(soplate.getNomePiatto(),total.get(position));
                 if(total.get(position) <= 10 ) {
                     ((MaMangeNavigationActivity) context).dbc.incrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
                     //aggiorno visualizzatore contatore quantità
@@ -103,7 +104,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                     builder1.setMessage(R.string.massimoPiatti);
                     total.set(position,total.get(position)-1);
                     //salvo la nuova quantità nello shared preferences
-                    saveData(soplate.getNomePiatto(),total.get(position));
+                    saveDataSharedPref(soplate.getNomePiatto(),total.get(position));
                     builder1.setCancelable(true);
                     AlertDialog alert = builder1.create();
                     alert.show();
@@ -140,7 +141,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     }
 
     //metodo per salvare nello shared preferences la quantità relativa al piatto passato come parametro
-    public void saveData(String nomePiatto,int total) {
+    public void saveDataSharedPref(String nomePiatto, int total) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -149,7 +150,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     }
 
     //metodo per caricare dallo shared preferences la quantità relativa al piatto passato come parametro
-    public int loadData(String nomePiatto) {
+    public int loadDataSharedPref(String nomePiatto) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
         //0 è il valore passato di default, cioè se nello shared preferences non esiste una quantità precedentemente aggiunta per quel piatto
         return sharedPreferences.getInt(nomePiatto,0);

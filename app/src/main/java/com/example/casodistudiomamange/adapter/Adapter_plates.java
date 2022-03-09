@@ -121,7 +121,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
 
                 //Aggiunta del piatto nel DB
 
-                ((MaMangeNavigationActivity) context).dbc.orderPlate(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
+                ((MaMangeNavigationActivity) context).dbc.orderPlate(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username, (long)1);
 
                 //aggiornamento icona aggiunta
                 holder.addMoreLayout.setVisibility(View.VISIBLE);

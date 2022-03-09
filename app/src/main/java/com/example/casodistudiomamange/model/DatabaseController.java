@@ -153,7 +153,7 @@ public class DatabaseController {
     }
 
     /*Metodo che associa il piatto selezionato al codice del singleOrder*/
-    public void orderPlate(String plate, String codiceSingleOrder, String codiceGroupOrder, String codiceTavolo,String username){
+    public void orderPlate(String plate, String codiceSingleOrder, String codiceGroupOrder, String codiceTavolo,String username,Long quantita){
         
         df.collection("SO-PIATTO")
         .get()
@@ -167,7 +167,7 @@ public class DatabaseController {
                     Map<String, Object> creaSoPiatto = new HashMap<>();
                     creaSoPiatto.put("codiceSingleOrder", codiceSingleOrder);
                     creaSoPiatto.put("nomePiatto", plate);
-                    creaSoPiatto.put("quantita",1);
+                    creaSoPiatto.put("quantita",quantita);
                     creaSoPiatto.put("codiceGroupOrder",codiceGroupOrder);
                     creaSoPiatto.put("codiceTavolo",codiceTavolo);
                     creaSoPiatto.put("username",username);

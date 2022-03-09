@@ -1,14 +1,12 @@
 package com.example.casodistudiomamange.fragment;
 
-import android.annotation.SuppressLint;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -18,16 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
-import com.example.casodistudiomamange.activity.QRCodeActivity;
 import com.example.casodistudiomamange.adapter.Adapter_Plates_Ordered;
-import com.example.casodistudiomamange.model.Plate;
 import com.example.casodistudiomamange.model.SoPlate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -46,16 +41,13 @@ public class SingleOrderFragment extends Fragment {
     private ArrayList<SoPlate> soPlate;
     private boolean wantsLastOrder=false;   //variabile che serve a determinare se l'utente vuole vedere il single order caricato dal file oppure quello fatto al momento
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
-        soPlate = new ArrayList<SoPlate>();
+        soPlate = new ArrayList<>();
         adapter_plates = new Adapter_Plates_Ordered(getContext(), soPlate);
-
     }
 
     @Nullable
@@ -129,14 +121,12 @@ public class SingleOrderFragment extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
 
-
         }else{
 
             String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
             String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
             String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
             String username = ((MaMangeNavigationActivity) getActivity()).username;
-
 
             db.collection("SO-PIATTO")
                     .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
@@ -206,22 +196,20 @@ public class SingleOrderFragment extends Fragment {
             fis = getContext().openFileInput(FILE_NAME);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
             String text;
 
             while ((text = br.readLine()) != null) {
-                text=text+("/");
+                text=text+("/");    //aggiungo lo slash per identificare la fine della riga
                 SoPlate plateOrdered= new SoPlate();
                 plateOrdered.setNomePiatto(text.substring(0, text.indexOf(",")));   //seleziono nomepiatto e lo metto nell'oggetto
-                plateOrdered.setQuantita(Long.parseLong(text.substring(text.indexOf(",")+1, text.indexOf("/"))));
+                plateOrdered.setQuantita(Long.parseLong(text.substring(text.indexOf(",")+1, text.indexOf("/")))); //seleziono quantità
 
-               // Long.parseLong(text.substring(text.indexOf(",")+1, text.indexOf("/")));
                 soPlate.add(plateOrdered);   //aggiungo il piatto appena letto alla lista dei piatti da stampare
 
                 //aggiungi piatto ordinato al db
                 //se il piatto non esiste già nell'ordine dell'utente lo aggiungo
                 if(!((MaMangeNavigationActivity) getActivity()).dbc.checkIfPlateHasAlreadyBeenOrdered(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username)){
-                    ((MaMangeNavigationActivity) getActivity()).dbc.orderPlate(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username);
+                    ((MaMangeNavigationActivity) getActivity()).dbc.orderPlate(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username,plateOrdered.getQuantita());
                 }
             }
         } catch (IOException e) {
