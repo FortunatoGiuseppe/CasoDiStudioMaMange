@@ -33,7 +33,7 @@ public class Adapter_Profile_Ordered_GroupOrder extends RecyclerView.Adapter<Ada
     @Override
     public void onBindViewHolder(@NonNull Adapter_Profile_Ordered_GroupOrderViewHolder holder, int position) {
         holder.plateName.setText(soPlateList.get(position).getNomePiatto());
-        holder.tvCount.setText((int) soPlateList.get(position).getQuantita());
+        holder.tvCount.setText(Integer.toString((int)soPlateList.get(position).getQuantita()));
     }
 
     @Override

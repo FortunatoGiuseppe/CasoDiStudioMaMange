@@ -1,6 +1,7 @@
 package com.example.casodistudiomamange.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.example.casodistudiomamange.model.SoPlate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -38,7 +40,7 @@ public class GroupOrderFragment extends Fragment {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
         profileList = new ArrayList<>();
-        listadiLista = new ArrayList<>();
+        listadiLista = new ArrayList<ArrayList<SoPlate>>();
         adapter_profile = new Adapter_Profile(profileList);
 
     }
@@ -55,23 +57,35 @@ public class GroupOrderFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter_profile);
 
-        leggiUsername();
-
+        leggiUsername(new metododiCallbackListaProfili() {
+            @Override
+            public void onCallback(List<Profile> profili) {
+                leggiOrdinazioni(profili, new metododiCallbackListadiListe() {
+                    @Override
+                    public void onCallback(ArrayList<ArrayList<SoPlate>> listadiListeCallBack) {
+                        for(int i= 0; i<profili.size(); i++){
+                            listadiListeCallBack.size();
+                            profili.get(i).setSoPlates(listadiListeCallBack.get(i));
+                            adapter_profile.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+        });
 
         return v;
     }
 
-    private void leggiUsername(){
+    /*Metodo che serve a leggere ogni username del GroupOrder corrente ed ad inserirlo in una lista di profili*/
+    private void leggiUsername(metododiCallbackListaProfili profilicallback){
+
         String groupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
-
-
         ArrayList<SoPlate> listaUtentiDelGroupOrder = new ArrayList<>(); //lista che conterrà i document di soplate letti dal db
         //Query 1: dobbiamo selezionare tutti gli utenti di quel group order
         //Query 2: Per ogni utente dobbiamo selezionare tutti gli so-plate associati a lui che ha ordinato
 
-
         db.collection("SO-PIATTO")
-                .whereEqualTo("codiceGroupOrder",groupOrder)
+                .whereEqualTo("codiceGroupOrder",groupOrder).orderBy("username", Query.Direction.ASCENDING)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -83,8 +97,7 @@ public class GroupOrderFragment extends Fragment {
                             Profile profile = new Profile();
                             profile.setNomeProfilo(documentSnapshot.toObject(SoPlate.class).getUsername());
                             profileList.add(profile);
-                            leggiOrdinazioni(profileList);
-
+                            profilicallback.onCallback(profileList);
                             adapter_profile.notifyDataSetChanged();
                         } else {
                             //variabile che serve a capire se esiste già nella lista un username
@@ -102,109 +115,61 @@ public class GroupOrderFragment extends Fragment {
                                 Profile profile = new Profile();
                                 profile.setNomeProfilo(documentSnapshot.toObject(SoPlate.class).getUsername());
                                 profileList.add(profile);
-                                leggiOrdinazioni(profileList);
+                                profilicallback.onCallback(profileList);
                                 adapter_profile.notifyDataSetChanged();
                             }
                         }
                     }
                 }
-
             }
         });
-
     }
 
-    private void leggiOrdinazioni(List<Profile> profileList){
-        ArrayList<SoPlate>listaDiAppoggio = new ArrayList<>();
-        for(int i=0; i<profileList.size();i++){
-            db.collection("SO-PIATTO")
-                    .whereEqualTo("username",profileList.get(i).getNomeProfilo())
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if(task.isSuccessful()){
-                                for(QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
-                                    listaDiAppoggio.add(queryDocumentSnapshot.toObject(SoPlate.class));
-                                }
-                                listadiLista.add(listaDiAppoggio);
-                                associaTutto(profileList, listadiLista);
-                            }
-
-                        }
-                    });
-        }
-    }
-
-    private void associaTutto(List<Profile> profileList, ArrayList<ArrayList<SoPlate>>listadiLista){
-        for(int i=0; i<profileList.size(); i++){
-            profileList.get(i).setSoPlates(listadiLista.get(i));
-            adapter_profile.notifyDataSetChanged();
-        }
-    }
-
-    /*
-    private void caricaProfili(){
+    /*Metodo che serve a leggere ogni SoPlate del GroupOrder corrente ed ad inserire
+    * ogni lista di SoPlate di un utente in una lista di SoPlate generica di tutti gli utenti*/
+    private void leggiOrdinazioni(List<Profile> profileList, metododiCallbackListadiListe listadiListeCallBack){
         String groupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
+        String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
+        ArrayList<SoPlate>listaTuttiSO = new ArrayList<>();
 
+        db.collection("SO-PIATTO")
+            .whereEqualTo("codiceGroupOrder",groupOrder)
+            .whereEqualTo("codiceTavolo",codiceTavolo)
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        for(QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
+                            listaTuttiSO.add(queryDocumentSnapshot.toObject(SoPlate.class));
+                        }
 
-        ArrayList<SoPlate> listaUtentiDelGroupOrder = new ArrayList<SoPlate>();
-        //Query 1: dobbiamo selezionare tutti gli utenti di quel group order
-        //Query 2: Per ogni utente dobbiamo selezionare tutti gli so-plate associati a lui che ha ordinato
-
-
-        ffdb.collection("SO-PIATTO").whereEqualTo("codiceGroupOrder",groupOrder)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                        listaUtentiDelGroupOrder.add(documentSnapshot.toObject(SoPlate.class));
-
-                    }
-                    for (int i = 0; i < listaUtentiDelGroupOrder.size(); i++){
-                        Profile profile = new Profile();
-                        profile.setNomeProfilo(listaUtentiDelGroupOrder.get(i).getUsername());
-                        profileList.add(profile);
-                        caricaPiatti(profile);
-                        adapter_profile.notifyDataSetChanged();
-                    }
-
-                }
-
-            }
-        });
-    }
-
-    private void caricaPiatti(Profile profile){
-        ArrayList<SoPlate> soPlate = new ArrayList<SoPlate>();
-        ffdb.collection("SO-PIATTO")
-                .whereEqualTo("username", profile.getNomeProfilo())
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                        soPlate.add(documentSnapshot.toObject(SoPlate.class));
-                    }
-                    for(int i =0; i<soPlate.size();i++){
-                        ffdb.collection("PIATTI").whereEqualTo("nome",soPlate.get(i).getNomePiatto()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task2) {
-                                if (task2.isSuccessful()) {
-                                    for (QueryDocumentSnapshot doc : task2.getResult()) {
-                                        plates.add(doc.toObject(Plate.class));
-                                        adapter_plates_ordered.notifyDataSetChanged();
-
-                                    }
+                        for(int j = 0; j< profileList.size(); j++){
+                            ArrayList<SoPlate> listaordiniutente = new ArrayList<>();
+                            for(int i= 0; i< listaTuttiSO.size(); i++){
+                                if(listaTuttiSO.get(i).getUsername().equals(profileList.get(j).getNomeProfilo())){
+                                    listaordiniutente.add(listaTuttiSO.get(i));
                                 }
                             }
-                        });
+                            listadiLista.add(listaordiniutente);
+                        }
+                        listadiListeCallBack.onCallback(listadiLista);
                     }
-
                 }
-            }
-        });
+            });
+        }
     }
-*/
-}
+
+    /*Interfaccia che permette di chiamare il metodo di Callback*/
+    interface metododiCallbackListaProfili{
+        //metodo che permette di utilizzare il codiceSingleOrder e codiceGroupOrder letto dal db
+        void onCallback(List<Profile> profili);
+    }
+
+    /*Interfaccia che permette di chiamare il metodo di Callback*/
+    interface metododiCallbackListadiListe{
+        //metodo che permette di utilizzare il codiceSingleOrder e codiceGroupOrder letto dal db
+        void onCallback(ArrayList<ArrayList<SoPlate>> listadiListeCallBack);
+    }
+
+
