@@ -210,9 +210,12 @@ public class SingleOrderFragment extends Fragment {
             String text;
 
             while ((text = br.readLine()) != null) {
-                sb.append(text).append("\n");
+                text=text+("/");
                 SoPlate plateOrdered= new SoPlate();
                 plateOrdered.setNomePiatto(text.substring(0, text.indexOf(",")));   //seleziono nomepiatto e lo metto nell'oggetto
+                plateOrdered.setQuantita(Long.parseLong(text.substring(text.indexOf(",")+1, text.indexOf("/"))));
+
+               // Long.parseLong(text.substring(text.indexOf(",")+1, text.indexOf("/")));
                 soPlate.add(plateOrdered);   //aggiungo il piatto appena letto alla lista dei piatti da stampare
 
                 //aggiungi piatto ordinato al db
