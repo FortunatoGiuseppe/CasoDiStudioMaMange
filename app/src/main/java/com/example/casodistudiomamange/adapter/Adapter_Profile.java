@@ -18,12 +18,13 @@ import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.model.Profile;
 import com.example.casodistudiomamange.model.SoPlate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myViewHolder> {
 
     private List<Profile> profileList;
-    private List<SoPlate> soPlates;
+    private List<SoPlate> soPlates = new ArrayList<>();
 
     public Adapter_Profile(List<Profile> profileList) {
         this.profileList = profileList;
