@@ -48,6 +48,7 @@ public class SingleOrderFragment extends Fragment {
     private boolean wantsLastOrder=false;   //variabile che serve a determinare se l'utente vuole vedere il single order caricato dal file oppure quello fatto al momento
 
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -116,6 +117,9 @@ public class SingleOrderFragment extends Fragment {
             //NOTA: NON VIENE LETTA LA QUANTITÀ PERCHÈ IN OGGETTI DI PLATES NON È POSSIBILE INSERIRLA
             //occorrerebbe stampare la lista degli soplate piuttosto che la lista di plates, modifica che impatterebbe anche su singlePlates corrente e non letto dal file
             load();
+
+            //Aggiungi piatti ordinati nel DB
+
 
             //devo stampare nelle view ciò che leggo dal file
             adapter_plates.notifyDataSetChanged();
@@ -205,8 +209,14 @@ public class SingleOrderFragment extends Fragment {
         }
     }
 
-    //Metodo per caricare i piatti dell'ultimo ordine effettuato
+    //Metodo per caricare i piatti dell'ultimo ordine effettuato, li aggiunge al DB e alla lista dalla quale l'adapter prende i dati per stamparli
     public void load() {
+
+        String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
+        String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
+        String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
+        String username = ((MaMangeNavigationActivity) getActivity()).username;
+
         FileInputStream fis = null;
 
         try {
@@ -221,9 +231,13 @@ public class SingleOrderFragment extends Fragment {
                 Plate plateOrdered= new Plate();
                 plateOrdered.setNome(text.substring(0, text.indexOf(",")));   //seleziono nomepiatto e lo metto nell'oggetto
                 plates.add(plateOrdered);   //aggiungo il piatto appena letto alla lista dei piatti da stampare
+
+                //aggiungi piatto ordinato al db
+                //se il piatto non esiste già nell'ordine dell'utente lo aggiungo
+                if(!((MaMangeNavigationActivity) getActivity()).dbc.checkIfPlateHasAlreadyBeenOrdered(plateOrdered.getNome(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username)){
+                    ((MaMangeNavigationActivity) getActivity()).dbc.orderPlate(plateOrdered.getNome(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username);
+                }
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
