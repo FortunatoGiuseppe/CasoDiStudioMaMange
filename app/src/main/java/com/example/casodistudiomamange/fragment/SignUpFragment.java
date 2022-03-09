@@ -20,7 +20,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.regex.Pattern;
 
-
 public class SignUpFragment extends Fragment {
     TextView email;
     TextView pass;
@@ -47,7 +46,6 @@ public class SignUpFragment extends Fragment {
                 register();
             }
         });
-
         return root;
     }
 
@@ -86,13 +84,11 @@ public class SignUpFragment extends Fragment {
             }
         }
 
-
         if(!passconf.getText().toString().trim().contains(pass.getText().toString().trim())){
             passconf.setError("Enter the same password");
             passconf.requestFocus();
             return;
         }
-
 
         rAuth.createUserWithEmailAndPassword(email.getText().toString().trim(), pass.getText().toString().trim())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

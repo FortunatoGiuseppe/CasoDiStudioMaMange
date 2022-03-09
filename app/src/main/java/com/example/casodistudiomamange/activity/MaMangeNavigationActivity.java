@@ -69,6 +69,10 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
                     case R.id.menuProfile:
                         launchProfileActivity(username);
                         break;
+
+                    case R.id.lastOrder:
+                        launchLastOrderFragment();
+                        break;
                 }
                 return false;
             }
@@ -118,6 +122,9 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
                 break;
             case R.id.single_order:
                 fragment = new SingleOrderFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("chiamante", "tastoSingleOrder"); //specifica a singleOrderFragment che deve caricare l'ordine corrente
+                fragment.setArguments(bundle);
                 break;
             case R.id.group_order:
                 fragment = new GroupOrderFragment();
@@ -166,6 +173,16 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         Intent intent2 = new Intent(MaMangeNavigationActivity.this, ProfileActivity.class);
         intent2.putExtra("username",username);
         startActivity(intent2);
+    }
+
+    private void launchLastOrderFragment(){
+
+        //carica dati dal file e apri single order con i piatti presenti nel file
+        Fragment fragment = new SingleOrderFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("chiamante", "lastOrder"); //specifica in singleOrderFragment che deve caricare l'ultimo ordine salvato
+        fragment.setArguments(bundle);
+        loadFragment(fragment);
     }
 
     private String getEmail(){

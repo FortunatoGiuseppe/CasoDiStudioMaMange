@@ -49,4 +49,7 @@
     <string name="about_us">Chi siamo</string>
     <string name="codice_tavolo">Codice Tavolo</string>
     <string name="ordinazione">Ordine di </string>
+    <string name="filename">lastOrder</string>
+    <string name="ordineSalvato">Il tuo ordine è stato confermato!</string>
+    <string name="ordineCaricato">Il tuo ultimo ordine è stato caricato!</string>
 </resources>

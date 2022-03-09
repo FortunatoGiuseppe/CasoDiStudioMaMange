@@ -22,6 +22,8 @@ public class DatabaseController {
     private SoPlate singleOrderPlate;
     private int codiceGroupOrder;
     private int codiceSingleOrder;
+
+    private boolean alreadyExists=false;
     
     public DatabaseController() {
         this.df= FirebaseFirestore.getInstance();
@@ -260,6 +262,33 @@ public class DatabaseController {
                 }
         });
     }
+
+
+    //Metodo che permette di capire se piatti di un ordine letti dal file locale sono già presenti nel db
+    public boolean checkIfPlateHasAlreadyBeenOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo,String username){
+
+        df.collection("SO-PIATTO")
+                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
+                .whereEqualTo("nomePiatto",plate)
+                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+                .whereEqualTo("codiceTavolo", codiceTavolo)
+                .whereEqualTo("username",username)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if(task.isSuccessful()){
+                            alreadyExists= true;    //se ha trovato risultati vuol dire che l'ordine era già stato aggiunto
+                        }else{
+                            alreadyExists=false;
+                        }
+                    }
+                });
+        return alreadyExists;
+    }
+
 
     /*Interfaccia che permette di chiamare il metodo di Callback*/
     public interface metododiCallback{
