@@ -36,7 +36,7 @@ public class SingleOrderFragment extends Fragment {
     private static final String FILE_NAME = "lastOrder.txt";
     private RecyclerView recyclerView_plates;
     private Adapter_Plates_Ordered adapter_plates;
-    private TextView username;
+    private TextView username_tv;
     private FirebaseFirestore db;
     private ArrayList<SoPlate> soPlate;
     private boolean wantsLastOrder=false;   //variabile che serve a determinare se l'utente vuole vedere il single order caricato dal file oppure quello fatto al momento
@@ -57,10 +57,10 @@ public class SingleOrderFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_single_order, null);
         getActivity().setTitle("Single Order");
 
-        username = v.findViewById(R.id.usernameTextView);
+        username_tv = v.findViewById(R.id.usernameTextView);
         String ordinazione = getResources().getString(R.string.ordinazione);
         String usernameInserito = ((MaMangeNavigationActivity) getActivity()).username;
-        username.setText(ordinazione + " " + usernameInserito);
+        username_tv.setText(ordinazione + " " + usernameInserito);
 
         recyclerView_plates = v.findViewById(R.id.recyclerViewSingleOrderPlates);
         recyclerView_plates.setHasFixedSize(true);
@@ -91,6 +91,13 @@ public class SingleOrderFragment extends Fragment {
                 //crea file contenente i piatti ordinati (salvataggio ultimo ordine)
                 //IL FILE CONTIENE NOME PIATTO E QUANTITÀ
                 save(v,soPlate);
+
+                //imposta l'attributo singleOrderConfirmed a true
+                String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
+                String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
+                String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
+
+                ((MaMangeNavigationActivity) getActivity()).dbc.setSingleOrderConfirmed(codiceSingleOrder,codiceGroupOrder,codiceTavolo);
 
             }
         });

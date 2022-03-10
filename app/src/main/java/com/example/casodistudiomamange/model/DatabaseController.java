@@ -103,7 +103,7 @@ public class DatabaseController {
                                 nuovoSingleOrder.put("codiceSingleOrder", singleOrder.getCodiceSingleOrder());
                                 nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder());
                                 nuovoSingleOrder.put("codiceTavolo",singleOrder.getCodiceTavolo());
-                                nuovoSingleOrder.put("isSingleOrderConfirmed",false);
+                                nuovoSingleOrder.put("singleOrderConfirmed",false);
                                 df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
                                 
                                 //Assegno al metodo di CallBack il codice del SingleOrder e GroupOrder
@@ -156,7 +156,7 @@ public class DatabaseController {
                                                 nuovoSingleOrder.put("codiceSingleOrder", singleOrder.getCodiceSingleOrder());
                                                 nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder());
                                                 nuovoSingleOrder.put("codiceTavolo",codiceTavolo);
-                                                nuovoSingleOrder.put("isSingleOrderConfirmed",false);
+                                                nuovoSingleOrder.put("singleOrderConfirmed",false);
                                                 df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
 
                                                 //Assegno al metodo di CallBack il codice del SingleOrder e GroupOrder
@@ -308,6 +308,27 @@ public class DatabaseController {
                     }
                 });
         return alreadyExists;
+    }
+
+
+    public void setSingleOrderConfirmed(String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo){
+        df.collection("SINGLE ORDERS")
+                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
+                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+                .whereEqualTo("codiceTavolo", codiceTavolo)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                df.collection("SINGLE ORDERS")
+                                        .document(documentSnapshot.getId())
+                                        .update("singleOrderConfirmed",true);
+                            }
+                        }
+                    }
+                });
     }
 
 

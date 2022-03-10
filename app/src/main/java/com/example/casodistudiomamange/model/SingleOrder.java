@@ -4,24 +4,24 @@ public class SingleOrder {
     private String codiceSingleOrder;
     private String codiceGroupOrder;
     private String codiceTavolo;
-    private boolean isSingleOrderConfirmed;
+    private boolean singleOrderConfirmed;
 
     public SingleOrder() {
     }
 
-    public SingleOrder(String codiceSingleOrder, String codiceGroupOrder, String codiceTavolo, boolean isSingleOrderConfirmed) {
+    public SingleOrder(String codiceSingleOrder, String codiceGroupOrder, String codiceTavolo, boolean singleOrderConfirmed) {
         this.codiceSingleOrder = codiceSingleOrder;
         this.codiceGroupOrder = codiceGroupOrder;
         this.codiceTavolo = codiceTavolo;
-        this.isSingleOrderConfirmed = isSingleOrderConfirmed;
+        this.singleOrderConfirmed = singleOrderConfirmed;
     }
 
     public boolean isSingleOrderConfirmed() {
-        return isSingleOrderConfirmed;
+        return singleOrderConfirmed;
     }
 
     public void setSingleOrderConfirmed(boolean singleOrderConfirmed) {
-        isSingleOrderConfirmed = singleOrderConfirmed;
+        this.singleOrderConfirmed = singleOrderConfirmed;
     }
 
     public String getCodiceSingleOrder() {
