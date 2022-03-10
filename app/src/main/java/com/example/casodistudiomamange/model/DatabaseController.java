@@ -57,21 +57,42 @@ public class DatabaseController {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             
                             if (task.isSuccessful()) {
+                                // se il groupOrder è nullo, creo il primo GroupOrder con codice GO0
+                                if(task.getResult().isEmpty()){
+                                    groupOrder = new GroupOrder();
+                                    groupOrder.setCodiceTavolo(codiceTavolo);
+                                    groupOrder.setTableFree(false);
+                                    groupOrder.setCodice("GO0");
 
-                                //prendo l'ultimo elemento della lista
-                                groupOrder=(task.getResult().toObjects(GroupOrder.class)).get(0);
-                                //seleziono la parte numerica del codiceGroupOrder
-                                codiceGroupOrder=Integer.parseInt(task.getResult().toObjects(GroupOrder.class).get(0).getCodice().substring(2));
-                                codiceGroupOrder+=1;
-                                //ricostruisco la stringa
-                                groupOrder.setCodice("GO"+String.valueOf(codiceGroupOrder));
-                                
-                                //creo groupOrder con lo stato a true per permettere ai SingleOrder di unirsi al tavolo
-                                Map<String, Object> nuovoGroupOrder = new HashMap<>();
-                                nuovoGroupOrder.put("codice", groupOrder.getCodice());
-                                nuovoGroupOrder.put("codiceTavolo", codiceTavolo);
-                                nuovoGroupOrder.put("isTableFree", false);  //modificato
-                                df.collection("GROUP ORDERS").add(nuovoGroupOrder);
+                                    //creo groupOrder per permettere ai SingleOrder di unirsi al tavolo
+                                    Map<String, Object> nuovoGroupOrder = new HashMap<>();
+                                    nuovoGroupOrder.put("codice", groupOrder.getCodice());
+                                    nuovoGroupOrder.put("codiceTavolo", groupOrder.getCodiceTavolo());
+                                    nuovoGroupOrder.put("tableFree", groupOrder.isTableFree());
+                                    df.collection("GROUP ORDERS").add(nuovoGroupOrder);
+                                }
+                                else {
+                                    //prendo l'ultimo elemento della lista
+                                    groupOrder=(task.getResult().toObjects(GroupOrder.class)).get(0);
+
+                                    //seleziono la parte numerica del codiceGroupOrder
+                                    codiceGroupOrder=Integer.parseInt(task.getResult()
+                                            .toObjects(GroupOrder.class)
+                                            .get(0).getCodice().substring(2));
+
+                                    //inceremento il nuovo codiceGroupOrder
+                                    codiceGroupOrder+=1;
+
+                                    //ricostruisco la stringa
+                                    groupOrder.setCodice("GO"+String.valueOf(codiceGroupOrder));
+
+                                    //creo groupOrder per permettere ai SingleOrder di unirsi al tavolo
+                                    Map<String, Object> nuovoGroupOrder = new HashMap<>();
+                                    nuovoGroupOrder.put("codice", groupOrder.getCodice());
+                                    nuovoGroupOrder.put("codiceTavolo", codiceTavolo);
+                                    nuovoGroupOrder.put("tableFree", false);
+                                    df.collection("GROUP ORDERS").add(nuovoGroupOrder);
+                                }
 
                                 //creo single order supponendo che il primo single order abbia come codice "SO0"
                                 singleOrder = new SingleOrder();
