@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menuProfile"
-        android:icon="@drawable/ic_profilo_utente"
+        android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/profile"/>
 
     <item
@@ -27,4 +27,11 @@
         </menu>
 
     </item>
+
+    <item
+        android:id="@+id/acc_reg"
+        android:visible="true"
+        android:icon="@drawable/ic_profilo_utente"
+        android:title="@string/acc_reg"/>
+
 </menu>

@@ -52,4 +52,5 @@
     <string name="filename">lastOrder</string>
     <string name="ordineSalvato">Il tuo ordine è stato confermato!</string>
     <string name="ordineCaricato">Il tuo ultimo ordine è stato caricato!</string>
+    <string name="acc_reg">Accedi per sbloccare</string>
 </resources>

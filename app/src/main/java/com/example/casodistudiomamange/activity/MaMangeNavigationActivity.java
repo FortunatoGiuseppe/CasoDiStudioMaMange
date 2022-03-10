@@ -7,8 +7,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.ActionProvider;
+import android.view.ContextMenu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.fragment.GroupOrderFragment;
@@ -31,6 +35,11 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
     public String codiceSingleOrder;
     public String codiceGroupOrder;
+
+    private MenuItem profileItem;
+    private MenuItem lastOrderItem;
+    private MenuItem acc_regItem;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +64,20 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         String email = getEmail();
         if (email.equals("Guest")) {
-            navigationView.getMenu().removeItem(R.id.menuProfile);
+            //Se l'utente è ospite devo disabilitare i tasti profilo e caricamento ultimo ordine perché solo per utenti registrati
+            profileItem = navigationView.getMenu().findItem(R.id.menuProfile);
+            profileItem.setEnabled(false);
+            profileItem.getIcon().setAlpha(130);
+
+            lastOrderItem = navigationView.getMenu().findItem(R.id.lastOrder);
+            lastOrderItem.setEnabled(false);
+            lastOrderItem.getIcon().setAlpha(130);
+
+            acc_regItem = navigationView.getMenu().findItem(R.id.acc_reg);
+            acc_regItem.setVisible(true);
+            acc_regItem.setEnabled(false);
+            acc_regItem.getIcon().setAlpha(130);
+
         }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
