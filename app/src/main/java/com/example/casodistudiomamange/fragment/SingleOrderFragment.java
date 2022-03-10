@@ -1,7 +1,9 @@
 package com.example.casodistudiomamange.fragment;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,6 +109,7 @@ public class SingleOrderFragment extends Fragment {
                         ((MaMangeNavigationActivity) getActivity()).dbc.setSingleOrderConfirmed(codiceSingleOrder,codiceGroupOrder,codiceTavolo);
 
                         //svuoto lo shared preferences
+                        clearSharedPreferences();
 
                         //carica pagina di attesa
 
@@ -257,6 +260,14 @@ public class SingleOrderFragment extends Fragment {
             }
         }
 
+    }
+
+
+    private void clearSharedPreferences() {
+        SharedPreferences sharedPreferences =  (getContext()).getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
     }
 
 }
