@@ -53,4 +53,6 @@
     <string name="ordineSalvato">Il tuo ordine è stato confermato!</string>
     <string name="ordineCaricato">Il tuo ultimo ordine è stato caricato!</string>
     <string name="acc_reg">Accedi per sbloccare</string>
+    <string name="attenzione">Attenzione!</string>
+    <string name="msgAttenzione">Sai confermando il tuo ordine e non potrai più modificarlo. Procedere?</string>
 </resources>

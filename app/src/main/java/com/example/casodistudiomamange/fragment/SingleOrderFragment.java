@@ -1,6 +1,7 @@
 package com.example.casodistudiomamange.fragment;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,22 +83,47 @@ public class SingleOrderFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(getResources().getString(R.string.ordineSalvato));
-                builder.setMessage(" ");
-                AlertDialog dialog = builder.create();
+                AlertDialog.Builder richiestaSicuro = new AlertDialog.Builder(getActivity());
+                richiestaSicuro.setTitle(getResources().getString(R.string.attenzione));
+                richiestaSicuro.setMessage(getResources().getString(R.string.msgAttenzione));
+                richiestaSicuro.setPositiveButton((getResources().getString(R.string.Confirm)), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle(getResources().getString(R.string.ordineSalvato));
+                        builder.setMessage(" ");
+                        AlertDialog dialogConfermato = builder.create();
+                        dialogConfermato.show();
+
+                        //crea file contenente i piatti ordinati (salvataggio ultimo ordine)
+                        //IL FILE CONTIENE NOME PIATTO E QUANTITÀ
+                        save(v,soPlate);
+
+                        //imposta l'attributo singleOrderConfirmed a true
+                        String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
+                        String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
+                        String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
+
+                        ((MaMangeNavigationActivity) getActivity()).dbc.setSingleOrderConfirmed(codiceSingleOrder,codiceGroupOrder,codiceTavolo);
+
+                        //svuoto lo shared preferences
+
+                        //carica pagina di attesa
+
+
+
+
+                    }
+                });
+                richiestaSicuro.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                AlertDialog dialog = richiestaSicuro.create();
                 dialog.show();
 
-                //crea file contenente i piatti ordinati (salvataggio ultimo ordine)
-                //IL FILE CONTIENE NOME PIATTO E QUANTITÀ
-                save(v,soPlate);
-
-                //imposta l'attributo singleOrderConfirmed a true
-                String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
-                String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
-                String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
-
-                ((MaMangeNavigationActivity) getActivity()).dbc.setSingleOrderConfirmed(codiceSingleOrder,codiceGroupOrder,codiceTavolo);
 
             }
         });
