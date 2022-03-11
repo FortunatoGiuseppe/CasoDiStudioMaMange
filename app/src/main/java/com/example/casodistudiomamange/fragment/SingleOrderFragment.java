@@ -13,7 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -87,17 +90,30 @@ public class SingleOrderFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+
+
+
+
                 AlertDialog.Builder richiestaSicuro = new AlertDialog.Builder(getActivity());
                 richiestaSicuro.setTitle(getResources().getString(R.string.attenzione));
                 richiestaSicuro.setMessage(getResources().getString(R.string.msgAttenzione));
                 richiestaSicuro.setPositiveButton((getResources().getString(R.string.Confirm)), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle(getResources().getString(R.string.ordineSalvato));
                         builder.setMessage(" ");
                         AlertDialog dialogConfermato = builder.create();
                         dialogConfermato.show();
+
+
+                        Fragment fragment= new ConfirmFragment();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, fragment);
+                        fragmentTransaction.commit();
+
 
                         //crea file contenente i piatti ordinati (salvataggio ultimo ordine)
                         //IL FILE CONTIENE NOME PIATTO E QUANTITÀ

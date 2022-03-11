@@ -68,11 +68,12 @@ public class SensorFragment extends Fragment {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (!bluetoothAdapter.isEnabled()) {
+            
             Intent richiesta = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(richiesta, REQUEST_ENABLE_BLUETOOTH);
         }
 
-        boolean salvoBOEJA = bluetoothAdapter.startDiscovery();
+        //boolean salvoBOEJA = bluetoothAdapter.startDiscovery();
 
 
 

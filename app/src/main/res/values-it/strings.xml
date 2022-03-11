@@ -53,8 +53,5 @@
     <string name="ordineCaricato">Il tuo ultimo ordine è stato caricato!</string>
     <string name="acc_reg">Accedi per sbloccare</string>
     <string name="attenzione">Attenzione!</string>
-    <string name="msgAttenzione">Stai confermando il tuo ordine e non potrai più modificarlo. Procedere?</string>
-    <string name="inviatoCucinaMsg">Abbiamo ricevuto il tuo ordine e lo stiamo elaborando</string>
-    <string name="inviatoCucina">Ordine inviato alla cucina</string>
-    <string name="chiudi">Chiudi</string>
+    <string name="msgAttenzione">Sai confermando il tuo ordine e non potrai più modificarlo. Procedere?</string>
 </resources>
