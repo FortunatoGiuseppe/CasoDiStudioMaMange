@@ -1,6 +1,10 @@
 package com.example.casodistudiomamange.model;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
+import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.activity.QRCodeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -10,8 +14,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.reactivex.rxjava3.core.Single;
 
 public class DatabaseController {
     
@@ -331,11 +339,50 @@ public class DatabaseController {
                 });
     }
 
+    public void allSingleOrdersAreConfirmed(String codiceGroupOrder,String codiceTavolo, metododiCallbackAllSingleOrderConfirmed areAllConfirmedCallback) {
+
+
+        df.collection("SINGLE ORDERS")
+                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+                .whereEqualTo("codiceTavolo", codiceTavolo)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            ArrayList<SingleOrder> singleOrdersControlConfirmed = new ArrayList<>();
+                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                SingleOrder singleOrderControl = documentSnapshot.toObject(SingleOrder.class);
+                                singleOrdersControlConfirmed.add(singleOrderControl);
+
+                                //se trovo anche solo uno non confermato allora non sono tutti confermati
+                                if(!singleOrderControl.isSingleOrderConfirmed()){
+                                    Boolean areAllConfirmed=false;
+                                    areAllConfirmedCallback.onCallback(areAllConfirmed);
+                                }
+                            }
+                        }
+                    }
+                });
+        areAllConfirmedCallback.onCallback(true);
+
+    }
+
+    public void sendOrdersToTheKitchen() {
+
+    }
+
 
     /*Interfaccia che permette di chiamare il metodo di Callback*/
     public interface metododiCallback{
         //metodo che permette di utilizzare il codiceSingleOrder e codiceGroupOrder letto dal db
         void onCallback(String codiceSingleOrderCheMiServe,String codiceGroupOrder);
+    }
+
+    /*Interfaccia che permette di chiamare il metodo di Callback AllSingleOrderConfirmed*/
+    public interface metododiCallbackAllSingleOrderConfirmed{
+        //metodo che permette di utilizzare il codiceSingleOrder e codiceGroupOrder letto dal db
+        void onCallback(boolean areAllSingleOrderConfirmed);
     }
 
 }

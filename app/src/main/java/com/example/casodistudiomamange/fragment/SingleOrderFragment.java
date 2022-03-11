@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
+import com.example.casodistudiomamange.activity.QRCodeActivity;
 import com.example.casodistudiomamange.adapter.Adapter_Plates_Ordered;
+import com.example.casodistudiomamange.model.DatabaseController;
 import com.example.casodistudiomamange.model.SoPlate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -111,11 +113,33 @@ public class SingleOrderFragment extends Fragment {
                         //svuoto lo shared preferences
                         clearSharedPreferences();
 
-                        //carica pagina di attesa
+                        //se tutti gli ordini singoli sono stati confermati allora manda ordine e carica gioco
+                        //altrimenti carica pagina di attesa
+
+                        ((MaMangeNavigationActivity) getActivity()).dbc.allSingleOrdersAreConfirmed(codiceGroupOrder, codiceTavolo, new DatabaseController.metododiCallbackAllSingleOrderConfirmed() {
+                            @Override
+                            public void onCallback(boolean areAllSingleOrderConfirmed) {
+                                if(areAllSingleOrderConfirmed){
+                                    //invio ordine
+                                    ((MaMangeNavigationActivity) getActivity()).dbc.sendOrdersToTheKitchen();
+                                    //avviso l'utente
+                                    AlertDialog.Builder ordineInviatoCucina = new AlertDialog.Builder(getContext());
+                                    ordineInviatoCucina.setTitle(getResources().getString(R.string.inviatoCucina));
+                                    ordineInviatoCucina.setMessage(getResources().getString(R.string.inviatoCucinaMsg));
+                                    ordineInviatoCucina.setPositiveButton(getResources().getString(R.string.chiudi), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                                        }
+                                    });
+                                    AlertDialog dialog = ordineInviatoCucina.create();
+                                    dialog.show();
+                                }else{
 
 
-
-
+                                }
+                            }
+                        });
                     }
                 });
                 richiestaSicuro.setNegativeButton("No", new DialogInterface.OnClickListener() {

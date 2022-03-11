@@ -35,7 +35,6 @@
     <string name="termina">Termina</string>
     <string name="massimoPiatti">Non puoi aggiungere più di 10 piatti</string>
     <string name="piattoRimosso">Piatto rimosso dal tuo ordine!</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo">Logo</string>
     <string name="Menu">Menu</string>
@@ -54,5 +53,8 @@
     <string name="ordineCaricato">Il tuo ultimo ordine è stato caricato!</string>
     <string name="acc_reg">Accedi per sbloccare</string>
     <string name="attenzione">Attenzione!</string>
-    <string name="msgAttenzione">Sai confermando il tuo ordine e non potrai più modificarlo. Procedere?</string>
+    <string name="msgAttenzione">Stai confermando il tuo ordine e non potrai più modificarlo. Procedere?</string>
+    <string name="inviatoCucinaMsg">Abbiamo ricevuto il tuo ordine e lo stiamo elaborando</string>
+    <string name="inviatoCucina">Ordine inviato alla cucina</string>
+    <string name="chiudi">Chiudi</string>
 </resources>
