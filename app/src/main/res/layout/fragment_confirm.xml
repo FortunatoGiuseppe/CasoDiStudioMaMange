@@ -53,7 +53,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/ShareImg"
             android:layout_width="85dp"
             android:layout_height="74dp"
             android:layout_marginStart="40dp"
@@ -63,7 +63,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/QuizImg"
             android:layout_width="86dp"
             android:layout_height="73dp"
             android:layout_marginTop="88dp"
@@ -81,7 +81,7 @@
             android:text="Share"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+            app:layout_constraintTop_toBottomOf="@+id/ShareImg" />
 
         <TextView
             android:id="@+id/textView3"
@@ -92,7 +92,7 @@
             android:text="Quiz"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6"
+            app:layout_constraintTop_toBottomOf="@+id/QuizImg"
             app:layout_constraintVertical_bias="0.128" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
