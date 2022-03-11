@@ -55,4 +55,6 @@
     <string name="acc_reg">Login to unlock</string>
     <string name="attenzione">Warning!</string>
     <string name="msgAttenzione">You are saving your order and you will no longer be able to modify it. Would you proceed?</string>
+    <string name="ConfSO">Your order was added successfully</string>
+
 </resources>

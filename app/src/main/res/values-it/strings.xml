@@ -55,4 +55,7 @@
     <string name="acc_reg">Accedi per sbloccare</string>
     <string name="attenzione">Attenzione!</string>
     <string name="msgAttenzione">Sai confermando il tuo ordine e non potrai più modificarlo. Procedere?</string>
+    <string name="ConfSO">Il tuo ordine è stato aggiunto correttamente</string>
+
+
 </resources>
