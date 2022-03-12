@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,9 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
-import com.example.casodistudiomamange.activity.QRCodeActivity;
 import com.example.casodistudiomamange.adapter.Adapter_Plates_Ordered;
-import com.example.casodistudiomamange.model.DatabaseController;
 import com.example.casodistudiomamange.model.SoPlate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -90,10 +88,6 @@ public class SingleOrderFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-
-
-
-
                 AlertDialog.Builder richiestaSicuro = new AlertDialog.Builder(getActivity());
                 richiestaSicuro.setTitle(getResources().getString(R.string.attenzione));
                 richiestaSicuro.setMessage(getResources().getString(R.string.msgAttenzione));
@@ -119,43 +113,50 @@ public class SingleOrderFragment extends Fragment {
                         //IL FILE CONTIENE NOME PIATTO E QUANTITÀ
                         save(v,soPlate);
 
-                        //imposta l'attributo singleOrderConfirmed a true
                         String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
                         String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
                         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
 
                         ((MaMangeNavigationActivity) getActivity()).dbc.setSingleOrderConfirmed(codiceSingleOrder,codiceGroupOrder,codiceTavolo);
 
-                        //svuoto lo shared preferences
+                        //svuoto lo shared preferences delle quantità
                         clearSharedPreferences();
 
                         //se tutti gli ordini singoli sono stati confermati allora manda ordine e carica gioco
                         //altrimenti carica pagina di attesa
 
-                        ((MaMangeNavigationActivity) getActivity()).dbc.allSingleOrdersAreConfirmed(codiceGroupOrder, codiceTavolo, new DatabaseController.metododiCallbackAllSingleOrderConfirmed() {
-                            @Override
-                            public void onCallback(boolean areAllSingleOrderConfirmed) {
-                                if(areAllSingleOrderConfirmed){
-                                    //invio ordine
-                                    ((MaMangeNavigationActivity) getActivity()).dbc.sendOrdersToTheKitchen();
-                                    //avviso l'utente
-                                    AlertDialog.Builder ordineInviatoCucina = new AlertDialog.Builder(getContext());
-                                    ordineInviatoCucina.setTitle(getResources().getString(R.string.inviatoCucina));
-                                    ordineInviatoCucina.setMessage(getResources().getString(R.string.inviatoCucinaMsg));
-                                    ordineInviatoCucina.setPositiveButton(getResources().getString(R.string.chiudi), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
+                        //imposto shared pref allSingleOrdersAreConfirmed a true, chiamo metodo che modifica lo shared prefs se trova anche solo uno non confermato,
+                        //leggo lo shared pref e vedo il valore, se allSingleOrdersAreConfirmed è ancora true allora non sono stati trovati single order non confermati
+                        // e quindi posso mandare ordine alla cucina, altrimenti no.
 
-                                        }
-                                    });
-                                    AlertDialog dialog = ordineInviatoCucina.create();
-                                    dialog.show();
-                                }else{
+                        //Imposta lo shared a true, cioè di default si assume che tutti siano stati confermati
+                        ((MaMangeNavigationActivity) getActivity()).clearShared();
+                        ((MaMangeNavigationActivity) getActivity()).setShared(true);
 
+                        //se trova anche solo un single order non confermato viene impostato lo shared a false
+                        ((MaMangeNavigationActivity) getActivity()).dbc.allSingleOrdersAreConfirmed(codiceGroupOrder, codiceTavolo, (MaMangeNavigationActivity) getActivity());
+
+                        //viene mostrato prima questo e poi l'altro, dovrebbe accadere il contrario
+                        Log.d("frag", String.valueOf(((MaMangeNavigationActivity) getActivity()).getSharedPrefs().getBoolean("allSingleOrdersAreConfirmed",true)));
+
+                        //getBoolean ha come parametro un boolean che corrisponde al valore di default che viene restituito nel caso in cui non trova quello shared
+                        if(((MaMangeNavigationActivity) getActivity()).getSharedPrefs().getBoolean("allSingleOrdersAreConfirmed",true)){
+                            //invio ordine
+                            ((MaMangeNavigationActivity) getActivity()).dbc.sendOrdersToTheKitchen();
+                            //avviso l'utente
+                            AlertDialog.Builder ordineInviatoCucina = new AlertDialog.Builder(getContext());
+                            ordineInviatoCucina.setTitle(getResources().getString(R.string.inviatoCucina));
+                            ordineInviatoCucina.setMessage(getResources().getString(R.string.inviatoCucinaMsg));
+                            ordineInviatoCucina.setPositiveButton(getResources().getString(R.string.chiudi), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
 
                                 }
-                            }
-                        });
+                            });
+                            AlertDialog dialog = ordineInviatoCucina.create();
+                            dialog.show();
+                        }
+
                     }
                 });
                 richiestaSicuro.setNegativeButton("No", new DialogInterface.OnClickListener() {

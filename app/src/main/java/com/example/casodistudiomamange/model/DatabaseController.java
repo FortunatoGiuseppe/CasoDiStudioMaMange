@@ -1,10 +1,11 @@
 package com.example.casodistudiomamange.model;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
+import android.content.SharedPreferences;
+import android.util.Log;
 
-import com.example.casodistudiomamange.R;
-import com.example.casodistudiomamange.activity.QRCodeActivity;
+import androidx.annotation.NonNull;
+
+import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -15,11 +16,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import io.reactivex.rxjava3.core.Single;
 
 public class DatabaseController {
     
@@ -339,8 +337,7 @@ public class DatabaseController {
                 });
     }
 
-    public void allSingleOrdersAreConfirmed(String codiceGroupOrder,String codiceTavolo, metododiCallbackAllSingleOrderConfirmed areAllConfirmedCallback) {
-
+    public void allSingleOrdersAreConfirmed(String codiceGroupOrder, String codiceTavolo, MaMangeNavigationActivity activity) {
 
         df.collection("SINGLE ORDERS")
                 .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
@@ -350,21 +347,24 @@ public class DatabaseController {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            ArrayList<SingleOrder> singleOrdersControlConfirmed = new ArrayList<>();
+                            //activity.setShared(true);
                             for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
                                 SingleOrder singleOrderControl = documentSnapshot.toObject(SingleOrder.class);
-                                singleOrdersControlConfirmed.add(singleOrderControl);
 
                                 //se trovo anche solo uno non confermato allora non sono tutti confermati
                                 if(!singleOrderControl.isSingleOrderConfirmed()){
-                                    Boolean areAllConfirmed=false;
-                                    areAllConfirmedCallback.onCallback(areAllConfirmed);
+
+                                    activity.clearShared();
+                                    activity.setShared(false);
+                                    Log.d("MSG", String.valueOf(activity.getSharedPrefs().getBoolean("allSingleOrdersAreConfirmed",true)));
+
+                                    break;
                                 }
                             }
                         }
                     }
                 });
-        areAllConfirmedCallback.onCallback(true);
+
 
     }
 

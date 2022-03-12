@@ -56,5 +56,6 @@
     <string name="msgAttenzione">You are saving your order and you will no longer be able to modify it. Would you proceed?</string>
     <string name="inviatoCucina">Order sent to the kitchen</string>
     <string name="inviatoCucinaMsg">We have received your order and we are processing it</string>
-    <string name="chiudi">Close</string
+    <string name="chiudi">Close</string>
+    <string name="ConfSO">Confirm</string>
 </resources>
