@@ -165,11 +165,21 @@ public class QuestionFragment extends Fragment {
             tvQuestionNo.setText("Domanda: "+qCounter+"/"+totalQuestions);
             answered=false;
         }else{
-            Fragment fragment= new RestaurantFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("score", String.valueOf(score));
+                bundle.putString("max", String.valueOf(Questions.size()));
+
+
+
+                Fragment fragment= new CongratulationFragment();
+                fragment.setArguments(bundle);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                fragmentTransaction.commit();
+
+
         }
     }
 
