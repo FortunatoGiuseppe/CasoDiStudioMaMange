@@ -58,4 +58,5 @@
     <string name="inviatoCucinaMsg">Abbiamo ricevuto il tuo ordine e lo stiamo elaborando</string>
     <string name="chiudi">Chiudi</string>
     <string name="ConfSO">Conferma</string>
+    <string name="inizioMessaggio">Ciao! Guarda cosa ho ordinato con l\'app MaMangè:</string>
 </resources>

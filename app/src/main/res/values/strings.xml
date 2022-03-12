@@ -58,4 +58,5 @@
     <string name="inviatoCucinaMsg">We have received your order and we are processing it</string>
     <string name="chiudi">Close</string>
     <string name="ConfSO">Confirm</string>
+    <string name="inizioMessaggio">Hi! Look what I ordered with MaMangè:</string>
 </resources>
