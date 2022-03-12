@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.adapter.Adapter_Plates_Ordered;
+import com.example.casodistudiomamange.model.FileOrderManager;
 import com.example.casodistudiomamange.model.SoPlate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -111,7 +112,8 @@ public class SingleOrderFragment extends Fragment {
 
                         //crea file contenente i piatti ordinati (salvataggio ultimo ordine)
                         //IL FILE CONTIENE NOME PIATTO E QUANTITÀ
-                        save(v,soPlate);
+                        FileOrderManager fileOrderManager= new FileOrderManager();
+                        fileOrderManager.save(v,soPlate,getContext(),FILE_NAME);
 
                         String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
                         String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
@@ -167,8 +169,6 @@ public class SingleOrderFragment extends Fragment {
                 });
                 AlertDialog dialog = richiestaSicuro.create();
                 dialog.show();
-
-
             }
         });
 
@@ -184,10 +184,8 @@ public class SingleOrderFragment extends Fragment {
             //carico l'array globale plates con i nomi dei piatti letti dal file
             //NOTA: NON VIENE LETTA LA QUANTITÀ PERCHÈ IN OGGETTI DI PLATES NON È POSSIBILE INSERIRLA
             //occorrerebbe stampare la lista degli soplate piuttosto che la lista di plates, modifica che impatterebbe anche su singlePlates corrente e non letto dal file
-            load();
-
-            //Aggiungi piatti ordinati nel DB
-
+            FileOrderManager fileOrderManager= new FileOrderManager();
+            fileOrderManager.load((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
 
             //devo stampare nelle view ciò che leggo dal file
             adapter_plates.notifyDataSetChanged();
@@ -223,82 +221,6 @@ public class SingleOrderFragment extends Fragment {
                 }
             });
 
-        }
-
-    }
-
-    //Metodo per salvare i piatti dell'ultimo ordine effettuato
-    public void save(View v, ArrayList<SoPlate> soPlateParam) {
-
-        String text="Nessun Piatto Aggiunto";   //Stringa di default se non ci sono piatti
-        for(int i=0;i<soPlateParam.size();i++){
-            if(i==0){
-                text="";    //se ci sono piatti allora pulisco la stringa perchè dovrà contenere la lista dei piatti
-            }
-            text = text+soPlateParam.get(i).getNomePiatto()+","+soPlateParam.get(i).getQuantita()+"\n";
-        }
-
-        FileOutputStream fos = null;
-
-        try {
-            fos = getContext().openFileOutput(FILE_NAME, getContext().MODE_PRIVATE);
-            fos.write(text.getBytes());
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    //Metodo per caricare i piatti dell'ultimo ordine effettuato, li aggiunge al DB e alla lista dalla quale l'adapter prende i dati per stamparli
-    public void load() {
-
-        String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
-        String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
-        String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
-        String username = ((MaMangeNavigationActivity) getActivity()).username;
-
-        FileInputStream fis = null;
-
-        try {
-            fis = getContext().openFileInput(FILE_NAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            String text;
-
-            while ((text = br.readLine()) != null) {
-                text=text+("/");    //aggiungo lo slash per identificare la fine della riga
-                SoPlate plateOrdered= new SoPlate();
-                plateOrdered.setNomePiatto(text.substring(0, text.indexOf(",")));   //seleziono nomepiatto e lo metto nell'oggetto
-                plateOrdered.setQuantita(Long.parseLong(text.substring(text.indexOf(",")+1, text.indexOf("/")))); //seleziono quantità
-
-                soPlate.add(plateOrdered);   //aggiungo il piatto appena letto alla lista dei piatti da stampare
-
-                //aggiungi piatto ordinato al db
-                //se il piatto non esiste già nell'ordine dell'utente lo aggiungo
-                if(!((MaMangeNavigationActivity) getActivity()).dbc.checkIfPlateHasAlreadyBeenOrdered(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username)){
-                    ((MaMangeNavigationActivity) getActivity()).dbc.orderPlate(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username,plateOrdered.getQuantita());
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
 
     }

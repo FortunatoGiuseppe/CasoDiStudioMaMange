@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
+import com.example.casodistudiomamange.model.FileOrderManager;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -56,10 +57,11 @@ public class ConfirmFragment extends Fragment {
 
                 //devo chiedere in che app vuole condividere (whatsapp), scegliere persona, nella chat caricare
                 //come messaggio l'ordine che ha fatto
+                FileOrderManager fileOrderManager= new FileOrderManager();
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, loadPlatesOrderedFromFileForMessage());
+                sendIntent.putExtra(Intent.EXTRA_TEXT, fileOrderManager.loadPlatesOrderedFromFileForMessage(FILE_NAME,(MaMangeNavigationActivity) getActivity()));
                 sendIntent.setType("text/plain");
                 sendIntent.setPackage("com.whatsapp");
                 startActivity(sendIntent);
@@ -69,36 +71,6 @@ public class ConfirmFragment extends Fragment {
         return v;
     }
 
-    //Metodo per caricare i piatti dell'ultimo ordine effettuato per mandare l'elenco come messaggio
-    public String loadPlatesOrderedFromFileForMessage() {
 
-        FileInputStream fis = null;
-
-        try {
-            fis = ( getActivity()).openFileInput(FILE_NAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            String msg ;
-            String text= getResources().getString(R.string.inizioMessaggio);
-            text=text+("\n");
-            msg=text;
-
-            while ((text = br.readLine()) != null) {
-               msg=msg+text+("\n");    //aggiungo lo slash per identificare la fine della riga
-            }
-            return msg;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
 
 }
