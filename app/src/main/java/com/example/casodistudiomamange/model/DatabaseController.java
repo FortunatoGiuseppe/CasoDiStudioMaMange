@@ -1,6 +1,11 @@
 package com.example.casodistudiomamange.model;
 
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
+
+import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -10,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -331,11 +337,52 @@ public class DatabaseController {
                 });
     }
 
+    public void allSingleOrdersAreConfirmed(String codiceGroupOrder, String codiceTavolo, MaMangeNavigationActivity activity) {
+
+        df.collection("SINGLE ORDERS")
+                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+                .whereEqualTo("codiceTavolo", codiceTavolo)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            //activity.setShared(true);
+                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                SingleOrder singleOrderControl = documentSnapshot.toObject(SingleOrder.class);
+
+                                //se trovo anche solo uno non confermato allora non sono tutti confermati
+                                if(!singleOrderControl.isSingleOrderConfirmed()){
+
+                                    activity.clearShared();
+                                    activity.setShared(false);
+                                    Log.d("MSG", String.valueOf(activity.getSharedPrefs().getBoolean("allSingleOrdersAreConfirmed",true)));
+
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                });
+
+
+    }
+
+    public void sendOrdersToTheKitchen() {
+
+    }
+
 
     /*Interfaccia che permette di chiamare il metodo di Callback*/
     public interface metododiCallback{
         //metodo che permette di utilizzare il codiceSingleOrder e codiceGroupOrder letto dal db
         void onCallback(String codiceSingleOrderCheMiServe,String codiceGroupOrder);
+    }
+
+    /*Interfaccia che permette di chiamare il metodo di Callback AllSingleOrderConfirmed*/
+    public interface metododiCallbackAllSingleOrderConfirmed{
+        //metodo che permette di utilizzare il codiceSingleOrder e codiceGroupOrder letto dal db
+        void onCallback(boolean areAllSingleOrderConfirmed);
     }
 
 }

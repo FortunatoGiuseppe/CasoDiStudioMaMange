@@ -35,7 +35,6 @@
     <string name="termina">Finish</string>
     <string name="massimoPiatti">You cannot add more than 10 dishes</string>
     <string name="piattoRimosso">The plate has been removed from your order</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo">Logo</string>
     <string name="Menu">Menu</string>
@@ -55,6 +54,9 @@
     <string name="acc_reg">Login to unlock</string>
     <string name="attenzione">Warning!</string>
     <string name="msgAttenzione">You are saving your order and you will no longer be able to modify it. Would you proceed?</string>
-    <string name="ConfSO">Your order was added successfully</string>
-
+    <string name="inviatoCucina">Order sent to the kitchen</string>
+    <string name="inviatoCucinaMsg">We have received your order and we are processing it</string>
+    <string name="chiudi">Close</string>
+    <string name="ConfSO">Confirm</string>
+    <string name="inizioMessaggio">Hi! Look what I ordered with MaMangè:</string>
 </resources>
