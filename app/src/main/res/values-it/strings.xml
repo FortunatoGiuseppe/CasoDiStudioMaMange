@@ -57,6 +57,8 @@
     <string name="inviatoCucina">Il tuo ordine è stato inviato alla cucina</string>
     <string name="inviatoCucinaMsg">Abbiamo ricevuto il tuo ordine e lo stiamo elaborando</string>
     <string name="chiudi">Chiudi</string>
-    <string name="ConfSO">Conferma</string>
+    <string name="ConfSO">Ordine effettuato con successo!</string>
     <string name="inizioMessaggio">Ciao! Guarda cosa ho ordinato con l\'app MaMangè:</string>
+    <string name="condividi">Condividi</string>
+    <string name="quiz">Quiz</string>
 </resources>

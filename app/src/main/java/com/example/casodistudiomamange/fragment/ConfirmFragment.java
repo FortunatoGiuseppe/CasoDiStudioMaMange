@@ -2,6 +2,8 @@ package com.example.casodistudiomamange.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,7 +22,10 @@ import java.io.InputStreamReader;
 
 public class ConfirmFragment extends Fragment {
 
+
     ImageView quiz,share;
+    View quizCostraint,shareCostarint;
+    ConstraintSet.Constraint shareCostraint;
     private static final String FILE_NAME = "lastOrder.txt";
 
     public ConfirmFragment() {
@@ -38,8 +43,9 @@ public class ConfirmFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_confirm, container, false);
+        quizCostraint=v.findViewById(R.id.QuizConstraint);
         quiz=v.findViewById(R.id.QuizImg);
-        quiz.setOnClickListener(new View.OnClickListener() {
+        quizCostraint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment fragment= new QuestionFragment();
@@ -49,9 +55,9 @@ public class ConfirmFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-
+        shareCostarint=v.findViewById(R.id.Shareconstraint);
         share = v.findViewById(R.id.ShareImg);
-        share.setOnClickListener(new View.OnClickListener() {
+        shareCostarint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

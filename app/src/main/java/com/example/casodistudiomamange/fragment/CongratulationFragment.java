@@ -7,15 +7,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.casodistudiomamange.R;
 
+import java.util.Random;
+
 
 public class CongratulationFragment extends Fragment {
 
-    private TextView congratulations;
-
+    private TextView congratulationsTv,codeTv;
+    private View congcostr;
 
 
     public CongratulationFragment() {
@@ -38,13 +41,28 @@ public class CongratulationFragment extends Fragment {
         String score = bundle.getString("score");
         String max=bundle.getString("max");
         View v=inflater.inflate(R.layout.fragment_congratulation, container, false);
-        congratulations=v.findViewById(R.id.congratulations);
+        congratulationsTv=v.findViewById(R.id.congratulationsTv);
+        congcostr=v.findViewById(R.id.CongCostr);
         if(score.equals(max)){
-            congratulations.setText("Congratulazioni hai vinto una ciola di gomma, ritirala in cassa");
+            congratulationsTv.setText("Congratulazioni, hai vinto un codice sconto!");
+            codeTv=v.findViewById(R.id.CodeTv);
+            codeTv.setText(getRandomString(7));
         }else{
-            congratulations.setText("Ritenta la prossima volta");
+            congratulationsTv.setText("Ritenta la prossima volta");
         }
 
         return v;
+    }
+
+
+    private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
+
+    private static String getRandomString(final int sizeOfRandomString)
+    {
+        final Random random=new Random();
+        final StringBuilder sb=new StringBuilder(sizeOfRandomString);
+        for(int i=0;i<sizeOfRandomString;++i)
+            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
+        return sb.toString();
     }
 }
