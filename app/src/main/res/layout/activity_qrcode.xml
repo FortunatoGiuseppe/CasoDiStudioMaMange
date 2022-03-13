@@ -132,14 +132,13 @@
 
             <EditText
                 android:id="@+id/insertQrCode"
-                android:layout_width="170dp"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="36dp"
-                android:layout_marginEnd="40dp"
                 android:background="@drawable/edit_text_bg"
                 android:hint="@string/inserisciCodice"
                 android:importantForAutofill="no"
@@ -151,8 +150,6 @@
                 android:textAlignment="center"
                 android:textColorHint="#757575"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/confirmBtn"
-                app:layout_constraintHorizontal_bias="0.209"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/CodiceTavolo"
                 app:layout_constraintWidth_percent=".8"
@@ -160,7 +157,7 @@
 
             <Button
                 android:id="@+id/confirmBtn"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="52dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
