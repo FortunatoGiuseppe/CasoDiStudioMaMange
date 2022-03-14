@@ -1,32 +1,33 @@
-package com.example.casodistudiomamange.fragment;
+package com.example.casodistudiomamange.activity;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.os.Bundle;
-
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.fragment.CongratulationFragment;
 import com.example.casodistudiomamange.model.Question;
+import com.google.protobuf.StringValue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
-public class QuestionFragment extends Fragment {
+public class QuestionActivity extends AppCompatActivity {
 
     private TextView tvQuestion;
     private TextView tvScore;
@@ -35,12 +36,14 @@ public class QuestionFragment extends Fragment {
     private RadioGroup radioGroup;
     private RadioButton rb1,rb2,rb3;
     private Button btnNext;
+    private ImageView img;
 
     int totalQuestions;
     int qCounter=0;
     int score =0;
     int DOMANDE=3;
 
+    View viewCostraint;
     ColorStateList dfRbColor;
     CountDownTimer countDownTimer;
     boolean answered;
@@ -51,40 +54,26 @@ public class QuestionFragment extends Fragment {
 
     private List<Question> Questions= new ArrayList<>();
 
-
-
-    public QuestionFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_question);
 
-
-
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_question, container, false);
         questionsList=new ArrayList<>();
 
-        tvQuestion=v.findViewById(R.id.textQuestion);
-        tvScore=v.findViewById(R.id.textScore);
-        tvQuestionNo=v.findViewById(R.id.textQuestionNo);
-        tvTimer=v.findViewById(R.id.textTimer);
+        tvQuestion=findViewById(R.id.textQuestion);
+        tvScore=findViewById(R.id.textScore);
+        tvQuestionNo=findViewById(R.id.textQuestionNo);
+        tvTimer=findViewById(R.id.textTimer);
 
 
-        radioGroup=v.findViewById(R.id.radioGroup);
-        rb1=v.findViewById(R.id.rb1);
-        rb2=v.findViewById(R.id.rb2);
-        rb3=v.findViewById(R.id.rb3);
-        btnNext=v.findViewById(R.id.btnNext);
+        viewCostraint = findViewById(R.id.imageCostraint);
+        img = findViewById(R.id.img1);
+        radioGroup=findViewById(R.id.radioGroup);
+        rb1=findViewById(R.id.rb1);
+        rb2=findViewById(R.id.rb2);
+        rb3=findViewById(R.id.rb3);
+        btnNext=findViewById(R.id.btnNext);
 
         dfRbColor=rb1.getTextColors();
 
@@ -97,27 +86,22 @@ public class QuestionFragment extends Fragment {
             public void onClick(View view) {
                 if(answered==false){
                     if(rb1.isChecked() || rb2.isChecked() || rb3.isChecked()){
-                        checkAnswer(v);
+                        checkAnswer();
                         countDownTimer.cancel();
                     }else{
-                        Toast.makeText(getActivity(), "Selezionare un'opzione", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuestionActivity.this, "Selezionare un'opzione", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     showNextQuestion();
                 }
             }
         });
-
-        return v;
-
-
     }
 
-
-    private void checkAnswer(View v) {
+    private void checkAnswer() {
 
         answered=true;
-        RadioButton rbSelected= v.findViewById(radioGroup.getCheckedRadioButtonId());
+        RadioButton rbSelected= findViewById(radioGroup.getCheckedRadioButtonId());
         int answerNo = radioGroup.indexOfChild(rbSelected) + 1;
         if(answerNo == currentQuestion.getCorrectAnsNo()){
             score++;
@@ -152,9 +136,18 @@ public class QuestionFragment extends Fragment {
         rb1.setTextColor(dfRbColor);
         rb2.setTextColor(dfRbColor);
         rb3.setTextColor(dfRbColor);
+
+
         if(qCounter<totalQuestions){
             timer();
             currentQuestion=Questions.get(qCounter);
+            img.setImageResource(currentQuestion.getImage());
+            if(currentQuestion.getImage()==0){
+                viewCostraint.setVisibility(View.GONE);
+            }
+            else{
+                viewCostraint.setVisibility(View.VISIBLE);
+            }
             tvQuestion.setText(currentQuestion.getQuestion());
             rb1.setText(currentQuestion.getOption1());
             rb2.setText(currentQuestion.getOption2());
@@ -166,20 +159,10 @@ public class QuestionFragment extends Fragment {
             answered=false;
         }else{
 
-                Bundle bundle = new Bundle();
-                bundle.putString("score", String.valueOf(score));
-                bundle.putString("max", String.valueOf(Questions.size()));
-
-
-
-                Fragment fragment= new CongratulationFragment();
-                fragment.setArguments(bundle);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, fragment);
-                fragmentTransaction.commit();
-
-
+            Intent intent = new Intent(QuestionActivity.this, CongratulationActivity.class);
+            intent.putExtra("score", score);
+            intent.putExtra("max",Questions.size());
+            startActivity(intent);
         }
     }
 
@@ -200,11 +183,11 @@ public class QuestionFragment extends Fragment {
     private void addQuestions() {
 
         questionsList.add(new Question("In quale nazione il salmone è maggiormente pescato?","Finlandia","Norvegia","Abruzzo",3,0));
-        questionsList.add(new Question("Il sushi è stato inventato in?","Cina","Giappone","Thailandia",3,0));
-        questionsList.add(new Question("Come si mangia il sushi?","Forchetta","Bacchette","Cucchiaio",3,0));
-        questionsList.add(new Question("A cosa serve lo zenzero?","Pulire il palato","Aggiungere sapore","D'abbellimento",3,0));
-        questionsList.add(new Question("Cosa è il sashimi?","Pesce senza riso","Pesce con riso","Riso senza pesce",3,0));
-        questionsList.add(new Question("Da quale pesce proviene il 'fugu'?","Pesce palla","Pesce cane","Pesce spada",3,0));
+        questionsList.add(new Question("Il sushi è stato inventato in?","Cina","Giappone","Thailandia",3, 0));
+        questionsList.add(new Question("Come si mangia il sushi?","Forchetta","Bacchette","Cucchiaio",3, 0));
+        questionsList.add(new Question("A cosa serve lo zenzero?","Pulire il palato","Aggiungere sapore","D'abbellimento",3,R.drawable.dice));
+        questionsList.add(new Question("Cosa è il sashimi?","Pesce senza riso","Pesce con riso","Riso senza pesce",3, R.drawable.dice));
+        questionsList.add(new Question("Da quale pesce proviene il 'fugu'?","Pesce palla","Pesce cane","Pesce spada",3, R.drawable.dice));
 
     }
 
