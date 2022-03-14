@@ -30,10 +30,13 @@ public class CongratulationActivity extends AppCompatActivity {
         congcostr=findViewById(R.id.CongCostr);
         if(score==max){
             congratulationsTv.setText("Congratulazioni, hai vinto un codice sconto!");
+            congcostr.setSystemUiVisibility(congcostr.VISIBLE);
             codeTv=findViewById(R.id.CodeTv);
             codeTv.setText(getRandomString(7));
+
         }else{
             congratulationsTv.setText("Ritenta la prossima volta");
+            congcostr.setSystemUiVisibility(congcostr.GONE);
         }
     }
 
