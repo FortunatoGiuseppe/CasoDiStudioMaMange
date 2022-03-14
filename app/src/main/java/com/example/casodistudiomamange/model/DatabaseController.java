@@ -142,6 +142,7 @@ public class DatabaseController {
                                 
                                 //prendo il singleOrder più recente in base al GroupOrder
                                 df.collection("SINGLE ORDERS")
+                                    .whereEqualTo("codiceTavolo", codiceTavolo)
                                     .whereEqualTo("codiceGroupOrder",groupOrder.getCodice())
                                     .orderBy("codiceSingleOrder",Query.Direction.DESCENDING).limit(1)
                                     .get()
@@ -368,8 +369,35 @@ public class DatabaseController {
 
     }
 
-    public void sendOrdersToTheKitchen() {
+    public void allSingleOrdersAreConfirmed(String codiceGroupOrder, String codiceTavolo, metododiCallbackAllSingleOrderConfirmed callback){
+        df.collection("SINGLE ORDERS")
+                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+                .whereEqualTo("codiceTavolo", codiceTavolo)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            boolean isInIf=false;
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                SingleOrder singleOrderControl = documentSnapshot.toObject(SingleOrder.class);
 
+                                if (!singleOrderControl.isSingleOrderConfirmed()) {
+                                    callback.onCallback(false);
+                                    isInIf = true;
+                                    break;
+                                }
+                            }
+                            if(!isInIf){
+                                callback.onCallback(true);
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void sendOrdersToTheKitchen() {
+        //salva tutte le ordinazioni in un file di testo
     }
 
 
