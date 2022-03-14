@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -12,7 +13,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -23,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.activity.QRCodeActivity;
 import com.example.casodistudiomamange.adapter.Adapter_plates;
 import com.example.casodistudiomamange.model.Plate;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,6 +55,10 @@ public class SensorFragment extends Fragment {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
+        /*Controlla che i eprmessi siano stati dai*/
+        checkBTPermission();
+
+        /*Attiva il Bluetooth*/
         attivaBluetooth();
 
 
@@ -91,5 +99,22 @@ public class SensorFragment extends Fragment {
         }
 
     }
+
+    private void checkBTPermission(){
+
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+            int permissionCheck = getContext().checkSelfPermission("android.Manifest.permission.ACCESS_FINE_LOCATION");
+            permissionCheck+= getContext().checkSelfPermission("android.Manifest.permission.ACCESS_COARSE_LOCATION");
+            if(permissionCheck != 0){
+                this.requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION},1001);
+            } else{
+                Log.d("TAG","Skd version < Lollipop");
+            }
+        }
+
+    }
+
+
 
 }
