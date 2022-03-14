@@ -378,12 +378,18 @@ public class DatabaseController {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            boolean isInIf=false;
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                 SingleOrder singleOrderControl = documentSnapshot.toObject(SingleOrder.class);
 
                                 if (!singleOrderControl.isSingleOrderConfirmed()) {
                                     callback.onCallback(false);
+                                    isInIf = true;
+                                    break;
                                 }
+                            }
+                            if(!isInIf){
+                                callback.onCallback(true);
                             }
                         }
                     }

@@ -118,13 +118,12 @@ public class SingleOrderFragment extends Fragment {
                         * 1: Se sono tutti confermati, metti groupOrderConfirm a vero e fai la intent
                         * */
 
-                        /* Flag che mi serve per indicare se il group order contiene tutti i single order confermati*/
-                         boolean groupOrderConfirm = true;
+
 
                          ((MaMangeNavigationActivity) getActivity()).dbc.allSingleOrdersAreConfirmed(codiceGroupOrder,codiceTavolo, new DatabaseController.metododiCallbackAllSingleOrderConfirmed() {
                              @Override
                              public void onCallback(boolean areAllSingleOrderConfirmed) {
-                                 if(groupOrderConfirm){
+                                 if(areAllSingleOrderConfirmed){
                                      //avviso l'utente
                                      AlertDialog.Builder ordineInviatoCucina = new AlertDialog.Builder(getContext());
                                      ordineInviatoCucina.setTitle(getResources().getString(R.string.inviatoCucina));
@@ -140,8 +139,6 @@ public class SingleOrderFragment extends Fragment {
                                  }
                              }
                          });
-
-
                     }
                 });
                 AlertDialog dialog = richiestaSicuro.create();
