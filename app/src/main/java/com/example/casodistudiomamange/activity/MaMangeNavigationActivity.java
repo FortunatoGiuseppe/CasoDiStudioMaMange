@@ -38,6 +38,8 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public String codiceSingleOrder;
     public String codiceGroupOrder;
 
+
+
     private MenuItem profileItem;
     private MenuItem lastOrderItem;
     private MenuItem acc_regItem;

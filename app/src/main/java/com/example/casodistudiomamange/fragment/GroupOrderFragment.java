@@ -80,11 +80,13 @@ public class GroupOrderFragment extends Fragment {
     private void leggiUsername(metododiCallbackListaProfili profilicallback){
 
         String groupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
+        String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
         ArrayList<SoPlate> listaUtentiDelGroupOrder = new ArrayList<>(); //lista che conterrà i document di soplate letti dal db
         //Query 1: dobbiamo selezionare tutti gli utenti di quel group order
         //Query 2: Per ogni utente dobbiamo selezionare tutti gli so-plate associati a lui che ha ordinato
 
         db.collection("SO-PIATTO")
+                .whereEqualTo("codiceTavolo", codiceTavolo)
                 .whereEqualTo("codiceGroupOrder",groupOrder).orderBy("username", Query.Direction.ASCENDING)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
