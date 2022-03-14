@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.adapter.Adapter_Plates_Ordered;
+import com.example.casodistudiomamange.model.DatabaseController;
 import com.example.casodistudiomamange.model.FileOrderManager;
 import com.example.casodistudiomamange.model.SoPlate;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -86,6 +87,69 @@ public class SingleOrderFragment extends Fragment {
 
         Button conferma= v.findViewById(R.id.confirm);
         conferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder richiestaSicuro = new AlertDialog.Builder(getActivity());
+                richiestaSicuro.setTitle(getResources().getString(R.string.attenzione));
+                richiestaSicuro.setMessage(getResources().getString(R.string.msgAttenzione));
+                richiestaSicuro.setPositiveButton((getResources().getString(R.string.Confirm)), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        //crea file contenente i piatti ordinati (salvataggio ultimo ordine)
+                        //IL FILE CONTIENE NOME PIATTO E QUANTITÀ
+                        FileOrderManager fileOrderManager= new FileOrderManager();
+                        fileOrderManager.save(v,soPlate,getContext(),FILE_NAME);
+
+                        String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
+                        String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
+                        String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
+
+                        ((MaMangeNavigationActivity) getActivity()).dbc.setSingleOrderConfirmed(codiceSingleOrder,codiceGroupOrder,codiceTavolo);
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle(getResources().getString(R.string.ordineSalvato));
+                        builder.setMessage(" ");
+                        AlertDialog dialogConfermato = builder.create();
+                        dialogConfermato.show();
+
+
+                        /*Devo leggere tutti i single order e vedere se sono stati tutti confermati
+                        * 1: Se sono tutti confermati, metti groupOrderConfirm a vero e fai la intent
+                        * */
+
+                        /* Flag che mi serve per indicare se il group order contiene tutti i single order confermati*/
+                         boolean groupOrderConfirm = true;
+
+                         ((MaMangeNavigationActivity) getActivity()).dbc.allSingleOrdersAreConfirmed(codiceGroupOrder,codiceTavolo, new DatabaseController.metododiCallbackAllSingleOrderConfirmed() {
+                             @Override
+                             public void onCallback(boolean areAllSingleOrderConfirmed) {
+                                 if(groupOrderConfirm){
+                                     //avviso l'utente
+                                     AlertDialog.Builder ordineInviatoCucina = new AlertDialog.Builder(getContext());
+                                     ordineInviatoCucina.setTitle(getResources().getString(R.string.inviatoCucina));
+                                     ordineInviatoCucina.setMessage(getResources().getString(R.string.inviatoCucinaMsg));
+                                     ordineInviatoCucina.setPositiveButton(getResources().getString(R.string.chiudi), new DialogInterface.OnClickListener() {
+                                         @Override
+                                         public void onClick(DialogInterface dialogInterface, int i) {
+                                         }
+                                     });
+                                     AlertDialog dialog = ordineInviatoCucina.create();
+                                     dialog.show();
+
+                                 }
+                             }
+                         });
+
+
+                    }
+                });
+                AlertDialog dialog = richiestaSicuro.create();
+                dialog.show();
+            }
+        });
+
+/*        conferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -170,7 +234,7 @@ public class SingleOrderFragment extends Fragment {
                 AlertDialog dialog = richiestaSicuro.create();
                 dialog.show();
             }
-        });
+        });*/
 
         return v;
 
