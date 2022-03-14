@@ -22,19 +22,13 @@ public class CongratulationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_congratulation);
 
-        //Intent intent = getIntent();
-        Bundle extras = getIntent().getExtras();
-        String score, max;
-
-        if (extras != null) {
-            score = extras.getString("score");
-            max= extras.getString("max");
-            // and get whatever type user account id is
-        }
+        Intent intent = getIntent();
+        int score = intent.getIntExtra("score",0);
+        int max = intent.getIntExtra("max",0);
 
         congratulationsTv=findViewById(R.id.congratulationsTv);
         congcostr=findViewById(R.id.CongCostr);
-        if(score.equals(max)){
+        if(score==max){
             congratulationsTv.setText("Congratulazioni, hai vinto un codice sconto!");
             codeTv=findViewById(R.id.CodeTv);
             codeTv.setText(getRandomString(7));

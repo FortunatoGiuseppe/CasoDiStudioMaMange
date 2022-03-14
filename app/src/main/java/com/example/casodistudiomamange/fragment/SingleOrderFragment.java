@@ -3,6 +3,7 @@ package com.example.casodistudiomamange.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.activity.ConfirmActivity;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.adapter.Adapter_Plates_Ordered;
 import com.example.casodistudiomamange.model.DatabaseController;
@@ -135,6 +137,8 @@ public class SingleOrderFragment extends Fragment {
                                      });
                                      AlertDialog dialog = ordineInviatoCucina.create();
                                      dialog.show();
+                                     Intent intent = new Intent(getActivity(), ConfirmActivity.class);
+                                     startActivity(intent);
 
                                  }
                              }
