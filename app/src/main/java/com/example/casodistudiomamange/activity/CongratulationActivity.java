@@ -24,16 +24,18 @@ public class CongratulationActivity extends AppCompatActivity {
         int max = intent.getIntExtra("max",0);
 
         congratulationsTv=findViewById(R.id.congratulationsTv);
-        congcostr=findViewById(R.id.CongCostr);
+
         if(score==max){
-            congratulationsTv.setText("Congratulazioni, hai vinto un codice sconto!");
-            congcostr.setSystemUiVisibility(congcostr.VISIBLE);
+            congratulationsTv.setText(R.string.congratulazioni);
+            congcostr=findViewById(R.id.CongCostr);
+            congcostr.setVisibility(congcostr.VISIBLE);
             codeTv=findViewById(R.id.CodeTv);
             codeTv.setText(getRandomString(7));
 
         }else{
-            congratulationsTv.setText("Ritenta la prossima volta");
-            congcostr.setSystemUiVisibility(congcostr.GONE);
+            congcostr=findViewById(R.id.CongCostr);
+            congratulationsTv.setText(R.string.ritenta);
+            congcostr.setVisibility(congcostr.GONE);
         }
     }
 

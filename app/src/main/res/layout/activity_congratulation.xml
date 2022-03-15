@@ -71,7 +71,8 @@
             android:text=""
             android:textColor="@color/white"
             android:textSize="20sp"
-
+            android:textAlignment="center"
+            android:gravity="center"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/CongCostr"
             app:layout_constraintEnd_toEndOf="parent"

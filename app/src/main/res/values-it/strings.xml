@@ -68,4 +68,6 @@
     <string name="domanda"> Domanda</string>
     <string name="vittoriaQuiz">Congratulazioni, hai vinto un codice sconto!</string>
     <string name="sconfittaQuiz">Ritenta la prossima volta</string>
+    <string name="congratulazioni">Congratulazioni,hai vinto un codice sconto!</string>
+    <string name="ritenta">Ritenta la prossima volta!</string>
 </resources>
