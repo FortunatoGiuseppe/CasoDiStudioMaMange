@@ -114,8 +114,7 @@ public class SingleOrderFragment extends Fragment {
                                     });
                                     AlertDialog dialog = ordineInviatoCucina.create();
                                     dialog.show();
-                                    Intent intent = new Intent(getActivity(), ConfirmActivity.class);
-                                    startActivity(intent);
+
 
                                 }
 
@@ -131,33 +130,10 @@ public class SingleOrderFragment extends Fragment {
 
                         clearSharedPreferencesQuantities();//pulisco shared delle quantità
 
-                        /*Devo leggere tutti i single order e vedere se sono stati tutti confermati
-                        * 1: Se sono tutti confermati, metti groupOrderConfirm a vero e fai la intent
-                        * */
+                        /*Avvio l'activity di scelta tra quiz e condivisione dell'ordine*/
+                        Intent intent = new Intent(getActivity(), ConfirmActivity.class);
+                        startActivity(intent);
 
-
-                        /*
-                         ((MaMangeNavigationActivity) getActivity()).dbc.allSingleOrdersAreConfirmed(codiceGroupOrder,codiceTavolo, new DatabaseController.metododiCallbackAllSingleOrderConfirmed() {
-                             @Override
-                             public void onCallback(boolean areAllSingleOrderConfirmed) {
-                                 if(areAllSingleOrderConfirmed){
-                                     //avviso l'utente
-                                     AlertDialog.Builder ordineInviatoCucina = new AlertDialog.Builder(getContext());
-                                     ordineInviatoCucina.setTitle(getResources().getString(R.string.inviatoCucina));
-                                     ordineInviatoCucina.setMessage(getResources().getString(R.string.inviatoCucinaMsg));
-                                     ordineInviatoCucina.setPositiveButton(getResources().getString(R.string.chiudi), new DialogInterface.OnClickListener() {
-                                         @Override
-                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                         }
-                                     });
-                                     AlertDialog dialog = ordineInviatoCucina.create();
-                                     dialog.show();
-                                     Intent intent = new Intent(getActivity(), ConfirmActivity.class);
-                                     startActivity(intent);
-
-                                 }
-                             }
-                         });*/
                     }
                 });
                 AlertDialog dialog = richiestaSicuro.create();

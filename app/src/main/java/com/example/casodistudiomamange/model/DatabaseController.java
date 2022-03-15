@@ -352,7 +352,7 @@ public class DatabaseController {
                                             if(!isInIf){
                                                 callback.onCallback(true);
                                                 setTableFreeOnDB(codiceTavolo);
-                                                sendOrderToTheKitchen();
+                                                sendOrderToTheKitchen(codiceSingleOrder,codiceGroupOrder, codiceTavolo);
                                             }
                                         }
                                     }
@@ -389,6 +389,7 @@ public class DatabaseController {
                 });
     }
 
+   /* Metodo che setta il campo del tavolo a true cioè libero*/
     private void setTableFreeOnDB(String codiceTavolo) {
         df.collection("TAVOLI").whereEqualTo("codiceTavolo", codiceTavolo)
                 .get()
@@ -409,7 +410,8 @@ public class DatabaseController {
 
 
 
-    private void sendOrderToTheKitchen(){
+    private void sendOrderToTheKitchen(String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo){
+
 
 
     }
