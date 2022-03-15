@@ -41,6 +41,7 @@
             android:exported="true" />
         <activity
             android:name=".activity.MaMangeNavigationActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".activity.LoggedUser"
