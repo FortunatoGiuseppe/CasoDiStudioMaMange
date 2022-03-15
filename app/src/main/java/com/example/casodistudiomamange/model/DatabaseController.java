@@ -287,7 +287,6 @@ public class DatabaseController {
         });
     }
 
-
     //Metodo che permette di capire se piatti di un ordine letti dal file locale sono già presenti nel db
     public boolean checkIfPlateHasAlreadyBeenOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo,String username){
 
@@ -314,7 +313,14 @@ public class DatabaseController {
     }
 
 
+    /*Metodo che permette di:
+        1. conferma il singleOrder
+        2. libera il tavolo nel caso in cui l'odine che si sta confermando sia l'ultimo ad essere
+         confermato nell'intera ordinazione di gruppo
+        3. Invia l'ordinazione di gruppo alla cucina
+     */
     public void setSingleOrderConfirmed(String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo, metododiCallbackAllSingleOrderConfirmed callback){
+        /* Vado a confermare il singleOrder*/
         df.collection("SINGLE ORDERS")
                 .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
                 .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
@@ -331,6 +337,7 @@ public class DatabaseController {
                             }
                         }
 
+                        /* Prendo tutti i singleOrder di questo tavolo con questo codiceGrouOrder*/
                         df.collection("SINGLE ORDERS")
                                 .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
                                 .whereEqualTo("codiceTavolo", codiceTavolo)
@@ -339,16 +346,27 @@ public class DatabaseController {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
+                                            //flag per capire se è entrato nell'if
                                             boolean isInIf=false;
                                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                                 SingleOrder singleOrderControl = documentSnapshot.toObject(SingleOrder.class);
 
+                                                /*Per ogni singleOrder se non è stato confermato:
+                                                    1.Passa al metodo di callback il valore falso che indica che mancano ancora degli ordini da confermare
+                                                    2. Setto il flag a true che mi indica che sono entrato nell'if
+                                                    3. Esco dal ciclo per ridurre il costo computazionale
+                                                 */
                                                 if (!singleOrderControl.isSingleOrderConfirmed()) {
                                                     callback.onCallback(false);
                                                     isInIf = true;
                                                     break;
                                                 }
                                             }
+                                            /* Se non è entrato nell'if allora vuol dire che sono stati tutti confermati:
+                                                1: Passa al metodo di callback il valore true che indica che tutti gli ordini sono stati confermati
+                                                2: Libera il tavolo
+                                                3: Invia l'ordinazione complessiva alla cucina
+                                             */
                                             if(!isInIf){
                                                 callback.onCallback(true);
                                                 setTableFreeOnDB(codiceTavolo);
@@ -357,37 +375,10 @@ public class DatabaseController {
                                         }
                                     }
                                 });
-
                     }
                 });
     }
 
-    public void allSingleOrdersAreConfirmed(String codiceGroupOrder, String codiceTavolo, metododiCallbackAllSingleOrderConfirmed callback){
-        df.collection("SINGLE ORDERS")
-                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
-                .whereEqualTo("codiceTavolo", codiceTavolo)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            boolean isInIf=false;
-                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                SingleOrder singleOrderControl = documentSnapshot.toObject(SingleOrder.class);
-
-                                if (!singleOrderControl.isSingleOrderConfirmed()) {
-                                    callback.onCallback(false);
-                                    isInIf = true;
-                                    break;
-                                }
-                            }
-                            if(!isInIf){
-                                callback.onCallback(true);
-                            }
-                        }
-                    }
-                });
-    }
 
    /* Metodo che setta il campo del tavolo a true cioè libero*/
     private void setTableFreeOnDB(String codiceTavolo) {
@@ -409,13 +400,9 @@ public class DatabaseController {
     }
 
 
-
+    /* Metodo che invia l'ordinazione di gruppo alla cucina*/
     private void sendOrderToTheKitchen(String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo){
-
-
-
     }
-
 
     /*Interfaccia che permette di chiamare il metodo di Callback*/
     public interface metododiCallback{
