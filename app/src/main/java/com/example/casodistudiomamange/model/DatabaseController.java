@@ -338,6 +338,7 @@ public class DatabaseController {
                 });
     }
 
+
     public void allSingleOrdersAreConfirmed(String codiceGroupOrder, String codiceTavolo, MaMangeNavigationActivity activity) {
 
         df.collection("SINGLE ORDERS")
@@ -365,8 +366,6 @@ public class DatabaseController {
                         }
                     }
                 });
-
-
     }
 
     public void allSingleOrdersAreConfirmed(String codiceGroupOrder, String codiceTavolo, metododiCallbackAllSingleOrderConfirmed callback){

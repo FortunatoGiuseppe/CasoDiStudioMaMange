@@ -214,8 +214,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         return guest;
     }
 
-    /*
-    Vecchi metodi usati per accorgersi se il single order corrente è l'ultimo confermato o meno
 
     public void clearShared(){
         SharedPreferences sharedPreferences = this.getSharedPrefs();
@@ -234,7 +232,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         editor.apply();
     }
 
-    public SharedPreferences getSharedPrefs(){
+    public SharedPreferences getSharedPrefs() {
         return this.getSharedPreferences("allSingleOrdersAreConfirmed", Context.MODE_PRIVATE);
-    }*/
+    }
 }
