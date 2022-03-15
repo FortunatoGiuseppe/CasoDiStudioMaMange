@@ -64,13 +64,13 @@ public class ConfirmFragment extends Fragment {
                 //devo chiedere in che app vuole condividere (whatsapp), scegliere persona, nella chat caricare
                 //come messaggio l'ordine che ha fatto
                 FileOrderManager fileOrderManager= new FileOrderManager();
-
+/*
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, fileOrderManager.loadPlatesOrderedFromFileForMessage(FILE_NAME,(MaMangeNavigationActivity) getActivity()));
                 sendIntent.setType("text/plain");
                 sendIntent.setPackage("com.whatsapp");
-                startActivity(sendIntent);
+                startActivity(sendIntent);*/
             }
         });
 

@@ -116,6 +116,8 @@ public class SingleOrderFragment extends Fragment {
                         dialogConfermato.show();
 
 
+                        clearSharedPreferences();//pulisco shared delle quantità
+
                         /*Devo leggere tutti i single order e vedere se sono stati tutti confermati
                         * 1: Se sono tutti confermati, metti groupOrderConfirm a vero e fai la intent
                         * */

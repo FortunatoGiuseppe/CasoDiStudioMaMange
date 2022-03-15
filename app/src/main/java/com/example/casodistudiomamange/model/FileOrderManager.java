@@ -3,6 +3,7 @@ package com.example.casodistudiomamange.model;
 import android.content.Context;
 import android.view.View;
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.activity.ConfirmActivity;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -95,7 +96,7 @@ public class FileOrderManager {
     }
 
     //Metodo per caricare i piatti dell'ultimo ordine effettuato per mandare l'elenco come messaggio
-    public String loadPlatesOrderedFromFileForMessage(String FILE_NAME,MaMangeNavigationActivity activity) {
+    public String loadPlatesOrderedFromFileForMessage(String FILE_NAME, ConfirmActivity activity) {
 
         FileInputStream fis = null;
 
