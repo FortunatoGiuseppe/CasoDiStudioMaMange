@@ -318,7 +318,7 @@ public class DatabaseController {
     }
 
 
-    public void setSingleOrderConfirmed(String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo){
+    public void setSingleOrderConfirmed(String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo, metododiCallbackAllSingleOrderConfirmed callback){
         df.collection("SINGLE ORDERS")
                 .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
                 .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
@@ -334,36 +334,33 @@ public class DatabaseController {
                                         .update("singleOrderConfirmed",true);
                             }
                         }
-                    }
-                });
-    }
 
+                        df.collection("SINGLE ORDERS")
+                                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+                                .whereEqualTo("codiceTavolo", codiceTavolo)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            boolean isInIf=false;
+                                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                SingleOrder singleOrderControl = documentSnapshot.toObject(SingleOrder.class);
 
-    public void allSingleOrdersAreConfirmed(String codiceGroupOrder, String codiceTavolo, MaMangeNavigationActivity activity) {
+                                                if (!singleOrderControl.isSingleOrderConfirmed()) {
+                                                    callback.onCallback(false);
+                                                    isInIf = true;
+                                                    break;
+                                                }
+                                            }
+                                            if(!isInIf){
+                                                callback.onCallback(true);
 
-        df.collection("SINGLE ORDERS")
-                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
-                .whereEqualTo("codiceTavolo", codiceTavolo)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            //activity.setShared(true);
-                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                                SingleOrder singleOrderControl = documentSnapshot.toObject(SingleOrder.class);
+                                            }
+                                        }
+                                    }
+                                });
 
-                                //se trovo anche solo uno non confermato allora non sono tutti confermati
-                                if(!singleOrderControl.isSingleOrderConfirmed()){
-
-                                    activity.clearShared();
-                                    activity.setShared(false);
-                                    Log.d("MSG", String.valueOf(activity.getSharedPrefs().getBoolean("allSingleOrdersAreConfirmed",true)));
-
-                                    break;
-                                }
-                            }
-                        }
                     }
                 });
     }

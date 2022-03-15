@@ -99,7 +99,28 @@ public class SingleOrderFragment extends Fragment {
                         String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
                         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
 
-                        ((MaMangeNavigationActivity) getActivity()).dbc.setSingleOrderConfirmed(codiceSingleOrder,codiceGroupOrder,codiceTavolo);
+                        ((MaMangeNavigationActivity) getActivity()).dbc.setSingleOrderConfirmed(codiceSingleOrder, codiceGroupOrder, codiceTavolo, new DatabaseController.metododiCallbackAllSingleOrderConfirmed() {
+                            @Override
+                            public void onCallback(boolean areAllSingleOrderConfirmed) {
+                                if(areAllSingleOrderConfirmed){
+                                    //avviso l'utente
+                                    AlertDialog.Builder ordineInviatoCucina = new AlertDialog.Builder(getContext());
+                                    ordineInviatoCucina.setTitle(getResources().getString(R.string.inviatoCucina));
+                                    ordineInviatoCucina.setMessage(getResources().getString(R.string.inviatoCucinaMsg));
+                                    ordineInviatoCucina.setPositiveButton(getResources().getString(R.string.chiudi), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                        }
+                                    });
+                                    AlertDialog dialog = ordineInviatoCucina.create();
+                                    dialog.show();
+                                    Intent intent = new Intent(getActivity(), ConfirmActivity.class);
+                                    startActivity(intent);
+
+                                }
+
+                            }
+                        });
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle(getResources().getString(R.string.ordineSalvato));
@@ -115,7 +136,7 @@ public class SingleOrderFragment extends Fragment {
                         * */
 
 
-
+                        /*
                          ((MaMangeNavigationActivity) getActivity()).dbc.allSingleOrdersAreConfirmed(codiceGroupOrder,codiceTavolo, new DatabaseController.metododiCallbackAllSingleOrderConfirmed() {
                              @Override
                              public void onCallback(boolean areAllSingleOrderConfirmed) {
@@ -136,7 +157,7 @@ public class SingleOrderFragment extends Fragment {
 
                                  }
                              }
-                         });
+                         });*/
                     }
                 });
                 AlertDialog dialog = richiestaSicuro.create();
