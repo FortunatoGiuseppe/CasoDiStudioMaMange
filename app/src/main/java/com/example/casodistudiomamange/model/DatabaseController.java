@@ -1,11 +1,7 @@
 package com.example.casodistudiomamange.model;
 
-import android.content.SharedPreferences;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
-import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -355,7 +351,8 @@ public class DatabaseController {
                                             }
                                             if(!isInIf){
                                                 callback.onCallback(true);
-                                                sendOrdersToTheKitchen(codiceTavolo);
+                                                setTableFreeOnDB(codiceTavolo);
+                                                sendOrderToTheKitchen();
                                             }
                                         }
                                     }
@@ -392,7 +389,7 @@ public class DatabaseController {
                 });
     }
 
-    private void sendOrdersToTheKitchen(String codiceTavolo) {
+    private void setTableFreeOnDB(String codiceTavolo) {
         df.collection("TAVOLI").whereEqualTo("codiceTavolo", codiceTavolo)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -410,7 +407,10 @@ public class DatabaseController {
                 });
     }
 
-    private void setTableFreeOnDB(){
+
+
+    private void sendOrderToTheKitchen(){
+
 
     }
 
