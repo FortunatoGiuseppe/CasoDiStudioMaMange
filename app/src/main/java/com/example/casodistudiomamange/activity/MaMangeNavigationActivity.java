@@ -9,12 +9,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.ActionProvider;
-import android.view.ContextMenu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.fragment.GroupOrderFragment;
@@ -29,8 +25,8 @@ import java.util.Objects;
 
 
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
-    public DatabaseController dbc;
-    BottomNavigationView bottomNavigationView;
+    public DatabaseController dbc;  //istanza per utilizzare metodi relativi al DB
+    BottomNavigationView bottomNavigationView;  //riferimento utilizzato per accedere alla barra in alto con le 3 linee orizzontali
     public String username;
     public String codiceTavolo;
     private FirebaseAuth lAuth;
@@ -38,8 +34,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public String codiceSingleOrder;
     public String codiceGroupOrder;
 
-
-
+    //elementi del menu che compae quando clicchi sulle 3 linette
     private MenuItem profileItem;
     private MenuItem lastOrderItem;
     private MenuItem acc_regItem;
@@ -78,7 +73,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             lastOrderItem.getIcon().setAlpha(130);
 
             acc_regItem = navigationView.getMenu().findItem(R.id.acc_reg);
-            acc_regItem.setVisible(true);
+            acc_regItem.setVisible(true);   //rendo visibile la scritta che suggerisce di loggarsi per accedere a profilo e caricare ultimo ordine
             acc_regItem.setEnabled(false);
             acc_regItem.getIcon().setAlpha(130);
 
@@ -103,7 +98,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
                 return false;
             }
         });
-
         intent = getIntent();
         codiceTavolo =intent.getStringExtra("CodiceTavolo");
 

@@ -1,17 +1,12 @@
 package com.example.casodistudiomamange.fragment;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.casodistudiomamange.R;
-
 import java.util.Random;
 
 
@@ -24,8 +19,6 @@ public class CongratulationFragment extends Fragment {
     public CongratulationFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,13 +37,12 @@ public class CongratulationFragment extends Fragment {
         congratulationsTv=v.findViewById(R.id.congratulationsTv);
         congcostr=v.findViewById(R.id.CongCostr);
         if(score.equals(max)){
-            congratulationsTv.setText("Congratulazioni, hai vinto un codice sconto!");
+            congratulationsTv.setText(R.string.vittoriaQuiz);
             codeTv=v.findViewById(R.id.CodeTv);
             codeTv.setText(getRandomString(7));
         }else{
-            congratulationsTv.setText("Ritenta la prossima volta");
+            congratulationsTv.setText(R.string.sconfittaQuiz);
         }
-
         return v;
     }
 

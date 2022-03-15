@@ -84,12 +84,12 @@ public class QuestionActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(answered==false){
+                if(!answered){
                     if(rb1.isChecked() || rb2.isChecked() || rb3.isChecked()){
                         checkAnswer();
                         countDownTimer.cancel();
                     }else{
-                        Toast.makeText(QuestionActivity.this, "Selezionare un'opzione", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuestionActivity.this, R.string.selezionaOpzione, Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     showNextQuestion();
@@ -123,11 +123,10 @@ public class QuestionActivity extends AppCompatActivity {
         }
 
         if(qCounter<totalQuestions){
-            btnNext.setText("Prossima domanda");
+            btnNext.setText(R.string.prossimaDomanda);
         }else{
-            btnNext.setText("Fine");
+            btnNext.setText(R.string.fine);
         }
-
 
     }
 
@@ -154,8 +153,8 @@ public class QuestionActivity extends AppCompatActivity {
             rb3.setText(currentQuestion.getOption3());
 
             qCounter++;
-            btnNext.setText("Invia");
-            tvQuestionNo.setText("Domanda: "+qCounter+"/"+totalQuestions);
+            btnNext.setText(R.string.invia);
+            tvQuestionNo.setText(R.string.domanda+": "+qCounter+"/"+totalQuestions);
             answered=false;
         }else{
 
@@ -199,9 +198,6 @@ public class QuestionActivity extends AppCompatActivity {
 
         trueList.addAll(questionsList);
         final int min = 0;
-
-
-
 
         for(int i=0;i<DOMANDE;i++){
             final int max = trueList.size()-1;

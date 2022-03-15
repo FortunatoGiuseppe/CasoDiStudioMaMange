@@ -61,4 +61,12 @@
     <string name="inizioMessaggio">Hi! Look what I ordered with MaMangè:</string>
     <string name="condividi">Share</string>
     <string name="quiz">Quiz</string>
+    <string name="selezionaOpzione">Select an option</string>
+    <string name="prossimaDomanda">Next Question</string>
+    <string name="fine">End</string>
+    <string name="invia"> Send</string>
+    <string name="domanda"> Question</string>
+    <string name="vittoriaQuiz">Congratulations, you won a discount code!</string>
+    <string name="sconfittaQuiz">Sorry, try again next time</string>
+
 </resources>

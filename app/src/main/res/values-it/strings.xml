@@ -61,4 +61,11 @@
     <string name="inizioMessaggio">Ciao! Guarda cosa ho ordinato con l\'app MaMangè:</string>
     <string name="condividi">Condividi</string>
     <string name="quiz">Quiz</string>
+    <string name="selezionaOpzione">Selezionare un\'opzione</string>
+    <string name="prossimaDomanda">Prossima Domanda</string>
+    <string name="fine">Fine</string>
+    <string name="invia"> Invia</string>
+    <string name="domanda"> Domanda</string>
+    <string name="vittoriaQuiz">Congratulazioni, hai vinto un codice sconto!</string>
+    <string name="sconfittaQuiz">Ritenta la prossima volta</string>
 </resources>

@@ -50,7 +50,6 @@ public class CategoryFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_category,null);
         getActivity().setTitle("Categorie");
 
-
         recyclerView_plates = v.findViewById(R.id.recycleview_plates);
         recyclerView_plates.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1 , LinearLayoutManager.VERTICAL, false);
@@ -58,6 +57,7 @@ public class CategoryFragment extends Fragment {
 
         recyclerView_plates.setAdapter(adapter_plates);
 
+        //Carica la lista con i piatti letti dal DB, presi in base alla categoria selezoionata
         caricaPiatti();
 
         return v;
@@ -70,6 +70,7 @@ public class CategoryFragment extends Fragment {
     }
 
 
+    //Carica la lista con i piatti letti dal DB, presi in base alla categoria selezoionata
     public void caricaPiatti() {
 
         db.collection("PIATTI")

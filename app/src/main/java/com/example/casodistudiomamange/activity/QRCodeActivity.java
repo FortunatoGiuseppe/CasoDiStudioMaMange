@@ -63,7 +63,7 @@ public class QRCodeActivity extends AppCompatActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controlCode(insertQrCode.getText().toString());
+                existsTableWithCode(insertQrCode.getText().toString());
             }
         });
 
@@ -123,7 +123,7 @@ public class QRCodeActivity extends AppCompatActivity {
     }
 
 
-    private void controlCode(String QrCode){
+    private void existsTableWithCode(String QrCode){
 
         db.collection("TAVOLI").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -137,6 +137,7 @@ public class QRCodeActivity extends AppCompatActivity {
                     }
                     for(int i = 0; i < tables.size(); i++){
                         if (QrCode.equals(tables.get(i).getCodiceTavolo())){
+                            //se tavolo viene trovato fai intent caricando prossima activity
                             Toast.makeText(QRCodeActivity.this,R.string.tavoloTrovato , Toast.LENGTH_LONG).show();
                             Intent intent= new Intent(getApplicationContext(),MaMangeNavigationActivity.class);
                             intent.putExtra("UsernameInserito",usernameInserito);
@@ -145,19 +146,19 @@ public class QRCodeActivity extends AppCompatActivity {
                             isFound=true;
                         }
                     }
-                    if(!isFound){
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(QRCodeActivity.this);
-                        builder1.setMessage(R.string.tavoloNonTrovato);
-                        builder1.setCancelable(true);
+                    if(!isFound){//se tavolo non pè stato trovato, allora avvisa utente
+                        AlertDialog.Builder tableNotFoundAlert = new AlertDialog.Builder(QRCodeActivity.this);
+                        tableNotFoundAlert.setMessage(R.string.tavoloNonTrovato);
+                        tableNotFoundAlert.setCancelable(true);
 
-                        builder1.setPositiveButton(
+                        tableNotFoundAlert.setPositiveButton(
                                 "Ok",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
                                     }
                                 });
-                        AlertDialog alert = builder1.create();
+                        AlertDialog alert = tableNotFoundAlert.create();
                         alert.show();
                     }
                 }
