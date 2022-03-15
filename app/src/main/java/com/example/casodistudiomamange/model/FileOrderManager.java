@@ -21,7 +21,7 @@ public class FileOrderManager {
     }
 
     //Metodo per salvare i piatti dell'ultimo ordine effettuato
-    public void save(View v, ArrayList<SoPlate> soPlateParam, Context context,String FILE_NAME) {
+    public void savePlatesLastOrder(View v, ArrayList<SoPlate> soPlateParam, Context context, String FILE_NAME) {
 
         String text="Nessun Piatto Aggiunto";   //Stringa di default se non ci sono piatti
         for(int i=0;i<soPlateParam.size();i++){
@@ -53,7 +53,7 @@ public class FileOrderManager {
     }
 
     //Metodo per caricare i piatti dell'ultimo ordine effettuato, li aggiunge al DB e alla lista dalla quale l'adapter prende i dati per stamparli
-    public void load(MaMangeNavigationActivity activity,String FILE_NAME,ArrayList<SoPlate> soPlate) {
+    public void loadPlateLastOrder(MaMangeNavigationActivity activity, String FILE_NAME, ArrayList<SoPlate> soPlate) {
 
         String codiceSingleOrder = activity.codiceSingleOrder;
         String codiceGroupOrder = activity.codiceGroupOrder;
@@ -112,7 +112,10 @@ public class FileOrderManager {
             while ((text = br.readLine()) != null) {
                 msg=msg+text+("\n");                    //costruzione della stringa tramite letture di ogni singola riga dal file
             }
+
             return msg;
+
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -126,4 +129,6 @@ public class FileOrderManager {
         }
         return null;
     }
+
+
 }

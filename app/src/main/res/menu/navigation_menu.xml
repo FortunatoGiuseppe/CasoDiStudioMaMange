@@ -30,7 +30,7 @@
 
     <item
         android:id="@+id/acc_reg"
-        android:visible="true"
+        android:visible="false"
         android:icon="@drawable/ic_profilo_utente"
         android:title="@string/acc_reg"/>
 

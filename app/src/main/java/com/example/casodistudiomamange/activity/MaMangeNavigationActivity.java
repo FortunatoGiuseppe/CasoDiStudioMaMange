@@ -104,17 +104,12 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             }
         });
 
-
-
         intent = getIntent();
         codiceTavolo =intent.getStringExtra("CodiceTavolo");
 
         bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
 
-
         dbc = new DatabaseController();
-
-
         dbc.createOrdersFirestore(username, codiceTavolo, new DatabaseController.metododiCallback() {
             @Override
             //metodo per assegnare pubblicamente il singleOrder e groupOrder letto da DatabaseController
@@ -219,6 +214,9 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         return guest;
     }
 
+    /*
+    Vecchi metodi usati per accorgersi se il single order corrente è l'ultimo confermato o meno
+
     public void clearShared(){
         SharedPreferences sharedPreferences = this.getSharedPrefs();
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -226,6 +224,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         editor.clear();
         editor.apply();
     }
+
 
     public void setShared(boolean state){
         SharedPreferences sharedPreferences = this.getSharedPrefs();
@@ -237,5 +236,5 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
     public SharedPreferences getSharedPrefs(){
         return this.getSharedPreferences("allSingleOrdersAreConfirmed", Context.MODE_PRIVATE);
-    }
+    }*/
 }

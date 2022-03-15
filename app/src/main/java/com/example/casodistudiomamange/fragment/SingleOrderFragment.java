@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,12 +30,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.util.ArrayList;
 
 public class SingleOrderFragment extends Fragment {
@@ -101,7 +93,7 @@ public class SingleOrderFragment extends Fragment {
                         //crea file contenente i piatti ordinati (salvataggio ultimo ordine)
                         //IL FILE CONTIENE NOME PIATTO E QUANTITÀ
                         FileOrderManager fileOrderManager= new FileOrderManager();
-                        fileOrderManager.save(v,soPlate,getContext(),FILE_NAME);
+                        fileOrderManager.savePlatesLastOrder(v,soPlate,getContext(),FILE_NAME);
 
                         String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
                         String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
@@ -116,7 +108,7 @@ public class SingleOrderFragment extends Fragment {
                         dialogConfermato.show();
 
 
-                        clearSharedPreferences();//pulisco shared delle quantità
+                        clearSharedPreferencesQuantities();//pulisco shared delle quantità
 
                         /*Devo leggere tutti i single order e vedere se sono stati tutti confermati
                         * 1: Se sono tutti confermati, metti groupOrderConfirm a vero e fai la intent
@@ -252,7 +244,7 @@ public class SingleOrderFragment extends Fragment {
             //NOTA: NON VIENE LETTA LA QUANTITÀ PERCHÈ IN OGGETTI DI PLATES NON È POSSIBILE INSERIRLA
             //occorrerebbe stampare la lista degli soplate piuttosto che la lista di plates, modifica che impatterebbe anche su singlePlates corrente e non letto dal file
             FileOrderManager fileOrderManager= new FileOrderManager();
-            fileOrderManager.load((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
+            fileOrderManager.loadPlateLastOrder((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
 
             //devo stampare nelle view ciò che leggo dal file
             adapter_plates.notifyDataSetChanged();
@@ -293,7 +285,7 @@ public class SingleOrderFragment extends Fragment {
     }
 
 
-    private void clearSharedPreferences() {
+    private void clearSharedPreferencesQuantities() {
         SharedPreferences sharedPreferences =  (getContext()).getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
