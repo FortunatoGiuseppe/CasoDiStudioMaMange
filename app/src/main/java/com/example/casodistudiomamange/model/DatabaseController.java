@@ -355,7 +355,7 @@ public class DatabaseController {
                                             }
                                             if(!isInIf){
                                                 callback.onCallback(true);
-
+                                                sendOrdersToTheKitchen(codiceTavolo);
                                             }
                                         }
                                     }
@@ -392,8 +392,26 @@ public class DatabaseController {
                 });
     }
 
-    public void sendOrdersToTheKitchen() {
-        //salva tutte le ordinazioni in un file di testo
+    private void sendOrdersToTheKitchen(String codiceTavolo) {
+        df.collection("TAVOLI").whereEqualTo("codiceTavolo", codiceTavolo)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot documentSnapshot: task.getResult()){
+                                df.collection("TAVOLI").
+                                        document(documentSnapshot.getId())
+                                        .update("tableFree", true);
+                            }
+                        }
+
+                    }
+                });
+    }
+
+    private void setTableFreeOnDB(){
+
     }
 
 
