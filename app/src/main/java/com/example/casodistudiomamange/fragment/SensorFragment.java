@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.QRCodeActivity;
@@ -58,8 +60,7 @@ public class SensorFragment extends Fragment {
         /*Controlla che i eprmessi siano stati dai*/
         checkBTPermission();
 
-        /*Attiva il Bluetooth*/
-        attivaBluetooth();
+
 
 
     }
@@ -102,19 +103,43 @@ public class SensorFragment extends Fragment {
 
     private void checkBTPermission(){
 
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
-            int permissionCheck = getContext().checkSelfPermission("android.Manifest.permission.ACCESS_FINE_LOCATION");
-            permissionCheck+= getContext().checkSelfPermission("android.Manifest.permission.ACCESS_COARSE_LOCATION");
-            if(permissionCheck != 0){
-                this.requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION},1001);
-            } else{
-                Log.d("TAG","Skd version < Lollipop");
-            }
-        }
+        int permissionCheck = getContext().checkSelfPermission("android.Manifest.permission.ACCESS_FINE_LOCATION");
+        permissionCheck+= getContext().checkSelfPermission("android.Manifest.permission.ACCESS_COARSE_LOCATION");
+        if(permissionCheck == 0){
+            attivaBluetooth();
+        } else if(shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION) && shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Importanza dei permessi");
+            builder.setMessage("Accettare i permessi per accedere a questa funzionalità, sei sicuro di non voler accettare i permessi?");
 
+            builder.setPositiveButton(
+                    "Si",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                        }
+                    });
+
+            builder.setNegativeButton(
+                    "Annulla",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                                    android.Manifest.permission.ACCESS_COARSE_LOCATION},1001);
+                        }
+                    });
+
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+            requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION},1001);
+        }
     }
 
 
 
 }
+
+
