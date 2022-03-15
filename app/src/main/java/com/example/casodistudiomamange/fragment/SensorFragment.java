@@ -137,7 +137,27 @@ public class SensorFragment extends Fragment {
                     android.Manifest.permission.ACCESS_COARSE_LOCATION},1001);
         }
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        switch (requestCode) {
+            case 1001:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    attivaBluetooth();
 
+                }  else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Importanza dei permessi");
+                    builder.setMessage("Accettare i permessi per accedere a questa funzionalità");
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+                return;
+        }
+
+    }
 
 
 }
