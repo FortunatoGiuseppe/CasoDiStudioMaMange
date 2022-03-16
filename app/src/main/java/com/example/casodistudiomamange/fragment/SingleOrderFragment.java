@@ -93,7 +93,7 @@ public class SingleOrderFragment extends Fragment {
                         //crea file contenente i piatti ordinati (salvataggio ultimo ordine)
                         //IL FILE CONTIENE NOME PIATTO E QUANTITÀ
                         FileOrderManager fileOrderManager= new FileOrderManager();
-                        fileOrderManager.savePlatesLastOrder(v,soPlate,getContext(),FILE_NAME);
+                        fileOrderManager.savePlatesLastOrder(soPlate,getContext(),FILE_NAME);
 
                         String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
                         String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
@@ -104,6 +104,8 @@ public class SingleOrderFragment extends Fragment {
                             @Override
                             public void onCallback(boolean areAllSingleOrderConfirmed) {
                                 if(areAllSingleOrderConfirmed){
+                                    ((MaMangeNavigationActivity) getActivity()).dbc.sendOrderToTheKitchen(codiceSingleOrder,codiceGroupOrder, codiceTavolo,((MaMangeNavigationActivity) getContext()));
+
                                     //avviso l'utente
                                     AlertDialog.Builder ordineInviatoCucina = new AlertDialog.Builder(getContext());
                                     ordineInviatoCucina.setTitle(getResources().getString(R.string.inviatoCucina));
@@ -113,8 +115,11 @@ public class SingleOrderFragment extends Fragment {
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                         }
                                     });
+
                                     AlertDialog dialog = ordineInviatoCucina.create();
                                     dialog.show();
+
+
 
 
                                 }
