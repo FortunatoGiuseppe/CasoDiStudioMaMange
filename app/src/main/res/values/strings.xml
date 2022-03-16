@@ -71,4 +71,53 @@
     <string name="congratulazioni">congratulations, you have won a discount code!</string>
     <string name="ritenta">Try again next time</string>
     <string name="permessi">Permission Granted!</string>
+
+
+
+    <string name="question1">In which country is salmon caught the most?</string>
+    <string name="question1option1">Finland</string>
+    <string name="question1option2">Norway</string>
+    <string name="question1option3">Japan</string>
+    <string name="question2">Was sushi invented in?</string>
+    <string name="question2option1">China</string>
+    <string name="question2option2">Japan</string>
+    <string name="question2option3">Thailand</string>
+    <string name="question3">How do you eat sushi?</string>
+    <string name="question3option1">Fork</string>
+    <string name="question3option2">Chopsticks</string>
+    <string name="question3option3">Table spoon</string>
+    <string name="question4">What is ginger used for?</string>
+    <string name="question4option1">Clean the palate</string>
+    <string name="question4option2">Add flavor</string>
+    <string name="question4option3">Embellishment</string>
+    <string name="question5">What is sashimi?</string>
+    <string name="question5option1">Fish without rice</string>
+    <string name="question5option2">Rice without fish</string>
+    <string name="question5option3">Rice with seaweed</string>
+    <string name="question6">What fish does fugu come from?</string>
+    <string name="question6option1">Puffer fish</string>
+    <string name="question6option2">Dog fish</string>
+    <string name="question6option3">Swordfish</string>
+    <string name="question7">What does the word sashimi mean?</string>
+    <string name="question7option1">Alcoholic beverage</string>
+    <string name="question7option2">Rice roll</string>
+    <string name="question7option3">Body pierced</string>
+    <string name="question8">What is sake?</string>
+    <string name="question8option1">Alcoholic beverage</string>
+    <string name="question8option2">Salmon</string>
+    <string name="question8option3">Flavor</string>
+    <string name="question9">What is the green spice offered along with sushi?</string>
+    <string name="question9option1">No one</string>
+    <string name="question9option2">Saba</string>
+    <string name="question9option3">Wasabi</string>
+    <string name="question10">When preparing sushi rice. What is added to the rice?</string>
+    <string name="question10option1">Soy sauce</string>
+    <string name="question10option2">Vinegar</string>
+    <string name="question10option3">Cayenne pepper</string>
+    <string name="question11">Who originally popularized sushi?</string>
+    <string name="question11option1">Sellers along the way</string>
+    <string name="question11option2">Soldiers</string>
+    <string name="question11option3">Royalty</string>
+
+    <string name="backhome">Return to inserting the table</string>
 </resources>

@@ -10,10 +10,11 @@ import java.util.Random;
 
 public class CongratulationActivity extends AppCompatActivity {
 
-    private TextView congratulationsTv,codeTv;
+    private TextView congratulationsTv,codeTv,homeTv;
     private View congcostr;
     private int max = 5;
     private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
+    private View homeconstr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,15 @@ public class CongratulationActivity extends AppCompatActivity {
         //int max = intent.getIntExtra("max",0);
 
         congratulationsTv=findViewById(R.id.congratulationsTv);
-
+        homeTv=findViewById(R.id.textHome);
+        homeconstr=findViewById(R.id.HomeCostr);
+        homeconstr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CongratulationActivity.this, QRCodeActivity.class);
+                startActivity(intent);
+            }
+        });
         if(score==max){
             congratulationsTv.setText(R.string.congratulazioni);
             congcostr=findViewById(R.id.CongCostr);

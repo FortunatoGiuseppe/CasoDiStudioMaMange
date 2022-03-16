@@ -199,12 +199,17 @@ public class QuestionFragment extends Fragment {
 
     private void addQuestions() {
 
-        questionsList.add(new Question("In quale nazione il salmone è maggiormente pescato?","Finlandia","Norvegia","Abruzzo",3,0));
-        questionsList.add(new Question("Il sushi è stato inventato in?","Cina","Giappone","Thailandia",3,0));
-        questionsList.add(new Question("Come si mangia il sushi?","Forchetta","Bacchette","Cucchiaio",3,0));
-        questionsList.add(new Question("A cosa serve lo zenzero?","Pulire il palato","Aggiungere sapore","D'abbellimento",3,0));
-        questionsList.add(new Question("Cosa è il sashimi?","Pesce senza riso","Pesce con riso","Riso senza pesce",3,0));
-        questionsList.add(new Question("Da quale pesce proviene il 'fugu'?","Pesce palla","Pesce cane","Pesce spada",3,0));
+        questionsList.add(new Question(R.string.question1,R.string.question1option1,R.string.question1option2,R.string.question1option3,2,0));
+        questionsList.add(new Question(R.string.question2,R.string.question2option1,R.string.question2option2,R.string.question2option3,1,0));
+        questionsList.add(new Question(R.string.question3,R.string.question3option1,R.string.question3option2,R.string.question3option3,2,0));
+        questionsList.add(new Question(R.string.question4,R.string.question4option1,R.string.question4option2,R.string.question4option3,1,0));
+        questionsList.add(new Question(R.string.question5,R.string.question5option1,R.string.question5option2,R.string.question5option3,1,0));
+        questionsList.add(new Question(R.string.question6,R.string.question6option1,R.string.question6option2,R.string.question6option3,1,0));
+        questionsList.add(new Question(R.string.question7,R.string.question7option1,R.string.question7option2,R.string.question7option3,3,0));
+        questionsList.add(new Question(R.string.question8,R.string.question8option1,R.string.question8option2,R.string.question8option3,1,0));
+        questionsList.add(new Question(R.string.question9,R.string.question9option1,R.string.question9option2,R.string.question9option3,3,0));
+        questionsList.add(new Question(R.string.question10,R.string.question10option1,R.string.question10option2,R.string.question10option3,2,0));
+        questionsList.add(new Question(R.string.question11,R.string.question11option1,R.string.question10option2,R.string.question11option3,1,0));
 
     }
 

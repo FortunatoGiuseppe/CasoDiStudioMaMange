@@ -71,4 +71,58 @@
     <string name="congratulazioni">Congratulazioni,hai vinto un codice sconto!</string>
     <string name="ritenta">Ritenta la prossima volta!</string>
     <string name="permessi">Permesso dato!</string>
+
+
+
+
+
+    <string name="question1">In quale nazione il salmone è maggiormente pescato?</string>
+        <string name="question1option1">Finlandia</string>
+        <string name="question1option2">Norvegia</string>
+        <string name="question1option3">Giappone</string>
+    <string name="question2">Il sushi è stato inventato in?</string>
+        <string name="question2option1">Cina</string>
+        <string name="question2option2">Giappone</string>
+        <string name="question2option3">Thailandia</string>
+    <string name="question3">Come si mangia il sushi?</string>
+        <string name="question3option1">Forchetta</string>
+        <string name="question3option2">Bacchette</string>
+        <string name="question3option3">Cucchiaio</string>
+    <string name="question4">A cosa serve lo zenzero?</string>
+        <string name="question4option1">Pulire il palato</string>
+        <string name="question4option2">Aggiungere sapore</string>
+        <string name="question4option3">Abbellimento</string>
+    <string name="question5">Cosa è il sashimi?</string>
+        <string name="question5option1">Pesce senza riso</string>
+        <string name="question5option2">Riso senza pesce</string>
+        <string name="question5option3">Riso con alga</string>
+    <string name="question6">Da quale pesce proviene il fugu?</string>
+        <string name="question6option1">Pesce palla</string>
+        <string name="question6option2">Pesce cane</string>
+        <string name="question6option3">Pesce spada</string>
+    <string name="question7">Cosa significa la parola sashimi?</string>
+        <string name="question7option1">Bevanda alcolica</string>
+        <string name="question7option2">Rotolo di riso</string>
+        <string name="question7option3">Corpo ttrafitto</string>
+    <string name="question8">Cosa è il sakè?</string>
+        <string name="question8option1">Bevanda alcolica</string>
+        <string name="question8option2">Salmone</string>
+        <string name="question8option3">Spezia</string>
+    <string name="question9">Qual è la spezia verde offerta insieme al sushi?</string>
+        <string name="question9option1">Nessuna</string>
+        <string name="question9option2">Saba</string>
+        <string name="question9option3">Wasabi</string>
+    <string name="question10">Quando si prepara il riso per il sushi. Cosa si aggiunge al riso?</string>
+        <string name="question10option1">Salsa di soia</string>
+        <string name="question10option2">Aceto</string>
+        <string name="question10option3">Pepe di Caienna</string>
+    <string name="question11">Chi ha originariamente reso popolare il sushi?</string>
+        <string name="question11option1">Venditori lungo la strada</string>
+        <string name="question11option2">Soldati</string>
+        <string name="question11option3">Regalità</string>
+
+
+
+
+    <string name="backhome">Torna all inserimento del tavolo</string>
 </resources>

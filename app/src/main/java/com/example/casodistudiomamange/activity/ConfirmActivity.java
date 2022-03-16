@@ -12,7 +12,7 @@ import com.example.casodistudiomamange.model.FileOrderManager;
 public class ConfirmActivity extends AppCompatActivity {
 
     ImageView quiz,share;
-    View quizCostraint, shareCostraint;
+    View quizCostraint, shareCostraint, homeconstr,homeTv;
     private static final String FILE_NAME = "lastOrder.txt";
 
     @Override
@@ -48,5 +48,22 @@ public class ConfirmActivity extends AppCompatActivity {
                 startActivity(sendIntent);
             }
         });
+
+        homeconstr=findViewById(R.id.HomeCostr);
+        homeTv=findViewById(R.id.textHome);
+        homeconstr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ConfirmActivity.this, QRCodeActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+
     }
 }
