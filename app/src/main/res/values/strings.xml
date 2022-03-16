@@ -70,4 +70,5 @@
     <string name="sconfittaQuiz">Sorry, try again next time</string>
     <string name="congratulazioni">congratulations, you have won a discount code!</string>
     <string name="ritenta">Try again next time</string>
+    <string name="permessi">Permission Granted!</string>
 </resources>

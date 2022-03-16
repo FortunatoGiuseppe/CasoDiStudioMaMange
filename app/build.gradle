@@ -30,6 +30,10 @@ android {
 
 dependencies {
 
+    implementation "androidx.activity:activity:1.4.0"
+    implementation "androidx.fragment:fragment:1.4.1"
+        
+
     /*aggiunte*/
     implementation 'com.google.firebase:firebase-storage:20.0.0'
     implementation 'com.firebaseui:firebase-ui-database:8.0.0'
