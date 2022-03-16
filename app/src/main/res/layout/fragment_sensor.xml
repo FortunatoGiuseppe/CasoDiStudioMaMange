@@ -106,6 +106,31 @@
             app:layout_constraintTop_toBottomOf="@+id/gusto"
             app:layout_constraintVertical_bias="0.060000002" />
 
+        <Button
+            android:id="@+id/connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Connetti"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.864"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/provenienza"
+            app:layout_constraintVertical_bias="0.525" />
+
+        <ListView
+            android:id="@+id/listaDispositiviBluetooth"
+            android:layout_width="228dp"
+            android:layout_height="101dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/connect"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/provenienza"
+            app:layout_constraintVertical_bias="0.644" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
