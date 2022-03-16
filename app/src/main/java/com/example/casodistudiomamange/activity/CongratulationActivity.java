@@ -12,6 +12,7 @@ public class CongratulationActivity extends AppCompatActivity {
 
     private TextView congratulationsTv,codeTv;
     private View congcostr;
+    private int max = 5;
     private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
 
     @Override
@@ -21,7 +22,7 @@ public class CongratulationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int score = intent.getIntExtra("score",0);
-        int max = intent.getIntExtra("max",0);
+        //int max = intent.getIntExtra("max",0);
 
         congratulationsTv=findViewById(R.id.congratulationsTv);
 

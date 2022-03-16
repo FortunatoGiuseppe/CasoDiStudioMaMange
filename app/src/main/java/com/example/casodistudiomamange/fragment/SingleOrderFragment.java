@@ -131,12 +131,11 @@ public class SingleOrderFragment extends Fragment {
                                      });
                                      AlertDialog dialog = ordineInviatoCucina.create();
                                      dialog.show();
-                                     Intent intent = new Intent(getActivity(), ConfirmActivity.class);
-                                     startActivity(intent);
-
                                  }
                              }
                          });
+                        Intent intent = new Intent(getActivity(), ConfirmActivity.class);
+                        startActivity(intent);
                     }
                 });
                 AlertDialog dialog = richiestaSicuro.create();

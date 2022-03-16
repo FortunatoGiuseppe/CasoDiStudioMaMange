@@ -79,7 +79,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         addQuestions();
         getQuizRandom();
-        totalQuestions=Questions.size();
+        totalQuestions=5;
         showNextQuestion();
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +137,7 @@ public class QuestionActivity extends AppCompatActivity {
         rb3.setTextColor(dfRbColor);
 
 
-        if(qCounter<totalQuestions){
+        if(qCounter<DOMANDE){
             timer();
             currentQuestion=Questions.get(qCounter);
             img.setImageResource(currentQuestion.getImage());
@@ -154,13 +154,13 @@ public class QuestionActivity extends AppCompatActivity {
 
             qCounter++;
             btnNext.setText(R.string.invia);
-            tvQuestionNo.setText(R.string.domanda+": "+qCounter+"/"+totalQuestions);
+            tvQuestionNo.setText("Question:"+" "+qCounter+"/"+totalQuestions);
             answered=false;
         }else{
 
-            Intent intent = new Intent(QuestionActivity.this, CongratulationActivity.class);
+            Intent intent = new Intent(QuestionActivity.this, RecognizeActivity.class);
             intent.putExtra("score", score);
-            intent.putExtra("max",Questions.size());
+            //intent.putExtra("max",Questions.size());
             startActivity(intent);
         }
     }
