@@ -1,6 +1,10 @@
 package com.example.casodistudiomamange.model;
 
+import android.content.Context;
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -11,9 +15,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class DatabaseController {
     
@@ -370,7 +382,7 @@ public class DatabaseController {
                                             if(!isInIf){
                                                 callback.onCallback(true);
                                                 setTableFreeOnDB(codiceTavolo);
-                                                sendOrderToTheKitchen(codiceSingleOrder,codiceGroupOrder, codiceTavolo);
+
                                             }
                                         }
                                     }
@@ -401,7 +413,39 @@ public class DatabaseController {
 
 
     /* Metodo che invia l'ordinazione di gruppo alla cucina*/
-    private void sendOrderToTheKitchen(String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo){
+    public void sendOrderToTheKitchen(String codiceSingleOrder, String codiceGroupOrder, String codiceTavolo, Context context){
+        /*
+        1. Seleziono tutti gli So-Piatto che hanno stesso codice groupOrder e stesso codice tavolo
+        2. Salvo in una lista di So-piatto il risultato della query
+        3. Chiamo il metodo  che mi genera in un file la lista precedente
+        4. Carico sul DB il file generato
+         */
+        ArrayList<SoPlate> listaSoPiatto = new ArrayList<>();
+        df.collection("SO-PIATTO")
+                .whereEqualTo("codiceTavolo", codiceTavolo)
+                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot qds : task.getResult()){
+                                listaSoPiatto.add(qds.toObject(SoPlate.class));
+                            }
+
+                            FileOrderManager fom = new FileOrderManager();
+                            String FILE_NAME = codiceTavolo +"_"+ codiceGroupOrder+".txt" ;
+                            File file = fom.saveGroupOrderForKitchen(listaSoPiatto,context,FILE_NAME);
+
+                            StorageReference storageReference;
+                            storageReference = FirebaseStorage.getInstance().getReference();
+
+                            StorageReference refOrdine = storageReference.child("Ordini/"+FILE_NAME);
+                            refOrdine.putFile(Uri.fromFile(file));
+
+                        }
+                    }
+                });
     }
 
     /*Interfaccia che permette di chiamare il metodo di Callback*/

@@ -1,11 +1,12 @@
 package com.example.casodistudiomamange.model;
 
 import android.content.Context;
-import android.view.View;
+
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.ConfirmActivity;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,7 +22,7 @@ public class FileOrderManager {
     }
 
     //Metodo per salvare i piatti dell'ultimo ordine effettuato
-    public void savePlatesLastOrder(View v, ArrayList<SoPlate> soPlateParam, Context context, String FILE_NAME) {
+    public void savePlatesLastOrder(ArrayList<SoPlate> soPlateParam, Context context, String FILE_NAME) {
 
         String text="Nessun Piatto Aggiunto";   //Stringa di default se non ci sono piatti
         for(int i=0;i<soPlateParam.size();i++){
@@ -128,6 +129,40 @@ public class FileOrderManager {
             }
         }
         return null;
+    }
+
+    public File saveGroupOrderForKitchen(ArrayList<SoPlate> soPlateParam, Context context, String FILE_NAME) {
+
+        String text="Nessun Piatto Aggiunto";   //Stringa di default se non ci sono piatti
+        for(int i=0;i<soPlateParam.size();i++){
+            if(i==0){
+                text="";    //se ci sono piatti allora pulisco la stringa perchè dovrà contenere la lista dei piatti
+            }
+            text = text+soPlateParam.get(i).getUsername()+soPlateParam.get(i).getNomePiatto()+","+soPlateParam.get(i).getQuantita()+"\n";
+        }
+
+        FileOutputStream fos = null;
+
+        try {
+            fos = context.openFileOutput(FILE_NAME, context.MODE_PRIVATE);
+            fos.write(text.getBytes());
+            return  context.getFilesDir();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return context.getFilesDir();
     }
 
 
