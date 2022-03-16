@@ -3,53 +3,58 @@ package com.example.casodistudiomamange.fragment;
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.casodistudiomamange.R;
-import com.example.casodistudiomamange.activity.QRCodeActivity;
-import com.example.casodistudiomamange.adapter.Adapter_plates;
-import com.example.casodistudiomamange.model.Plate;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Set;
 import java.util.UUID;
 
 public class SensorFragment extends Fragment {
 
     /*costanti che rappresentano lo stato del bluetooth*/
     static final int REQUEST_ENABLE_BLUETOOTH = 0;
+    static final int STATE_CONNECTED=3;
+    static final int STATE_CONNECTION_FAILED=4;
+    static final int STATE_MESSAGE_RECEIVED=5;
+    private static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
 
     BluetoothAdapter bluetoothAdapter;
+    BluetoothDevice[] bluetoothDevice;
+    Receive receive;
 
     TextView PlateName;
     ImageView img;
     TextView Descrizione;
+    ListView listaDispositiviBluetooth;
     String name;
     String descrizione;
     String image;
+    Button connect;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,9 +64,6 @@ public class SensorFragment extends Fragment {
 
         /*Controlla che i eprmessi siano stati dai*/
         checkBTPermission();
-
-
-
 
     }
 
@@ -75,6 +77,8 @@ public class SensorFragment extends Fragment {
         PlateName = v.findViewById(R.id.nomePiatto);
         Descrizione = v.findViewById(R.id.descrizione);
         img = v.findViewById(R.id.imagePlate);
+        connect = v.findViewById(R.id.connect);
+        listaDispositiviBluetooth = v.findViewById(R.id.listaDispositiviBluetooth);
         Bundle bundle = getArguments();
         name = bundle.getString("PlateName");
         PlateName.setText(name);
@@ -82,6 +86,41 @@ public class SensorFragment extends Fragment {
         Picasso.get().load(image).into(img);
         descrizione = bundle.getString("Descrizione");
         Descrizione.setText(descrizione);
+
+        connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkBTPermission();
+                Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+                String[] strings=new String[pairedDevices.size()];
+                bluetoothDevice=new BluetoothDevice[pairedDevices.size()];
+                int index=0;
+
+                if (pairedDevices.size() > 0) {
+                    // There are paired devices. Get the name and address of each paired device.
+
+                    for (BluetoothDevice device : pairedDevices) {
+                        bluetoothDevice[index] = device;
+                        strings[index] = device.getName();
+                        index++;
+                    }
+                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,strings);
+                    listaDispositiviBluetooth.setAdapter(arrayAdapter);
+                }
+
+                listaDispositiviBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        ClientClass clientClass = new ClientClass(bluetoothDevice[i]);
+                        clientClass.start();
+                        Descrizione.setText("Connecting");
+
+                    }
+                });
+
+
+            }
+        });
 
         return v;
     }
@@ -100,6 +139,31 @@ public class SensorFragment extends Fragment {
         }
 
     }
+
+    Handler handler=new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+
+            switch (msg.what)
+            {
+
+                case STATE_CONNECTED:
+                    Descrizione.setText("Connected");
+                    break;
+                case STATE_CONNECTION_FAILED:
+                    Descrizione.setText("Connection Failed");
+                    break;
+                case STATE_MESSAGE_RECEIVED:
+                    byte[] readBuff= (byte[]) msg.obj;
+                    String tempMsg=new String(readBuff,0,msg.arg1);
+
+                    Descrizione.setText(tempMsg);
+                    break;
+
+            }
+            return true;
+        }
+    });
 
     private void checkBTPermission(){
 
@@ -137,6 +201,7 @@ public class SensorFragment extends Fragment {
                     android.Manifest.permission.ACCESS_COARSE_LOCATION},1001);
         }
     }
+    
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
@@ -159,6 +224,84 @@ public class SensorFragment extends Fragment {
 
     }
 
+
+    private class ClientClass extends Thread
+    {
+        private BluetoothDevice device;
+        private BluetoothSocket socket;
+
+        public ClientClass (BluetoothDevice device1)
+        {
+            device=device1;
+
+            try {
+                checkBTPermission();
+                socket=device.createRfcommSocketToServiceRecord(MY_UUID);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void run()
+        {
+            try {
+                checkBTPermission();
+                socket.connect();
+                Message message=Message.obtain();
+                message.what=STATE_CONNECTED;
+                handler.sendMessage(message);
+                receive =new Receive(socket);
+                receive.start();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Message message=Message.obtain();
+                message.what=STATE_CONNECTION_FAILED;
+                handler.sendMessage(message);
+            }
+        }
+    }
+
+    private class Receive extends Thread
+    {
+        private final BluetoothSocket bluetoothSocket;
+        private final InputStream inputStream;
+       // private final OutputStream outputStream;
+
+        public Receive(BluetoothSocket socket)
+        {
+            bluetoothSocket=socket;
+            InputStream tempIn=null;
+            //OutputStream tempOut=null;
+
+            try {
+                tempIn=bluetoothSocket.getInputStream();
+              //  tempOut=bluetoothSocket.getOutputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            inputStream=tempIn;
+           // outputStream=tempOut;
+        }
+
+        public void run()
+        {
+            byte[] buffer=new byte[1024];
+            int bytes;
+
+            while (true)
+            {
+                try {
+                    bytes=inputStream.read(buffer);
+                    handler.obtainMessage(STATE_MESSAGE_RECEIVED,bytes,-1,buffer).sendToTarget();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
 
 }
 
