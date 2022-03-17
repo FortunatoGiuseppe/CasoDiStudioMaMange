@@ -44,7 +44,6 @@ public class ConfirmActivity extends AppCompatActivity {
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, fileOrderManager.loadPlatesOrderedFromFileForMessage(FILE_NAME,ConfirmActivity.this));
                 sendIntent.setType("text/plain");
-                sendIntent.setPackage("com.whatsapp");
                 startActivity(sendIntent);
             }
         });
