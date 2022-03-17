@@ -434,15 +434,10 @@ public class DatabaseController {
                             }
 
                             FileOrderManager fom = new FileOrderManager();
-                            String FILE_NAME = codiceTavolo +"_"+ codiceGroupOrder+".txt" ;
-                            File file = fom.saveGroupOrderForKitchen(listaSoPiatto,context,FILE_NAME);
-
-                            StorageReference storageReference;
-                            storageReference = FirebaseStorage.getInstance().getReference();
-
-                            StorageReference refOrdine = storageReference.child("Ordini/"+FILE_NAME);
-                            refOrdine.putFile(Uri.fromFile(file));
-
+                            String FILE_NAME = codiceTavolo +"_"+ codiceGroupOrder+".txt" ;//Creo il nome del file
+                            String orderToSend= fom.saveGroupOrderForKitchen(listaSoPiatto);    //Ottengo la stringa corrispondente alla lista dei piatti ordinati da tutto il gruppo
+                            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Ordini");
+                            storageReference.child(FILE_NAME).putBytes(orderToSend.getBytes()); //scrivo su db storage
                         }
                     }
                 });
