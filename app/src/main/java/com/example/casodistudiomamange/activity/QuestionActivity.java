@@ -193,6 +193,15 @@ public class QuestionActivity extends AppCompatActivity {
         questionsList.add(new Question(R.string.question10,R.string.question10option1,R.string.question10option2,R.string.question10option3,2, 0));
         questionsList.add(new Question(R.string.question11,R.string.question11option1,R.string.question11option2,R.string.question11option3,1, 0));
 
+
+        questionsList.add(new Question(R.string.question12,R.string.question12option1,R.string.question12option2,R.string.question12option3,1, R.drawable.alga));
+        questionsList.add(new Question(R.string.question13,R.string.question13option1,R.string.question13option2,R.string.question13option3,3, R.drawable.temaki));
+        questionsList.add(new Question(R.string.question13,R.string.question14option1,R.string.question14option2,R.string.question14option3,2, R.drawable.sashimi));
+        questionsList.add(new Question(R.string.question13,R.string.question15option1,R.string.question15option2,R.string.question15option3,1, R.drawable.ghoan));
+        questionsList.add(new Question(R.string.question11,R.string.question16option1,R.string.question16option2,R.string.question16option3,2, R.drawable.gamberi));
+        questionsList.add(new Question(R.string.question13,R.string.question17option1,R.string.question17option2,R.string.question17option3,3, R.drawable.nigiri));
+        questionsList.add(new Question(R.string.question13,R.string.question18option1,R.string.question18option2,R.string.question18option3,1, R.drawable.roll));
+
     }
 
 
