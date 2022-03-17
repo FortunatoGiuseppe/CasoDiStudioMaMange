@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class SensorFragment extends Fragment {
     static final int STATE_CONNECTED=3;
     static final int STATE_CONNECTION_FAILED=4;
     static final int STATE_MESSAGE_RECEIVED=5;
+    static final int STATE_CONNECTION_END = 6;
     private static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
 
     BluetoothAdapter bluetoothAdapter;
@@ -55,6 +57,8 @@ public class SensorFragment extends Fragment {
     String descrizione;
     String image;
     Button connect;
+
+    TextView temperatura,pressione,statoConnessione;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +91,10 @@ public class SensorFragment extends Fragment {
         descrizione = bundle.getString("Descrizione");
         Descrizione.setText(descrizione);
 
+        temperatura = v.findViewById(R.id.temperatura);
+        statoConnessione = v.findViewById(R.id.statoConnessione);
+        pressione = v.findViewById(R.id.pressione);
+
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +121,6 @@ public class SensorFragment extends Fragment {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         ClientClass clientClass = new ClientClass(bluetoothDevice[i]);
                         clientClass.start();
-                        Descrizione.setText("Connecting");
 
                     }
                 });
@@ -148,16 +155,23 @@ public class SensorFragment extends Fragment {
             {
 
                 case STATE_CONNECTED:
-                    Descrizione.setText("Connected");
+                    statoConnessione.setText("Connected");
                     break;
                 case STATE_CONNECTION_FAILED:
-                    Descrizione.setText("Connection Failed");
+                    statoConnessione.setText("Connection Failed");
                     break;
                 case STATE_MESSAGE_RECEIVED:
                     byte[] readBuff= (byte[]) msg.obj;
-                    String tempMsg=new String(readBuff,0,msg.arg1);
+                    String messaggioTemporaneo=new String(readBuff,0,msg.arg1);
 
-                    Descrizione.setText(tempMsg);
+
+                    String[] splitted = messaggioTemporaneo.split(",");
+                    for (int i=0; i<splitted.length; i++){
+                        System.out.println(splitted[i]);
+                    }
+                    pressione.setText("Pressione di conservazione: "+splitted[0]);
+                    temperatura.setText("Temperatura di conservazione: "+splitted[1]);
+
                     break;
 
             }
