@@ -179,4 +179,10 @@ public class RecognizeActivity extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+
+    }
 }

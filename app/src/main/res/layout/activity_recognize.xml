@@ -130,7 +130,7 @@
             android:background="@drawable/round_back"
             android:backgroundTint="@color/white"
             android:padding="10dp"
-            android:text="Next"
+            android:text="@string/prossimaDomanda"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="30sp"
             android:textStyle="italic"
