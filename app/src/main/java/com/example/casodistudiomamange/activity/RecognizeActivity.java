@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,14 +17,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.model.Question;
 import com.example.casodistudiomamange.model.RecognizeModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class RecognizeActivity extends AppCompatActivity {
 
+    private static final int DOMANDE = 2;
     private TextView tvTimer, tvScore, NoQuestion, Question;
     private EditText op1;
     private List<RecognizeModel> questionList;
@@ -30,19 +35,24 @@ public class RecognizeActivity extends AppCompatActivity {
     int qCounter = 3;
     int score;
     int i=0;
+    int width=380;
+    int height=380;
     View viewCostraint;
     ColorStateList dfRbColor;
     CountDownTimer countDownTimer;
+    Bitmap bmp;
     boolean answered;
     private RecognizeModel currentQuestion;
     private Button btnNext;
     private ImageView img1;
+    private List<RecognizeModel> Questions= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognize);
 
+        Question = findViewById(R.id.question);
         viewCostraint = findViewById(R.id.imageCostraint);
         img1 = findViewById(R.id.img1);
         op1 = findViewById(R.id.insertValue2);
@@ -61,6 +71,7 @@ public class RecognizeActivity extends AppCompatActivity {
         score = intent.getIntExtra("score",0);
 
         addQuestion();
+        getQuizRandom();
         showNextQuestion();
 
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -82,12 +93,13 @@ public class RecognizeActivity extends AppCompatActivity {
 
     private void checkAnswer() {
         answered = true;
-        if(op1.getText().toString().toLowerCase(Locale.ROOT).equals(currentQuestion.getCorrectAns())){
+        String stringa =op1.getText().toString().toLowerCase(Locale.ROOT);
+        if(stringa.equals(currentQuestion.getCorrectEN())|| stringa.equals(currentQuestion.getCorrectIT())){
             op1.setTextColor(Color.GREEN);
             score++;
             tvScore.setText("Score: " +score);
         }
-        if(!op1.getText().toString().toLowerCase(Locale.ROOT).equals(currentQuestion.getCorrectAns())){
+        if(!(stringa.equals(currentQuestion.getCorrectEN())|| stringa.equals(currentQuestion.getCorrectIT()))){
             op1.setTextColor(Color.RED);
         }
         if(qCounter<6){
@@ -101,19 +113,20 @@ public class RecognizeActivity extends AppCompatActivity {
 
         op1.setText("");
         op1.setTextColor(dfRbColor);
+        Question.setText(R.string.questionR);
         tvScore.setText("Score: " +score);
 
         if(qCounter < totalQuestion){
             timer();
 
-            currentQuestion = questionList.get(i);
+            currentQuestion = Questions.get(i);
+
             img1.setImageResource(currentQuestion.getImg1());
-            if(currentQuestion.getImg1()==0){
-                viewCostraint.setVisibility(View.GONE);
-            }
-            else{
-                viewCostraint.setVisibility(View.VISIBLE);
-            }
+            viewCostraint.setVisibility(View.VISIBLE);
+            bmp= BitmapFactory.decodeResource(getResources(),currentQuestion.getImg1());//image is your image
+            bmp= Bitmap.createScaledBitmap(bmp, width,height, true);
+            img1.setImageBitmap(bmp);
+
             i++;
             qCounter++;
             NoQuestion.setText("Question: "+ qCounter+" / "+ totalQuestion);
@@ -142,8 +155,34 @@ public class RecognizeActivity extends AppCompatActivity {
     }
 
     private void addQuestion() {
-        questionList.add(new RecognizeModel("tonno", R.drawable.dice));
-        questionList.add(new RecognizeModel("spigola",R.drawable.dice));
-        questionList.add(new RecognizeModel("salmone",R.drawable.dice));
+        questionList.add(new RecognizeModel("tonno","tuna", R.drawable.tonno));
+        questionList.add(new RecognizeModel("ravioli","ravioli",R.drawable.ravioli));
+        questionList.add(new RecognizeModel("salmone","salmon",R.drawable.salmonee));
+        questionList.add(new RecognizeModel("ramen","ramen",R.drawable.ramen));
+        questionList.add(new RecognizeModel("edamame","edamame", R.drawable.edamame));
+        questionList.add(new RecognizeModel("involtini di primavera","spring rolls",R.drawable.involtini));
+        questionList.add(new RecognizeModel("poke","poke",R.drawable.poke));
+    }
+
+    private void getQuizRandom(){
+
+        List<RecognizeModel> trueList = new ArrayList<>();
+
+        trueList.addAll(questionList);
+        final int min = 0;
+
+        for(int i=0;i<DOMANDE;i++){
+            final int max = trueList.size()-1;
+            final int random = new Random().nextInt((max - min) + 1) + min;
+            Questions.add(trueList.get(random));
+            trueList.remove(random);
+
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+
     }
 }

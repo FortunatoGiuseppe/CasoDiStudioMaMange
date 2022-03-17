@@ -124,5 +124,41 @@
 
 
 
+    <string name="question12">Indovina il tipo di piatto:</string>
+        <string name="question12option1">Antipasto</string>
+        <string name="question12option2">Dolce</string>
+        <string name="question12option3">Frutta</string>
+    <string name="question13">Indovina il nome del piatto</string>
+        <string name="question13option1">Roll</string>
+        <string name="question13option2">Hosomaki</string>
+        <string name="question13option3">Temaki</string>
+
+        <string name="question14option1">Gunkan</string>
+        <string name="question14option2">Sashimi</string>
+        <string name="question14option3">Gio Maguro</string>
+
+        <string name="question15option1">Ghoan</string>
+        <string name="question15option2">Tiger Roll</string>
+        <string name="question15option3">Spicysamo</string>
+
+    <string name="question16">Di che tipo di cottura si tratta?</string>
+        <string name="question16option1">Fritto</string>
+        <string name="question16option2">Tempura</string>
+        <string name="question16option3">Alla griglia</string>
+
+        <string name="question17option1">Roll</string>
+        <string name="question17option2">Futomaki</string>
+        <string name="question17option3">Nigiri</string>
+
+        <string name="question18option1">Roll</string>
+        <string name="question18option2">Temaki</string>
+        <string name="question18option3">Gunkan</string>
+
+    <string name="questionR">Qual è il nome del cibo?</string>
+    <string name="next">Avanti</string>
+
+
+
+
     <string name="backhome">Torna all inserimento del tavolo</string>
 </resources>

@@ -129,7 +129,7 @@
             android:background="@drawable/round_back"
             android:backgroundTint="@color/white"
             android:padding="10dp"
-            android:text="Next"
+            android:text="@string/prossimaDomanda"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="30sp"
             android:textStyle="italic"
@@ -146,9 +146,10 @@
             android:background="@drawable/categories_background"
             app:layout_constraintBottom_toTopOf="@+id/btnNext"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textQuestion"
-            app:layout_constraintVertical_bias="0.8">
+            app:layout_constraintVertical_bias="0.873">
 
             <RadioGroup
                 android:id="@+id/radioGroup"

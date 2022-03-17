@@ -1,28 +1,30 @@
 package com.example.casodistudiomamange.model;
 
 public class RecognizeModel {
-    private String question,correctAns;
+
+    String correctIT, correctEN;
     int img1;
 
-    public RecognizeModel(String correctAns, int image1) {
-        this.correctAns = correctAns;
+    public RecognizeModel(String correctIT, String correctEN, int image1) {
+        this.correctEN = correctEN;
+        this.correctIT = correctIT;
         this.img1 = image1;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getCorrectIT() {
+        return correctIT;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setCorrectIT(String correctIT) {
+        this.correctIT = correctIT;
     }
 
-    public String getCorrectAns() {
-        return correctAns;
+    public String getCorrectEN() {
+        return correctEN;
     }
 
-    public void setCorrectAns(String correctAns) {
-        this.correctAns = correctAns;
+    public void setCorrectEN(String correctEN) {
+        this.correctEN = correctEN;
     }
 
     public int getImg1() {

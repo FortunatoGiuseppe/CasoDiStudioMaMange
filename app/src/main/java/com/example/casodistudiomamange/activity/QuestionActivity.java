@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -38,6 +40,9 @@ public class QuestionActivity extends AppCompatActivity {
     private Button btnNext;
     private ImageView img;
 
+    int width=360;
+    int height=360;
+    Bitmap bmp;
     int totalQuestions;
     int qCounter=0;
     int score =0;
@@ -146,6 +151,9 @@ public class QuestionActivity extends AppCompatActivity {
             }
             else{
                 viewCostraint.setVisibility(View.VISIBLE);
+                bmp= BitmapFactory.decodeResource(getResources(),currentQuestion.getImage());//image is your image
+                bmp= Bitmap.createScaledBitmap(bmp, width,height, true);
+                img.setImageBitmap(bmp);
             }
             tvQuestion.setText(currentQuestion.getQuestion());
             rb1.setText(currentQuestion.getOption1());
@@ -192,6 +200,15 @@ public class QuestionActivity extends AppCompatActivity {
         questionsList.add(new Question(R.string.question9,R.string.question9option1,R.string.question9option2,R.string.question9option3,1, 0));
         questionsList.add(new Question(R.string.question10,R.string.question10option1,R.string.question10option2,R.string.question10option3,2, 0));
         questionsList.add(new Question(R.string.question11,R.string.question11option1,R.string.question11option2,R.string.question11option3,1, 0));
+
+
+        questionsList.add(new Question(R.string.question12,R.string.question12option1,R.string.question12option2,R.string.question12option3,1, R.drawable.alga));
+        questionsList.add(new Question(R.string.question13,R.string.question13option1,R.string.question13option2,R.string.question13option3,3, R.drawable.temaki));
+        questionsList.add(new Question(R.string.question13,R.string.question14option1,R.string.question14option2,R.string.question14option3,2, R.drawable.sashimi));
+        questionsList.add(new Question(R.string.question13,R.string.question15option1,R.string.question15option2,R.string.question15option3,1, R.drawable.ghoan));
+        questionsList.add(new Question(R.string.question16,R.string.question16option1,R.string.question16option2,R.string.question16option3,2, R.drawable.gamberi));
+        questionsList.add(new Question(R.string.question13,R.string.question17option1,R.string.question17option2,R.string.question17option3,3, R.drawable.nigiri));
+        questionsList.add(new Question(R.string.question13,R.string.question18option1,R.string.question18option2,R.string.question18option3,1, R.drawable.roll));
 
     }
 
