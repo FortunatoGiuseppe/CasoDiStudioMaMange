@@ -68,9 +68,9 @@
     <string name="domanda"> Question</string>
     <string name="vittoriaQuiz">Congratulations, you won a discount code!</string>
     <string name="sconfittaQuiz">Sorry, try again next time</string>
-    <string name="congratulazioni">congratulations, you have won a discount code!</string>
     <string name="ritenta">Try again next time</string>
     <string name="permessi">Permission Granted!</string>
+    <string name="nessunPiatto">You haven\'t add any plate!</string>
 
 
 
@@ -153,6 +153,7 @@
     <string name="question18option3">Gunkan</string>
 
     <string name="questionR">What is the name of the food?</string>
+    <string name="next">Next</string>
 
     <string name="backhome">Return to inserting the table</string>
 
