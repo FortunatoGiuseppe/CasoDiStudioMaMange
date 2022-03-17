@@ -152,5 +152,7 @@
     <string name="question18option2">Temaki</string>
     <string name="question18option3">Gunkan</string>
 
+    <string name="questionR">What is the name of the food?</string>
+
     <string name="backhome">Return to inserting the table</string>
 </resources>
