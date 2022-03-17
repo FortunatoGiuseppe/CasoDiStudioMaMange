@@ -36,18 +36,18 @@
 
         <TextView
             android:id="@+id/descrizione"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_width="199dp"
+            android:layout_height="102dp"
             android:gravity="left"
             android:text="Descrizione"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.78"
+            app:layout_constraintHorizontal_bias="0.739"
             app:layout_constraintStart_toStartOf="@+id/imagePlate"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.07999998" />
+            app:layout_constraintVertical_bias="0.08" />
 
         <TextView
             android:id="@+id/temperatura"
@@ -114,10 +114,10 @@
             android:text="Connetti"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.864"
+            app:layout_constraintHorizontal_bias="0.857"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/provenienza"
-            app:layout_constraintVertical_bias="0.525" />
+            app:layout_constraintVertical_bias="0.8" />
 
         <ListView
             android:id="@+id/listaDispositiviBluetooth"
@@ -130,6 +130,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/provenienza"
             app:layout_constraintVertical_bias="0.644" />
+
+        <TextView
+            android:id="@+id/statoConnessione"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="16dp"
+            android:text="Stato connessione"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toEndOf="@+id/listaDispositiviBluetooth"
+            app:layout_constraintTop_toBottomOf="@+id/provenienza" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
