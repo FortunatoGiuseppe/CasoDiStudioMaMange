@@ -58,4 +58,10 @@ public class CongratulationActivity extends AppCompatActivity {
         return sb.toString();
     }
 
+    @Override
+    public void onBackPressed() {
+
+
+    }
+
 }
