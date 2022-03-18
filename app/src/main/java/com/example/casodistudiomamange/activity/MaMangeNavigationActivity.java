@@ -39,6 +39,8 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     private MenuItem lastOrderItem;
     private MenuItem acc_regItem;
 
+    private boolean hasLastOrderBeenClicked=false; //flag che consente di caricare solo una volta l'ordine precedente
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +95,9 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
                     case R.id.lastOrder:
                         launchLastOrderFragment();
+                        lastOrderItem = navigationView.getMenu().findItem(R.id.lastOrder);
+                        lastOrderItem.setEnabled(false);
+                        lastOrderItem.getIcon().setAlpha(130);
                         break;
                 }
                 return false;

@@ -36,7 +36,7 @@ public class CongratulationActivity extends AppCompatActivity {
             }
         });
         if(score==max){
-            congratulationsTv.setText(R.string.congratulazioni);
+            congratulationsTv.setText(R.string.vittoriaQuiz);
             congcostr=findViewById(R.id.CongCostr);
             congcostr.setVisibility(congcostr.VISIBLE);
             codeTv=findViewById(R.id.CodeTv);

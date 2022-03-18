@@ -34,7 +34,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
 
         viewPager2.setAdapter(viewPagerFragmentAdapter);
         if(lAuth.getCurrentUser() != null){
-            Toast.makeText(this,"Logged in successfully!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getResources().getString(R.string.loggedIn),Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,LoggedUser.class));
             finish();
         }
