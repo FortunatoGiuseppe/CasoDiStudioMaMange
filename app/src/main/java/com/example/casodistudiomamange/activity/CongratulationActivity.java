@@ -16,6 +16,7 @@ public class CongratulationActivity extends AppCompatActivity {
     private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
     private View homeconstr;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,9 @@ public class CongratulationActivity extends AppCompatActivity {
         homeconstr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String usernameInserito = getIntent().getStringExtra("UsernameInserito");
                 Intent intent = new Intent(CongratulationActivity.this, QRCodeActivity.class);
+                intent.putExtra("UsernameInserito",usernameInserito);
                 startActivity(intent);
             }
         });

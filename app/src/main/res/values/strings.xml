@@ -57,7 +57,7 @@
     <string name="inviatoCucina">Order sent to the kitchen</string>
     <string name="inviatoCucinaMsg">We have received your order and we are processing it</string>
     <string name="chiudi">Close</string>
-    <string name="ConfSO">Order placed successfully!</string>
+    <string name="ConfSO">Order placed successfully! In the meantime, you can share your order or take a quiz!</string>
     <string name="inizioMessaggio">Hi! Look what I ordered with MaMangè:</string>
     <string name="condividi">Share</string>
     <string name="quiz">Quiz</string>

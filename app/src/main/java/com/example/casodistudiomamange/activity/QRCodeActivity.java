@@ -49,6 +49,9 @@ public class QRCodeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         usernameInserito = intent.getStringExtra("UsernameInserito");
+        if (usernameInserito==null){
+            usernameInserito = getIntent().getStringExtra("UsernameInserito");
+        }
 
         String benv = getResources().getString(R.string.benvenuto);
         benvenuto.setText(benv+" "+usernameInserito);

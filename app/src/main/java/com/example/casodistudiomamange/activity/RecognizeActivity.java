@@ -47,6 +47,7 @@ public class RecognizeActivity extends AppCompatActivity {
     private ImageView img1;
     private List<RecognizeModel> Questions= new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,8 +135,10 @@ public class RecognizeActivity extends AppCompatActivity {
             btnNext.setText("Submit");
         }
         else{
+            String usernameInserito = getIntent().getStringExtra("UsernameInserito");
             Intent intent = new Intent(RecognizeActivity.this, CongratulationActivity.class);
             intent.putExtra("score", score);
+            intent.putExtra("UsernameInserito",usernameInserito);
             startActivity(intent);
         }
     }

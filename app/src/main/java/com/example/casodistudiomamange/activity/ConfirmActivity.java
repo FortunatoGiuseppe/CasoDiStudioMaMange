@@ -20,6 +20,7 @@ public class ConfirmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm);
 
+        String usernameInserito = getIntent().getStringExtra("UsernameInserito");
         quizCostraint=findViewById(R.id.QuizConstraint);
         quiz=findViewById(R.id.QuizImg);
 
@@ -27,6 +28,7 @@ public class ConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ConfirmActivity.this, QuestionActivity.class);
+                intent.putExtra("UsernameInserito",usernameInserito);
                 startActivity(intent);
             }
         });
@@ -55,6 +57,7 @@ public class ConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ConfirmActivity.this, QRCodeActivity.class);
+                intent.putExtra("UsernameInserito",usernameInserito);
                 startActivity(intent);
             }
         });
