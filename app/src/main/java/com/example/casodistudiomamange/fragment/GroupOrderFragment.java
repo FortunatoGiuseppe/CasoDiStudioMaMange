@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.adapter.Adapter_Profile;
@@ -30,6 +32,7 @@ public class GroupOrderFragment extends Fragment {
     Adapter_Profile adapter_profile;
     FirebaseFirestore db;
     ArrayList<ArrayList<SoPlate>>listadiLista;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +49,8 @@ public class GroupOrderFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_group_order,null);
         getActivity().setTitle("Group Order");
+
+        swipeRefreshLayout = v.findViewById(R.id.SwipeRefreshLayout);
 
         recyclerView = v.findViewById(R.id.recyclerGroupOrder);
         recyclerView.setHasFixedSize(true);
@@ -66,6 +71,31 @@ public class GroupOrderFragment extends Fragment {
                         }
                     }
                 });
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                profileList = new ArrayList<>();
+                listadiLista = new ArrayList<ArrayList<SoPlate>>();
+                adapter_profile = new Adapter_Profile(profileList);
+                leggiUsername(new metododiCallbackListaProfili() {
+                    @Override
+                    public void onCallback(List<Profile> profili) {
+                        leggiOrdinazioni(profili, new metododiCallbackListadiListe() {
+                            @Override
+                            public void onCallback(ArrayList<ArrayList<SoPlate>> listadiListeCallBack) {
+                                for(int i= 0; i<profili.size(); i++){
+                                    listadiListeCallBack.size();
+                                    profili.get(i).setSoPlates(listadiListeCallBack.get(i));
+                                    adapter_profile.notifyDataSetChanged();
+                                }
+                            }
+                        });
+                    }
+                });
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
