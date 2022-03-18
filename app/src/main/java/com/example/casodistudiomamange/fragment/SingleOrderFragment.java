@@ -44,7 +44,7 @@ public class SingleOrderFragment extends Fragment {
     private FirebaseFirestore db;
     private ArrayList<SoPlate> soPlate;
     private boolean wantsLastOrder=false;   //variabile che serve a determinare se l'utente vuole vedere il single order caricato dal file oppure quello fatto al momento
-    private boolean isSingleOrderEmpty=true;
+    private boolean isSingleOrderEmpty=true; //variabile che serve a capire se il isingle order che si vuole confermare è vuoto o pieno
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,24 +110,9 @@ public class SingleOrderFragment extends Fragment {
                             ((MaMangeNavigationActivity) getActivity()).dbc.setSingleOrderConfirmed(codiceSingleOrder, codiceGroupOrder, codiceTavolo, new DatabaseController.metododiCallbackAllSingleOrderConfirmed() {
                                 @Override
                                 public void onCallback(boolean areAllSingleOrderConfirmed) {
-                                    if (areAllSingleOrderConfirmed) {
+                                    if (areAllSingleOrderConfirmed) { //SE TUTTI I SINGLE ORDER SONO COMFERMATI MANDO L'ORDINE TOTALE ALLA CUCINA
                                         ((MaMangeNavigationActivity) getActivity()).dbc.sendOrderToTheKitchen(codiceSingleOrder, codiceGroupOrder, codiceTavolo, ((MaMangeNavigationActivity) getContext()));
-
-                                        //avviso l'utente
-                                        AlertDialog.Builder ordineInviatoCucina = new AlertDialog.Builder(getContext());
-                                        ordineInviatoCucina.setTitle(getResources().getString(R.string.inviatoCucina));
-                                        ordineInviatoCucina.setMessage(getResources().getString(R.string.inviatoCucinaMsg));
-                                        ordineInviatoCucina.setPositiveButton(getResources().getString(R.string.chiudi), new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                            }
-                                        });
-
-                                        AlertDialog dialog = ordineInviatoCucina.create();
-                                        dialog.show();
-
                                     }
-
                                 }
                             });
 
@@ -168,7 +153,7 @@ public class SingleOrderFragment extends Fragment {
             //occorrerebbe stampare la lista degli soplate piuttosto che la lista di plates, modifica che impatterebbe anche su singlePlates corrente e non letto dal file
             FileOrderManager fileOrderManager= new FileOrderManager();
             fileOrderManager.loadPlateLastOrder((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
-            isSingleOrderEmpty=false;
+            isSingleOrderEmpty=false;   //se trovo piatti lo imposto a falso, che indica che contiene piatti
 
             //devo stampare nelle view ciò che leggo dal file
             adapter_plates.notifyDataSetChanged();
@@ -199,17 +184,16 @@ public class SingleOrderFragment extends Fragment {
                         for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                             soPlate.add(documentSnapshot.toObject(SoPlate.class));
                             adapter_plates.notifyDataSetChanged();
-                            isSingleOrderEmpty=false;
+                            isSingleOrderEmpty=false; //se trovo piatti lo imposto a falso, che indica che contiene piatti
+                            //non posso mettere questa istruzione fuori perché me la farebbe anche se trova 0 piatti,
+                            // perché risultato vuoto è comunque un task con successo
                         }
 
                     }
                 }
             });
-
         }
-
     }
-
 
     private void clearSharedPreferencesQuantities() {
         SharedPreferences sharedPreferences =  (getContext()).getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
