@@ -39,6 +39,7 @@ public class SensorFragment extends Fragment {
     /*costanti che rappresentano lo stato del bluetooth*/
     static final int REQUEST_ENABLE_BLUETOOTH = 0;
     static final int REQUEST_ENABLE_PERMISSION = 1;
+    static final int STATO_IN_ASCOLTO= 2;
     static final int STATO_CONNESSO =3;
     static final int STATO_CONNESSIONE_FALLITO =4;
     static final int STATO_MESSAGGIO_RICEVUTO =5;
@@ -73,7 +74,6 @@ public class SensorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_sensor, container, false);
 
         drinkName = v.findViewById(R.id.nomePiatto);
@@ -91,7 +91,6 @@ public class SensorFragment extends Fragment {
         statoConnessione = v.findViewById(R.id.statoConnessione);
         torbidita = v.findViewById(R.id.torbidita);
         umidita = v.findViewById(R.id.umidita);
-
 
         connettitiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,8 +127,13 @@ public class SensorFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                        Message message=Message.obtain();
+                        message.what= STATO_IN_ASCOLTO;
+                        handler.sendMessage(message);
+
                         ClientClass clientClass = new ClientClass(bluetoothDevice[i]);
                         clientClass.start();
+
                         listaDispositiviBluetooth.setVisibility(View.GONE);
                         connettitiBtn.setVisibility(View.GONE);
                         temperaturaConserazione.setVisibility(View.VISIBLE);
@@ -143,12 +147,6 @@ public class SensorFragment extends Fragment {
         });
 
         return v;
-    }
-
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     /**
@@ -177,11 +175,14 @@ public class SensorFragment extends Fragment {
             switch (messaggio.what)
             {
                 //stati di connessione del Bluetooth
+                case STATO_IN_ASCOLTO:
+                    statoConnessione.setText(R.string.inAscolto);
+                    break;
                 case STATO_CONNESSO:
-                    statoConnessione.setText("Connected");
+                    statoConnessione.setText(R.string.connesso);
                     break;
                 case STATO_CONNESSIONE_FALLITO:
-                    statoConnessione.setText("Connection Failed");
+                    statoConnessione.setText(R.string.connessioneFallita);
                     break;
                     //se il messaggio è ricevuto
                 case STATO_MESSAGGIO_RICEVUTO:
@@ -228,8 +229,8 @@ public class SensorFragment extends Fragment {
         } else if(shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION) && shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("Importanza dei permessi");
-            builder.setMessage("Accettare i permessi per accedere a questa funzionalità, sei sicuro di non voler accettare i permessi?");
+            builder.setTitle(R.string.importanzaDeiPermessi);
+            builder.setMessage(R.string.messaggioPermessi+"\n"+R.string.richiestaPermessi);
 
             builder.setPositiveButton(
                     "Si",
@@ -285,8 +286,8 @@ public class SensorFragment extends Fragment {
 
                 }  else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Importanza dei permessi");
-                    builder.setMessage("Accettare i permessi per accedere a questa funzionalità");
+                    builder.setTitle(R.string.importanzaDeiPermessi);
+                    builder.setMessage(R.string.messaggioPermessi);
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
@@ -374,7 +375,6 @@ public class SensorFragment extends Fragment {
                 }
             }
         }
-
 
     }
 
