@@ -88,13 +88,27 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             //Se il piatto che si sta caricando nel menu è presente nella mappa
             //NOTA: il controllo è fatto "al contrario" (cioè a partire dalla mappa) per sfruttare metodo della mappa efficiente
             if (mapPlateQuantity.containsKey(plate.getNome())) {
-                total.add(position, Math.toIntExact(mapPlateQuantity.get(plate.getNome()))); //se sta allora nel menu deve essere mostrata la quantità che ho letto
+
+                //se sta allora nel menu deve essere mostrata la quantità che ho letto
+                if(total.size()>=position){
+                    total.add(position, Math.toIntExact(mapPlateQuantity.get(plate.getNome())));
+                }else{
+                    total.set(position, Math.toIntExact(mapPlateQuantity.get(plate.getNome())));
+                }
+
+                holder.tvCount.setText(total.get(position).toString());
                 holder.addMoreLayout.setVisibility(View.VISIBLE);
                 holder.addMoreLayout.setEnabled(true);
                 holder.addPlateBtn.setVisibility(View.GONE);
             } else {
-                total.add(position, 0); //se non sta allora devo mettere 0
-                //Appena creo view devo vedere se il totale nello shared preferences è 0 oppure no
+
+                //se non sta allora devo mettere 0
+                if(total.size()>=position){
+                    total.add(position, 0);
+                }else{
+                    total.set(position, 0);
+                }
+
                 // se non è zero devo rendere gone il tasto aggiungi e devo visualizzare +- con il numero che devo leggere dallo shared
                 holder.addMoreLayout.setVisibility(View.GONE);
                 holder.addPlateBtn.setVisibility(View.VISIBLE);
