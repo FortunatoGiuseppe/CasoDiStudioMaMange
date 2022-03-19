@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -77,24 +80,7 @@ public class GroupOrderFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                profileList = new ArrayList<>();
-                listadiLista = new ArrayList<ArrayList<SoPlate>>();
-                adapter_profile = new Adapter_Profile(profileList);
-                leggiUsername(new metododiCallbackListaProfili() {
-                    @Override
-                    public void onCallback(List<Profile> profili) {
-                        leggiOrdinazioni(profili, new metododiCallbackListadiListe() {
-                            @Override
-                            public void onCallback(ArrayList<ArrayList<SoPlate>> listadiListeCallBack) {
-                                for(int i= 0; i<profili.size(); i++){
-                                    listadiListeCallBack.size();
-                                    profili.get(i).setSoPlates(listadiListeCallBack.get(i));
-                                    adapter_profile.notifyDataSetChanged();
-                                }
-                            }
-                        });
-                    }
-                });
+                reloadFragment();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -102,6 +88,14 @@ public class GroupOrderFragment extends Fragment {
         return v;
     }
 
+    /*metodo che ricarica questa fragment*/
+    private void reloadFragment(){
+        Fragment fragment=new GroupOrderFragment();
+        FragmentManager manager = this.getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = manager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
+    }
     /*Metodo che serve a leggere ogni username del GroupOrder corrente ed ad inserirlo in una lista di profili*/
     private void leggiUsername(metododiCallbackListaProfili profilicallback){
 
