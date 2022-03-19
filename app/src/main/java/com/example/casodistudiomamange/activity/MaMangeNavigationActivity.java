@@ -36,7 +36,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
     //elementi del menu che compae quando clicchi sulle 3 linette
     private MenuItem profileItem;
-    private MenuItem lastOrderItem;
+    public MenuItem lastOrderItem;
     private MenuItem acc_regItem;
 
     private boolean hasLastOrderBeenClicked=false; //flag che consente di caricare solo una volta l'ordine precedente
@@ -211,27 +211,5 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             return lAuth.getCurrentUser().getEmail();
         }
         return guest;
-    }
-
-
-    public void clearShared(){
-        SharedPreferences sharedPreferences = this.getSharedPrefs();
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.clear();
-        editor.apply();
-    }
-
-
-    public void setShared(boolean state){
-        SharedPreferences sharedPreferences = this.getSharedPrefs();
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putBoolean("allSingleOrdersAreConfirmed",state);
-        editor.apply();
-    }
-
-    public SharedPreferences getSharedPrefs() {
-        return this.getSharedPreferences("allSingleOrdersAreConfirmed", Context.MODE_PRIVATE);
     }
 }
