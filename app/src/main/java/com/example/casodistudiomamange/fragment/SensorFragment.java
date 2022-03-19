@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,23 +41,21 @@ public class SensorFragment extends Fragment {
     static final int STATE_CONNECTED=3;
     static final int STATE_CONNECTION_FAILED=4;
     static final int STATE_MESSAGE_RECEIVED=5;
-    static final int STATE_CONNECTION_END = 6;
     private static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
 
+    /*variabili del bluetooth*/
     BluetoothAdapter bluetoothAdapter;
     BluetoothDevice[] bluetoothDevice;
     Receive receive;
-
-    TextView PlateName;
-    ImageView img;
-    TextView Descrizione;
     ListView listaDispositiviBluetooth;
-    String name;
-    String descrizione;
-    String image;
-    Button connect;
-
+    Button connettitiBtn;
     TextView temperaturaConserazione, torbidita, statoConnessione, umidita, info;
+
+    /*variabili della bevanda selezionata*/
+    TextView drinkName;
+    ImageView drinkImg;
+    TextView drinkDescrizione;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,28 +75,24 @@ public class SensorFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_sensor, container, false);
 
-        PlateName = v.findViewById(R.id.nomePiatto);
-        Descrizione = v.findViewById(R.id.descrizione);
-        img = v.findViewById(R.id.imagePlate);
-        connect = v.findViewById(R.id.connect);
-        listaDispositiviBluetooth = v.findViewById(R.id.listaDispositiviBluetooth);
-        Bundle bundle = getArguments();
-        name = bundle.getString("PlateName");
-        PlateName.setText(name);
-        image = bundle.getString("Img");
-        Picasso.get().load(image).into(img);
-        descrizione = bundle.getString("Descrizione");
-        Descrizione.setText(descrizione);
+        drinkName = v.findViewById(R.id.nomePiatto);
+        drinkDescrizione = v.findViewById(R.id.descrizione);
+        drinkImg = v.findViewById(R.id.imagePlate);
 
+        Bundle bundle = getArguments();
+        drinkName.setText(bundle.getString("PlateName"));
+        Picasso.get().load(bundle.getString("Img")).into(drinkImg);
+        drinkDescrizione.setText(bundle.getString("Descrizione"));
+
+        connettitiBtn = v.findViewById(R.id.connect);
+        listaDispositiviBluetooth = v.findViewById(R.id.listaDispositiviBluetooth);
         temperaturaConserazione = v.findViewById(R.id.temperatura);
         statoConnessione = v.findViewById(R.id.statoConnessione);
         torbidita = v.findViewById(R.id.torbidita);
         umidita = v.findViewById(R.id.umidita);
-        info = v.findViewById(R.id.altreInfo);
 
 
-
-        connect.setOnClickListener(new View.OnClickListener() {
+        connettitiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listaDispositiviBluetooth.setVisibility(View.VISIBLE);
@@ -125,14 +118,13 @@ public class SensorFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         ClientClass clientClass = new ClientClass(bluetoothDevice[i]);
+                        clientClass.start();
                         listaDispositiviBluetooth.setVisibility(View.GONE);
-                        connect.setVisibility(View.GONE);
+                        connettitiBtn.setVisibility(View.GONE);
                         temperaturaConserazione.setVisibility(View.VISIBLE);
                         torbidita.setVisibility(View.VISIBLE);
                         umidita.setVisibility(View.VISIBLE);
-                        temperaturaConserazione.setVisibility(View.VISIBLE);
-                        info.setVisibility(View.VISIBLE);
-                        clientClass.start();
+
 
                     }
                 });
