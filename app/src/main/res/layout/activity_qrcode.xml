@@ -45,12 +45,13 @@
 
             <TextView
                 android:id="@+id/textView_benvenuto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="8dp"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="34sp"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

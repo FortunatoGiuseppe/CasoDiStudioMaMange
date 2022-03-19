@@ -21,9 +21,8 @@ public class GuestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_guest, container, false);
 
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_guest, container, false);
         Button unirsiTavolo = root.findViewById(R.id.uniscitiGroupOrder);
         tw_username=root.findViewById(R.id.username);
 
@@ -56,6 +55,7 @@ public class GuestFragment extends Fragment {
 
         }else {
             Intent intent= new Intent(getActivity(),QRCodeActivity.class);
+            username_ins = username_ins + " (Guest)";
             intent.putExtra("UsernameInserito",username_ins);
             startActivity(intent);
         }
