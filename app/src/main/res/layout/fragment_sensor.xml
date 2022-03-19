@@ -53,23 +53,26 @@
             android:id="@+id/temperatura"
             android:layout_width="325dp"
             android:layout_height="60dp"
+            android:layout_marginTop="13dp"
             android:layout_marginBottom="272dp"
             android:gravity="left"
             android:text="Temperatura"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imagePlate"
-            app:layout_constraintVertical_bias="0.16000003" />
+            app:layout_constraintTop_toBottomOf="@+id/listaDispositiviBluetooth"
+            app:layout_constraintVertical_bias="0.663" />
 
         <TextView
-            android:id="@+id/pressione"
+            android:id="@+id/torbidita"
             android:layout_width="325dp"
             android:layout_height="60dp"
             android:gravity="left"
-            android:text="Pressione"
+            android:text="Torbidita'"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -79,70 +82,66 @@
             app:layout_constraintVertical_bias="0.060000002" />
 
         <TextView
-            android:id="@+id/gusto"
+            android:id="@+id/umidita"
             android:layout_width="325dp"
             android:layout_height="60dp"
             android:gravity="left"
-            android:text="Gusto"
+            android:text="Umidita'"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pressione"
+            app:layout_constraintTop_toBottomOf="@+id/torbidita"
             app:layout_constraintVertical_bias="0.060000002" />
 
         <TextView
-            android:id="@+id/provenienza"
+            android:id="@+id/altreInfo"
             android:layout_width="325dp"
             android:layout_height="60dp"
             android:gravity="left"
-            android:text="Provenienza"
+            android:text="Altre Info: "
             android:textColor="@color/white"
+            android:visibility="gone"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gusto"
+            app:layout_constraintTop_toBottomOf="@+id/umidita"
             app:layout_constraintVertical_bias="0.060000002" />
 
         <Button
             android:id="@+id/connect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="352dp"
             android:text="Connetti"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.857"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/provenienza"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintTop_toBottomOf="@+id/descrizione" />
 
         <ListView
             android:id="@+id/listaDispositiviBluetooth"
-            android:layout_width="228dp"
-            android:layout_height="101dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/connect"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_width="206dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/provenienza"
-            app:layout_constraintVertical_bias="0.644" />
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/imagePlate" />
 
         <TextView
             android:id="@+id/statoConnessione"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="16dp"
             android:text="Stato connessione"
             android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.4"
-            app:layout_constraintStart_toEndOf="@+id/listaDispositiviBluetooth"
-            app:layout_constraintTop_toBottomOf="@+id/provenienza" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -58,7 +58,7 @@ public class SensorFragment extends Fragment {
     String image;
     Button connect;
 
-    TextView temperatura,pressione,statoConnessione;
+    TextView temperaturaConserazione, torbidita, statoConnessione, umidita, info;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,13 +91,18 @@ public class SensorFragment extends Fragment {
         descrizione = bundle.getString("Descrizione");
         Descrizione.setText(descrizione);
 
-        temperatura = v.findViewById(R.id.temperatura);
+        temperaturaConserazione = v.findViewById(R.id.temperatura);
         statoConnessione = v.findViewById(R.id.statoConnessione);
-        pressione = v.findViewById(R.id.pressione);
+        torbidita = v.findViewById(R.id.torbidita);
+        umidita = v.findViewById(R.id.umidita);
+        info = v.findViewById(R.id.altreInfo);
+
+
 
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                listaDispositiviBluetooth.setVisibility(View.VISIBLE);
                 checkBTPermission();
                 Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
                 String[] strings=new String[pairedDevices.size()];
@@ -120,6 +125,13 @@ public class SensorFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         ClientClass clientClass = new ClientClass(bluetoothDevice[i]);
+                        listaDispositiviBluetooth.setVisibility(View.GONE);
+                        connect.setVisibility(View.GONE);
+                        temperaturaConserazione.setVisibility(View.VISIBLE);
+                        torbidita.setVisibility(View.VISIBLE);
+                        umidita.setVisibility(View.VISIBLE);
+                        temperaturaConserazione.setVisibility(View.VISIBLE);
+                        info.setVisibility(View.VISIBLE);
                         clientClass.start();
 
                     }
@@ -161,16 +173,16 @@ public class SensorFragment extends Fragment {
                     statoConnessione.setText("Connection Failed");
                     break;
                 case STATE_MESSAGE_RECEIVED:
+
                     byte[] readBuff= (byte[]) msg.obj;
+
+                    //messaggio ricevuto tramite bluetooth
                     String messaggioTemporaneo=new String(readBuff,0,msg.arg1);
-
-
-                    String[] splitted = messaggioTemporaneo.split(",");
-                    for (int i=0; i<splitted.length; i++){
-                        System.out.println(splitted[i]);
-                    }
-                    pressione.setText("Pressione di conservazione: "+splitted[0]);
-                    temperatura.setText("Temperatura di conservazione: "+splitted[1]);
+                    //Suddivido il messaggio in piu' messaggi
+                    String[] splitted = messaggioTemporaneo.split("!");
+                    torbidita.setText("Torbidita' della bevanda: "+splitted[0]);
+                   temperaturaConserazione.setText("Temperatura di conservazione: "+splitted[1]);
+                   umidita.setText("Umidita' di conservazione: "+splitted[2]);
 
                     break;
 
@@ -311,9 +323,14 @@ public class SensorFragment extends Fragment {
                     handler.obtainMessage(STATE_MESSAGE_RECEIVED,bytes,-1,buffer).sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Message message=Message.obtain();
+                    message.what=STATE_CONNECTION_FAILED;
+                    handler.sendMessage(message);
+                    break;
                 }
             }
         }
+
 
     }
 
