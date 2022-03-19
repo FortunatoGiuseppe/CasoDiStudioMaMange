@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 /*Classe che gestisce il file testuale temporaneo utilizzato per salvare l'ultimo ordine e per inviare il messaggio contenente i piatti ordinati*/
@@ -146,5 +147,34 @@ public class FileOrderManager {
         return  text;
     }
 
+    /*
+    Metodo per leggere le quantità ed i piatti inseriti in un file dell'ultimo ordine salvato e caricare una mappa.
+    Serve per caricare le giuste quantità nella schermata del menu (categoryFragment)
+     */
+    public void loadQuantitiesFromFile (MaMangeNavigationActivity activity, String FILE_NAME, Map<String,Long> map){
 
+        FileInputStream fis = null;
+
+        try {
+            fis = activity.openFileInput(FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            String text;
+
+            while ((text = br.readLine()) != null) {
+                text=text+("/");    //aggiungo lo slash per identificare la fine della riga
+                map.put(text.substring(0, text.indexOf(",")),Long.parseLong(text.substring(text.indexOf(",")+1, text.indexOf("/"))));   //seleziono nomepiatto e quantità
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
