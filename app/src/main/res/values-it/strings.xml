@@ -161,4 +161,6 @@
 
 
     <string name="backhome">Torna all\' inserimento del tavolo</string>
+    <string name="Invia">Submit</string>
+    <string name="inserireValore">Per favore inserire valore</string>
 </resources>

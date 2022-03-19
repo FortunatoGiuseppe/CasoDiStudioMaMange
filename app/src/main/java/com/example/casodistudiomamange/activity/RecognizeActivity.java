@@ -82,7 +82,7 @@ public class RecognizeActivity extends AppCompatActivity {
                         checkAnswer();
                         countDownTimer.cancel();
                     } else{
-                        Toast.makeText(RecognizeActivity.this, "Please insert value", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RecognizeActivity.this, R.string.inserireValore, Toast.LENGTH_SHORT).show();
                     }
                 } else{
                     showNextQuestion();
@@ -102,7 +102,7 @@ public class RecognizeActivity extends AppCompatActivity {
         if(!(stringa.equals(currentQuestion.getCorrectEN())|| stringa.equals(currentQuestion.getCorrectIT()))){
             op1.setTextColor(Color.RED);
         }
-        if(qCounter<6){
+        if(qCounter<5){
             btnNext.setText(R.string.prossimaDomanda);
         }else{
             btnNext.setText(R.string.fine);
@@ -131,7 +131,7 @@ public class RecognizeActivity extends AppCompatActivity {
             qCounter++;
             NoQuestion.setText("Question: "+ qCounter+" / "+ totalQuestion);
             answered = false;
-            btnNext.setText("Submit");
+            btnNext.setText(R.string.Invia);
         }
         else{
             Intent intent = new Intent(RecognizeActivity.this, CongratulationActivity.class);
