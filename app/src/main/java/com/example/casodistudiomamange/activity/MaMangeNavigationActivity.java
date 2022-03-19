@@ -62,6 +62,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         });
 
         NavigationView navigationView = findViewById(R.id.navigationView);
+        lastOrderItem = navigationView.getMenu().findItem(R.id.lastOrder);
 
         String email = getEmail();
         if (email.equals("Guest")) {
@@ -70,7 +71,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             profileItem.setEnabled(false);
             profileItem.getIcon().setAlpha(130);
 
-            lastOrderItem = navigationView.getMenu().findItem(R.id.lastOrder);
             lastOrderItem.setEnabled(false);
             lastOrderItem.getIcon().setAlpha(130);
 
@@ -95,7 +95,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
                     case R.id.lastOrder:
                         launchLastOrderFragment();
-                        lastOrderItem = navigationView.getMenu().findItem(R.id.lastOrder);
+
                         lastOrderItem.setEnabled(false);
                         lastOrderItem.getIcon().setAlpha(130);
                         break;

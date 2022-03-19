@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.casodistudiomamange.fragment.SensorFragment;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -28,10 +26,8 @@ import com.example.casodistudiomamange.model.FileOrderManager;
 import com.example.casodistudiomamange.model.Plate;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 
 public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHolder> {
@@ -68,33 +64,43 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         FileOrderManager fileOrderManager=new FileOrderManager();
         fileOrderManager.loadQuantitiesFromFile((MaMangeNavigationActivity) context,FILE_NAME,mapPlateQuantity); //carico la mappa
 
-        //Se il piatto che si sta caricando nel menu è presente nella mappa
-        //NOTA: il controllo è fatto "al contrario" (cioè a partire dalla mappa) per sfruttare metodo della mappa efficiente
-        if(mapPlateQuantity.containsKey(plate.getNome())){
-            total.add(position, Math.toIntExact(mapPlateQuantity.get(plate.getNome()))); //se sta allora nel menu deve essere mostrata la quantità che ho letto
-            holder.addMoreLayout.setVisibility(View.VISIBLE);
-            holder.addPlateBtn.setVisibility(View.GONE);
-        }else{
-            total.add(position,0); //se non sta allora devo mettere 0
-            //Appena creo view devo vedere se il totale nello shared preferences è 0 oppure no
-            // se non è zero devo rendere gone il tasto aggiungi e devo visualizzare +- con il numero che devo leggere dallo shared
-            holder.addMoreLayout.setVisibility(View.GONE);
-            holder.addPlateBtn.setVisibility(View.VISIBLE);
-
+        if(((MaMangeNavigationActivity)context).lastOrderItem.isEnabled()){
             //se piatto non sta nell'ultimo ordine salvato vedo se sta nello shared preferences dell'ordine corrente
-            if(loadDataSharedPreferences(plate.getNome())!=0){
+            if(getQuantityForParameterPlateSharedPreferences(plate.getNome())!=0){
                 holder.addMoreLayout.setVisibility(View.VISIBLE);
                 holder.addPlateBtn.setVisibility(View.GONE);
+
                 //imposto nell'array list alla quantità del piatto selezionato il valore letto dallo shared preferences
-                total.set(position, loadDataSharedPreferences(plate.getNome()));
+                if(total.size()>=position){
+                    total.add(position, getQuantityForParameterPlateSharedPreferences(plate.getNome()));
+                }else{
+                    total.set(position, getQuantityForParameterPlateSharedPreferences(plate.getNome()));
+                }
+
                 //imposto alla textView che visualizza la quantità già aggiunta il valore appena letto dallo shared preferences
                 holder.tvCount.setText(total.get(position).toString());
             }else{
+                total.add(position, 0);
                 holder.addMoreLayout.setVisibility(View.GONE);
                 holder.addPlateBtn.setVisibility(View.VISIBLE);
             }
+        }else {
+            //Se il piatto che si sta caricando nel menu è presente nella mappa
+            //NOTA: il controllo è fatto "al contrario" (cioè a partire dalla mappa) per sfruttare metodo della mappa efficiente
+            if (mapPlateQuantity.containsKey(plate.getNome())) {
+                total.add(position, Math.toIntExact(mapPlateQuantity.get(plate.getNome()))); //se sta allora nel menu deve essere mostrata la quantità che ho letto
+                holder.addMoreLayout.setVisibility(View.VISIBLE);
+                holder.addMoreLayout.setEnabled(true);
+                holder.addPlateBtn.setVisibility(View.GONE);
+            } else {
+                total.add(position, 0); //se non sta allora devo mettere 0
+                //Appena creo view devo vedere se il totale nello shared preferences è 0 oppure no
+                // se non è zero devo rendere gone il tasto aggiungi e devo visualizzare +- con il numero che devo leggere dallo shared
+                holder.addMoreLayout.setVisibility(View.GONE);
+                holder.addPlateBtn.setVisibility(View.VISIBLE);
+                holder.addPlateBtn.setEnabled(true);
+            }
         }
-
 
         //visualizzazione icona mondo
         if((plate.getFlag() != null) && plate.getFlag()==1){
@@ -125,7 +131,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         holder.addPlateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+/*                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                 builder1.setMessage(R.string.piattoAggiunto);
                 builder1.setCancelable(true);
                 AlertDialog alert = builder1.create();
@@ -141,7 +147,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                         }
                     }
                 };
-                handler.postDelayed(runnable, 1500);
+                handler.postDelayed(runnable, 1500);*/
 
                 //Aggiunta del piatto nel DB
 
@@ -152,8 +158,8 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 holder.addPlateBtn.setVisibility(View.GONE);
 
                 //siccome ho potuto cliccare sul tasto aggiungi vuol dire che prima la quantità era 0 perciò ora è sicuramente 1
-                holder.tvCount.setText("1");
-                total.set(position,1);
+                holder.tvCount.setText(String.valueOf(total.get(position)+1));
+                total.set(position, total.get(position)+1);
                 //salvo la quantità nello shared preferences
                 saveDataSharedPreferences(plate.getNome(),total.get(position));
             }
@@ -252,7 +258,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     }
 
     //metodo per caricare dallo shared preferences la quantità relativa al piatto passato come parametro
-    public int loadDataSharedPreferences(String nomePiatto) {
+    public int getQuantityForParameterPlateSharedPreferences(String nomePiatto) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
         //0 è il valore passato di default, cioè se nello shared preferences non esiste una quantità precedentemente aggiunta per quel piatto
         return sharedPreferences.getInt(nomePiatto,0);
