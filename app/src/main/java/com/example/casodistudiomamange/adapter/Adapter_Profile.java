@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,6 +45,13 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
         boolean isExpandible = profileList.get(position).isExpandable();
         holder.expandableLayout.setVisibility(isExpandible ? View.VISIBLE : View.GONE);
 
+        if(isExpandible){
+            holder.arrow.setRotation(180);
+        }
+        else{
+            holder.arrow.setRotation(0);
+        }
+
         Adapter_Profile_Ordered_GroupOrder adapter = new Adapter_Profile_Ordered_GroupOrder(soPlates);
         holder.recyclerViewPlate.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
         holder.recyclerViewPlate.setHasFixedSize(true);
@@ -75,6 +83,7 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
         LinearLayout linearLayout;
         RelativeLayout expandableLayout;
         RecyclerView recyclerViewPlate;
+        ImageView arrow;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +92,7 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
             linearLayout = itemView.findViewById(R.id.linearProfile);
             expandableLayout = itemView.findViewById(R.id.expandableLayout);
             recyclerViewPlate = itemView.findViewById(R.id.recycleViewPlateGroupOrder);
+            arrow = itemView.findViewById(R.id.dropArrow);
 
         }
     }
