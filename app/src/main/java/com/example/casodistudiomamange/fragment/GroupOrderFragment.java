@@ -88,6 +88,7 @@ public class GroupOrderFragment extends Fragment {
         return v;
     }
 
+    /*metodo che ricarica questa fragment*/
     private void reloadFragment(){
         Fragment fragment=new GroupOrderFragment();
         FragmentManager manager = this.getActivity().getSupportFragmentManager();
