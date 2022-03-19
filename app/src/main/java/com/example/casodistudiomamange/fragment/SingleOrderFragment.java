@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -42,6 +44,7 @@ public class SingleOrderFragment extends Fragment {
     private FirebaseFirestore db;
     private ArrayList<SoPlate> soPlate;
     private boolean wantsLastOrder=false;   //variabile che serve a determinare se l'utente vuole vedere il single order caricato dal file oppure quello fatto al momento
+    private boolean isSingleOrderEmpty=true; //variabile che serve a capire se il isingle order che si vuole confermare è vuoto o pieno
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,62 +95,48 @@ public class SingleOrderFragment extends Fragment {
 
                         //crea file contenente i piatti ordinati (salvataggio ultimo ordine)
                         //IL FILE CONTIENE NOME PIATTO E QUANTITÀ
-                        FileOrderManager fileOrderManager= new FileOrderManager();
-                        fileOrderManager.savePlatesLastOrder(soPlate,getContext(),FILE_NAME);
+                        FileOrderManager fileOrderManager = new FileOrderManager();
+                        fileOrderManager.savePlatesLastOrder(soPlate, getContext(), FILE_NAME);
 
                         String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
                         String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
                         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
 
-                        /*confermo l'ordinazione*/
-                        ((MaMangeNavigationActivity) getActivity()).dbc.setSingleOrderConfirmed(codiceSingleOrder, codiceGroupOrder, codiceTavolo, new DatabaseController.metododiCallbackAllSingleOrderConfirmed() {
-                            @Override
-                            public void onCallback(boolean areAllSingleOrderConfirmed) {
-                                if(areAllSingleOrderConfirmed){
-                                    ((MaMangeNavigationActivity) getActivity()).dbc.sendOrderToTheKitchen(codiceSingleOrder,codiceGroupOrder, codiceTavolo,((MaMangeNavigationActivity) getContext()));
+                        if(isSingleOrderEmpty) {
+                            Toast.makeText(getContext(), getResources().getString(R.string.nessunPiatto), Toast.LENGTH_SHORT).show();
+                        }else {
 
-                                    //avviso l'utente
-                                    AlertDialog.Builder ordineInviatoCucina = new AlertDialog.Builder(getContext());
-                                    ordineInviatoCucina.setTitle(getResources().getString(R.string.inviatoCucina));
-                                    ordineInviatoCucina.setMessage(getResources().getString(R.string.inviatoCucinaMsg));
-                                    ordineInviatoCucina.setPositiveButton(getResources().getString(R.string.chiudi), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                        }
-                                    });
-
-                                    AlertDialog dialog = ordineInviatoCucina.create();
-                                    dialog.show();
-
-
-
-
+                            /*confermo l'ordinazione*/
+                            ((MaMangeNavigationActivity) getActivity()).dbc.setSingleOrderConfirmed(codiceSingleOrder, codiceGroupOrder, codiceTavolo, new DatabaseController.metododiCallbackAllSingleOrderConfirmed() {
+                                @Override
+                                public void onCallback(boolean areAllSingleOrderConfirmed) {
+                                    if (areAllSingleOrderConfirmed) { //SE TUTTI I SINGLE ORDER SONO COMFERMATI MANDO L'ORDINE TOTALE ALLA CUCINA
+                                        ((MaMangeNavigationActivity) getActivity()).dbc.sendOrderToTheKitchen(codiceSingleOrder, codiceGroupOrder, codiceTavolo, ((MaMangeNavigationActivity) getContext()));
+                                    }
                                 }
+                            });
 
-                            }
-                        });
+                            /*Avviso l'utente che l'ordinazione è stata confermata*/
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle(getResources().getString(R.string.ordineSalvato));
+                            builder.setMessage(" ");
+                            AlertDialog dialogConfermato = builder.create();
+                            dialogConfermato.show();
 
-                        /*Avviso l'utente che l'ordinazione è stata confermata*/
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle(getResources().getString(R.string.ordineSalvato));
-                        builder.setMessage(" ");
-                        AlertDialog dialogConfermato = builder.create();
-                        dialogConfermato.show();
+                            //pulisco shared delle quantità
+                            clearSharedPreferencesQuantities();
 
-                        //pulisco shared delle quantità
-                        clearSharedPreferencesQuantities();
-
-                        /*Avvio l'activity di scelta tra quiz e condivisione dell'ordine*/
-                        Intent intent = new Intent(getActivity(), ConfirmActivity.class);
-                        intent.putExtra("UsernameInserito",usernameInserito);
-                        startActivity(intent);
-
+                            /*Avvio l'activity di scelta tra quiz e condivisione dell'ordine*/
+                            Intent intent = new Intent(getActivity(), ConfirmActivity.class);
+                            startActivity(intent);
+                        }
                     }
                 });
                 AlertDialog dialog = richiestaSicuro.create();
                 dialog.show();
             }
         });
+
 
         return v;
 
@@ -164,6 +153,7 @@ public class SingleOrderFragment extends Fragment {
             //occorrerebbe stampare la lista degli soplate piuttosto che la lista di plates, modifica che impatterebbe anche su singlePlates corrente e non letto dal file
             FileOrderManager fileOrderManager= new FileOrderManager();
             fileOrderManager.loadPlateLastOrder((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
+            isSingleOrderEmpty=false;   //se trovo piatti lo imposto a falso, che indica che contiene piatti
 
             //devo stampare nelle view ciò che leggo dal file
             adapter_plates.notifyDataSetChanged();
@@ -181,6 +171,7 @@ public class SingleOrderFragment extends Fragment {
             String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
             String username = ((MaMangeNavigationActivity) getActivity()).username;
 
+
             db.collection("SO-PIATTO")
                     .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
                     .whereEqualTo("codiceGroupOrder",codiceGroupOrder)
@@ -193,16 +184,16 @@ public class SingleOrderFragment extends Fragment {
                         for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                             soPlate.add(documentSnapshot.toObject(SoPlate.class));
                             adapter_plates.notifyDataSetChanged();
+                            isSingleOrderEmpty=false; //se trovo piatti lo imposto a falso, che indica che contiene piatti
+                            //non posso mettere questa istruzione fuori perché me la farebbe anche se trova 0 piatti,
+                            // perché risultato vuoto è comunque un task con successo
                         }
 
                     }
                 }
             });
-
         }
-
     }
-
 
     private void clearSharedPreferencesQuantities() {
         SharedPreferences sharedPreferences =  (getContext()).getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);

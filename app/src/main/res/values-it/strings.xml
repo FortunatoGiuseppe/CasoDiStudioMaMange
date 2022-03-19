@@ -68,11 +68,16 @@
     <string name="domanda"> Domanda</string>
     <string name="vittoriaQuiz">Congratulazioni, hai vinto un codice sconto!</string>
     <string name="sconfittaQuiz">Ritenta la prossima volta</string>
-    <string name="congratulazioni">Congratulazioni,hai vinto un codice sconto!</string>
     <string name="ritenta">Ritenta la prossima volta!</string>
     <string name="permessi">Permesso dato!</string>
-
-
+    <string name="nessunPiatto">Non hai aggiunto nessun piatto al tuo ordine!</string>
+    <string name="loggedIn">Loggato correttamente!</string>
+    <string name="inAscolto">Ascoltando</string>
+    <string name="connesso">Connesso</string>
+    <string name="connessioneFallita">Connessione fallita</string>
+    <string name="importanzaDeiPermessi">Importanza dei permessi</string>
+    <string name="messaggioPermessi">Accettare i permessi per accedere a questa funzionalità</string>
+    <string name="richiestaPermessi">Sei sicuro di non voler accettare i permessi?</string>
 
 
 
@@ -160,5 +165,7 @@
 
 
 
-    <string name="backhome">Torna all inserimento del tavolo</string>
+    <string name="backhome">Torna all\' inserimento del tavolo</string>
+    <string name="Invia">Submit</string>
+    <string name="inserireValore">Per favore inserire valore</string>
 </resources>

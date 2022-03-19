@@ -36,8 +36,10 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
     //elementi del menu che compae quando clicchi sulle 3 linette
     private MenuItem profileItem;
-    private MenuItem lastOrderItem;
+    public MenuItem lastOrderItem;
     private MenuItem acc_regItem;
+
+    private boolean hasLastOrderBeenClicked=false; //flag che consente di caricare solo una volta l'ordine precedente
 
 
     @Override
@@ -60,6 +62,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         });
 
         NavigationView navigationView = findViewById(R.id.navigationView);
+        lastOrderItem = navigationView.getMenu().findItem(R.id.lastOrder);
 
         String email = getEmail();
         if (email.equals("Guest")) {
@@ -68,7 +71,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             profileItem.setEnabled(false);
             profileItem.getIcon().setAlpha(130);
 
-            lastOrderItem = navigationView.getMenu().findItem(R.id.lastOrder);
             lastOrderItem.setEnabled(false);
             lastOrderItem.getIcon().setAlpha(130);
 
@@ -93,6 +95,9 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
                     case R.id.lastOrder:
                         launchLastOrderFragment();
+
+                        lastOrderItem.setEnabled(false);
+                        lastOrderItem.getIcon().setAlpha(130);
                         break;
                 }
                 return false;
@@ -206,27 +211,5 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             return lAuth.getCurrentUser().getEmail();
         }
         return guest;
-    }
-
-
-    public void clearShared(){
-        SharedPreferences sharedPreferences = this.getSharedPrefs();
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.clear();
-        editor.apply();
-    }
-
-
-    public void setShared(boolean state){
-        SharedPreferences sharedPreferences = this.getSharedPrefs();
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putBoolean("allSingleOrdersAreConfirmed",state);
-        editor.apply();
-    }
-
-    public SharedPreferences getSharedPrefs() {
-        return this.getSharedPreferences("allSingleOrdersAreConfirmed", Context.MODE_PRIVATE);
     }
 }

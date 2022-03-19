@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.model.FileOrderManager;
 
+/*NON PIU IN USO*/
 public class ConfirmFragment extends Fragment {
 
 
@@ -65,10 +66,7 @@ public class ConfirmFragment extends Fragment {
                 startActivity(sendIntent);*/
             }
         });
-
         return v;
     }
-
-
 
 }

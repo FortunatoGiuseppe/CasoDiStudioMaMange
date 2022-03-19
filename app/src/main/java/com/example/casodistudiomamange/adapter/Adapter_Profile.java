@@ -55,8 +55,11 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
                 profile.setExpandable(!profile.isExpandable());
                 soPlates = profile.getSoPlates();
                 notifyItemChanged(holder.getBindingAdapterPosition());
+                adapter.notifyDataSetChanged();
             }
         });
+
+
 
     }
 

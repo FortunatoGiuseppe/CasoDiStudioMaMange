@@ -36,100 +36,92 @@
 
         <TextView
             android:id="@+id/descrizione"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_width="199dp"
+            android:layout_height="102dp"
             android:gravity="left"
             android:text="Descrizione"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.78"
+            app:layout_constraintHorizontal_bias="0.739"
             app:layout_constraintStart_toStartOf="@+id/imagePlate"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.07999998" />
+            app:layout_constraintVertical_bias="0.08" />
+
+        <TextView
+            android:id="@+id/umidita"
+            android:layout_width="325dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:gravity="left"
+            android:visibility="gone"
+            android:text="Umidita'"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/torbidita" />
+
+        <TextView
+            android:id="@+id/torbidita"
+            android:layout_width="325dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:gravity="left"
+            android:visibility="gone"
+            android:text="Torbidita'"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temperatura" />
 
         <TextView
             android:id="@+id/temperatura"
             android:layout_width="325dp"
             android:layout_height="60dp"
-            android:layout_marginBottom="272dp"
+            android:layout_marginBottom="312dp"
             android:gravity="left"
             android:text="Temperatura"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imagePlate"
-            app:layout_constraintVertical_bias="0.16000003" />
-
-        <TextView
-            android:id="@+id/pressione"
-            android:layout_width="325dp"
-            android:layout_height="60dp"
-            android:gravity="left"
-            android:text="Pressione"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperatura"
-            app:layout_constraintVertical_bias="0.060000002" />
-
-        <TextView
-            android:id="@+id/gusto"
-            android:layout_width="325dp"
-            android:layout_height="60dp"
-            android:gravity="left"
-            android:text="Gusto"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pressione"
-            app:layout_constraintVertical_bias="0.060000002" />
-
-        <TextView
-            android:id="@+id/provenienza"
-            android:layout_width="325dp"
-            android:layout_height="60dp"
-            android:gravity="left"
-            android:text="Provenienza"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gusto"
-            app:layout_constraintVertical_bias="0.060000002" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/connect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginBottom="24dp"
             android:text="Connetti"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/statoConnessione"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.864"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/provenienza"
-            app:layout_constraintVertical_bias="0.525" />
+            app:layout_constraintHorizontal_bias="0.857"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ListView
             android:id="@+id/listaDispositiviBluetooth"
-            android:layout_width="228dp"
-            android:layout_height="101dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="206dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="60dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/connect"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/provenienza"
-            app:layout_constraintVertical_bias="0.644" />
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/statoConnessione"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="16dp"
+            android:text="Stato connessione"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

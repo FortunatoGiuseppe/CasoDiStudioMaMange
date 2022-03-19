@@ -16,7 +16,7 @@ import com.example.casodistudiomamange.model.CaptureAct;
 import com.example.casodistudiomamange.model.Table;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -42,7 +42,6 @@ public class QRCodeActivity extends AppCompatActivity {
         Button scanQrCodeBtn = findViewById(R.id.scanQrCodeBtn);
         Button confirmBtn = findViewById(R.id.confirmBtn);
         insertQrCode = findViewById(R.id.insertQrCode);
-        Button logout = findViewById(R.id.logout);
         TextView benvenuto = findViewById(R.id.textView_benvenuto);
 
         getSupportActionBar().hide();
@@ -70,12 +69,6 @@ public class QRCodeActivity extends AppCompatActivity {
             }
         });
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout();
-            }
-        });
     }
 
     private void scanQrCode(){
@@ -167,11 +160,5 @@ public class QRCodeActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    public void logout(){
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(this,SwitchLoginSignupGuestActivity.class));
-        finish();
     }
 }
