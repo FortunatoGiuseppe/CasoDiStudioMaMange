@@ -55,7 +55,7 @@ public class LoggedUser extends AppCompatActivity {
             alert.show();
         }else {
             Intent intent = new Intent(this, QRCodeActivity.class);
-            intent.putExtra("UsernameInserito", tw_username.getText().toString());
+            intent.putExtra("UsernameInserito", username_ins + " (Guest)");
             startActivity(intent);
         }
     }
