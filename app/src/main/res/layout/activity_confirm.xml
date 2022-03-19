@@ -34,12 +34,11 @@
         app:layout_constraintVertical_bias="1.0">
 
 
-
-
         <TextView
             android:id="@+id/confirmTxt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="338dp"
+            android:layout_height="104dp"
+            android:layout_marginTop="48dp"
             android:background="@color/primaryColor"
             android:paddingTop="16dp"
             android:text="@string/ConfSO"
@@ -47,13 +46,13 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.169"
             app:layout_constraintWidth_percent=".8"
             tools:paddingBottom="16dp" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/Shareconstraint"
@@ -62,10 +61,10 @@
             android:background="@drawable/categories_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.158"
+            app:layout_constraintHorizontal_bias="0.137"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmTxt"
-            app:layout_constraintVertical_bias="0.29">
+            app:layout_constraintVertical_bias="0.229">
 
             <ImageView
                 android:id="@+id/ShareImg"
@@ -94,17 +93,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/QuizConstraint"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginStart="220dp"
+            android:layout_marginStart="216dp"
             android:background="@drawable/categories_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmTxt"
-            app:layout_constraintVertical_bias="0.292" >
+            app:layout_constraintVertical_bias="0.229">
 
             <ImageView
                 android:id="@+id/QuizImg"
@@ -123,8 +121,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:text="@string/quiz"
-                android:textSize="25sp"
                 android:textColor="@color/black"
+                android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -136,7 +134,7 @@
             android:id="@+id/HomeCostr"
             android:layout_width="230dp"
             android:layout_height="49dp"
-            android:layout_marginBottom="96dp"
+            android:layout_marginBottom="76dp"
             android:background="@drawable/categories_background"
             android:foregroundGravity="center"
             android:textAlignment="center"
@@ -149,15 +147,17 @@
                 android:id="@+id/textHome"
                 android:layout_width="181dp"
                 android:layout_height="36dp"
-                android:text="@string/backhome"
                 android:gravity="center"
+                android:text="@string/backhome"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.51"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.461" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

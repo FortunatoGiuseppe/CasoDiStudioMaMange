@@ -128,6 +128,7 @@ public class SingleOrderFragment extends Fragment {
 
                             /*Avvio l'activity di scelta tra quiz e condivisione dell'ordine*/
                             Intent intent = new Intent(getActivity(), ConfirmActivity.class);
+                            intent.putExtra("UsernameInserito",usernameInserito);
                             startActivity(intent);
                         }
                     }
