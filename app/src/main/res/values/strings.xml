@@ -72,7 +72,12 @@
     <string name="permessi">Permission Granted!</string>
     <string name="nessunPiatto">You haven\'t add any plate!</string>
     <string name="loggedIn">Logged in successfully!</string>
-
+    <string name="inAscolto">Listening</string>
+    <string name="connesso">Connected</string>
+    <string name="connessioneFallita">Connection Failed</string>
+    <string name="importanzaDeiPermessi">Importance of permissions</string>
+    <string name="messaggioPermessi">Accept permissions to access this feature</string>
+    <string name="richiestaPermessi">Are you sure you do not want to accept the permissions?</string>
 
 
     <string name="question1">In which country is salmon caught the most?</string>
