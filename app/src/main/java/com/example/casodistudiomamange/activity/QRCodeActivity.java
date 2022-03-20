@@ -5,6 +5,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.connection.NetworkChangedListener;
 import com.example.casodistudiomamange.model.CaptureAct;
 import com.example.casodistudiomamange.model.Table;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,7 +35,7 @@ public class QRCodeActivity extends AppCompatActivity {
     private EditText insertQrCode;
     String usernameInserito;
     private FirebaseFirestore db;
-
+    NetworkChangedListener networkChangedListener = new NetworkChangedListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,5 +163,18 @@ public class QRCodeActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart(){
+        IntentFilter filter= new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangedListener, filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangedListener);
+        super.onStop();
     }
 }

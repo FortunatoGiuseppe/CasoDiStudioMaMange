@@ -3,10 +3,13 @@ package com.example.casodistudiomamange.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.connection.NetworkChangedListener;
 import com.example.casodistudiomamange.model.FileOrderManager;
 
 public class ConfirmActivity extends AppCompatActivity {
@@ -14,6 +17,7 @@ public class ConfirmActivity extends AppCompatActivity {
     ImageView quiz,share;
     View quizCostraint, shareCostraint, homeconstr,homeTv;
     private static final String FILE_NAME = "lastOrder.txt";
+    NetworkChangedListener networkChangedListener = new NetworkChangedListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,5 +71,19 @@ public class ConfirmActivity extends AppCompatActivity {
     public void onBackPressed() {
 
 
+    }
+
+
+    @Override
+    protected void onStart(){
+        IntentFilter filter= new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangedListener, filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangedListener);
+        super.onStop();
     }
 }

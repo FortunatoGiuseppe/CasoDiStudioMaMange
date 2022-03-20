@@ -1,5 +1,7 @@
 package com.example.casodistudiomamange.adapter;
 
+import static com.google.firebase.firestore.core.UserData.Source.Set;
+
 import com.example.casodistudiomamange.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,9 +26,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.model.FileOrderManager;
 import com.example.casodistudiomamange.model.Plate;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.mlkit.common.model.DownloadConditions;
+import com.google.mlkit.common.model.RemoteModelManager;
+import com.google.mlkit.nl.translate.TranslateLanguage;
+import com.google.mlkit.nl.translate.TranslateRemoteModel;
+import com.google.mlkit.nl.translate.Translation;
+import com.google.mlkit.nl.translate.Translator;
+import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -37,6 +49,13 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     private ArrayList<Plate> plateArrayList;
     private ArrayList<Integer> total= new ArrayList<>();//lista delle quantità, in ogni posizione c'è la quantità di un piatto (o bevanda)
     private static final String FILE_NAME = "lastOrder.txt";
+    TranslatorOptions options =
+            new TranslatorOptions.Builder()
+                    .setSourceLanguage(TranslateLanguage.ITALIAN)
+                    .setTargetLanguage(TranslateLanguage.ENGLISH)
+                    .build();
+    final Translator englishGermanTranslator = Translation.getClient(options);
+    RemoteModelManager modelManager = RemoteModelManager.getInstance();
 
     public  Adapter_plates(Context context, ArrayList<Plate> plateArrayList){
         this.context =context;
@@ -54,8 +73,17 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     public void onBindViewHolder(@NonNull myViewHolder holder, @SuppressLint("RecyclerView") int position) {
         /* attribuisco i valori letti alle textview corrispondenti*/
         Plate plate = plateArrayList.get(position);
-        holder.textView_plate.setText(plate.getNome());
-        holder.textView_plate_description.setText(plate.getDescrizione());
+
+        if(Locale.getDefault().getDisplayLanguage().equals("Italiano")){
+            holder.textView_plate.setText(plate.getNome());
+            holder.textView_plate_description.setText(plate.getDescrizione());
+
+        }else{
+            prepareModel(plate.getNome(),holder);
+            prepareModelDescription(plate.getDescrizione(),holder);
+        }
+
+
         Picasso.get().load(plate.getImg()).into(holder.imageView_plate);
 
 
@@ -277,4 +305,67 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         //0 è il valore passato di default, cioè se nello shared preferences non esiste una quantità precedentemente aggiunta per quel piatto
         return sharedPreferences.getInt(nomePiatto,0);
     }
+
+    private void prepareModel(String trans,@NonNull myViewHolder holder){
+
+
+        DownloadConditions conditions = new DownloadConditions.Builder()
+                .requireWifi()
+                .build();
+        englishGermanTranslator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                englishGermanTranslator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        holder.textView_plate.setText(s);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+
+    private void prepareModelDescription(String trans,@NonNull myViewHolder holder){
+
+
+        DownloadConditions conditions = new DownloadConditions.Builder()
+                .requireWifi()
+                .build();
+        englishGermanTranslator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                englishGermanTranslator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        holder.textView_plate_description.setText(s);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+
+
+
 }

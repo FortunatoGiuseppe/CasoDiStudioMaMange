@@ -165,4 +165,7 @@
     <string name="Invia">Submit</string>
     <string name="inserireValore">Please insert value</string>
 
+    <string name="connessione_assente">No internet connection</string>
+    <string name="retry">RETRY</string>
+
 </resources>

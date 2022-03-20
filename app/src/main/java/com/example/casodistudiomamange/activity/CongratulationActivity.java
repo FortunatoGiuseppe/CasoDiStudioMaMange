@@ -2,10 +2,14 @@ package com.example.casodistudiomamange.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.connection.NetworkChangedListener;
+
 import java.util.Random;
 
 public class CongratulationActivity extends AppCompatActivity {
@@ -15,7 +19,7 @@ public class CongratulationActivity extends AppCompatActivity {
     private int max = 5;
     private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
     private View homeconstr;
-
+    NetworkChangedListener networkChangedListener = new NetworkChangedListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,19 @@ public class CongratulationActivity extends AppCompatActivity {
     public void onBackPressed() {
 
 
+    }
+
+    @Override
+    protected void onStart(){
+        IntentFilter filter= new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangedListener, filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangedListener);
+        super.onStop();
     }
 
 }

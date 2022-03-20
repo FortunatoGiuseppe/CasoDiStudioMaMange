@@ -8,11 +8,14 @@ import androidx.fragment.app.Fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.connection.NetworkChangedListener;
 import com.example.casodistudiomamange.fragment.GroupOrderFragment;
 import com.example.casodistudiomamange.fragment.RestaurantFragment;
 import com.example.casodistudiomamange.fragment.SingleOrderFragment;
@@ -30,7 +33,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public String username;
     public String codiceTavolo;
     private FirebaseAuth lAuth;
-
+    NetworkChangedListener networkChangedListener = new NetworkChangedListener();
     public String codiceSingleOrder;
     public String codiceGroupOrder;
 
@@ -211,5 +214,18 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             return lAuth.getCurrentUser().getEmail();
         }
         return guest;
+    }
+
+    @Override
+    protected void onStart(){
+        IntentFilter filter= new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangedListener, filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangedListener);
+        super.onStop();
     }
 }

@@ -168,4 +168,6 @@
     <string name="backhome">Torna all\' inserimento del tavolo</string>
     <string name="Invia">Submit</string>
     <string name="inserireValore">Per favore inserire valore</string>
+    <string name="connessione_assente">Nessuna connessione ad internet</string>
+    <string name="retry">RIPROVA</string>
 </resources>
