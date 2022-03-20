@@ -170,4 +170,12 @@
     <string name="Invia">Submit</string>
     <string name="inserireValore">Please insert value</string>
 
+
+
+    <string name="info">MaMange is an app that aims to be able to order in your favorite sushi restaurant with simplicity and speed, offering those who use it a certainty in ordering.</string>
+    <string name="developers">Developers:</string>
+    <string name="sendEmail">Send email to us</string>
+    <string name="back">Presso to go back</string>
+
+
 </resources>
