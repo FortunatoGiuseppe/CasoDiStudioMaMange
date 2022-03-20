@@ -71,15 +71,27 @@ public class QRCodeActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Medoto che inizializza la scansione QR del tavolo
+     *
+     */
     private void scanQrCode(){
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setCaptureActivity(CaptureAct.class);
         integrator.setOrientationLocked(false);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
-        integrator.setPrompt("Scanning code");
+        integrator.setPrompt(getText(R.string.scannerizzaQr).toString());
         integrator.initiateScan();
     }
 
+    /**
+     * Metodo che controlla dell'esistenza del codice QR
+     * scannerizzato dalla fotocamera
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -118,9 +130,15 @@ public class QRCodeActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Metodo che controlla l'esistenza del tavolo associato
+     * al codice scannerizzato tramite Fotocamera o inserito manualmente
+     *
+     * @param QrCode
+     */
     private void existsTableWithCode(String QrCode){
 
+        //effettuo una ricerca nella tabella TAVOLI presente su firebase
         db.collection("TAVOLI").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -142,7 +160,8 @@ public class QRCodeActivity extends AppCompatActivity {
                             isFound=true;
                         }
                     }
-                    if(!isFound){//se tavolo non pè stato trovato, allora avvisa utente
+
+                    if(!isFound){//se tavolo non è stato trovato, allora avvisa utente
                         AlertDialog.Builder tableNotFoundAlert = new AlertDialog.Builder(QRCodeActivity.this);
                         tableNotFoundAlert.setMessage(R.string.tavoloNonTrovato);
                         tableNotFoundAlert.setCancelable(true);
