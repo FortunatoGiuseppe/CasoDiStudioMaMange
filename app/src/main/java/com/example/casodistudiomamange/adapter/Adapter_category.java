@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.fragment.CategoryFragment;
 import com.example.casodistudiomamange.model.Category;
 import com.squareup.picasso.Picasso;

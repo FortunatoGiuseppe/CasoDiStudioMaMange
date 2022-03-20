@@ -154,6 +154,12 @@ public class SingleOrderFragment extends Fragment {
             //occorrerebbe stampare la lista degli soplate piuttosto che la lista di plates, modifica che impatterebbe anche su singlePlates corrente e non letto dal file
             FileOrderManager fileOrderManager= new FileOrderManager();
             fileOrderManager.loadPlateLastOrder((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
+
+            //Se ho caricato l'ultimo ordine salvato allora devo aggiungere nello shared preferences i piatti letti
+            for (int i = 0; i < soPlate.size(); i++) {
+                ((MaMangeNavigationActivity) getContext()).saveDataSharedPreferences(soPlate.get(i).getNomePiatto(), (int) soPlate.get(i).getQuantita());
+            }
+
             isSingleOrderEmpty=false;   //se trovo piatti lo imposto a falso, che indica che contiene piatti
 
             //devo stampare nelle view ciò che leggo dal file
