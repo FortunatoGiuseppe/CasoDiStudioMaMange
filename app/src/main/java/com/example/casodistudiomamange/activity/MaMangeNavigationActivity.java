@@ -99,6 +99,10 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
                         lastOrderItem.setEnabled(false);
                         lastOrderItem.getIcon().setAlpha(130);
                         break;
+
+                    case R.id.About:
+                        launchAboutActivity();
+                        break;
                 }
                 return false;
             }
@@ -193,6 +197,11 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         Intent intent2 = new Intent(MaMangeNavigationActivity.this, ProfileActivity.class);
         intent2.putExtra("username",username);
         startActivity(intent2);
+    }
+
+    private void launchAboutActivity(){
+        Intent intent3 = new Intent(MaMangeNavigationActivity.this, AboutActivity.class);
+        startActivity(intent3);
     }
 
     private void launchLastOrderFragment(){

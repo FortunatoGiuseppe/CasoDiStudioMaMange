@@ -26,6 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CasoDiStudioMaMange">
         <activity
+            android:name=".activity.AboutActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.RecognizeActivity"
             android:exported="true" />
         <activity
