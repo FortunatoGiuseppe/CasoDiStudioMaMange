@@ -124,7 +124,7 @@ public class SingleOrderFragment extends Fragment {
                             dialogConfermato.show();
 
                             //pulisco shared delle quantità
-                            clearSharedPreferencesQuantities();
+                            ((MaMangeNavigationActivity)getContext()).clearSharedPreferencesQuantities();
 
                             /*Avvio l'activity di scelta tra quiz e condivisione dell'ordine*/
                             Intent intent = new Intent(getActivity(), ConfirmActivity.class);
@@ -202,11 +202,6 @@ public class SingleOrderFragment extends Fragment {
         }
     }
 
-    private void clearSharedPreferencesQuantities() {
-        SharedPreferences sharedPreferences =  (getContext()).getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
-    }
+
 
 }

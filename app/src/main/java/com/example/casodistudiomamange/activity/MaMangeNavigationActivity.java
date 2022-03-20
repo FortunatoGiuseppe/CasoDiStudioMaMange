@@ -231,4 +231,11 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         //0 è il valore passato di default, cioè se nello shared preferences non esiste una quantità precedentemente aggiunta per quel piatto
         return sharedPreferences.getInt(nomePiatto,0);
     }
+
+    public void clearSharedPreferencesQuantities() {
+        SharedPreferences sharedPreferences =  this.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
 }
