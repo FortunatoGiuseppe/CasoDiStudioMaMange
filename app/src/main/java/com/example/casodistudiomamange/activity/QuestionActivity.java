@@ -65,7 +65,6 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question);
 
         questionsList=new ArrayList<>();
-
         tvQuestion=findViewById(R.id.textQuestion);
         tvScore=findViewById(R.id.textScore);
         tvQuestionNo=findViewById(R.id.textQuestionNo);
@@ -165,9 +164,11 @@ public class QuestionActivity extends AppCompatActivity {
             tvQuestionNo.setText("Question:"+" "+qCounter+"/"+totalQuestions);
             answered=false;
         }else{
+            String usernameInserito = getIntent().getStringExtra("UsernameInserito");
 
             Intent intent = new Intent(QuestionActivity.this, RecognizeActivity.class);
             intent.putExtra("score", score);
+            intent.putExtra("UsernameInserito",usernameInserito);
             //intent.putExtra("max",Questions.size());
             startActivity(intent);
         }

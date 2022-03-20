@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +38,7 @@ public class GroupOrderFragment extends Fragment {
     FirebaseFirestore db;
     ArrayList<ArrayList<SoPlate>>listadiLista;
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView table;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +55,9 @@ public class GroupOrderFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_group_order,null);
         getActivity().setTitle("Group Order");
+        table = v.findViewById(R.id.TavoloText);
+        String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
+        table.setText("Ordinazione Tavolo: "+codiceTavolo);
 
         swipeRefreshLayout = v.findViewById(R.id.SwipeRefreshLayout);
 

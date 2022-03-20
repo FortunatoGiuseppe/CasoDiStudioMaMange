@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">MaMange</string>
+    <string name="si">Yes</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="registrati">Sign up</string>
@@ -10,10 +11,13 @@
     <string name="passdimenticata">Forgot Password?</string>
     <string name="username">Username</string>
     <string name="ospite">Guest</string>
-    <string name="emailRichiestaErr">email is required</string>
-    <string name="passwordRichiestaErr">password is required</string>
+    <string name="emailRichiestaErr">Email is required</string>
+    <string name="passwordRichiestaErr">Password is required</string>
+    <string name="passwordReset">Reset password?</string>
+    <string name="emailLinkReset">We have sent a reset link in your email</string>
+    <string name="emailLinkResetFailed">Error! Reset Link is Not Sent</string>
     <string name="emailValidaErr">Please provide valid email!</string>
-    <string name="seiCaratteriErr">Enter at least six character</string>
+    <string name="ottoCaratteriErr">Enter at least eight character</string>
     <string name="stessaPassErr">Password does not coincide!</string>
     <string name="logout">Logout</string>
     <string name="cerca">Search a restaurant</string>
@@ -57,7 +61,7 @@
     <string name="inviatoCucina">Order sent to the kitchen</string>
     <string name="inviatoCucinaMsg">We have received your order and we are processing it</string>
     <string name="chiudi">Close</string>
-    <string name="ConfSO">Order placed successfully!</string>
+    <string name="ConfSO">Order placed successfully! In the meantime, you can share your order or take a quiz!</string>
     <string name="inizioMessaggio">Hi! Look what I ordered with MaMangè:</string>
     <string name="condividi">Share</string>
     <string name="quiz">Quiz</string>
@@ -72,7 +76,13 @@
     <string name="permessi">Permission Granted!</string>
     <string name="nessunPiatto">You haven\'t add any plate!</string>
     <string name="loggedIn">Logged in successfully!</string>
-
+    <string name="loggedInFailed">Failed to login</string>
+    <string name="inAscolto">Listening</string>
+    <string name="connesso">Connected</string>
+    <string name="connessioneFallita">Connection Failed</string>
+    <string name="importanzaDeiPermessi">Importance of permissions</string>
+    <string name="messaggioPermessi">Accept permissions to access this feature</string>
+    <string name="richiestaPermessi">Are you sure you do not want to accept the permissions?</string>
 
 
     <string name="question1">In which country is salmon caught the most?</string>

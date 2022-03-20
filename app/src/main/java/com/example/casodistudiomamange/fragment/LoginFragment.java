@@ -23,6 +23,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Classe con la quale si effettua il login nell'app
+ */
 public class LoginFragment extends Fragment {
     TextView email;
     TextView pass;
@@ -33,87 +36,105 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_login, container, false);
 
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_login, container, false);
         email = root.findViewById(R.id.email);
         pass = root.findViewById(R.id.pass);
         forgetPass = root.findViewById(R.id.forget_pass);
         loginBtn = root.findViewById(R.id.loginBtn);
         lAuth = FirebaseAuth.getInstance();
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 login();
             }
         });
+
         forgetPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 forgetPass();
             }
         });
+
         return root;
     }
 
+    /**
+     * Metodo con il quale si effettua il login
+     *
+     * Si controllano prima che le stringhe inserite in input rispettano
+     * gli standard convenzionali (Ad esempio una password da almeno 8 cifre)
+     *
+     */
     private void login(){
         if(email.getText().toString().trim().isEmpty()){
-            email.setError("email is required");
+            email.setError(getText(R.string.emailRichiestaErr));
             email.requestFocus();
             return;
         }
         if(pass.getText().toString().trim().isEmpty()){
-            pass.setError("password is required");
+            pass.setError(getText(R.string.passwordRichiestaErr));
             pass.requestFocus();
             return;
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
-            email.setError("Please provide valid email!");
+            email.setError(getText(R.string.emailValidaErr));
             email.requestFocus();
             return;
         }
-        if(pass.getText().toString().trim().length() < 6){
-            pass.setError("Enter at least six character");
+        if(pass.getText().toString().trim().length() < 8){
+            pass.setError(getText(R.string.ottoCaratteriErr));
             pass.requestFocus();
             return;
         }
-
+        //metodo di firebase usato per effettuare login
         lAuth.signInWithEmailAndPassword(email.getText().toString().trim(),pass.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(getActivity(),"Logged in successfully!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),R.string.loggedIn,Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getActivity(), SwitchLoginSignupGuestActivity.class));
 
                 } else {
-                    Toast.makeText(getActivity(),"Failed to login",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),R.string.loggedInFailed,Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
+    /**
+     * Metodo per fare richiesta di password dimenticata
+     */
     private void forgetPass(){
         EditText resetEmail = new EditText(getView().getContext());
         AlertDialog.Builder passResetDialog = new AlertDialog.Builder(getView().getContext());
-        passResetDialog.setTitle("Reset Password?");
-        passResetDialog.setMessage("Enter your email to recived reset link");
+        passResetDialog.setTitle(R.string.passwordReset);
         passResetDialog.setView(resetEmail);
 
-        passResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        passResetDialog.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String mail = resetEmail.getText().toString();
-                lAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(getActivity(),"Reset Link Sent To Your Email",Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(),"Error! Reset Link is Not Sent"+ e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                });
+                String emailReset = resetEmail.getText().toString();
+                //controllo che l'email inserita nell'Alert non sia vuota
+                if(!emailReset.equals("")){
+                    lAuth.sendPasswordResetEmail(emailReset).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(getActivity(),R.string.emailLinkReset,Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(),R.string.emailLinkResetFailed,Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getActivity(),R.string.emailValidaErr,Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.adapter.Adapter_category;
 import com.example.casodistudiomamange.model.Category;
 import com.google.firebase.firestore.DocumentChange;
@@ -48,7 +49,7 @@ public class RestaurantFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         recyclerView.setAdapter(adapter_category);
-
+        ((MaMangeNavigationActivity)getContext()).clearSharedPreferencesQuantities();//pulisco shared preferences quantità
         caricaCategorie();
 
         return v;

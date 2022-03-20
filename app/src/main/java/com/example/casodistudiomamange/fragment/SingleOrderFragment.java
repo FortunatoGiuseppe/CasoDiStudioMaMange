@@ -124,10 +124,11 @@ public class SingleOrderFragment extends Fragment {
                             dialogConfermato.show();
 
                             //pulisco shared delle quantità
-                            clearSharedPreferencesQuantities();
+                            ((MaMangeNavigationActivity)getContext()).clearSharedPreferencesQuantities();
 
                             /*Avvio l'activity di scelta tra quiz e condivisione dell'ordine*/
                             Intent intent = new Intent(getActivity(), ConfirmActivity.class);
+                            intent.putExtra("UsernameInserito",usernameInserito);
                             startActivity(intent);
                         }
                     }
@@ -153,6 +154,12 @@ public class SingleOrderFragment extends Fragment {
             //occorrerebbe stampare la lista degli soplate piuttosto che la lista di plates, modifica che impatterebbe anche su singlePlates corrente e non letto dal file
             FileOrderManager fileOrderManager= new FileOrderManager();
             fileOrderManager.loadPlateLastOrder((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
+
+            //Se ho caricato l'ultimo ordine salvato allora devo aggiungere nello shared preferences i piatti letti
+            for (int i = 0; i < soPlate.size(); i++) {
+                ((MaMangeNavigationActivity) getContext()).saveDataSharedPreferences(soPlate.get(i).getNomePiatto(), (int) soPlate.get(i).getQuantita());
+            }
+
             isSingleOrderEmpty=false;   //se trovo piatti lo imposto a falso, che indica che contiene piatti
 
             //devo stampare nelle view ciò che leggo dal file
@@ -195,11 +202,6 @@ public class SingleOrderFragment extends Fragment {
         }
     }
 
-    private void clearSharedPreferencesQuantities() {
-        SharedPreferences sharedPreferences =  (getContext()).getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
-    }
+
 
 }

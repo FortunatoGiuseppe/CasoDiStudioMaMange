@@ -3,20 +3,14 @@ package com.example.casodistudiomamange.fragment;
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +20,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.thread.Client;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Set;
 import java.util.UUID;
 
@@ -39,26 +30,25 @@ public class SensorFragment extends Fragment {
 
     /*costanti che rappresentano lo stato del bluetooth*/
     static final int REQUEST_ENABLE_BLUETOOTH = 0;
-    static final int STATE_CONNECTED=3;
-    static final int STATE_CONNECTION_FAILED=4;
-    static final int STATE_MESSAGE_RECEIVED=5;
-    static final int STATE_CONNECTION_END = 6;
-    private static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
+    static final int REQUEST_ENABLE_PERMISSION = 1;
+    static final int STATO_IN_ASCOLTO= 2;
+    static final int STATO_CONNESSO =3;
+    static final int STATO_CONNESSIONE_FALLITO =4;
+    static final int STATO_MESSAGGIO_RICEVUTO =5;
+    public static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
 
+    /*variabili del bluetooth*/
     BluetoothAdapter bluetoothAdapter;
     BluetoothDevice[] bluetoothDevice;
-    Receive receive;
-
-    TextView PlateName;
-    ImageView img;
-    TextView Descrizione;
     ListView listaDispositiviBluetooth;
-    String name;
-    String descrizione;
-    String image;
-    Button connect;
-
+    Button connettitiBtn;
     TextView temperaturaConserazione, torbidita, statoConnessione, umidita, info;
+
+    /*variabili della bevanda selezionata*/
+    TextView drinkName;
+    ImageView drinkImg;
+    TextView drinkDescrizione;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +56,7 @@ public class SensorFragment extends Fragment {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        /*Controlla che i eprmessi siano stati dai*/
+        /*Controlla che i permessi siano stati dai*/
         checkBTPermission();
 
     }
@@ -75,68 +65,74 @@ public class SensorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_sensor, container, false);
 
-        PlateName = v.findViewById(R.id.nomePiatto);
-        Descrizione = v.findViewById(R.id.descrizione);
-        img = v.findViewById(R.id.imagePlate);
-        connect = v.findViewById(R.id.connect);
-        listaDispositiviBluetooth = v.findViewById(R.id.listaDispositiviBluetooth);
-        Bundle bundle = getArguments();
-        name = bundle.getString("PlateName");
-        PlateName.setText(name);
-        image = bundle.getString("Img");
-        Picasso.get().load(image).into(img);
-        descrizione = bundle.getString("Descrizione");
-        Descrizione.setText(descrizione);
+        drinkName = v.findViewById(R.id.nomePiatto);
+        drinkDescrizione = v.findViewById(R.id.descrizione);
+        drinkImg = v.findViewById(R.id.imagePlate);
 
+        Bundle bundle = getArguments();
+        drinkName.setText(bundle.getString("PlateName"));
+        Picasso.get().load(bundle.getString("Img")).into(drinkImg);
+        drinkDescrizione.setText(bundle.getString("Descrizione"));
+
+        connettitiBtn = v.findViewById(R.id.connect);
+        listaDispositiviBluetooth = v.findViewById(R.id.listaDispositiviBluetooth);
         temperaturaConserazione = v.findViewById(R.id.temperatura);
         statoConnessione = v.findViewById(R.id.statoConnessione);
         torbidita = v.findViewById(R.id.torbidita);
         umidita = v.findViewById(R.id.umidita);
-        info = v.findViewById(R.id.altreInfo);
 
-
-
-        connect.setOnClickListener(new View.OnClickListener() {
+        connettitiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listaDispositiviBluetooth.setVisibility(View.VISIBLE);
+                //controllo se i permessi bluetooth sono stati dati
                 checkBTPermission();
+
+                //prendo dal bluetooth adapter la lista dei dispositivi paireati
+                //così da poter selezionare il server a cui connettermi
                 Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
                 String[] strings=new String[pairedDevices.size()];
                 bluetoothDevice=new BluetoothDevice[pairedDevices.size()];
                 int index=0;
 
                 if (pairedDevices.size() > 0) {
-                    // There are paired devices. Get the name and address of each paired device.
-
+                    //per ogni device paireato lo aggiungo nella lista dei bluetooth device
+                    //ed aggiungo il nome del dispositivo per visualizzarlo all'inerno della listView
                     for (BluetoothDevice device : pairedDevices) {
                         bluetoothDevice[index] = device;
                         strings[index] = device.getName();
                         index++;
                     }
+                    //creo un adapter per inserire i dispositivi all'intenro dell'array di stringhe
+                    //nella listView di dispositivi bluetooth inizialmente vuota
                     ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,strings);
                     listaDispositiviBluetooth.setAdapter(arrayAdapter);
                 }
 
+                //se viene cliccato un nome di un dispositivo paireato
+                //istanzio una classe client e provo a connettermi
+                //al server selezionato
                 listaDispositiviBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        ClientClass clientClass = new ClientClass(bluetoothDevice[i]);
+
+                        Message message=Message.obtain();
+                        message.what= STATO_IN_ASCOLTO;
+                        handler.sendMessage(message);
+
+                        Client client = new Client(bluetoothDevice[i], handler,SensorFragment.this);
+                        client.start();
+
                         listaDispositiviBluetooth.setVisibility(View.GONE);
-                        connect.setVisibility(View.GONE);
+                        connettitiBtn.setVisibility(View.GONE);
                         temperaturaConserazione.setVisibility(View.VISIBLE);
                         torbidita.setVisibility(View.VISIBLE);
                         umidita.setVisibility(View.VISIBLE);
-                        temperaturaConserazione.setVisibility(View.VISIBLE);
-                        info.setVisibility(View.VISIBLE);
-                        clientClass.start();
 
                     }
                 });
-
 
             }
         });
@@ -144,12 +140,11 @@ public class SensorFragment extends Fragment {
         return v;
     }
 
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
+    /**
+     * Metodo che controlla se il bluetooth è già attivo
+     * Altrimenti controlla se i permessi sono stati dati
+     * e fa richiesta per l'attivazione
+     */
     private void attivaBluetooth(){
 
         if (!bluetoothAdapter.isEnabled()) {
@@ -159,30 +154,44 @@ public class SensorFragment extends Fragment {
 
     }
 
+    /**
+     * Metodo che consente di elaborare ed inviare messaggi associati ad un Thread
+     * Fa ausilio dell'interfaccia HandlerCallback usato per la gestione dei
+     * messaggi
+     */
     Handler handler=new Handler(new Handler.Callback() {
         @Override
-        public boolean handleMessage(Message msg) {
+        public boolean handleMessage(Message messaggio) {
 
-            switch (msg.what)
+            switch (messaggio.what)
             {
-
-                case STATE_CONNECTED:
-                    statoConnessione.setText("Connected");
+                //stati di connessione del Bluetooth
+                case STATO_IN_ASCOLTO:
+                    statoConnessione.setText(R.string.inAscolto);
                     break;
-                case STATE_CONNECTION_FAILED:
-                    statoConnessione.setText("Connection Failed");
+                case STATO_CONNESSO:
+                    statoConnessione.setText(R.string.connesso);
                     break;
-                case STATE_MESSAGE_RECEIVED:
+                case STATO_CONNESSIONE_FALLITO:
+                    statoConnessione.setText(R.string.connessioneFallita);
+                    break;
+                    //se il messaggio è ricevuto
+                case STATO_MESSAGGIO_RICEVUTO:
+                    //creo un buffer per la lettura del messaggio
+                    byte[] bufferDiLettura= (byte[]) messaggio.obj;
+                    //e lo minserisco all'intenro di una stringa
+                    String messaggioTemporaneo=new String(bufferDiLettura,0,messaggio.arg1);
 
-                    byte[] readBuff= (byte[]) msg.obj;
+                    //Si è pensata la seguente assunzione:
+                    //Il messaggio da parte del server viene inviato in un unica stringa
+                    //dove al suo interno sono presenti dei punti esclamativi
+                    //utilizzati per dividere la stringa in 3 stringhe
 
-                    //messaggio ricevuto tramite bluetooth
-                    String messaggioTemporaneo=new String(readBuff,0,msg.arg1);
-                    //Suddivido il messaggio in piu' messaggi
-                    String[] splitted = messaggioTemporaneo.split("!");
-                    torbidita.setText("Torbidita' della bevanda: "+splitted[0]);
-                   temperaturaConserazione.setText("Temperatura di conservazione: "+splitted[1]);
-                   umidita.setText("Umidita' di conservazione: "+splitted[2]);
+                    //Suddivido il messaggio attraverso il metodo splitted
+                    String[] stringaSplittata = messaggioTemporaneo.split("!");
+                    torbidita.setText("Torbidita' della bevanda: "+stringaSplittata[0]);
+                    temperaturaConserazione.setText("Temperatura di conservazione: "+stringaSplittata[1]);
+                    umidita.setText("Umidita' di conservazione: "+stringaSplittata[2]);
 
                     break;
 
@@ -191,22 +200,34 @@ public class SensorFragment extends Fragment {
         }
     });
 
-    private void checkBTPermission(){
+    /**
+     * Metodo con il quale si controllano se i permessi, "ACCESS_FINE_LOCATION"
+     * e "ACCESS_COARSE_LOCTION", da parte dell'utente sono stati dati.
+     *
+     * Questi permessi servono all'app di accedere ad una posizione
+     * precisa ed approssimativa.
+     */
+    public void checkBTPermission(){
 
         int permissionCheck = getContext().checkSelfPermission("android.Manifest.permission.ACCESS_FINE_LOCATION");
         permissionCheck+= getContext().checkSelfPermission("android.Manifest.permission.ACCESS_COARSE_LOCATION");
+
+        //se il permesso è stato dato allora attiva il bluetooth
         if(permissionCheck == 0){
             attivaBluetooth();
+
+        //altrimenti mostra il razionale, ovvero il perchè è importante dare i seguenti permessi
         } else if(shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION) && shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("Importanza dei permessi");
-            builder.setMessage("Accettare i permessi per accedere a questa funzionalità, sei sicuro di non voler accettare i permessi?");
+            builder.setTitle(R.string.importanzaDeiPermessi);
+            builder.setMessage(R.string.messaggioPermessi+"\n"+R.string.richiestaPermessi);
 
             builder.setPositiveButton(
                     "Si",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-
+                            //l'utente è sicuro di non voler chieder epiù i permessi
                         }
                     });
 
@@ -214,123 +235,55 @@ public class SensorFragment extends Fragment {
                     "Annulla",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            //l'utente vuole fare richiesta di accettazione dei permessi
                             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
-                                    android.Manifest.permission.ACCESS_COARSE_LOCATION},1001);
+                                    android.Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_ENABLE_PERMISSION);
                         }
                     });
 
-
             AlertDialog dialog = builder.create();
             dialog.show();
+
         } else {
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION},1001);
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_ENABLE_PERMISSION);
         }
     }
-    
+
+    /**
+     * Metodo che viene invocato per ogni chiamata su requestPermissions
+     *
+     * E' possibile che l'interazione della richiesta di autorizzazione
+     * dei permessi con l'utente venga interrotta
+     * Perciò è dovere controllare la sua risposta in modo da far
+     * riprendere la corretta esecuzione del'app.
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         switch (requestCode) {
-            case 1001:
-                // If request is cancelled, the result arrays are empty.
+            case REQUEST_ENABLE_PERMISSION:
+                //Se la richiesta viene cancellata il risultato dell'array sarà vuoto
+                //In tal caso è doveroso informare l'utente che non potrà più accedere
+                //a questa funzionalità a meno che non l'attivi manualmente nel
+                //gestore delle app.
                 if (grantResults.length > 0 &&
                         grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     attivaBluetooth();
 
                 }  else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Importanza dei permessi");
-                    builder.setMessage("Accettare i permessi per accedere a questa funzionalità");
+                    builder.setTitle(R.string.importanzaDeiPermessi);
+                    builder.setMessage(R.string.messaggioPermessi);
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
                 return;
         }
-
-    }
-
-
-    private class ClientClass extends Thread
-    {
-        private BluetoothDevice device;
-        private BluetoothSocket socket;
-
-        public ClientClass (BluetoothDevice device1)
-        {
-            device=device1;
-
-            try {
-                checkBTPermission();
-                socket=device.createRfcommSocketToServiceRecord(MY_UUID);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public void run()
-        {
-            try {
-                checkBTPermission();
-                socket.connect();
-                Message message=Message.obtain();
-                message.what=STATE_CONNECTED;
-                handler.sendMessage(message);
-                receive =new Receive(socket);
-                receive.start();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Message message=Message.obtain();
-                message.what=STATE_CONNECTION_FAILED;
-                handler.sendMessage(message);
-            }
-        }
-    }
-
-    private class Receive extends Thread
-    {
-        private final BluetoothSocket bluetoothSocket;
-        private final InputStream inputStream;
-       // private final OutputStream outputStream;
-
-        public Receive(BluetoothSocket socket)
-        {
-            bluetoothSocket=socket;
-            InputStream tempIn=null;
-            //OutputStream tempOut=null;
-
-            try {
-                tempIn=bluetoothSocket.getInputStream();
-              //  tempOut=bluetoothSocket.getOutputStream();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            inputStream=tempIn;
-           // outputStream=tempOut;
-        }
-
-        public void run()
-        {
-            byte[] buffer=new byte[1024];
-            int bytes;
-
-            while (true)
-            {
-                try {
-                    bytes=inputStream.read(buffer);
-                    handler.obtainMessage(STATE_MESSAGE_RECEIVED,bytes,-1,buffer).sendToTarget();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Message message=Message.obtain();
-                    message.what=STATE_CONNECTION_FAILED;
-                    handler.sendMessage(message);
-                    break;
-                }
-            }
-        }
-
 
     }
 
