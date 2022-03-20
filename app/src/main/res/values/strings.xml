@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">MaMange</string>
+    <string name="si">Yes</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="registrati">Sign up</string>
@@ -13,7 +14,7 @@
     <string name="emailRichiestaErr">Email is required</string>
     <string name="passwordRichiestaErr">Password is required</string>
     <string name="passwordReset">Reset password?</string>
-    <string name="emailLinkReset">Enter your email to recived reset link</string>
+    <string name="emailLinkReset">We have sent a reset link in your email</string>
     <string name="emailLinkResetFailed">Error! Reset Link is Not Sent</string>
     <string name="emailValidaErr">Please provide valid email!</string>
     <string name="seiCaratteriErr">Enter at least six character</string>

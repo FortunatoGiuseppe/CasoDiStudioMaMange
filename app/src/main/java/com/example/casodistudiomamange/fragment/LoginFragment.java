@@ -61,9 +61,15 @@ public class LoginFragment extends Fragment {
         return root;
     }
 
+    /**
+     * Metodo con il quale si effettua il login
+     *
+     * Si controllano prima che le stringhe inserite in input rispettano
+     * gli standard convenzionali (Ad esempio una password da almeno 6 cifre)
+     *
+     */
     private void login(){
         if(email.getText().toString().trim().isEmpty()){
-
             email.setError(getText(R.string.emailRichiestaErr));
             email.requestFocus();
             return;
@@ -83,6 +89,7 @@ public class LoginFragment extends Fragment {
             pass.requestFocus();
             return;
         }
+
 
         lAuth.signInWithEmailAndPassword(email.getText().toString().trim(),pass.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -105,7 +112,7 @@ public class LoginFragment extends Fragment {
         passResetDialog.setMessage("");
         passResetDialog.setView(resetEmail);
 
-        passResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        passResetDialog.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String mail = resetEmail.getText().toString();
@@ -117,7 +124,7 @@ public class LoginFragment extends Fragment {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(),R.string.emailLinkResetFailed+ e.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),R.string.emailLinkResetFailed,Toast.LENGTH_SHORT).show();
                     }
                 });
             }
