@@ -49,6 +49,7 @@ public class RestaurantFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         recyclerView.setAdapter(adapter_category);
+        ((MaMangeNavigationActivity)getContext()).clearSharedPreferencesQuantities();//pulisco shared preferences quantità
         caricaCategorie();
 
         return v;
