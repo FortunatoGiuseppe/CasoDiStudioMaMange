@@ -10,8 +10,11 @@
     <string name="passdimenticata">Hai dimenticato la password?</string>
     <string name="username">Username</string>
     <string name="ospite">Ospite</string>
-    <string name="emailRichiestaErr">email richiesta!</string>
-    <string name="passwordRichiestaErr">password richiesta!</string>
+    <string name="emailRichiestaErr">Email richiesta</string>
+    <string name="passwordRichiestaErr">Password richiesta</string>
+    <string name="passwordReset">Vuoi resettare la password?</string>
+    <string name="emailLinkReset">Inserisci la tua email per ricevere il resetlink</string>
+    <string name="emailLinkResetFailed">Errore! Link di reset non inviato</string>
     <string name="emailValidaErr">Fornisci una mail valida!</string>
     <string name="seiCaratteriErr">Inserisci almeno 6 caratteri</string>
     <string name="stessaPassErr">Le due password non combaciano</string>
@@ -72,6 +75,7 @@
     <string name="permessi">Permesso dato!</string>
     <string name="nessunPiatto">Non hai aggiunto nessun piatto al tuo ordine!</string>
     <string name="loggedIn">Loggato correttamente!</string>
+    <string name="loggedInFailed">Login fallito</string>
     <string name="inAscolto">Ascoltando</string>
     <string name="connesso">Connesso</string>
     <string name="connessioneFallita">Connessione fallita</string>
