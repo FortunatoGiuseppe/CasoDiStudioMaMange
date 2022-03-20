@@ -17,7 +17,7 @@
     <string name="emailLinkReset">Abbiamo inviato un link di reset nella tua email</string>
     <string name="emailLinkResetFailed">Errore! Link di reset non inviato</string>
     <string name="emailValidaErr">Fornisci una mail valida!</string>
-    <string name="seiCaratteriErr">Inserisci almeno 6 caratteri</string>
+    <string name="ottoCaratteriErr">Inserisci almeno otto caratteri</string>
     <string name="stessaPassErr">Le due password non combaciano</string>
     <string name="logout">Logout</string>
     <string name="cerca">Cerca</string>

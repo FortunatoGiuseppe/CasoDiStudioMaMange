@@ -65,7 +65,7 @@ public class LoginFragment extends Fragment {
      * Metodo con il quale si effettua il login
      *
      * Si controllano prima che le stringhe inserite in input rispettano
-     * gli standard convenzionali (Ad esempio una password da almeno 6 cifre)
+     * gli standard convenzionali (Ad esempio una password da almeno 8 cifre)
      *
      */
     private void login(){
@@ -84,8 +84,8 @@ public class LoginFragment extends Fragment {
             email.requestFocus();
             return;
         }
-        if(pass.getText().toString().trim().length() < 6){
-            pass.setError(getText(R.string.seiCaratteriErr));
+        if(pass.getText().toString().trim().length() < 8){
+            pass.setError(getText(R.string.ottoCaratteriErr));
             pass.requestFocus();
             return;
         }
@@ -109,24 +109,30 @@ public class LoginFragment extends Fragment {
         EditText resetEmail = new EditText(getView().getContext());
         AlertDialog.Builder passResetDialog = new AlertDialog.Builder(getView().getContext());
         passResetDialog.setTitle(R.string.passwordReset);
-        passResetDialog.setMessage("");
+
         passResetDialog.setView(resetEmail);
 
         passResetDialog.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String mail = resetEmail.getText().toString();
-                lAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(getActivity(),R.string.emailLinkReset,Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(),R.string.emailLinkResetFailed,Toast.LENGTH_SHORT).show();
-                    }
-                });
+                String emailReset = resetEmail.getText().toString();
+                if(!emailReset.equals("")){
+                    lAuth.sendPasswordResetEmail(emailReset).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(getActivity(),R.string.emailLinkReset,Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(),R.string.emailLinkResetFailed,Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getActivity(),R.string.emailValidaErr,Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 

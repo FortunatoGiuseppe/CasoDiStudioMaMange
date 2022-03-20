@@ -17,7 +17,7 @@
     <string name="emailLinkReset">We have sent a reset link in your email</string>
     <string name="emailLinkResetFailed">Error! Reset Link is Not Sent</string>
     <string name="emailValidaErr">Please provide valid email!</string>
-    <string name="seiCaratteriErr">Enter at least six character</string>
+    <string name="ottoCaratteriErr">Enter at least eight character</string>
     <string name="stessaPassErr">Password does not coincide!</string>
     <string name="logout">Logout</string>
     <string name="cerca">Search a restaurant</string>
