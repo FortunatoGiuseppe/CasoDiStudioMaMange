@@ -89,8 +89,7 @@ public class LoginFragment extends Fragment {
             pass.requestFocus();
             return;
         }
-
-
+        //metodo di firebase usato per effettuare login
         lAuth.signInWithEmailAndPassword(email.getText().toString().trim(),pass.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -105,17 +104,20 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    /**
+     * Metodo per fare richiesta di password dimenticata
+     */
     private void forgetPass(){
         EditText resetEmail = new EditText(getView().getContext());
         AlertDialog.Builder passResetDialog = new AlertDialog.Builder(getView().getContext());
         passResetDialog.setTitle(R.string.passwordReset);
-
         passResetDialog.setView(resetEmail);
 
         passResetDialog.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String emailReset = resetEmail.getText().toString();
+                //controllo che l'email inserita nell'Alert non sia vuota
                 if(!emailReset.equals("")){
                     lAuth.sendPasswordResetEmail(emailReset).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
