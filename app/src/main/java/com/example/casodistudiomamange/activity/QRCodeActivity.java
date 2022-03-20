@@ -3,8 +3,11 @@ package com.example.casodistudiomamange.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +35,7 @@ public class QRCodeActivity extends AppCompatActivity {
     private EditText insertQrCode;
     String usernameInserito;
     private FirebaseFirestore db;
-
+    private static final int REQUEST_ENABLE_PERMISSION = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,8 @@ public class QRCodeActivity extends AppCompatActivity {
         Button confirmBtn = findViewById(R.id.confirmBtn);
         insertQrCode = findViewById(R.id.insertQrCode);
         TextView benvenuto = findViewById(R.id.textView_benvenuto);
+
+        checkCameraPermission();//controllo se i permessi della fotocamera sono stati dati
 
         getSupportActionBar().hide();
 
@@ -58,6 +63,7 @@ public class QRCodeActivity extends AppCompatActivity {
         scanQrCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                checkCameraPermission();
                 scanQrCode();
             }
         });
@@ -76,6 +82,7 @@ public class QRCodeActivity extends AppCompatActivity {
      *
      */
     private void scanQrCode(){
+
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setCaptureActivity(CaptureAct.class);
         integrator.setOrientationLocked(false);
@@ -179,5 +186,88 @@ public class QRCodeActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * Metodo con il quale si controllano se i permessi della "CAMERA"
+     * e altri permessi associati siano stati dati da parte dell'utente.
+     *
+     * Questi permessi servono all'app per far funzionare
+     * la Fotocamera e di conseguenza scasionare il Qrcode.
+     */
+    public void checkCameraPermission(){
+
+        int permissionCheck = this.checkSelfPermission("android.Manifest.permission.CAMERA");
+
+        //se il permesso è stato dato allora continua esecuzione
+        if(permissionCheck == 0){
+
+            //altrimenti mostra il razionale, ovvero il perchè è importante dare i seguenti permessi
+        } else if(shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.importanzaDeiPermessi);
+            builder.setMessage(getText(R.string.messaggioPermessi)+"\n"+getText(R.string.richiestaPermessi));
+
+            builder.setPositiveButton(
+                    "Si",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //l'utente è sicuro di non voler chiedere più i permessi
+                        }
+                    });
+
+            builder.setNegativeButton(
+                    "Annulla",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //l'utente vuole fare richiesta di accettazione dei permessi
+                            requestPermissions(new String[]{android.Manifest.permission.CAMERA},REQUEST_ENABLE_PERMISSION);
+                        }
+                    });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+        } else {
+            requestPermissions(new String[]{android.Manifest.permission.CAMERA},REQUEST_ENABLE_PERMISSION);
+        }
+    }
+
+    /**
+     * Metodo che viene invocato per ogni chiamata su requestPermissions
+     *
+     * E' possibile che l'interazione della richiesta di autorizzazione
+     * dei permessi con l'utente venga interrotta
+     * Perciò è dovere controllare la sua risposta in modo da far
+     * riprendere la corretta esecuzione del'app.
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_ENABLE_PERMISSION:
+                //Se la richiesta viene cancellata il risultato dell'array sarà vuoto
+                //In tal caso è doveroso informare l'utente che non potrà più accedere
+                //a questa funzionalità a meno che non l'attivi manualmente nel
+                //gestore delle app.
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this
+                    );
+                    builder.setTitle(getText(R.string.importanzaDeiPermessi));
+                    builder.setMessage(getText(R.string.messaggioPermessi));
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+                return;
+        }
+
     }
 }
