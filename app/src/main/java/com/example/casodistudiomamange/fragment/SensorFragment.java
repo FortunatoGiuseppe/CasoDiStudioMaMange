@@ -3,14 +3,11 @@ package com.example.casodistudiomamange.fragment;
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -27,10 +24,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.casodistudiomamange.R;
+//import com.example.casodistudiomamange.thread.ClientClass;
+import com.example.casodistudiomamange.thread.Client;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Set;
 import java.util.UUID;
 
@@ -43,12 +40,11 @@ public class SensorFragment extends Fragment {
     static final int STATO_CONNESSO =3;
     static final int STATO_CONNESSIONE_FALLITO =4;
     static final int STATO_MESSAGGIO_RICEVUTO =5;
-    private static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
+    public static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
 
     /*variabili del bluetooth*/
     BluetoothAdapter bluetoothAdapter;
     BluetoothDevice[] bluetoothDevice;
-    Receive receive;
     ListView listaDispositiviBluetooth;
     Button connettitiBtn;
     TextView temperaturaConserazione, torbidita, statoConnessione, umidita, info;
@@ -131,8 +127,8 @@ public class SensorFragment extends Fragment {
                         message.what= STATO_IN_ASCOLTO;
                         handler.sendMessage(message);
 
-                        ClientClass clientClass = new ClientClass(bluetoothDevice[i]);
-                        clientClass.start();
+                        Client client = new Client(bluetoothDevice[i], handler,SensorFragment.this);
+                        client.start();
 
                         listaDispositiviBluetooth.setVisibility(View.GONE);
                         connettitiBtn.setVisibility(View.GONE);
@@ -216,7 +212,7 @@ public class SensorFragment extends Fragment {
      * Questi permessi servono all'app di accedere ad una posizione
      * precisa ed approssimativa.
      */
-    private void checkBTPermission(){
+    public void checkBTPermission(){
 
         int permissionCheck = getContext().checkSelfPermission("android.Manifest.permission.ACCESS_FINE_LOCATION");
         permissionCheck+= getContext().checkSelfPermission("android.Manifest.permission.ACCESS_COARSE_LOCATION");
@@ -296,87 +292,11 @@ public class SensorFragment extends Fragment {
 
     }
 
-    private class ClientClass extends Thread
-    {
-        private BluetoothDevice device;
-        private BluetoothSocket socket;
 
-        public ClientClass (BluetoothDevice device1)
-        {
-            device=device1;
 
-            try {
-                checkBTPermission();
-                socket=device.createRfcommSocketToServiceRecord(MY_UUID);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
-        public void run()
-        {
-            try {
-                checkBTPermission();
-                socket.connect();
-                Message message=Message.obtain();
-                message.what= STATO_CONNESSO;
-                handler.sendMessage(message);
-                receive =new Receive(socket);
-                receive.start();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                Message message=Message.obtain();
-                message.what= STATO_CONNESSIONE_FALLITO;
-                handler.sendMessage(message);
-            }
-        }
-    }
 
-    private class Receive extends Thread
-    {
-        private final BluetoothSocket bluetoothSocket;
-        private final InputStream inputStream;
-       // private final OutputStream outputStream;
-
-        public Receive(BluetoothSocket socket)
-        {
-            bluetoothSocket=socket;
-            InputStream tempIn=null;
-            //OutputStream tempOut=null;
-
-            try {
-                tempIn=bluetoothSocket.getInputStream();
-              //  tempOut=bluetoothSocket.getOutputStream();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            inputStream=tempIn;
-           // outputStream=tempOut;
-        }
-
-        public void run()
-        {
-            byte[] buffer=new byte[1024];
-            int bytes;
-
-            while (true)
-            {
-                try {
-                    bytes=inputStream.read(buffer);
-                    handler.obtainMessage(STATO_MESSAGGIO_RICEVUTO,bytes,-1,buffer).sendToTarget();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Message message=Message.obtain();
-                    message.what= STATO_CONNESSIONE_FALLITO;
-                    handler.sendMessage(message);
-                    break;
-                }
-            }
-        }
-
-    }
 
 }
 
