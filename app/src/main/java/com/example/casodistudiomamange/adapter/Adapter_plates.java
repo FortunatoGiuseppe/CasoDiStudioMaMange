@@ -67,13 +67,13 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
 
         //Se non ho caricato l'ultimo ordine salvato (cioè il tasto per caricarlo è ancora abilitato)
         if(((MaMangeNavigationActivity)context).lastOrderItem.isEnabled()){
-            //se piatto non sta nell'ultimo ordine salvato vedo se sta nello shared preferences dell'ordine corrente
+            //Non ho caricato ultimo rodne quindi lavoro sullo shared preferences e vedo se piatto sta nello shared preferences dell'ordine corrente
             if(((MaMangeNavigationActivity) context).getQuantityForParameterPlateSharedPreferences(plate.getNome())!=0){
                 holder.addMoreLayout.setVisibility(View.VISIBLE);
                 holder.addPlateBtn.setVisibility(View.GONE);
 
                 //imposto nell'array list alla quantità del piatto selezionato il valore letto dallo shared preferences
-                if(total.size()>=position){
+                if(total.size()>=position){ //controllo per vedere se la quantità per il piatto esisteva già o meno (per evitare null pointer), se esisteva allora position<size
                     total.add(position, ((MaMangeNavigationActivity) context).getQuantityForParameterPlateSharedPreferences(plate.getNome()));
                 }else{
                     total.set(position, ((MaMangeNavigationActivity) context).getQuantityForParameterPlateSharedPreferences(plate.getNome()));
@@ -82,19 +82,20 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 //imposto alla textView che visualizza la quantità già aggiunta il valore appena letto dallo shared preferences
                 holder.tvCount.setText(total.get(position).toString());
             }else{
+                //se non stava nello shared allora utente non aveva selezionato quel piatto, quindi imposto quantità a 0
                 total.add(position, 0);
                 holder.addMoreLayout.setVisibility(View.GONE);
                 holder.addPlateBtn.setVisibility(View.VISIBLE);
             }
-        }else {
-            //Se il piatto che si sta caricando nel menu è presente nella mappa
+        }else {//se ho caricato ultimo ordine
+            //Se il piatto che si sta caricando nel menu è presente nella mappa (ultimo ordine) (caricamento mappa riga 65 questo file)
             //NOTA: il controllo è fatto "al contrario" (cioè a partire dalla mappa) per sfruttare metodo della mappa efficiente
             if (mapPlateQuantity.containsKey(plate.getNome())) {
 
-                //Se la quantità che sta nella mappa (cioè letto dal file) non coincide con quello dello shared, vuol dire che l'utente l'ha modificato, quindi "vince" quello
-                //che sta nello shared, quindi quelle quantità devono essere visualizzate nel menu
+                //Se la quantità che sta nella mappa (cioè letto dal file ultimo ordine) non coincide con quello dello shared, vuol dire che l'utente l'ha modificato, quindi "vince" quello
+                //che sta nello shared, quindi la quantitàdello shared deve essere visualizzata nel menu
                 if(mapPlateQuantity.get(plate.getNome())!=((MaMangeNavigationActivity) context).getQuantityForParameterPlateSharedPreferences(plate.getNome())){
-                    if(total.size()>=position){
+                    if(total.size()>=position){//controllo per vedere se la quantità per il piatto esisteva già o meno (per evitare null pointer), se esisteva allora position<size
                         total.add(position, ((MaMangeNavigationActivity) context).getQuantityForParameterPlateSharedPreferences(plate.getNome()));
                     }else{
                         total.set(position, ((MaMangeNavigationActivity) context).getQuantityForParameterPlateSharedPreferences(plate.getNome()));
@@ -102,36 +103,42 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 }else {
                     //se le quantità sono uguali allora copio quelle prese dal file
                     //se sta allora nel menu deve essere mostrata la quantità che ho letto
-                    if(total.size()>=position){
+                    if(total.size()>=position){//controllo per vedere se la quantità per il piatto esisteva già o meno (per evitare null pointer), se esisteva allora position<size
                         total.add(position, Math.toIntExact(mapPlateQuantity.get(plate.getNome())));
                     }else{
                         total.set(position, Math.toIntExact(mapPlateQuantity.get(plate.getNome())));
                     }
                 }
 
+                //imposto stampa quantità del piatto
                 holder.tvCount.setText(total.get(position).toString());
                 holder.addMoreLayout.setVisibility(View.VISIBLE);
                 holder.addMoreLayout.setEnabled(true);
                 holder.addPlateBtn.setVisibility(View.GONE);
             } else {
-
+                //Se non sta nel file dell'ultimo ordine è probabile che l'utente abbia aggiunto il piatto dopo aver caricato l'ordine, quindi lo trovo nello shared
                 //Se nello shared preferences c'è il piatto corrente (cioè se ha quantità diversa da 0)
                 if(((MaMangeNavigationActivity) context).getQuantityForParameterPlateSharedPreferences(plate.getNome())!=0){
                     total.add(position, ((MaMangeNavigationActivity) context).getQuantityForParameterPlateSharedPreferences(plate.getNome())); //aggiungo la quantità al totale
+
+                    //imposto stampa quantità del piatto
+                    holder.tvCount.setText(total.get(position).toString());
+                    holder.addMoreLayout.setVisibility(View.VISIBLE);
+                    holder.addMoreLayout.setEnabled(true);
+                    holder.addPlateBtn.setVisibility(View.GONE);
+
                 }else{
-                    //se non sta allora devo mettere 0
+                    //se non sta allora devo mettere 0, cioè il piatto non è mai stato selezionato dall'utente (nè in ordine vecchio nè in quello dopo aver caricato ordine vecchio)
                     if(total.size()>=position){
                         total.add(position, 0);
                     }else{
                         total.set(position, 0);
                     }
+
+                    holder.addMoreLayout.setVisibility(View.GONE);
+                    holder.addPlateBtn.setVisibility(View.VISIBLE);
+                    holder.addPlateBtn.setEnabled(true);
                 }
-
-
-                // se non è zero devo rendere gone il tasto aggiungi e devo visualizzare +- con il numero che devo leggere dallo shared
-                holder.addMoreLayout.setVisibility(View.GONE);
-                holder.addPlateBtn.setVisibility(View.VISIBLE);
-                holder.addPlateBtn.setEnabled(true);
             }
         }
 
