@@ -7,10 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -22,12 +20,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.casodistudiomamange.R;
-//import com.example.casodistudiomamange.thread.ClientClass;
 import com.example.casodistudiomamange.thread.Client;
 import com.squareup.picasso.Picasso;
-
 import java.util.Set;
 import java.util.UUID;
 
@@ -61,7 +56,7 @@ public class SensorFragment extends Fragment {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        /*Controlla che i eprmessi siano stati dai*/
+        /*Controlla che i permessi siano stati dai*/
         checkBTPermission();
 
     }
@@ -291,12 +286,6 @@ public class SensorFragment extends Fragment {
         }
 
     }
-
-
-
-
-
-
 
 }
 

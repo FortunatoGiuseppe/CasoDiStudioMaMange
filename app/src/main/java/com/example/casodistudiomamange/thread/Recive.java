@@ -7,7 +7,7 @@ import android.os.Message;
 import java.io.IOException;
 import java.io.InputStream;
 
-class Receive extends Thread
+class Recive extends Thread
 {
     static final int STATO_CONNESSIONE_FALLITO =4;
     static final int STATO_MESSAGGIO_RICEVUTO =5;
@@ -16,7 +16,7 @@ class Receive extends Thread
     private Handler handler;
     // private final OutputStream outputStream;
 
-    public Receive(BluetoothSocket socket, Handler handler)
+    public Recive(BluetoothSocket socket, Handler handler)
     {
         bluetoothSocket=socket;
         InputStream tempIn=null;
