@@ -74,7 +74,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         /* attribuisco i valori letti alle textview corrispondenti*/
         Plate plate = plateArrayList.get(position);
 
-        if(Locale.getDefault().getDisplayLanguage().equals("Italiano")){
+        if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
             holder.textView_plate.setText(plate.getNome());
             holder.textView_plate_description.setText(plate.getDescrizione());
 
