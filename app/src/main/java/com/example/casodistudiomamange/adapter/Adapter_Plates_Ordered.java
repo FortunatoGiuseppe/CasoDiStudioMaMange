@@ -3,6 +3,7 @@ package com.example.casodistudiomamange.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,11 @@ import com.example.casodistudiomamange.R;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
+import com.example.casodistudiomamange.fragment.SingleOrderFragment;
 import com.example.casodistudiomamange.model.SoPlate;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -99,7 +102,14 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                     ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
                     holder.addMoreLayout.setVisibility(View.GONE);
                     holder.itemView.setVisibility(View.GONE);
-                    //v_gen.setVisibility(View.GONE);
+
+                    //Riavvio fragment per avere lista aggiornata
+                    Fragment fragment = new SingleOrderFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("chiamante", "riavvioAdapter"); //specifica a singleOrderFragment che deve caricare l'ordine corrente
+                    fragment.setArguments(bundle);
+                    ((MaMangeNavigationActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                     builder1.setMessage(R.string.piattoRimosso);
                     builder1.setCancelable(true);
