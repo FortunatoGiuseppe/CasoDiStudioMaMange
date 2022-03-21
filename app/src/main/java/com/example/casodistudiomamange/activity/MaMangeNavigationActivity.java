@@ -24,6 +24,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -42,7 +45,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public MenuItem lastOrderItem;
     private MenuItem acc_regItem;
 
-    private boolean hasLastOrderBeenClicked=false; //flag che consente di caricare solo una volta l'ordine precedente
+    public static final String SHARED_PREFS = "sharedPrefs";
 
 
     @Override
@@ -101,6 +104,10 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
                         lastOrderItem.setEnabled(false);
                         lastOrderItem.getIcon().setAlpha(130);
+                        break;
+
+                    case R.id.About:
+                        launchAboutActivity();
                         break;
                 }
                 return false;
@@ -198,6 +205,11 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         startActivity(intent2);
     }
 
+    private void launchAboutActivity(){
+        Intent intent3 = new Intent(MaMangeNavigationActivity.this, AboutActivity.class);
+        startActivity(intent3);
+    }
+
     private void launchLastOrderFragment(){
 
         //carica dati dal file e apri single order con i piatti presenti nel file
@@ -227,5 +239,28 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     protected void onStop() {
         unregisterReceiver(networkChangedListener);
         super.onStop();
+    }
+
+    //metodo per salvare nello shared preferences la quantità relativa al piatto passato come parametro
+    public void saveDataSharedPreferences(String nomePiatto, int total) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt(nomePiatto,total);   //salvataggio nello shared preference del piatto la quantità
+        editor.apply();
+    }
+
+    //metodo per caricare dallo shared preferences la quantità relativa al piatto passato come parametro
+    public int getQuantityForParameterPlateSharedPreferences(String nomePiatto) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
+        //0 è il valore passato di default, cioè se nello shared preferences non esiste una quantità precedentemente aggiunta per quel piatto
+        return sharedPreferences.getInt(nomePiatto,0);
+    }
+
+    public void clearSharedPreferencesQuantities() {
+        SharedPreferences sharedPreferences =  this.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
     }
 }

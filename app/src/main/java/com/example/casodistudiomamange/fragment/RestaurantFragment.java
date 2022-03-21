@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.adapter.Adapter_category;
 import com.example.casodistudiomamange.model.Category;
 import com.google.firebase.firestore.DocumentChange;
@@ -46,9 +47,7 @@ public class RestaurantFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2 , LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
-
         recyclerView.setAdapter(adapter_category);
-
         caricaCategorie();
 
         return v;

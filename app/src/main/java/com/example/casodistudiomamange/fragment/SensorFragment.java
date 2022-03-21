@@ -1,6 +1,9 @@
 package com.example.casodistudiomamange.fragment;
 
 import android.Manifest;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -8,12 +11,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -25,7 +24,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.adapter.Adapter_plates;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,12 +34,12 @@ import com.google.mlkit.nl.translate.TranslateLanguage;
 import com.google.mlkit.nl.translate.Translation;
 import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
+import com.example.casodistudiomamange.thread.Client;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Set;
 import java.util.UUID;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class SensorFragment extends Fragment {
 
@@ -52,7 +50,8 @@ public class SensorFragment extends Fragment {
     static final int STATO_CONNESSO =3;
     static final int STATO_CONNESSIONE_FALLITO =4;
     static final int STATO_MESSAGGIO_RICEVUTO =5;
-    private static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
+    public static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
+
     TranslatorOptions options =
             new TranslatorOptions.Builder()
                     .setSourceLanguage(TranslateLanguage.ITALIAN)
@@ -81,7 +80,7 @@ public class SensorFragment extends Fragment {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        /*Controlla che i eprmessi siano stati dai*/
+        /*Controlla che i permessi siano stati dai*/
         checkBTPermission();
 
     }
@@ -148,8 +147,8 @@ public class SensorFragment extends Fragment {
                         message.what= STATO_IN_ASCOLTO;
                         handler.sendMessage(message);
 
-                        ClientClass clientClass = new ClientClass(bluetoothDevice[i]);
-                        clientClass.start();
+                        Client client = new Client(bluetoothDevice[i], handler,SensorFragment.this);
+                        client.start();
 
                         listaDispositiviBluetooth.setVisibility(View.GONE);
                         connettitiBtn.setVisibility(View.GONE);
@@ -233,7 +232,7 @@ public class SensorFragment extends Fragment {
      * Questi permessi servono all'app di accedere ad una posizione
      * precisa ed approssimativa.
      */
-    private void checkBTPermission(){
+    public void checkBTPermission(){
 
         int permissionCheck = getContext().checkSelfPermission("android.Manifest.permission.ACCESS_FINE_LOCATION");
         permissionCheck+= getContext().checkSelfPermission("android.Manifest.permission.ACCESS_COARSE_LOCATION");

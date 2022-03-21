@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">MaMange</string>
+    <string name="si">Yes</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="registrati">Sign up</string>
@@ -10,10 +11,13 @@
     <string name="passdimenticata">Forgot Password?</string>
     <string name="username">Username</string>
     <string name="ospite">Guest</string>
-    <string name="emailRichiestaErr">email is required</string>
-    <string name="passwordRichiestaErr">password is required</string>
+    <string name="emailRichiestaErr">Email is required</string>
+    <string name="passwordRichiestaErr">Password is required</string>
+    <string name="passwordReset">Reset password?</string>
+    <string name="emailLinkReset">We have sent a reset link in your email</string>
+    <string name="emailLinkResetFailed">Error! Reset Link is Not Sent</string>
     <string name="emailValidaErr">Please provide valid email!</string>
-    <string name="seiCaratteriErr">Enter at least six character</string>
+    <string name="ottoCaratteriErr">Enter at least eight character</string>
     <string name="stessaPassErr">Password does not coincide!</string>
     <string name="logout">Logout</string>
     <string name="cerca">Search a restaurant</string>
@@ -72,13 +76,14 @@
     <string name="permessi">Permission Granted!</string>
     <string name="nessunPiatto">You haven\'t add any plate!</string>
     <string name="loggedIn">Logged in successfully!</string>
+    <string name="loggedInFailed">Failed to login</string>
     <string name="inAscolto">Listening</string>
     <string name="connesso">Connected</string>
     <string name="connessioneFallita">Connection Failed</string>
     <string name="importanzaDeiPermessi">Importance of permissions</string>
     <string name="messaggioPermessi">Accept permissions to access this feature</string>
     <string name="richiestaPermessi">Are you sure you do not want to accept the permissions?</string>
-
+    <string name="scannerizzaQr">Scanning QRcode</string>
 
     <string name="question1">In which country is salmon caught the most?</string>
     <string name="question1option1">Finland</string>
@@ -164,6 +169,14 @@
     <string name="backhome">Return to inserting the table</string>
     <string name="Invia">Submit</string>
     <string name="inserireValore">Please insert value</string>
+
+
+
+    <string name="info">MaMange is an app that aims to be able to order in your favorite sushi restaurant with simplicity and speed, offering those who use it a certainty in ordering.</string>
+    <string name="developers">Developers:</string>
+    <string name="sendEmail">Send email to us</string>
+    <string name="back">Presso to go back</string>
+
 
     <string name="connessione_assente">No internet connection</string>
     <string name="retry">RETRY</string>

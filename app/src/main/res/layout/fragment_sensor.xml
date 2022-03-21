@@ -44,18 +44,17 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.739"
-            app:layout_constraintStart_toStartOf="@+id/imagePlate"
+            app:layout_constraintHorizontal_bias="0.338"
+            app:layout_constraintStart_toEndOf="@+id/imagePlate"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.08" />
+            app:layout_constraintVertical_bias="0.076" />
 
         <TextView
             android:id="@+id/umidita"
             android:layout_width="325dp"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
-            android:gravity="left"
-            android:visibility="gone"
+
             android:text="Umidita'"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -69,7 +68,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="12dp"
             android:gravity="left"
-            android:visibility="gone"
+
             android:text="Torbidita'"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -81,15 +80,15 @@
             android:id="@+id/temperatura"
             android:layout_width="325dp"
             android:layout_height="60dp"
-            android:layout_marginBottom="312dp"
+            android:layout_marginTop="68dp"
             android:gravity="left"
+
             android:text="Temperatura"
-            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imagePlate" />
 
         <Button
             android:id="@+id/connect"
