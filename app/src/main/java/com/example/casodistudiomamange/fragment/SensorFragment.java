@@ -36,6 +36,8 @@ import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.example.casodistudiomamange.thread.Client;
 import com.squareup.picasso.Picasso;
+
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 import java.io.IOException;
@@ -98,7 +100,12 @@ public class SensorFragment extends Fragment {
         Bundle bundle = getArguments();
         drinkName.setText(bundle.getString("PlateName"));
         Picasso.get().load(bundle.getString("Img")).into(drinkImg);
-        prepareModelDescription(bundle.getString("Descrizione"));
+        if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
+            drinkDescrizione.setText(bundle.getString("Descrizione"));
+        }else{
+            prepareModelDescription(bundle.getString("Descrizione"));
+        }
+
 
 
         connettitiBtn = v.findViewById(R.id.connect);
