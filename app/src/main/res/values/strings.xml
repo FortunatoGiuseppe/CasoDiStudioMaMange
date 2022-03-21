@@ -181,5 +181,6 @@
 
     <string name="connessione_assente">No internet connection</string>
     <string name="retry">RETRY</string>
+    <string name="nordinazione">Table order: </string>
 
 </resources>

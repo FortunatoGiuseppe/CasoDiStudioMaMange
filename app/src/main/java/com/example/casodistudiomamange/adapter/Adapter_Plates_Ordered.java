@@ -3,6 +3,7 @@ package com.example.casodistudiomamange.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.model.SoPlate;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.mlkit.common.model.DownloadConditions;
+import com.google.mlkit.nl.translate.TranslateLanguage;
+import com.google.mlkit.nl.translate.Translation;
+import com.google.mlkit.nl.translate.Translator;
+import com.google.mlkit.nl.translate.TranslatorOptions;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_Ordered.myViewHolder> {
 
@@ -28,6 +37,12 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     private ArrayList<SoPlate> plateArrayList;
     private ArrayList<Integer> total= new ArrayList<>();
     private View v_gen;
+    TranslatorOptions options =
+            new TranslatorOptions.Builder()
+                    .setSourceLanguage(TranslateLanguage.ITALIAN)
+                    .setTargetLanguage(TranslateLanguage.ENGLISH)
+                    .build();
+    final com.google.mlkit.nl.translate.Translator Translator = Translation.getClient(options);
 
     public Adapter_Plates_Ordered(Context context, ArrayList<SoPlate> plateArrayList) {
         this.context = context;
@@ -44,7 +59,12 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     @Override
     public void onBindViewHolder(@NonNull Adapter_Plates_Ordered.myViewHolder holder,@SuppressLint("RecyclerView") int position) {
         SoPlate soplate = plateArrayList.get(position);
-        holder.textView_plate.setText(soplate.getNomePiatto());
+        if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
+            holder.textView_plate.setText(soplate.getNomePiatto());
+        }else{
+            prepareModelTranslation(soplate.getNomePiatto(),holder);
+        }
+
 
         total.add(position,0);
 
@@ -154,5 +174,36 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
         //0 è il valore passato di default, cioè se nello shared preferences non esiste una quantità precedentemente aggiunta per quel piatto
         return sharedPreferences.getInt(nomePiatto,0);
+    }
+
+
+    private void prepareModelTranslation(String trans,@NonNull myViewHolder holder){
+
+
+        DownloadConditions conditions = new DownloadConditions.Builder()
+                .requireWifi()
+                .build();
+        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        Log.d("TAG",s);
+                        holder.textView_plate.setText(s);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 }

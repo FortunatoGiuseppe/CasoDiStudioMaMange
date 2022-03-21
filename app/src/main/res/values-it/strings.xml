@@ -183,5 +183,6 @@
     <string name="developers">Sviluppatori:</string>
     <string name="sendEmail">Inviaci un email</string>
     <string name="back">Torna indietro</string>
+    <string name="nordinazione">Ordinazione Tavolo: </string>
 
 </resources>
