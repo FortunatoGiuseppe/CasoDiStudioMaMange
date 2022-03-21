@@ -98,7 +98,8 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 } else {
                     ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
                     holder.addMoreLayout.setVisibility(View.GONE);
-                    v_gen.setVisibility(View.GONE);
+                    holder.itemView.setVisibility(View.GONE);
+                    //v_gen.setVisibility(View.GONE);
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                     builder1.setMessage(R.string.piattoRimosso);
                     builder1.setCancelable(true);

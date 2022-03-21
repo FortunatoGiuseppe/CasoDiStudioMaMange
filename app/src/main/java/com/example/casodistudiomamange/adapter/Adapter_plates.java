@@ -90,7 +90,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         //invece di aggiungere quantità a 0 a priori dovrei leggere quantità per i piatti che sono stati caricati da file locale
         Map<String,Long> mapPlateQuantity = new HashMap<>();    //  creo mappa che contiene nome piatto e quantità relativa ordinata nell'ordine salvato
         FileOrderManager fileOrderManager=new FileOrderManager();
-        fileOrderManager.loadQuantitiesFromFile((MaMangeNavigationActivity) context,FILE_NAME,mapPlateQuantity); //carico la mappa
+
 
 
         //Se non ho caricato l'ultimo ordine salvato (cioè il tasto per caricarlo è ancora abilitato)
@@ -116,6 +116,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 holder.addPlateBtn.setVisibility(View.VISIBLE);
             }
         }else {//se ho caricato ultimo ordine
+            fileOrderManager.loadQuantitiesFromFile((MaMangeNavigationActivity) context,FILE_NAME,mapPlateQuantity); //carico la mappa
             //Se il piatto che si sta caricando nel menu è presente nella mappa (ultimo ordine) (caricamento mappa riga 65 questo file)
             //NOTA: il controllo è fatto "al contrario" (cioè a partire dalla mappa) per sfruttare metodo della mappa efficiente
             if (mapPlateQuantity.containsKey(plate.getNome())) {
