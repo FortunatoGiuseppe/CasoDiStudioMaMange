@@ -27,6 +27,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.adapter.Adapter_plates;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.mlkit.common.model.DownloadConditions;
+import com.google.mlkit.common.model.RemoteModelManager;
+import com.google.mlkit.nl.translate.TranslateLanguage;
+import com.google.mlkit.nl.translate.Translation;
+import com.google.mlkit.nl.translate.Translator;
+import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -44,6 +53,13 @@ public class SensorFragment extends Fragment {
     static final int STATO_CONNESSIONE_FALLITO =4;
     static final int STATO_MESSAGGIO_RICEVUTO =5;
     private static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
+    TranslatorOptions options =
+            new TranslatorOptions.Builder()
+                    .setSourceLanguage(TranslateLanguage.ITALIAN)
+                    .setTargetLanguage(TranslateLanguage.ENGLISH)
+                    .build();
+    final com.google.mlkit.nl.translate.Translator Translator = Translation.getClient(options);
+    RemoteModelManager modelManager = RemoteModelManager.getInstance();
 
     /*variabili del bluetooth*/
     BluetoothAdapter bluetoothAdapter;
@@ -83,7 +99,8 @@ public class SensorFragment extends Fragment {
         Bundle bundle = getArguments();
         drinkName.setText(bundle.getString("PlateName"));
         Picasso.get().load(bundle.getString("Img")).into(drinkImg);
-        drinkDescrizione.setText(bundle.getString("Descrizione"));
+        prepareModelDescription(bundle.getString("Descrizione"));
+
 
         connettitiBtn = v.findViewById(R.id.connect);
         listaDispositiviBluetooth = v.findViewById(R.id.listaDispositiviBluetooth);
@@ -184,7 +201,7 @@ public class SensorFragment extends Fragment {
                 case STATO_CONNESSIONE_FALLITO:
                     statoConnessione.setText(R.string.connessioneFallita);
                     break;
-                    //se il messaggio è ricevuto
+                //se il messaggio è ricevuto
                 case STATO_MESSAGGIO_RICEVUTO:
                     //creo un buffer per la lettura del messaggio
                     byte[] bufferDiLettura= (byte[]) messaggio.obj;
@@ -225,7 +242,7 @@ public class SensorFragment extends Fragment {
         if(permissionCheck == 0){
             attivaBluetooth();
 
-        //altrimenti mostra il razionale, ovvero il perchè è importante dare i seguenti permessi
+            //altrimenti mostra il razionale, ovvero il perchè è importante dare i seguenti permessi
         } else if(shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION) && shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -337,7 +354,7 @@ public class SensorFragment extends Fragment {
     {
         private final BluetoothSocket bluetoothSocket;
         private final InputStream inputStream;
-       // private final OutputStream outputStream;
+        // private final OutputStream outputStream;
 
         public Receive(BluetoothSocket socket)
         {
@@ -347,13 +364,13 @@ public class SensorFragment extends Fragment {
 
             try {
                 tempIn=bluetoothSocket.getInputStream();
-              //  tempOut=bluetoothSocket.getOutputStream();
+                //  tempOut=bluetoothSocket.getOutputStream();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             inputStream=tempIn;
-           // outputStream=tempOut;
+            // outputStream=tempOut;
         }
 
         public void run()
@@ -376,6 +393,35 @@ public class SensorFragment extends Fragment {
             }
         }
 
+    }
+
+    private void prepareModelDescription(String trans){
+
+
+        DownloadConditions conditions = new DownloadConditions.Builder()
+                .requireWifi()
+                .build();
+        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        drinkDescrizione.setText(s);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 
 }

@@ -54,7 +54,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                     .setSourceLanguage(TranslateLanguage.ITALIAN)
                     .setTargetLanguage(TranslateLanguage.ENGLISH)
                     .build();
-    final Translator englishGermanTranslator = Translation.getClient(options);
+    final Translator Translator = Translation.getClient(options);
     RemoteModelManager modelManager = RemoteModelManager.getInstance();
 
     public  Adapter_plates(Context context, ArrayList<Plate> plateArrayList){
@@ -215,7 +215,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 //salvo la nuova quantità nello shared preferences
                 saveDataSharedPreferences(plate.getNome(),total.get(position));
                 if(total.get(position) > 0 ) {
-                   ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
+                    ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
                     holder.tvCount.setText(total.get(position) +"");
                 } else {
                     ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
@@ -312,10 +312,10 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         DownloadConditions conditions = new DownloadConditions.Builder()
                 .requireWifi()
                 .build();
-        englishGermanTranslator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                englishGermanTranslator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
+                Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override
                     public void onSuccess(String s) {
                         holder.textView_plate.setText(s);
@@ -342,10 +342,10 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         DownloadConditions conditions = new DownloadConditions.Builder()
                 .requireWifi()
                 .build();
-        englishGermanTranslator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                englishGermanTranslator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
+                Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override
                     public void onSuccess(String s) {
                         holder.textView_plate_description.setText(s);
