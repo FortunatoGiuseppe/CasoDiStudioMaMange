@@ -191,10 +191,8 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     private void prepareModelTranslation(String trans,@NonNull myViewHolder holder){
 
 
-        DownloadConditions conditions = new DownloadConditions.Builder()
-                .requireWifi()
-                .build();
-        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {

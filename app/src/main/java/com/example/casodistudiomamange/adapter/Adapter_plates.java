@@ -6,6 +6,7 @@ import com.example.casodistudiomamange.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -318,10 +319,8 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     private void prepareModel(String trans,@NonNull myViewHolder holder){
 
 
-        DownloadConditions conditions = new DownloadConditions.Builder()
-                .requireWifi()
-                .build();
-        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
@@ -348,10 +347,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     private void prepareModelDescription(String trans,@NonNull myViewHolder holder){
 
 
-        DownloadConditions conditions = new DownloadConditions.Builder()
-                .requireWifi()
-                .build();
-        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {

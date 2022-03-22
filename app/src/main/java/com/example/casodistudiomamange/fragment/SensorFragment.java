@@ -323,10 +323,8 @@ public class SensorFragment extends Fragment {
     private void prepareModelDescription(String trans){
 
 
-        DownloadConditions conditions = new DownloadConditions.Builder()
-                .requireWifi()
-                .build();
-        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {

@@ -73,10 +73,8 @@ public class Adapter_Profile_Ordered_GroupOrder extends RecyclerView.Adapter<Ada
     private void prepareModelTranslation(String trans,@NonNull Adapter_Profile_Ordered_GroupOrderViewHolder holder){
 
 
-        DownloadConditions conditions = new DownloadConditions.Builder()
-                .requireWifi()
-                .build();
-        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
