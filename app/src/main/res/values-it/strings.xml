@@ -115,7 +115,7 @@
     <string name="question7">Cosa significa la parola sashimi?</string>
         <string name="question7option1">Bevanda alcolica</string>
         <string name="question7option2">Rotolo di riso</string>
-        <string name="question7option3">Corpo ttrafitto</string>
+        <string name="question7option3">Corpo trafitto</string>
     <string name="question8">Cosa è il sakè?</string>
         <string name="question8option1">Bevanda alcolica</string>
         <string name="question8option2">Salmone</string>
@@ -185,5 +185,6 @@
     <string name="sendEmail">Inviaci un email</string>
     <string name="back">Torna indietro</string>
     <string name="nordinazione">Ordinazione Tavolo: </string>
+    <string name="shareW">Condividi il tuo risultato</string>
 
 </resources>

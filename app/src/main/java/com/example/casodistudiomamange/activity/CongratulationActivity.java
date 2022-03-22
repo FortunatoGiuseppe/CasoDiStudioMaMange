@@ -6,7 +6,10 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.connection.NetworkChangedListener;
 
@@ -15,7 +18,8 @@ import java.util.Random;
 public class CongratulationActivity extends AppCompatActivity {
 
     private TextView congratulationsTv,codeTv,homeTv;
-    private View congcostr;
+    private View congcostr, whatsappConstr;
+    private ImageView image;
     private int max = 5;
     private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
     private View homeconstr;
@@ -32,6 +36,9 @@ public class CongratulationActivity extends AppCompatActivity {
 
         congratulationsTv=findViewById(R.id.congratulationsTv);
         homeTv=findViewById(R.id.textHome);
+        image = findViewById(R.id.imageWhatsapp);
+        image.setImageResource(R.drawable.whatsapp);
+
         homeconstr=findViewById(R.id.HomeCostr);
         homeconstr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +49,23 @@ public class CongratulationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        whatsappConstr= findViewById(R.id.ConstrWhatsapp);
+        whatsappConstr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+                whatsappIntent.setType("text/plain");
+                whatsappIntent.setPackage("com.whatsapp");
+                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "Ciao! Guarda il mio punteggio al quiz dell'app MaMangè: "+ score +"/5");
+                try {
+                    startActivity(whatsappIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(CongratulationActivity.this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         if(score==max){
             congratulationsTv.setText(R.string.vittoriaQuiz);
             congcostr=findViewById(R.id.CongCostr);
