@@ -55,7 +55,7 @@ public class GuestFragment extends Fragment {
 
         }else {
             Intent intent= new Intent(getActivity(),QRCodeActivity.class);
-            username_ins = username_ins + " (Guest)";
+            username_ins = username_ins + " "+ getContext().getResources().getString(R.string.Guest);
             intent.putExtra("UsernameInserito",username_ins);
             startActivity(intent);
         }
