@@ -252,7 +252,7 @@ public class SensorFragment extends Fragment {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle(R.string.importanzaDeiPermessi);
-            builder.setMessage(R.string.messaggioPermessi+"\n"+R.string.richiestaPermessi);
+            builder.setMessage(getText(R.string.messaggioPermessi)+"\n"+getText(R.string.richiestaPermessi));
 
             builder.setPositiveButton(
                     "Si",
