@@ -28,11 +28,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".8"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
-
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,8 +39,8 @@
             android:layout_width="323dp"
             android:layout_height="107dp"
             android:background="@drawable/categories_background"
-            android:textAlignment="center"
             android:foregroundGravity="center"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.493"
@@ -75,7 +74,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CongCostr" >
+            app:layout_constraintTop_toBottomOf="@+id/CongCostr">
 
             <TextView
                 android:id="@+id/textHome"
@@ -97,16 +96,55 @@
             android:layout_width="314dp"
             android:layout_height="83dp"
             android:layout_marginTop="68dp"
+            android:gravity="center"
             android:text=""
+            android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textAlignment="center"
-            android:gravity="center"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/CongCostr"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:id="@+id/ConstrWhatsapp"
+            android:background="@drawable/round_back"
+            android:backgroundTint="#25d366"
+            app:layout_constraintBottom_toTopOf="@+id/HomeCostr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CongCostr">
+
+            <ImageView
+                android:id="@+id/imageWhatsapp"
+                android:layout_width="70dp"
+                android:layout_height="38dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/whatsapp"
+                android:contentDescription="TODO" />
+
+            <TextView
+                android:id="@+id/textShareW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/shareW"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:padding="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageWhatsapp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

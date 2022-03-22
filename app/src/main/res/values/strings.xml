@@ -180,5 +180,6 @@
 
     <string name="connessione_assente">No internet connection</string>
     <string name="retry">RETRY</string>
+    <string name="shareW">Press to share your result</string>
 
 </resources>
