@@ -95,7 +95,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
 
         //Se non ho caricato l'ultimo ordine salvato (cioè il tasto per caricarlo è ancora abilitato)
         if(((MaMangeNavigationActivity)context).lastOrderItem.isEnabled()){
-            //Non ho caricato ultimo rodne quindi lavoro sullo shared preferences e vedo se piatto sta nello shared preferences dell'ordine corrente
+            //Non ho caricato ultimo ordine quindi lavoro sullo shared preferences e vedo se piatto sta nello shared preferences dell'ordine corrente
             if(((MaMangeNavigationActivity) context).getQuantityForParameterPlateSharedPreferences(plate.getNome())!=0){
                 holder.addMoreLayout.setVisibility(View.VISIBLE);
                 holder.addPlateBtn.setVisibility(View.GONE);
