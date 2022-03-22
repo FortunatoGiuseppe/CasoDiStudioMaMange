@@ -65,7 +65,6 @@ public class SensorFragment extends Fragment {
     /*variabili del bluetooth*/
     BluetoothAdapter bluetoothAdapter;
     BluetoothDevice[] bluetoothDevice;
-    Receive receive;
     ListView listaDispositiviBluetooth;
     Button connettitiBtn;
     TextView temperaturaConserazione, torbidita, statoConnessione, umidita, info;
@@ -253,7 +252,7 @@ public class SensorFragment extends Fragment {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle(R.string.importanzaDeiPermessi);
-            builder.setMessage(R.string.messaggioPermessi+"\n"+R.string.richiestaPermessi);
+            builder.setMessage(getText(R.string.messaggioPermessi)+"\n"+getText(R.string.richiestaPermessi));
 
             builder.setPositiveButton(
                     "Si",
@@ -319,95 +318,13 @@ public class SensorFragment extends Fragment {
 
     }
 
-    private class ClientClass extends Thread
-    {
-        private BluetoothDevice device;
-        private BluetoothSocket socket;
 
-        public ClientClass (BluetoothDevice device1)
-        {
-            device=device1;
-
-            try {
-                checkBTPermission();
-                socket=device.createRfcommSocketToServiceRecord(MY_UUID);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public void run()
-        {
-            try {
-                checkBTPermission();
-                socket.connect();
-                Message message=Message.obtain();
-                message.what= STATO_CONNESSO;
-                handler.sendMessage(message);
-                receive =new Receive(socket);
-                receive.start();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Message message=Message.obtain();
-                message.what= STATO_CONNESSIONE_FALLITO;
-                handler.sendMessage(message);
-            }
-        }
-    }
-
-    private class Receive extends Thread
-    {
-        private final BluetoothSocket bluetoothSocket;
-        private final InputStream inputStream;
-        // private final OutputStream outputStream;
-
-        public Receive(BluetoothSocket socket)
-        {
-            bluetoothSocket=socket;
-            InputStream tempIn=null;
-            //OutputStream tempOut=null;
-
-            try {
-                tempIn=bluetoothSocket.getInputStream();
-                //  tempOut=bluetoothSocket.getOutputStream();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            inputStream=tempIn;
-            // outputStream=tempOut;
-        }
-
-        public void run()
-        {
-            byte[] buffer=new byte[1024];
-            int bytes;
-
-            while (true)
-            {
-                try {
-                    bytes=inputStream.read(buffer);
-                    handler.obtainMessage(STATO_MESSAGGIO_RICEVUTO,bytes,-1,buffer).sendToTarget();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Message message=Message.obtain();
-                    message.what= STATO_CONNESSIONE_FALLITO;
-                    handler.sendMessage(message);
-                    break;
-                }
-            }
-        }
-
-    }
 
     private void prepareModelDescription(String trans){
 
 
-        DownloadConditions conditions = new DownloadConditions.Builder()
-                .requireWifi()
-                .build();
-        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {

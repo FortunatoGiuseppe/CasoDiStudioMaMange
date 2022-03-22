@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -137,69 +138,69 @@ public class SingleOrderFragment extends Fragment {
                 dialog.show();
             }
         });
-
-
         return v;
-
-    }
+}
 
     /*Metodo che permette di caricare la singola ordinazione dell'utente*/
     private void caricaOrdinazione() {
 
-        //se l'utente vuole caricare l'ultimo ordine fatto
-        if(wantsLastOrder){
+        /*Carico tutte le ordinazioni già presenti*/
 
-            //carico l'array globale plates con i nomi dei piatti letti dal file
-            //NOTA: NON VIENE LETTA LA QUANTITÀ PERCHÈ IN OGGETTI DI PLATES NON È POSSIBILE INSERIRLA
-            //occorrerebbe stampare la lista degli soplate piuttosto che la lista di plates, modifica che impatterebbe anche su singlePlates corrente e non letto dal file
-            FileOrderManager fileOrderManager= new FileOrderManager();
-            fileOrderManager.loadPlateLastOrder((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
-
-            //Se ho caricato l'ultimo ordine salvato allora devo aggiungere nello shared preferences i piatti letti
-            for (int i = 0; i < soPlate.size(); i++) {
-                ((MaMangeNavigationActivity) getContext()).saveDataSharedPreferences(soPlate.get(i).getNomePiatto(), (int) soPlate.get(i).getQuantita());
-            }
-
-            isSingleOrderEmpty=false;   //se trovo piatti lo imposto a falso, che indica che contiene piatti
-
-            //devo stampare nelle view ciò che leggo dal file
-            adapter_plates.notifyDataSetChanged();
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(getResources().getString(R.string.ordineCaricato));
-            builder.setMessage(" ");
-            AlertDialog dialog = builder.create();
-            dialog.show();
-
-        }else{
-
-            String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
-            String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
-            String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
-            String username = ((MaMangeNavigationActivity) getActivity()).username;
+        String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
+        String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
+        String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
+        String username = ((MaMangeNavigationActivity) getActivity()).username;
 
 
-            db.collection("SO-PIATTO")
-                    .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
-                    .whereEqualTo("codiceGroupOrder",codiceGroupOrder)
-                    .whereEqualTo("codiceTavolo",codiceTavolo)
-                    .whereEqualTo("username",username)
-                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                            soPlate.add(documentSnapshot.toObject(SoPlate.class));
-                            adapter_plates.notifyDataSetChanged();
-                            isSingleOrderEmpty=false; //se trovo piatti lo imposto a falso, che indica che contiene piatti
-                            //non posso mettere questa istruzione fuori perché me la farebbe anche se trova 0 piatti,
-                            // perché risultato vuoto è comunque un task con successo
+        db.collection("SO-PIATTO")
+                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
+                .whereEqualTo("codiceGroupOrder",codiceGroupOrder)
+                .whereEqualTo("codiceTavolo",codiceTavolo)
+                .whereEqualTo("username",username)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                        soPlate.add(documentSnapshot.toObject(SoPlate.class));
+                        isSingleOrderEmpty=false; //se trovo piatti lo imposto a falso, che indica che contiene piatti
+                    }
+
+                    /* Se l'utente vuole caricare l'ultimo ordine e non aveva aggiunto piatti allora può farlo, quindi carico piatti salvati */
+                    if(wantsLastOrder && isSingleOrderEmpty){
+                        //carico l'array globale plates con i nomi dei piatti letti dal file
+                        //NOTA: NON VIENE LETTA LA QUANTITÀ PERCHÈ IN OGGETTI DI PLATES NON È POSSIBILE INSERIRLA
+                        FileOrderManager fileOrderManager= new FileOrderManager();
+                        fileOrderManager.loadPlateLastOrder((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
+
+                        //Se ho caricato l'ultimo ordine salvato allora devo aggiungere nello shared preferences i piatti letti
+                        for (int i = 0; i < soPlate.size(); i++) {
+                            ((MaMangeNavigationActivity) getContext()).saveDataSharedPreferences(soPlate.get(i).getNomePiatto(), (int) soPlate.get(i).getQuantita());
                         }
 
-                    }
+                        isSingleOrderEmpty=false;   //ho aggiunto piatti quindi single order non è più vuoto
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle(getResources().getString(R.string.ordineCaricato));
+                        builder.setMessage(" ");
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                    }else if (!isSingleOrderEmpty && wantsLastOrder){
+                        //se vuole caricare ordine ma ha già aggiunto piatti allora devo comunicare che non può farlo
+                            Toast.makeText(getContext(), getResources().getString(R.string.lastOrderCaricamento), Toast.LENGTH_SHORT).show();
+                            // lo rimetto a enable perché se toglie i piatti già aggiunti allora può caricare
+                            ((MaMangeNavigationActivity) getContext()).lastOrderItem.setEnabled(true);
+                            ((MaMangeNavigationActivity) getContext()).lastOrderItem.setIcon(R.drawable.ic_ordine_ultimo);
+                            wantsLastOrder=false;
+                        }
+
+                    adapter_plates.notifyDataSetChanged();
                 }
-            });
-        }
+            }
+        });
+
+
     }
 
 

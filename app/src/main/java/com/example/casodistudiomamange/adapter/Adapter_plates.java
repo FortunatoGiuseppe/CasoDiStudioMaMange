@@ -6,6 +6,7 @@ import com.example.casodistudiomamange.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,12 +91,12 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         //invece di aggiungere quantità a 0 a priori dovrei leggere quantità per i piatti che sono stati caricati da file locale
         Map<String,Long> mapPlateQuantity = new HashMap<>();    //  creo mappa che contiene nome piatto e quantità relativa ordinata nell'ordine salvato
         FileOrderManager fileOrderManager=new FileOrderManager();
-        fileOrderManager.loadQuantitiesFromFile((MaMangeNavigationActivity) context,FILE_NAME,mapPlateQuantity); //carico la mappa
+
 
 
         //Se non ho caricato l'ultimo ordine salvato (cioè il tasto per caricarlo è ancora abilitato)
         if(((MaMangeNavigationActivity)context).lastOrderItem.isEnabled()){
-            //Non ho caricato ultimo rodne quindi lavoro sullo shared preferences e vedo se piatto sta nello shared preferences dell'ordine corrente
+            //Non ho caricato ultimo ordine quindi lavoro sullo shared preferences e vedo se piatto sta nello shared preferences dell'ordine corrente
             if(((MaMangeNavigationActivity) context).getQuantityForParameterPlateSharedPreferences(plate.getNome())!=0){
                 holder.addMoreLayout.setVisibility(View.VISIBLE);
                 holder.addPlateBtn.setVisibility(View.GONE);
@@ -116,6 +117,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 holder.addPlateBtn.setVisibility(View.VISIBLE);
             }
         }else {//se ho caricato ultimo ordine
+            fileOrderManager.loadQuantitiesFromFile((MaMangeNavigationActivity) context,FILE_NAME,mapPlateQuantity); //carico la mappa
             //Se il piatto che si sta caricando nel menu è presente nella mappa (ultimo ordine) (caricamento mappa riga 65 questo file)
             //NOTA: il controllo è fatto "al contrario" (cioè a partire dalla mappa) per sfruttare metodo della mappa efficiente
             if (mapPlateQuantity.containsKey(plate.getNome())) {
@@ -317,10 +319,8 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     private void prepareModel(String trans,@NonNull myViewHolder holder){
 
 
-        DownloadConditions conditions = new DownloadConditions.Builder()
-                .requireWifi()
-                .build();
-        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
@@ -347,10 +347,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     private void prepareModelDescription(String trans,@NonNull myViewHolder holder){
 
 
-        DownloadConditions conditions = new DownloadConditions.Builder()
-                .requireWifi()
-                .build();
-        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 
 /*Classe che gestisce il file testuale temporaneo utilizzato per salvare l'ultimo ordine e per inviare il messaggio contenente i piatti ordinati*/
@@ -73,14 +74,22 @@ public class FileOrderManager {
             while ((text = br.readLine()) != null) {
                 text=text+("/");    //aggiungo lo slash per identificare la fine della riga
                 SoPlate plateOrdered= new SoPlate();
-                plateOrdered.setNomePiatto(text.substring(0, text.indexOf(",")));   //seleziono nomepiatto e lo metto nell'oggetto
-                plateOrdered.setQuantita(Long.parseLong(text.substring(text.indexOf(",")+1, text.indexOf("/")))); //seleziono quantità
+                int firstIndex=text.indexOf(",");
+                int secondIndex=text.indexOf("/");
 
-                soPlate.add(plateOrdered);   //aggiungo il piatto appena letto alla lista dei piatti da stampare
+                if(firstIndex<0 || secondIndex<0){
+                    //Se non ho trovato gli indici allora non era mai stato salvato un single order, quindi non carico plateOrdered
+
+                }else{
+                    plateOrdered.setNomePiatto(text.substring(0, firstIndex));   //seleziono nomepiatto e lo metto nell'oggetto
+                    plateOrdered.setQuantita(Long.parseLong(text.substring(firstIndex+1, secondIndex))); //seleziono quantità
+
+                    soPlate.add(plateOrdered);   //aggiungo il piatto appena letto alla lista dei piatti da stampare
+                }
 
                 //aggiungi piatto ordinato al db
                 //se il piatto non esiste già nell'ordine dell'utente lo aggiungo
-                if(!activity.dbc.checkIfPlateHasAlreadyBeenOrdered(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username)){
+                if(!Objects.isNull(plateOrdered) && !activity.dbc.checkIfPlateHasAlreadyBeenOrdered(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username)){
                     activity.dbc.orderPlate(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username,plateOrdered.getQuantita());
                 }
             }
@@ -163,7 +172,13 @@ public class FileOrderManager {
 
             while ((text = br.readLine()) != null) {
                 text=text+("/");    //aggiungo lo slash per identificare la fine della riga
-                map.put(text.substring(0, text.indexOf(",")),Long.parseLong(text.substring(text.indexOf(",")+1, text.indexOf("/"))));   //seleziono nomepiatto e quantità
+                int firstIndex=text.indexOf(",");
+                int secondIndex=text.indexOf("/");
+                if(firstIndex<0 || secondIndex<0){
+                    //Se non ho trovato gli indici allora non era mai stato salvato un single order, quindi non carico la mappa
+                }else {
+                    map.put(text.substring(0, firstIndex), Long.parseLong(text.substring(firstIndex + 1, secondIndex)));   //seleziono nomepiatto e quantità
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

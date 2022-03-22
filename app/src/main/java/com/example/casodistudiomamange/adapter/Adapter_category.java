@@ -110,10 +110,8 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
     private void prepareModelName(String trans,metododiCallbackTransaltion stringaTradotta){
 
 
-        DownloadConditions conditions = new DownloadConditions.Builder()
-                .requireWifi()
-                .build();
-        Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
 
