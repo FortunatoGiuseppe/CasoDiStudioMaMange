@@ -85,6 +85,7 @@
     <string name="richiestaPermessi">Are you sure you do not want to accept the permissions?</string>
     <string name="scannerizzaQr">Scanning QRcode</string>
     <string name="lastOrderCaricamento">Delete the dishes you have already chosen to load the saved order</string>
+    <string name="piattiDi"> plates of</string>
 
     <string name="question1">In which country is salmon caught the most?</string>
     <string name="question1option1">Finland</string>

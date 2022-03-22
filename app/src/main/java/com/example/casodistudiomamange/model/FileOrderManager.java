@@ -120,8 +120,14 @@ public class FileOrderManager {
             text=text+("\n");
             msg=text;
 
+
+
+
             while ((text = br.readLine()) != null) {
-                msg=msg+text+("\n");                    //costruzione della stringa tramite letture di ogni singola riga dal file
+                int firstIndex=text.indexOf(",");
+                int secondIndex=text.length();
+                msg=msg+text.substring(firstIndex+1, secondIndex)+" "+activity.getString(R.string.piattiDi)+" "+text.substring(0, firstIndex)+("\n");                    //costruzione della stringa tramite letture di ogni singola riga dal file
+
             }
 
             return msg;

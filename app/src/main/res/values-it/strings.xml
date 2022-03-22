@@ -85,6 +85,7 @@
     <string name="richiestaPermessi">Sei sicuro di non voler accettare i permessi?</string>
     <string name="scannerizzaQr">Scannerizza QRcode</string>
     <string name="lastOrderCaricamento">Cancella i piatti che hai già scelto per caricare l\'ordine salvato</string>
+    <string name="piattiDi">piatti di</string>
 
 
     <string name="question1">In quale nazione il salmone è maggiormente pescato?</string>
