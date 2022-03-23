@@ -5,7 +5,7 @@
     android:id="@+id/cardViewProfile"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="2dp"
+    app:cardCornerRadius="20dp"
     app:cardElevation="3dp"
     app:cardUseCompatPadding="true">
 
@@ -13,7 +13,6 @@
         android:id="@+id/linearProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryTextColor"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
