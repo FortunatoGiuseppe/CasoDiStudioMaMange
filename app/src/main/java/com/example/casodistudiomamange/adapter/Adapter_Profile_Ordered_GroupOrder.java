@@ -50,7 +50,7 @@ public class Adapter_Profile_Ordered_GroupOrder extends RecyclerView.Adapter<Ada
         if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
             holder.plateName.setText(soPlateList.get(position).getNomePiatto());
         }else{
-            prepareModelTranslation(soPlateList.get(position).getNomePiatto(),holder);
+            prepareModelTranslation(soPlateList.get(position).getNomePiatto(),holder.plateName);
         }
         holder.tvCount.setText(Integer.toString((int)soPlateList.get(position).getQuantita()));
     }
@@ -70,7 +70,7 @@ public class Adapter_Profile_Ordered_GroupOrder extends RecyclerView.Adapter<Ada
         }
     }
 
-    private void prepareModelTranslation(String trans,@NonNull Adapter_Profile_Ordered_GroupOrderViewHolder holder){
+    private void prepareModelTranslation(String trans,TextView holder){
 
 
 
@@ -81,7 +81,7 @@ public class Adapter_Profile_Ordered_GroupOrder extends RecyclerView.Adapter<Ada
                     @Override
                     public void onSuccess(String s) {
                         Log.d("TAG",s);
-                        holder.plateName.setText(s);
+                        holder.setText(s);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

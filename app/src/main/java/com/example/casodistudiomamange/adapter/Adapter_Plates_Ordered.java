@@ -65,7 +65,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
         if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
             holder.textView_plate.setText(soplate.getNomePiatto());
         }else{
-            prepareModelTranslation(soplate.getNomePiatto(),holder);
+            prepareModelTranslation(soplate.getNomePiatto(),holder.textView_plate);
         }
 
 
@@ -188,7 +188,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     }
 
 
-    private void prepareModelTranslation(String trans,@NonNull myViewHolder holder){
+    private void prepareModelTranslation(String trans,TextView holder){
 
 
 
@@ -199,7 +199,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                     @Override
                     public void onSuccess(String s) {
                         Log.d("TAG",s);
-                        holder.textView_plate.setText(s);
+                        holder.setText(s);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

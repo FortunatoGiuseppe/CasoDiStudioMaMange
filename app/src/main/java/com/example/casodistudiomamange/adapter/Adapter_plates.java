@@ -56,7 +56,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                     .setTargetLanguage(TranslateLanguage.ENGLISH)
                     .build();
     final Translator Translator = Translation.getClient(options);
-    RemoteModelManager modelManager = RemoteModelManager.getInstance();
+
 
     public  Adapter_plates(Context context, ArrayList<Plate> plateArrayList){
         this.context =context;
@@ -80,8 +80,9 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             holder.textView_plate_description.setText(plate.getDescrizione());
 
         }else{
-            prepareModel(plate.getNome(),holder);
-            prepareModelDescription(plate.getDescrizione(),holder);
+            prepareModel(plate.getNome(),holder.textView_plate);
+            prepareModel(plate.getDescrizione(),holder.textView_plate_description);
+
         }
 
 
@@ -316,7 +317,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         return sharedPreferences.getInt(nomePiatto,0);
     }
 
-    private void prepareModel(String trans,@NonNull myViewHolder holder){
+    private void prepareModel(String trans,TextView holder){
 
 
 
@@ -326,7 +327,8 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override
                     public void onSuccess(String s) {
-                        holder.textView_plate.setText(s);
+
+                        holder.setText(s);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -344,31 +346,6 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
     }
 
 
-    private void prepareModelDescription(String trans,@NonNull myViewHolder holder){
-
-
-        Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-                        holder.textView_plate_description.setText(s);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
-    }
 
 
 
