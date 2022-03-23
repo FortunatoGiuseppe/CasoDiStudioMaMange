@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -196,8 +198,22 @@ public class SingleOrderFragment extends Fragment {
                             wantsLastOrder=false;
                         }
                     else if (isSingleOrderEmpty && !wantsLastOrder){
+
+                        //your drawable
+                        ImageSpan is = new ImageSpan(((MaMangeNavigationActivity) getContext()), R.drawable.ic_menu);
+
+                        //your spannable text "Lorem.... amet"
+                        SpannableString spannableText= new SpannableString(getResources().getString(R.string.ispirazioneLastOrder));
+
+                        //apply image to spannable text
+                        //0 is the flag
+                        //start and end are the index length where you wantg to put the image
+                        int startIndex= getResources().getString(R.string.ispirazioneLastOrder).indexOf("_");
+                        spannableText.setSpan(is, startIndex, startIndex+1, 0);
+
                         //imposto suggerimento
                         TextView suggerimento= v.findViewById(R.id.ispirazioneTW);
+                        suggerimento.setText(spannableText);
                         suggerimento.setVisibility(View.VISIBLE);
                     }
 

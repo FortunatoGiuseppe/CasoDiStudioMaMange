@@ -91,7 +91,6 @@
                 android:id="@+id/ispirazioneTW"
                 android:layout_width="285dp"
                 android:layout_height="278dp"
-                android:text="Sei in cerca di idee? Clicca su ... e cerca inserisci ultimo ordine per caricare i piatti dello scorso ordine"
                 android:textColor="#B6A1A1"
                 android:textSize="24sp"
                 android:visibility="gone"
