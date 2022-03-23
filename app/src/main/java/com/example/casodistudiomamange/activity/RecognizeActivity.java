@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +40,13 @@ public class RecognizeActivity extends AppCompatActivity {
     int height=380;
     View viewCostraint;
     ColorStateList dfRbColor;
-    CountDownTimer countDownTimer;
+
+    ProgressBar mProgressBar, mProgressBar1;
+
+    private TextView textViewShowTime;
+    private CountDownTimer countDownTimer;
+    private long totalTimeCountInMilliseconds;
+
     Bitmap bmp;
     boolean answered;
     private RecognizeModel currentQuestion;
@@ -57,7 +64,14 @@ public class RecognizeActivity extends AppCompatActivity {
         viewCostraint = findViewById(R.id.imageCostraint);
         img1 = findViewById(R.id.img1);
         op1 = findViewById(R.id.insertValue2);
-        tvTimer = findViewById(R.id.textTimer);
+        //tvTimer = findViewById(R.id.textTimer);
+
+        textViewShowTime = (TextView)
+                findViewById(R.id.textView_timerview_time);
+
+        mProgressBar = (ProgressBar) findViewById(R.id.progressbar_timerview);
+        mProgressBar1 = (ProgressBar) findViewById(R.id.progressbar1_timerview);
+
         tvScore = findViewById(R.id.textScore);
         NoQuestion = findViewById(R.id.textQuestionNo);
         questionList = new ArrayList<>();
@@ -118,7 +132,12 @@ public class RecognizeActivity extends AppCompatActivity {
         tvScore.setText("Score: " +score);
 
         if(qCounter < totalQuestion){
+
+            setTimer();
+            mProgressBar.setVisibility(View.INVISIBLE);
+
             timer();
+            mProgressBar1.setVisibility(View.VISIBLE);
 
             currentQuestion = Questions.get(i);
 
@@ -144,17 +163,26 @@ public class RecognizeActivity extends AppCompatActivity {
     }
 
     private void timer() {
-        countDownTimer=new CountDownTimer(20000,1000) {
+        countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
             @Override
-            public void onTick(long l) {
-                tvTimer.setText("00:"+ l/1000);
-            }
+            public void onTick(long leftTimeInMilliseconds) {
+                long seconds = leftTimeInMilliseconds / 1000;
+                mProgressBar1.setProgress((int) (leftTimeInMilliseconds));
 
+                textViewShowTime.setText(String.format("%02d", seconds / 60)
+                        + ":" + String.format("%02d", seconds % 60));
+            }
             @Override
             public void onFinish() {
                 showNextQuestion();
             }
         }.start();
+    }
+
+    private void setTimer(){
+        int time = 21;
+        totalTimeCountInMilliseconds =  time * 1000;
+        mProgressBar1.setMax( time * 1000);
     }
 
     private void addQuestion() {
