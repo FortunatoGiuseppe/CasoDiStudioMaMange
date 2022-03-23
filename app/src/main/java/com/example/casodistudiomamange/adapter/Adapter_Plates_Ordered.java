@@ -96,7 +96,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 //salvo la nuova quantità nello shared preferences
                 saveDataSharedPref(soplate.getNomePiatto(),total.get(position));
                 if(total.get(position) > 0 ) {
-                    ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
+                    ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username,total.get(position));
                     holder.tvCount.setText(total.get(position) +"");
                 } else {
                     ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
@@ -127,7 +127,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 //salvo la nuova quantità nello shared preferences
                 saveDataSharedPref(soplate.getNomePiatto(),total.get(position));
                 if(total.get(position) <= 10 ) {
-                    ((MaMangeNavigationActivity) context).dbc.incrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
+                    ((MaMangeNavigationActivity) context).dbc.incrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username, total.get(position));
                     //aggiorno visualizzatore contatore quantità
                     holder.tvCount.setText(total.get(position) +"");
                 }else{
