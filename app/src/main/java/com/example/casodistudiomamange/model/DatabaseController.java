@@ -217,7 +217,7 @@ public class DatabaseController {
     }
 
     /*Metodo che aumenta la quantita del piatto aggiunto in base al codice del SingleOrder*/
-    public void incrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo,String username){
+    public void incrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo,String username, long quantita){
        
         df.collection("SO-PIATTO")
             .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
@@ -237,7 +237,7 @@ public class DatabaseController {
                             singleOrderPlate = documentSnapshot.toObject(SoPlate.class);
                             df.collection("SO-PIATTO")
                                 .document(documentSnapshot.getId())
-                                .update("quantita",1+ singleOrderPlate.getQuantita());
+                                .update("quantita",quantita);
                         }
 
                     }
@@ -246,7 +246,7 @@ public class DatabaseController {
     }
 
     /*Metodo che diminuisce la quantita del piatto in base al codice del SingleOrder*/
-    public void decrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder, String codiceTavolo,String username){
+    public void decrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder, String codiceTavolo,String username,long quantita){
 
         df.collection("SO-PIATTO")
             .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
@@ -266,7 +266,7 @@ public class DatabaseController {
                             singleOrderPlate = documentSnapshot.toObject(SoPlate.class);
                             df.collection("SO-PIATTO")
                                 .document(documentSnapshot.getId())
-                                .update("quantita",singleOrderPlate.getQuantita() - 1);
+                                .update("quantita",quantita);
                         }
                     }
                 }
