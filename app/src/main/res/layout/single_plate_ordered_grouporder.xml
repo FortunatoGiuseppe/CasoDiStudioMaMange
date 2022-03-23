@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_margin="10dp"
-    android:background="@drawable/categories_background"
+    android:background="@drawable/group_order_plate_background"
     android:textAlignment="center"
     tools:layout_constraintWidth_percent=".8">
 
@@ -16,7 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Piatto"
-        android:textColor="@color/black"
+        android:textColor="@color/primaryTextColor"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +28,7 @@
         android:layout_marginEnd="16dp"
         android:gravity="center_horizontal"
         android:text="1"
-        android:textColor="@color/primaryColor"
+        android:textColor="@color/primaryTextColor"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView_NamePlateGO"
         app:layout_constraintEnd_toEndOf="parent"

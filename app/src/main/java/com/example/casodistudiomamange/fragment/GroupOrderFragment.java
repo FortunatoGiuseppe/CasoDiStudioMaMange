@@ -58,7 +58,7 @@ public class GroupOrderFragment extends Fragment {
         table = v.findViewById(R.id.TavoloText);
         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
 
-        table.setText(getContext().getResources().getString(R.string.nordinazione)+codiceTavolo);
+        table.setText(getContext().getResources().getString(R.string.nordinazione)+" "+codiceTavolo);
 
         swipeRefreshLayout = v.findViewById(R.id.SwipeRefreshLayout);
 
