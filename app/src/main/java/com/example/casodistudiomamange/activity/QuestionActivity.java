@@ -15,6 +15,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -34,7 +35,7 @@ public class QuestionActivity extends AppCompatActivity {
     private TextView tvQuestion;
     private TextView tvScore;
     private TextView tvQuestionNo;
-    private TextView tvTimer;
+    //private TextView tvTimer;
     private RadioGroup radioGroup;
     private RadioButton rb1,rb2,rb3;
     private Button btnNext;
@@ -48,9 +49,14 @@ public class QuestionActivity extends AppCompatActivity {
     int score =0;
     int DOMANDE=3;
 
+    ProgressBar mProgressBar, mProgressBar1;
+
+    private TextView textViewShowTime;
+    private CountDownTimer countDownTimer;
+    private long totalTimeCountInMilliseconds;
+
     View viewCostraint;
     ColorStateList dfRbColor;
-    CountDownTimer countDownTimer;
     boolean answered;
 
     private Question currentQuestion;
@@ -68,8 +74,12 @@ public class QuestionActivity extends AppCompatActivity {
         tvQuestion=findViewById(R.id.textQuestion);
         tvScore=findViewById(R.id.textScore);
         tvQuestionNo=findViewById(R.id.textQuestionNo);
-        tvTimer=findViewById(R.id.textTimer);
 
+        textViewShowTime = (TextView)
+                findViewById(R.id.textView_timerview_time);
+
+        mProgressBar = (ProgressBar) findViewById(R.id.progressbar_timerview);
+        mProgressBar1 = (ProgressBar) findViewById(R.id.progressbar1_timerview);
 
         viewCostraint = findViewById(R.id.imageCostraint);
         img = findViewById(R.id.img1);
@@ -142,7 +152,13 @@ public class QuestionActivity extends AppCompatActivity {
 
 
         if(qCounter<DOMANDE){
+
+            setTimer();
+            mProgressBar.setVisibility(View.INVISIBLE);
+
             timer();
+            mProgressBar1.setVisibility(View.VISIBLE);
+
             currentQuestion=Questions.get(qCounter);
             img.setImageResource(currentQuestion.getImage());
             if(currentQuestion.getImage()==0){
@@ -175,17 +191,26 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void timer() {
-        countDownTimer=new CountDownTimer(20000,1000) {
+        countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
             @Override
-            public void onTick(long l) {
-                tvTimer.setText("00:"+ l/1000);
-            }
+            public void onTick(long leftTimeInMilliseconds) {
+                long seconds = leftTimeInMilliseconds / 1000;
+                mProgressBar1.setProgress((int) (leftTimeInMilliseconds));
 
+                textViewShowTime.setText(String.format("%02d", seconds / 60)
+                        + ":" + String.format("%02d", seconds % 60));
+            }
             @Override
             public void onFinish() {
                 showNextQuestion();
             }
         }.start();
+    }
+
+    private void setTimer(){
+        int time = 21;
+        totalTimeCountInMilliseconds =  time * 1000;
+        mProgressBar1.setMax( time * 1000);
     }
 
     private void addQuestions() {

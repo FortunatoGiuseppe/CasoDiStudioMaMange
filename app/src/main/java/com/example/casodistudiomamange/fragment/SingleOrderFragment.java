@@ -81,7 +81,7 @@ public class SingleOrderFragment extends Fragment {
             wantsLastOrder=true;
         }
 
-        caricaOrdinazione();
+        caricaOrdinazione(v);
 
         Button conferma= v.findViewById(R.id.confirm);
         conferma.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +142,7 @@ public class SingleOrderFragment extends Fragment {
 }
 
     /*Metodo che permette di caricare la singola ordinazione dell'utente*/
-    private void caricaOrdinazione() {
+    private void caricaOrdinazione(View v) {
 
         /*Carico tutte le ordinazioni già presenti*/
 
@@ -168,6 +168,7 @@ public class SingleOrderFragment extends Fragment {
 
                     /* Se l'utente vuole caricare l'ultimo ordine e non aveva aggiunto piatti allora può farlo, quindi carico piatti salvati */
                     if(wantsLastOrder && isSingleOrderEmpty){
+
                         //carico l'array globale plates con i nomi dei piatti letti dal file
                         //NOTA: NON VIENE LETTA LA QUANTITÀ PERCHÈ IN OGGETTI DI PLATES NON È POSSIBILE INSERIRLA
                         FileOrderManager fileOrderManager= new FileOrderManager();
@@ -194,6 +195,11 @@ public class SingleOrderFragment extends Fragment {
                             ((MaMangeNavigationActivity) getContext()).lastOrderItem.setIcon(R.drawable.ic_ordine_ultimo);
                             wantsLastOrder=false;
                         }
+                    else if (isSingleOrderEmpty && !wantsLastOrder){
+                        //imposto suggerimento
+                        TextView suggerimento= v.findViewById(R.id.ispirazioneTW);
+                        suggerimento.setVisibility(View.VISIBLE);
+                    }
 
                     adapter_plates.notifyDataSetChanged();
                 }
