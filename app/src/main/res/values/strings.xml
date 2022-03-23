@@ -86,6 +86,7 @@
     <string name="scannerizzaQr">Scanning QRcode</string>
     <string name="lastOrderCaricamento">Delete the dishes you have already chosen to load the saved order</string>
     <string name="piattiDi"> plates of</string>
+    <string name="Guest"> (Guest) </string>
 
     <string name="question1">In which country is salmon caught the most?</string>
     <string name="question1option1">Finland</string>
@@ -131,6 +132,7 @@
     <string name="question11option1">Sellers along the way</string>
     <string name="question11option2">Soldiers</string>
     <string name="question11option3">Royalty</string>
+
 
 
 
