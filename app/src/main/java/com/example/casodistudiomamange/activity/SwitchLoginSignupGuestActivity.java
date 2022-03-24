@@ -2,9 +2,7 @@ package com.example.casodistudiomamange.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewpager2.widget.ViewPager2;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -23,7 +21,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.adapter.ViewPagerFragmentAdapter;
@@ -41,8 +38,10 @@ import com.google.mlkit.nl.translate.TranslatorOptions;
 
 import java.util.Locale;
 
+/**
+ * Activity in cui l'utente decide come entrare nell'app, se come ospite, registarsi o loggarsi a un account esistente
+ */
 public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
-
 
     NetworkChangedListener networkChangedListener = new NetworkChangedListener();
     ViewPagerFragmentAdapter viewPagerFragmentAdapter;
@@ -67,7 +66,6 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
         tabLayout=findViewById(R.id.tab_layout);
         viewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this);
         ManageDownload();
-
 
         getSupportActionBar().hide();
 
@@ -99,6 +97,10 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
         super.onStop();
     }
 
+    /**
+     * Metodo che permette di salvare lo stato dell'alert che gestisce il download della lingua
+     * @param isChecked indica se è stato già scaricato o no
+     */
     private void storeDialogStatus(boolean isChecked){
         SharedPreferences mSharedPreferences = getSharedPreferences("CheckItem", MODE_PRIVATE);
         SharedPreferences.Editor mEditor = mSharedPreferences.edit();
@@ -106,12 +108,18 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
         mEditor.apply();
     }
 
+    /**
+     * da commentare
+     * @return
+     */
     private boolean getDialogStatus(){
         SharedPreferences mSharedPreferences = getSharedPreferences("CheckItem", MODE_PRIVATE);
         return mSharedPreferences.getBoolean("item", false);
     }
 
-
+    /**
+     * DA COMMENTARE
+     */
     private void ManageDownload(){
         if(!Locale.getDefault().getLanguage().equals("italiano")){
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
@@ -159,6 +167,9 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * DA COMMENTARE
+     */
     private void downloadModel(){
         DownloadConditions conditions = new DownloadConditions.Builder()
                 .build();
@@ -176,7 +187,9 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     *  DA COMMENTARE
+     */
     private void progressBar(){
         progdialog = new Dialog(this, android.R.style.Theme_Dialog);
 

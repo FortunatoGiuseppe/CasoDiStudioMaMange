@@ -1,12 +1,10 @@
 package com.example.casodistudiomamange.model;
 
 import android.content.Context;
-
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.ConfirmActivity;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,13 +15,21 @@ import java.util.Map;
 import java.util.Objects;
 
 
-/*Classe che gestisce il file testuale temporaneo utilizzato per salvare l'ultimo ordine e per inviare il messaggio contenente i piatti ordinati*/
+/**
+ * Classe che gestisce il file testuale temporaneo utilizzato per salvare l'ultimo ordine e
+ * per inviare il messaggio contenente i piatti ordinati
+ */
 public class FileOrderManager {
 
     public FileOrderManager() {
     }
 
-    //Metodo per salvare i piatti dell'ultimo ordine effettuato
+    /**
+     * Metodo per salvare i piatti dell'ultimo ordine effettuato nel file txt
+     * @param soPlateParam lista degli soPlate da salvare nel file
+     * @param context contesto necessario per l'apertura del file
+     * @param FILE_NAME nome del file
+     */
     public void savePlatesLastOrder(ArrayList<SoPlate> soPlateParam, Context context, String FILE_NAME) {
 
         String text="Nessun Piatto Aggiunto";   //Stringa di default se non ci sono piatti
@@ -55,7 +61,13 @@ public class FileOrderManager {
         }
     }
 
-    //Metodo per caricare i piatti dell'ultimo ordine effettuato, li aggiunge al DB e alla lista dalla quale l'adapter prende i dati per stamparli
+
+    /**
+     * Metodo per caricare i piatti dell'ultimo ordine effettuato, li aggiunge al DB e alla lista dalla quale l'adapter prende i dati per stamparli
+     * @param activity necessaria per aprire il file
+     * @param FILE_NAME nome del file
+     * @param soPlate conterrà gli soPlate appena letti e creati
+     */
     public void loadPlateLastOrder(MaMangeNavigationActivity activity, String FILE_NAME, ArrayList<SoPlate> soPlate) {
 
         String codiceSingleOrder = activity.codiceSingleOrder;
@@ -83,7 +95,6 @@ public class FileOrderManager {
                 }else{
                     plateOrdered.setNomePiatto(text.substring(0, firstIndex));   //seleziono nomepiatto e lo metto nell'oggetto
                     plateOrdered.setQuantita(Long.parseLong(text.substring(firstIndex+1, secondIndex))); //seleziono quantità
-
                     soPlate.add(plateOrdered);   //aggiungo il piatto appena letto alla lista dei piatti da stampare
                 }
 
@@ -106,7 +117,13 @@ public class FileOrderManager {
         }
     }
 
-    //Metodo per caricare i piatti dell'ultimo ordine effettuato per mandare l'elenco come messaggio
+
+    /**
+     * Metodo per caricare i piatti dell'ultimo ordine effettuato per mandare l'elenco come messaggio
+     * @param FILE_NAME nome del file dal quale leggere
+     * @param activity contesto necessario per aprire il file
+     * @return la stringa contenente tutti i piatti e relativa quantità
+     */
     public String loadPlatesOrderedFromFileForMessage(String FILE_NAME, ConfirmActivity activity) {
 
         FileInputStream fis = null;
@@ -127,9 +144,7 @@ public class FileOrderManager {
                         +text.substring(0, firstIndex)+("\n");
                 //costruzione della stringa tramite letture di ogni singola riga dal file
             }
-
             return msg;
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -145,10 +160,13 @@ public class FileOrderManager {
         return null;
     }
 
-    /* Metodo che prende i dati di soplate e li organizza in un unica stringa che verrà inserita nel file per essere caricata in Storage Database
-    * Attenzione: Non scrive in nessun file locale (a differenza degli altri metodi di questa classe) , ma serve solo a creare l'impostazione del file
-    * che viene effettivamente creato e caricato nel metodo chiamante
-    * */
+
+    /**
+     * Metodo che prende i dati del parametro e li organizza in un unica stringa (che verrà inserita nel file per essere caricata in Storage Database)
+     * Serve solo a creare l'impostazione del file che viene effettivamente creato e caricato nel metodo chiamante
+     * @param soPlateParam lista dei piatti ordinati
+     * @return una stringa contenente diverse righe con username, nome del piatto e relativ quantità
+     */
     public String saveGroupOrderForKitchen(ArrayList<SoPlate> soPlateParam) {
         String text="Nessun Piatto Aggiunto";   //Stringa di default se non ci sono piatti
         for(int i=0;i<soPlateParam.size();i++){
@@ -160,9 +178,14 @@ public class FileOrderManager {
         return  text;
     }
 
-    /*
-    Metodo per leggere le quantità ed i piatti inseriti in un file dell'ultimo ordine salvato e caricare una mappa.
-    Serve per caricare le giuste quantità nella schermata del menu (categoryFragment)
+
+
+    /**
+     * Metodo per leggere le quantità ed i piatti inseriti in un file dell'ultimo ordine salvato e caricare una mappa.
+     * Serve per caricare le giuste quantità nella schermata del menu (categoryFragment)
+     * @param activity necessaria per aprire il file locale
+     * @param FILE_NAME il nome del file locale
+     * @param map contiene nome del piatto e quantità relativa ordinata
      */
     public void loadQuantitiesFromFile (MaMangeNavigationActivity activity, String FILE_NAME, Map<String,Long> map){
 

@@ -9,12 +9,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.connection.NetworkChangedListener;
-
 import java.util.Random;
 
+/**
+ * Activity di comunicazione risultato del quiz
+ */
 public class CongratulationActivity extends AppCompatActivity {
 
     private TextView congratulationsTv,codeTv,homeTv;
@@ -80,6 +81,11 @@ public class CongratulationActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo che permette di generare una stringa di lunghezza definita
+     * @param sizeOfRandomString lunghezza della stringa
+     * @return stringa generata 
+     */
     private static String getRandomString(final int sizeOfRandomString)
     {
         final Random random=new Random();

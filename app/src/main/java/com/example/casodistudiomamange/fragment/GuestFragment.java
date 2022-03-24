@@ -13,6 +13,9 @@ import android.widget.EditText;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.QRCodeActivity;
 
+/**
+ * Fragment relativo all'utente ospite, viene chiesto username per unirsi al tavolo
+ */
 public class GuestFragment extends Fragment {
 
     private static final int MAX_LENGTH = 10;
@@ -35,6 +38,9 @@ public class GuestFragment extends Fragment {
         return root;
     }
 
+    /**
+     * Metodo che richiede inserimento username all'utente
+     */
     private void uniscitiAlTavolo(){
         String username_ins=tw_username.getText().toString();
 

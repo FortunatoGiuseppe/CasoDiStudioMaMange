@@ -22,10 +22,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
-
+/**
+ * Fragment nel quale vengono mostrati i piatti relativi alla categoria selezionata
+ */
 public class CategoryFragment extends Fragment {
     private RecyclerView recyclerView_plates;
-    private ArrayList<Plate> plates;    //lista che conterrà i nomi delle categorie
+    private ArrayList<Plate> plates;    //lista dei piatti disponibili per la categoria
     private Adapter_plates adapter_plates;
     private FirebaseFirestore db;
     String CategoryKey;
@@ -70,7 +72,9 @@ public class CategoryFragment extends Fragment {
     }
 
 
-    //Carica la lista con i piatti letti dal DB, presi in base alla categoria selezoionata
+    /**
+     * Metodo che carica la lista con i piatti letti dal DB, presi in base alla categoria selezionata
+     */
     public void caricaPiatti() {
 
         db.collection("PIATTI")

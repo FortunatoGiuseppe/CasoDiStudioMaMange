@@ -33,7 +33,7 @@ public class RestaurantFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
-        categories= new ArrayList<Category>();
+        categories= new ArrayList<>();
         adapter_category = new Adapter_category(getContext(), categories);
     }
 
@@ -58,6 +58,9 @@ public class RestaurantFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    /**
+     * Metodo per il caricamento di categorie. Preleva le categorie dal DB e carica un'arraylist di category
+     */
     public void caricaCategorie(){
         db.collection("CATEGORIE")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {

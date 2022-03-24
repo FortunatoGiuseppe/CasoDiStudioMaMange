@@ -1,10 +1,8 @@
 package com.example.casodistudiomamange.fragment;
 
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -14,11 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -106,6 +102,7 @@ public class SingleOrderFragment extends Fragment {
                         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
 
                         if(isSingleOrderEmpty) {
+                            //Se single order è vuoto avviso l'utente che non può confermare
                             Toast.makeText(getContext(), getResources().getString(R.string.nessunPiatto), Toast.LENGTH_SHORT).show();
                         }else {
 
@@ -129,7 +126,7 @@ public class SingleOrderFragment extends Fragment {
                             //pulisco shared delle quantità
                             ((MaMangeNavigationActivity)getContext()).clearSharedPreferencesQuantities();
 
-                            /*Avvio l'activity di scelta tra quiz e condivisione dell'ordine*/
+                            // Avvio l'activity di scelta tra quiz e condivisione dell'ordine
                             Intent intent = new Intent(getActivity(), ConfirmActivity.class);
                             intent.putExtra("UsernameInserito",usernameInserito);
                             startActivity(intent);
@@ -143,11 +140,13 @@ public class SingleOrderFragment extends Fragment {
         return v;
 }
 
-    /*Metodo che permette di caricare la singola ordinazione dell'utente*/
+    /**
+     * Metodo che permette di caricare la singola ordinazione dell'utente
+     * @param v è la view nella quale è compresa la textView contenente il suggerimento di caricare ultimo ordine
+     * */
     private void caricaOrdinazione(View v) {
 
-        /*Carico tutte le ordinazioni già presenti*/
-
+        /*Carico tutte i piatti ordinati già presenti*/
         String codiceSingleOrder = ((MaMangeNavigationActivity) getActivity()).codiceSingleOrder;
         String codiceGroupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
@@ -172,7 +171,6 @@ public class SingleOrderFragment extends Fragment {
                     if(wantsLastOrder && isSingleOrderEmpty){
 
                         //carico l'array globale plates con i nomi dei piatti letti dal file
-                        //NOTA: NON VIENE LETTA LA QUANTITÀ PERCHÈ IN OGGETTI DI PLATES NON È POSSIBILE INSERIRLA
                         FileOrderManager fileOrderManager= new FileOrderManager();
                         fileOrderManager.loadPlateLastOrder((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
 
@@ -190,7 +188,7 @@ public class SingleOrderFragment extends Fragment {
                         dialog.show();
 
                     }else if (!isSingleOrderEmpty && wantsLastOrder){
-                        //se vuole caricare ordine ma ha già aggiunto piatti allora devo comunicare che non può farlo
+                            //se vuole caricare ordine ma ha già aggiunto piatti allora devo comunicare che non può farlo
                             Toast.makeText(getContext(), getResources().getString(R.string.lastOrderCaricamento), Toast.LENGTH_SHORT).show();
                             // lo rimetto a enable perché se toglie i piatti già aggiunti allora può caricare
                             ((MaMangeNavigationActivity) getContext()).lastOrderItem.setEnabled(true);
@@ -199,32 +197,18 @@ public class SingleOrderFragment extends Fragment {
                         }
                     else if (isSingleOrderEmpty && !wantsLastOrder){
 
-                        //your drawable
+                        //imposto suggerimento per caricare ordine vecchio
                         ImageSpan is = new ImageSpan(((MaMangeNavigationActivity) getContext()), R.drawable.ic_menu);
-
-                        //your spannable text "Lorem.... amet"
                         SpannableString spannableText= new SpannableString(getResources().getString(R.string.ispirazioneLastOrder));
-
-                        //apply image to spannable text
-                        //0 is the flag
-                        //start and end are the index length where you wantg to put the image
                         int startIndex= getResources().getString(R.string.ispirazioneLastOrder).indexOf("_");
                         spannableText.setSpan(is, startIndex, startIndex+1, 0);
-
-                        //imposto suggerimento
                         TextView suggerimento= v.findViewById(R.id.ispirazioneTW);
                         suggerimento.setText(spannableText);
                         suggerimento.setVisibility(View.VISIBLE);
                     }
-
                     adapter_plates.notifyDataSetChanged();
                 }
             }
         });
-
-
     }
-
-
-
 }

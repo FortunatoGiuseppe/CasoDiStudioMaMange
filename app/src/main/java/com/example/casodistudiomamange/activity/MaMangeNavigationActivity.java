@@ -23,13 +23,14 @@ import com.example.casodistudiomamange.model.DatabaseController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
-
+/**
+ * Activity che contiene:
+ * - la BottomNavigationView che contiene le funzionalità come profilo, carica ultimo ordine
+ * - la NavigationView per navigare tra le schede menu, single order e group order
+ * - fragment relativi alle schede sopra citate
+ */
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
     public DatabaseController dbc;  //istanza per utilizzare metodi relativi al DB
     BottomNavigationView bottomNavigationView;  //riferimento utilizzato per accedere alla barra in alto con le 3 linee orizzontali
@@ -40,7 +41,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public String codiceSingleOrder;
     public String codiceGroupOrder;
 
-    //elementi del menu che compae quando clicchi sulle 3 linette
+    //elementi del menu che compare quando si clicca sulle 3 linette
     private MenuItem profileItem;
     public MenuItem lastOrderItem;
     private MenuItem acc_regItem;
@@ -84,7 +85,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             acc_regItem.setVisible(true);   //rendo visibile la scritta che suggerisce di loggarsi per accedere a profilo e caricare ultimo ordine
             acc_regItem.setEnabled(false);
             acc_regItem.getIcon().setAlpha(130);
-
         }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -141,6 +141,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }
+
     public Fragment fragment = null;
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -241,7 +242,11 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         super.onStop();
     }
 
-    //metodo per salvare nello shared preferences la quantità relativa al piatto passato come parametro
+    /**
+     * metodo per salvare nello shared preferences la quantità relativa al piatto passato come parametro
+     * @param nomePiatto nome del piatto di cui si vuole salvare la quantità nello shared preference
+     * @param total la quantità da salvare
+     */
     public void saveDataSharedPreferences(String nomePiatto, int total) {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -250,13 +255,19 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         editor.apply();
     }
 
-    //metodo per caricare dallo shared preferences la quantità relativa al piatto passato come parametro
+    /**
+     * metodo per caricare dallo shared preferences la quantità relativa al piatto passato come parametro
+     * @param nomePiatto nome del piatto del quale si è interessati a sapere la quantità
+     */
     public int getQuantityForParameterPlateSharedPreferences(String nomePiatto) {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
         //0 è il valore passato di default, cioè se nello shared preferences non esiste una quantità precedentemente aggiunta per quel piatto
         return sharedPreferences.getInt(nomePiatto,0);
     }
 
+    /**
+     * metodo per svuotare lo shared preferences
+     */
     public void clearSharedPreferencesQuantities() {
         SharedPreferences sharedPreferences =  this.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

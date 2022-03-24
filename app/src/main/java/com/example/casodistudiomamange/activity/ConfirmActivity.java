@@ -1,7 +1,6 @@
 package com.example.casodistudiomamange.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -12,6 +11,10 @@ import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.connection.NetworkChangedListener;
 import com.example.casodistudiomamange.model.FileOrderManager;
 
+/**
+ * Activity che compare una volta che l'utente ha confermato il proprio ordine singolo.
+ * Contiene i tasti che richiamano alle funzionalità di invio ordine tramite messaggio o per fare il quiz
+ */
 public class ConfirmActivity extends AppCompatActivity {
 
     ImageView quiz,share;
@@ -43,11 +46,11 @@ public class ConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //devo chiedere in che app vuole condividere (whatsapp), scegliere persona, nella chat caricare
-                //come messaggio l'ordine che ha fatto
+                // Mostro la lista di app attraverso le quali è possibile condividere
                 FileOrderManager fileOrderManager= new FileOrderManager();
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
+                // con loadPlatesOrderedFromFileForMessage scrivo il corpo del messaggio con la lista dei piatti ordinati
                 sendIntent.putExtra(Intent.EXTRA_TEXT, fileOrderManager.loadPlatesOrderedFromFileForMessage(FILE_NAME,ConfirmActivity.this));
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
@@ -66,13 +69,9 @@ public class ConfirmActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     public void onBackPressed() {
-
-
     }
-
 
     @Override
     protected void onStart(){
