@@ -82,7 +82,7 @@ public class QRCodeActivity extends AppCompatActivity {
     }
 
     /**
-     * Medoto che inizializza la scansione QR del tavolo
+     * Metodo che inizializza la scansione QR del tavolo
      *
      */
     private void scanQrCode(){
