@@ -41,7 +41,7 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
                     .setTargetLanguage(TranslateLanguage.ENGLISH)
                     .build();
     final Translator Translator = Translation.getClient(options);
-    ArrayList<String> categoria= new ArrayList<>();
+
 
     public  Adapter_category(Context context, ArrayList<Category> categories){
         this.context =context;
@@ -109,13 +109,6 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
 
     private void prepareModelName(String trans,metododiCallbackTransaltion stringaTradotta){
 
-
-
-        Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-
-
                     Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
 
                         public void onSuccess(String s) {
@@ -126,18 +119,10 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-
+                            stringaTradotta.onCallback(trans);
                         }
                     });
 
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
     }
 
 
