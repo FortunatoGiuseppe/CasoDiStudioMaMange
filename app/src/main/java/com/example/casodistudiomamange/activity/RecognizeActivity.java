@@ -35,6 +35,7 @@ public class RecognizeActivity extends AppCompatActivity {
     int totalQuestion = 5;
     int qCounter = 3;
     int score;
+    int wrongAnswer;
     int i=0;
     int width=380;
     int height=380;
@@ -84,6 +85,7 @@ public class RecognizeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         score = intent.getIntExtra("score",0);
+        wrongAnswer= intent.getIntExtra("wrongAnswer",wrongAnswer);
 
         addQuestion();
         getQuizRandom();
@@ -113,6 +115,8 @@ public class RecognizeActivity extends AppCompatActivity {
             op1.setTextColor(Color.GREEN);
             score++;
             tvScore.setText("Score: " +score);
+        }else{
+            wrongAnswer++;
         }
         if(!(stringa.equals(currentQuestion.getCorrectEN())|| stringa.equals(currentQuestion.getCorrectIT()))){
             op1.setTextColor(Color.RED);
@@ -131,35 +135,45 @@ public class RecognizeActivity extends AppCompatActivity {
         Question.setText(R.string.questionR);
         tvScore.setText("Score: " +score);
 
-        if(qCounter < totalQuestion){
-
-            setTimer();
-            mProgressBar.setVisibility(View.INVISIBLE);
-
-            timer();
-            mProgressBar1.setVisibility(View.VISIBLE);
-
-            currentQuestion = Questions.get(i);
-
-            img1.setImageResource(currentQuestion.getImg1());
-            viewCostraint.setVisibility(View.VISIBLE);
-            bmp= BitmapFactory.decodeResource(getResources(),currentQuestion.getImg1());//image is your image
-            bmp= Bitmap.createScaledBitmap(bmp, width,height, true);
-            img1.setImageBitmap(bmp);
-
-            i++;
-            qCounter++;
-            NoQuestion.setText("Question: "+ qCounter+" / "+ totalQuestion);
-            answered = false;
-            btnNext.setText(R.string.Invia);
-        }
-        else{
+        if(wrongAnswer>=2){
             String usernameInserito = getIntent().getStringExtra("UsernameInserito");
             Intent intent = new Intent(RecognizeActivity.this, CongratulationActivity.class);
-            intent.putExtra("score", score);
             intent.putExtra("UsernameInserito",usernameInserito);
             startActivity(intent);
+        }else{
+            if(qCounter < totalQuestion){
+
+                setTimer();
+                mProgressBar.setVisibility(View.INVISIBLE);
+
+                timer();
+                mProgressBar1.setVisibility(View.VISIBLE);
+
+                currentQuestion = Questions.get(i);
+
+                img1.setImageResource(currentQuestion.getImg1());
+                viewCostraint.setVisibility(View.VISIBLE);
+                bmp= BitmapFactory.decodeResource(getResources(),currentQuestion.getImg1());//image is your image
+                bmp= Bitmap.createScaledBitmap(bmp, width,height, true);
+                img1.setImageBitmap(bmp);
+
+                i++;
+                qCounter++;
+                NoQuestion.setText("Question: "+ qCounter+" / "+ totalQuestion);
+                answered = false;
+                btnNext.setText(R.string.Invia);
+            }
+            else{
+                String usernameInserito = getIntent().getStringExtra("UsernameInserito");
+                Intent intent = new Intent(RecognizeActivity.this, CongratulationActivity.class);
+                intent.putExtra("score", score);
+                intent.putExtra("UsernameInserito",usernameInserito);
+                startActivity(intent);
+            }
+
         }
+
+
     }
 
     private void timer() {
