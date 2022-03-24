@@ -66,7 +66,7 @@ public class CongratulationActivity extends AppCompatActivity {
             }
         });
 
-        if(score==max){
+        if(score==max || score==max-1){
             congratulationsTv.setText(R.string.vittoriaQuiz);
             congcostr=findViewById(R.id.CongCostr);
             congcostr.setVisibility(congcostr.VISIBLE);

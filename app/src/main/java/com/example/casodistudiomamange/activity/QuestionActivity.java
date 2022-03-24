@@ -47,6 +47,7 @@ public class QuestionActivity extends AppCompatActivity {
     int totalQuestions;
     int qCounter=0;
     int score =0;
+    int wrongAnswer=0;
     int DOMANDE=3;
 
     ProgressBar mProgressBar, mProgressBar1;
@@ -120,6 +121,8 @@ public class QuestionActivity extends AppCompatActivity {
         if(answerNo == currentQuestion.getCorrectAnsNo()){
             score++;
             tvScore.setText("Score:"+score);
+        }else{
+            wrongAnswer++;
         }
         rb1.setTextColor(Color.RED);
         rb2.setTextColor(Color.RED);
@@ -150,44 +153,52 @@ public class QuestionActivity extends AppCompatActivity {
         rb2.setTextColor(dfRbColor);
         rb3.setTextColor(dfRbColor);
 
-
-        if(qCounter<DOMANDE){
-
-            setTimer();
-            mProgressBar.setVisibility(View.INVISIBLE);
-
-            timer();
-            mProgressBar1.setVisibility(View.VISIBLE);
-
-            currentQuestion=Questions.get(qCounter);
-            img.setImageResource(currentQuestion.getImage());
-            if(currentQuestion.getImage()==0){
-                viewCostraint.setVisibility(View.GONE);
-            }
-            else{
-                viewCostraint.setVisibility(View.VISIBLE);
-                bmp= BitmapFactory.decodeResource(getResources(),currentQuestion.getImage());//image is your image
-                bmp= Bitmap.createScaledBitmap(bmp, width,height, true);
-                img.setImageBitmap(bmp);
-            }
-            tvQuestion.setText(currentQuestion.getQuestion());
-            rb1.setText(currentQuestion.getOption1());
-            rb2.setText(currentQuestion.getOption2());
-            rb3.setText(currentQuestion.getOption3());
-
-            qCounter++;
-            btnNext.setText(R.string.invia);
-            tvQuestionNo.setText("Question:"+" "+qCounter+"/"+totalQuestions);
-            answered=false;
-        }else{
+        if(wrongAnswer>=2){
             String usernameInserito = getIntent().getStringExtra("UsernameInserito");
-
-            Intent intent = new Intent(QuestionActivity.this, RecognizeActivity.class);
-            intent.putExtra("score", score);
+            Intent intent = new Intent(QuestionActivity.this, CongratulationActivity.class);
             intent.putExtra("UsernameInserito",usernameInserito);
-            //intent.putExtra("max",Questions.size());
             startActivity(intent);
+        }else{
+            if(qCounter<DOMANDE){
+
+                setTimer();
+                mProgressBar.setVisibility(View.INVISIBLE);
+
+                timer();
+                mProgressBar1.setVisibility(View.VISIBLE);
+
+                currentQuestion=Questions.get(qCounter);
+                img.setImageResource(currentQuestion.getImage());
+                if(currentQuestion.getImage()==0){
+                    viewCostraint.setVisibility(View.GONE);
+                }
+                else{
+                    viewCostraint.setVisibility(View.VISIBLE);
+                    bmp= BitmapFactory.decodeResource(getResources(),currentQuestion.getImage());//image is your image
+                    bmp= Bitmap.createScaledBitmap(bmp, width,height, true);
+                    img.setImageBitmap(bmp);
+                }
+                tvQuestion.setText(currentQuestion.getQuestion());
+                rb1.setText(currentQuestion.getOption1());
+                rb2.setText(currentQuestion.getOption2());
+                rb3.setText(currentQuestion.getOption3());
+
+                qCounter++;
+                btnNext.setText(R.string.invia);
+                tvQuestionNo.setText("Question:"+" "+qCounter+"/"+totalQuestions);
+                answered=false;
+            }else{
+                String usernameInserito = getIntent().getStringExtra("UsernameInserito");
+
+                Intent intent = new Intent(QuestionActivity.this, RecognizeActivity.class);
+                intent.putExtra("score", score);
+                intent.putExtra("UsernameInserito",usernameInserito);
+                intent.putExtra("wrongAnswer",wrongAnswer);
+                startActivity(intent);
+            }
         }
+
+
     }
 
     private void timer() {
