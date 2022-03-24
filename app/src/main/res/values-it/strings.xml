@@ -110,7 +110,7 @@
         <string name="question5option1">Pesce senza riso</string>
         <string name="question5option2">Riso senza pesce</string>
         <string name="question5option3">Riso con alga</string>
-    <string name="question6">Da quale pesce proviene il fugu?</string>
+    <string name="question6">Da quale pesce proviene il fogu?</string>
         <string name="question6option1">Pesce palla</string>
         <string name="question6option2">Pesce cane</string>
         <string name="question6option3">Pesce spada</string>
@@ -175,7 +175,7 @@
 
 
     <string name="backhome">Torna all\' inserimento del tavolo</string>
-    <string name="Invia">Submit</string>
+    <string name="Invia">Invia</string>
     <string name="inserireValore">Per favore inserire valore</string>
     <string name="connessione_assente">Nessuna connessione ad internet</string>
     <string name="retry">RIPROVA</string>

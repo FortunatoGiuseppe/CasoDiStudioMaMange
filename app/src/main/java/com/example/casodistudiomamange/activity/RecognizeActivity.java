@@ -37,8 +37,8 @@ public class RecognizeActivity extends AppCompatActivity {
     int score;
     int wrongAnswer;
     int i=0;
-    int width=380;
-    int height=380;
+    int width=370;
+    int height=370;
     View viewCostraint;
     ColorStateList dfRbColor;
 
@@ -103,6 +103,7 @@ public class RecognizeActivity extends AppCompatActivity {
                     }
                 } else{
                     showNextQuestion();
+                    op1.setEnabled(true);
                 }
             }
         });
@@ -113,6 +114,7 @@ public class RecognizeActivity extends AppCompatActivity {
         String stringa =op1.getText().toString().toLowerCase(Locale.ROOT);
         if(stringa.equals(currentQuestion.getCorrectEN())|| stringa.equals(currentQuestion.getCorrectIT())){
             op1.setTextColor(Color.GREEN);
+            op1.setEnabled(false);
             score++;
             tvScore.setText("Score: " +score);
         }else{
@@ -120,6 +122,7 @@ public class RecognizeActivity extends AppCompatActivity {
         }
         if(!(stringa.equals(currentQuestion.getCorrectEN())|| stringa.equals(currentQuestion.getCorrectIT()))){
             op1.setTextColor(Color.RED);
+            op1.setEnabled(false);
         }
         if(qCounter<5){
             btnNext.setText(R.string.prossimaDomanda);
