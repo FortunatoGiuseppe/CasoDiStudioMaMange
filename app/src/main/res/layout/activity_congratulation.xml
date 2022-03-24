@@ -33,6 +33,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:progressTint="#FFFF00"
+            android:rating="0"
+            android:stepSize="0.5"
+            app:layout_constraintBottom_toTopOf="@+id/HomeCostr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CongCostr"
+            app:layout_constraintVertical_bias="0.81"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CongCostr"
@@ -46,7 +61,7 @@
             app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.435">
+            app:layout_constraintVertical_bias="0.29000002">
 
             <TextView
                 android:id="@+id/CodeTv"
@@ -74,7 +89,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CongCostr">
+            app:layout_constraintTop_toBottomOf="@+id/CongCostr"
+            app:layout_constraintVertical_bias="0.73">
 
             <TextView
                 android:id="@+id/textHome"
@@ -95,7 +111,7 @@
             android:id="@+id/congratulationsTv"
             android:layout_width="314dp"
             android:layout_height="83dp"
-            android:layout_marginTop="68dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:text=""
             android:textAlignment="center"
@@ -107,40 +123,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:id="@+id/ConstrWhatsapp"
-            android:background="@drawable/round_back"
-            android:backgroundTint="#25d366"
-            app:layout_constraintBottom_toTopOf="@+id/HomeCostr"
+            android:id="@+id/constraintRating"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CongCostr">
 
-            <ImageView
-                android:id="@+id/imageWhatsapp"
-                android:layout_width="70dp"
-                android:layout_height="38dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/whatsapp"
-                android:contentDescription="TODO" />
-
             <TextView
-                android:id="@+id/textShareW"
+                android:id="@+id/textRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/shareW"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:padding="15dp"
+                android:text="@string/rating"
+                android:textColor="@color/white"
+                android:textSize="19sp"
+                android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageWhatsapp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

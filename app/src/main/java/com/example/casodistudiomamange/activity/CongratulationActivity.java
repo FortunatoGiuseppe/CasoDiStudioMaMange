@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.casodistudiomamange.R;
@@ -19,8 +20,8 @@ import java.util.Random;
 public class CongratulationActivity extends AppCompatActivity {
 
     private TextView congratulationsTv,codeTv,homeTv;
-    private View congcostr, whatsappConstr;
-    private ImageView image;
+    private View congcostr;
+    private RatingBar rating;
     private int max = 5;
     private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
     private View homeconstr;
@@ -33,12 +34,14 @@ public class CongratulationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int score = intent.getIntExtra("score",0);
-        //int max = intent.getIntExtra("max",0);
+
+        codeTv=findViewById(R.id.CodeTv);
+        codeTv.setText(getRandomString(7));
+        codeTv.setVisibility(codeTv.GONE);
 
         congratulationsTv=findViewById(R.id.congratulationsTv);
         homeTv=findViewById(R.id.textHome);
-        image = findViewById(R.id.imageWhatsapp);
-        image.setImageResource(R.drawable.whatsapp);
+        rating = findViewById(R.id.ratingBar);
 
         homeconstr=findViewById(R.id.HomeCostr);
         homeconstr.setOnClickListener(new View.OnClickListener() {
@@ -51,34 +54,51 @@ public class CongratulationActivity extends AppCompatActivity {
             }
         });
 
-        whatsappConstr= findViewById(R.id.ConstrWhatsapp);
-        whatsappConstr.setOnClickListener(new View.OnClickListener() {
+        rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
-            public void onClick(View view) {
-                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                whatsappIntent.setType("text/plain");
-                whatsappIntent.setPackage("com.whatsapp");
-                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "Ciao! Guarda il mio punteggio al quiz dell'app MaMangè: "+ score +"/5");
-                try {
-                    startActivity(whatsappIntent);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(CongratulationActivity.this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+
+                int rating = (int) v;
+                String message = null;
+
+                if(score==max || score==max-1){
+                    congratulationsTv.setText(R.string.vittoriaQuiz);
+                    congcostr=findViewById(R.id.CongCostr);
+                    congcostr.setVisibility(congcostr.VISIBLE);
+                    codeTv.setVisibility(codeTv.VISIBLE);
+
+                }else{
+                    congcostr=findViewById(R.id.CongCostr);
+                    congratulationsTv.setText(R.string.ritenta);
+                    congcostr.setVisibility(congcostr.GONE);
                 }
+
+                switch(rating){
+
+                    case 1:
+                        message = "Pessimo";
+                        break;
+
+                    case 2:
+                        message = "Mediocre";
+                        break;
+
+                    case 3:
+                        message = "Sufficiente";
+                        break;
+
+                    case 4:
+                        message = "Ottimo";
+                        break;
+
+                    case 5:
+                        message = "Perfetto";
+                        break;
+
+                }
+                Toast.makeText(CongratulationActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
-
-        if(score==max || score==max-1){
-            congratulationsTv.setText(R.string.vittoriaQuiz);
-            congcostr=findViewById(R.id.CongCostr);
-            congcostr.setVisibility(congcostr.VISIBLE);
-            codeTv=findViewById(R.id.CodeTv);
-            codeTv.setText(getRandomString(7));
-
-        }else{
-            congcostr=findViewById(R.id.CongCostr);
-            congratulationsTv.setText(R.string.ritenta);
-            congcostr.setVisibility(congcostr.GONE);
-        }
     }
 
     /**
