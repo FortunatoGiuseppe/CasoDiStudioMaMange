@@ -99,9 +99,8 @@ public class FileOrderManager {
                 }
 
                 //aggiungi piatto ordinato al db
-                //se il piatto non esiste già nell'ordine dell'utente lo aggiungo
-                if(!Objects.isNull(plateOrdered) && !activity.dbc.checkIfPlateHasAlreadyBeenOrdered(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username)){
-                    activity.dbc.orderPlate(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username,plateOrdered.getQuantita());
+                if(!Objects.isNull(plateOrdered) ){
+                    activity.dbc.orderPlate(plateOrdered.getNomePiatto(), codiceSingleOrder, codiceGroupOrder, codiceTavolo, username, plateOrdered.getQuantita());
                 }
             }
         } catch (IOException e) {

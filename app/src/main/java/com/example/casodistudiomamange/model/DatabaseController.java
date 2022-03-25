@@ -299,32 +299,6 @@ public class DatabaseController {
         });
     }
 
-    //Metodo che permette di capire se piatti di un ordine letti dal file locale sono già presenti nel db
-    public boolean checkIfPlateHasAlreadyBeenOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo,String username){
-
-        df.collection("SO-PIATTO")
-                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
-                .whereEqualTo("nomePiatto",plate)
-                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
-                .whereEqualTo("codiceTavolo", codiceTavolo)
-                .whereEqualTo("username",username)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        if(task.isSuccessful()){
-                            alreadyExists= true;    //se ha trovato risultati vuol dire che l'ordine era già stato aggiunto
-                        }else{
-                            alreadyExists=false;
-                        }
-                    }
-                });
-        return alreadyExists;
-    }
-
-
     /*Metodo che permette di:
         1. conferma il singleOrder
         2. libera il tavolo nel caso in cui l'odine che si sta confermando sia l'ultimo ad essere

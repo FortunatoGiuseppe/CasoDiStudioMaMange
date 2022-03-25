@@ -190,9 +190,6 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
 
     private void prepareModelTranslation(String trans,TextView holder){
 
-
-
-
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override
                     public void onSuccess(String s) {
