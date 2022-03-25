@@ -99,16 +99,10 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                     ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username,total.get(position));
                     holder.tvCount.setText(total.get(position) +"");
                 } else {
-                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
+                    //passo true per indicare che deve essere aggiornato il fragment
+                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username, ((MaMangeNavigationActivity) context),true);
                     holder.addMoreLayout.setVisibility(View.GONE);
                     holder.itemView.setVisibility(View.GONE);
-
-                    //Riavvio fragment per avere lista aggiornata
-                    Fragment fragment = new SingleOrderFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("chiamante", "riavvioAdapter"); //specifica a singleOrderFragment che deve caricare l'ordine corrente
-                    fragment.setArguments(bundle);
-                    ((MaMangeNavigationActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
 
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                     builder1.setMessage(R.string.piattoRimosso);
@@ -116,6 +110,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                     AlertDialog alert = builder1.create();
                     alert.show();
                 }
+
             }
         });
 

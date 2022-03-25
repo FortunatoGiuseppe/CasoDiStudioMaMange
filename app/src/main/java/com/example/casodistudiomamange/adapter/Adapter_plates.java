@@ -229,7 +229,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                     ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username,total.get(position));
                     holder.tvCount.setText(total.get(position) +"");
                 } else {
-                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username);
+                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username,((MaMangeNavigationActivity) context),false);
                     holder.addMoreLayout.setVisibility(View.GONE);
                     holder.addPlateBtn.setVisibility(View.VISIBLE);
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);

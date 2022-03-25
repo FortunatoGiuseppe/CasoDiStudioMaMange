@@ -141,7 +141,7 @@ public class SingleOrderFragment extends Fragment {
 }
 
     /**
-     * Metodo che permette di caricare la singola ordinazione dell'utente
+     * Metodo che permette di caricare la singola ordinazione dell'utente, cioè la lista dei piatti ordinati e loro quantità
      * @param v è la view nella quale è compresa la textView contenente il suggerimento di caricare ultimo ordine
      * */
     private void caricaOrdinazione(View v) {

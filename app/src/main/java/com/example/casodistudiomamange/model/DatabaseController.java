@@ -2,10 +2,15 @@ package com.example.casodistudiomamange.model;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
+import com.example.casodistudiomamange.fragment.SingleOrderFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -273,8 +278,20 @@ public class DatabaseController {
         });
     }
 
-    /*Metodo che elimina totalmente il piatto se la quantita è pari a 0*/
-    public void deletePlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo,String username){
+
+    /**
+     * Metodo che elimina totalmente il piatto dal db
+     * @param plate nome del piatto da cancellare
+     * @param codiceSingleOrder
+     * @param codiceGroupOrder
+     * @param codiceTavolo
+     * @param username
+     * @param context necessario per riavviare il fragment (quando richiesto)
+     * @param refreshFragment true-> è necessario riavviare il fragment o meno, per aggiornare l'elenco in single order fragment (se chiamato da Adapter_plates_ordered)
+     *                        false-> non è necessario, accade quando questo metodo viene chiamato da Adapter_plates
+     *
+     */
+    public void deletePlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo,String username, MaMangeNavigationActivity context,boolean refreshFragment){
 
         df.collection("SO-PIATTO")
             .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
@@ -292,6 +309,15 @@ public class DatabaseController {
 
                         for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
                             df.collection("SO-PIATTO").document(documentSnapshot.getId()).delete();
+                        }
+
+                        if(refreshFragment){
+                            //Riavvio fragment per avere lista aggiornata
+                            Fragment fragment = new SingleOrderFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("chiamante", "riavvioAdapter"); //specifica a singleOrderFragment che deve caricare l'ordine corrente
+                            fragment.setArguments(bundle);
+                            ((MaMangeNavigationActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
                         }
 
                     }
