@@ -8,11 +8,13 @@
         <entry key="..\:/MaMange/app/src/main/res/drawable/ic_baseline_add_circle_outline_24.xml" value="0.2645" />
         <entry key="..\:/MaMange/app/src/main/res/drawable/ic_baseline_arrow_drop_down_circle_24.xml" value="0.2645" />
         <entry key="..\:/MaMange/app/src/main/res/drawable/ic_menu.xml" value="0.3725" />
+        <entry key="..\:/MaMange/app/src/main/res/drawable/navbar_color.xml" value="0.353" />
         <entry key="..\:/MaMange/app/src/main/res/layout-land/activity_qrcode.xml" value="0.2" />
         <entry key="..\:/MaMange/app/src/main/res/layout/activity_logged_user.xml" value="0.36615384615384616" />
         <entry key="..\:/MaMange/app/src/main/res/layout/activity_ma_mange_navigation.xml" value="0.33" />
         <entry key="..\:/MaMange/app/src/main/res/layout/activity_qrcode.xml" value="0.33" />
         <entry key="..\:/MaMange/app/src/main/res/layout/activity_recognize.xml" value="0.36615384615384616" />
+        <entry key="..\:/MaMange/app/src/main/res/layout/activity_splash_screen.xml" value="0.33" />
         <entry key="..\:/MaMange/app/src/main/res/layout/card_item_category.xml" value="0.259375" />
         <entry key="..\:/MaMange/app/src/main/res/layout/card_item_profile.xml" value="0.4" />
         <entry key="..\:/MaMange/app/src/main/res/layout/fragment_category.xml" value="0.371875" />
@@ -32,12 +34,11 @@
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/scheda_rotonda.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_about.xml" value="0.25" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_confirm.xml" value="0.25" />
-        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_congratulation.xml" value="0.264" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_congratulation.xml" value="0.4" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_logged_user.xml" value="0.25" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_ma_mange_navigation.xml" value="0.264" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_profile.xml" value="0.2359375" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_qrcode.xml" value="0.25" />
-        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_question.xml" value="0.24615384615384617" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_recognize.xml" value="0.25" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_support.xml" value="0.4" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_switch_login_signup_guest.xml" value="0.25" />
@@ -85,8 +86,6 @@
         <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/single_plate.xml" value="0.536" />
         <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/menu/navigation_menu.xml" value="0.22395833333333334" />
         <entry key="..\:/Users/giuse/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14814814814814814" />
-        <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/dialog_bg.xml" value="0.29" />
-        <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/drawable_bg.xml" value="0.102" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/scheda_rotonda.xml" value="0.3145" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_confirm.xml" value="0.31040564373897706" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_congratulation.xml" value="0.31040564373897706" />
@@ -108,7 +107,6 @@
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_switch_login_signup_guest.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/card_item_category.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/card_item_profile.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/check_internet_dialog.xml" value="0.3157894736842105" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_category.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_confirm.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_congratulation.xml" value="0.36666666666666664" />
