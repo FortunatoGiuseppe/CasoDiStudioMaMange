@@ -48,7 +48,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager2 viewPager2;
     private final String[] titles = {"Guest", "Login", "Signup"};
-    private final String[] titles_it = {"Ospite", "Login", "Registrati"};
+    private final String[] titles_it = {"Ospite", "Accedi", "Registrati"};
     TranslatorOptions options =
             new TranslatorOptions.Builder()
                     .setSourceLanguage(TranslateLanguage.ITALIAN)
@@ -121,7 +121,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
      * DA COMMENTARE
      */
     private void ManageDownload(){
-        if(!Locale.getDefault().getLanguage().equals("italiano")){
+        if(!Locale.getDefault().getLanguage().equals((new Locale("it").getLanguage()))){
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
             View mView = getLayoutInflater().inflate(R.layout.check_menu_language, null);
             CheckBox mCheckBox = mView.findViewById(R.id.checkBox);
