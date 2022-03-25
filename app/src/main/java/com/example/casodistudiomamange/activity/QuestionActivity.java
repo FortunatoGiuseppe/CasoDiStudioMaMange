@@ -1,9 +1,6 @@
 package com.example.casodistudiomamange.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -22,9 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.casodistudiomamange.R;
-import com.example.casodistudiomamange.fragment.CongratulationFragment;
 import com.example.casodistudiomamange.model.Question;
-import com.google.protobuf.StringValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +30,6 @@ public class QuestionActivity extends AppCompatActivity {
     private TextView tvQuestion;
     private TextView tvScore;
     private TextView tvQuestionNo;
-    //private TextView tvTimer;
     private RadioGroup radioGroup;
     private RadioButton rb1,rb2,rb3;
     private Button btnNext;
@@ -210,9 +204,14 @@ public class QuestionActivity extends AppCompatActivity {
 
                 textViewShowTime.setText(String.format("%02d", seconds / 60)
                         + ":" + String.format("%02d", seconds % 60));
+
             }
             @Override
             public void onFinish() {
+
+                if(!rb1.isChecked() && !rb2.isChecked() && !rb3.isChecked()){
+                    wrongAnswer++;
+                }
                 showNextQuestion();
             }
         }.start();

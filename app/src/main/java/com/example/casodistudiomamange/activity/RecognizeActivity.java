@@ -191,6 +191,10 @@ public class RecognizeActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
+
+                if(!(op1.getText().length()>0)){
+                    wrongAnswer++;
+                }
                 showNextQuestion();
             }
         }.start();

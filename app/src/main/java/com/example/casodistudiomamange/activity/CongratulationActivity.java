@@ -19,6 +19,7 @@ import java.util.Random;
  */
 public class CongratulationActivity extends AppCompatActivity {
 
+    private final int lengthCodeTv = 7;
     private TextView congratulationsTv,codeTv,homeTv;
     private View congcostr;
     private RatingBar rating;
@@ -36,7 +37,7 @@ public class CongratulationActivity extends AppCompatActivity {
         int score = intent.getIntExtra("score",0);
 
         codeTv=findViewById(R.id.CodeTv);
-        codeTv.setText(getRandomString(7));
+        codeTv.setText(getRandomString(lengthCodeTv));
         codeTv.setVisibility(codeTv.GONE);
 
         congratulationsTv=findViewById(R.id.congratulationsTv);
