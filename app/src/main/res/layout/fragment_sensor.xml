@@ -23,30 +23,20 @@
 
         <TextView
             android:id="@+id/cosaFareBluetoothTW"
-            android:layout_width="321dp"
-            android:layout_height="295dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
             android:padding="10dp"
             android:text="@string/cosaFareAssociazione"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintHorizontal_bias="0.532"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.537" />
-
-        <ListView
-            android:id="@+id/listaDispositiviBluetooth"
-            android:layout_width="296dp"
-            android:layout_height="199dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/cosaFareBluetoothTW"
-            app:layout_constraintEnd_toEndOf="@+id/cosaFareBluetoothTW"
-            app:layout_constraintHorizontal_bias="0.4"
-            app:layout_constraintStart_toStartOf="@+id/cosaFareBluetoothTW"
-            app:layout_constraintTop_toTopOf="@+id/cosaFareBluetoothTW"
-            app:layout_constraintVertical_bias="0.781" />
+            app:layout_constraintTop_toBottomOf="@+id/torbidita"
+            app:layout_constraintVertical_bias="0.055" />
 
         <ImageView
             android:id="@+id/imagePlate"
@@ -117,41 +107,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imagePlate" />
 
+
         <Button
             android:id="@+id/connect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="@color/white"
+            android:visibility="gone"
             android:hint="@string/connetti"
             android:textColorHint="#c62828"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:visibility="gone"
+            app:cornerRadius="10dp"
             app:layout_constraintBottom_toTopOf="@+id/statoConnessione"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:cornerRadius="10dp"
-            android:backgroundTint="@color/white"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/pair"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:backgroundTint="@color/white"
             android:hint="@string/associa"
             android:textColorHint="#c62828"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/statoConnessione"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+
             app:cornerRadius="10dp"
-            android:backgroundTint="@color/white"
-            />
-
-
-
+            app:layout_constraintBottom_toBottomOf="@+id/connect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/statoConnessione"
