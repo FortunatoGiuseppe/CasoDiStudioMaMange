@@ -10,8 +10,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import com.example.casodistudiomamange.R;
@@ -20,6 +23,7 @@ import com.example.casodistudiomamange.fragment.GroupOrderFragment;
 import com.example.casodistudiomamange.fragment.RestaurantFragment;
 import com.example.casodistudiomamange.fragment.SingleOrderFragment;
 import com.example.casodistudiomamange.model.DatabaseController;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -135,6 +139,22 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         loadFragment(fragment);
 
         bottomNavigationView.setOnItemSelectedListener(this);
+
+        /*
+        Badge che mostra numero di piatti aggiunti in single order fragment, da spostare
+         */
+        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.single_order);
+        badge.setVisible(true);
+        badge.setVerticalOffset(dpToPx(MaMangeNavigationActivity.this,3));
+        badge.setNumber(12);
+        badge.setBackgroundColor(getResources().getColor(R.color.primaryColor));
+        badge.setBadgeTextColor(getResources().getColor(R.color.white));
+    }
+
+    public static int dpToPx(Context context, int dp){
+        Resources resources=context.getResources();
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp, resources.getDisplayMetrics()));
+
     }
 
     @Override
