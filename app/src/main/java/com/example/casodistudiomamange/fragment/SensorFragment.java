@@ -10,6 +10,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -66,8 +67,8 @@ public class SensorFragment extends Fragment {
     BluetoothAdapter bluetoothAdapter;
     BluetoothDevice[] bluetoothDevice;
     ListView listaDispositiviBluetooth;
-    Button connettitiBtn;
-    TextView temperaturaConserazione, torbidita, statoConnessione, umidita, info;
+    Button connettitiBtn, associaBtn;
+    TextView temperaturaConserazione, torbidita, statoConnessione, umidita, cosaFareTw;
 
     /*variabili della bevanda selezionata*/
     TextView drinkName;
@@ -106,13 +107,25 @@ public class SensorFragment extends Fragment {
         }
 
 
-
+        cosaFareTw = v.findViewById(R.id.cosaFareBluetoothTW);
+        associaBtn = v.findViewById(R.id.pair);
         connettitiBtn = v.findViewById(R.id.connect);
         listaDispositiviBluetooth = v.findViewById(R.id.listaDispositiviBluetooth);
         temperaturaConserazione = v.findViewById(R.id.temperatura);
         statoConnessione = v.findViewById(R.id.statoConnessione);
         torbidita = v.findViewById(R.id.torbidita);
         umidita = v.findViewById(R.id.umidita);
+
+        associaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS));
+
+                associaBtn.setVisibility(View.GONE);
+                connettitiBtn.setVisibility(View.VISIBLE);
+                cosaFareTw.setText(R.string.adessoConnettiti);
+            }
+        });
 
         connettitiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,10 +149,17 @@ public class SensorFragment extends Fragment {
                         strings[index] = device.getName();
                         index++;
                     }
-                    //creo un adapter per inserire i dispositivi all'intenro dell'array di stringhe
-                    //nella listView di dispositivi bluetooth inizialmente vuota
-                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,strings);
+
+                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strings){
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            TextView textView = (TextView) super.getView(position, convertView, parent);
+                            textView.setTextColor(Color.WHITE);
+                            return textView;
+                        }
+                    };
                     listaDispositiviBluetooth.setAdapter(arrayAdapter);
+
                 }
 
                 //se viene cliccato un nome di un dispositivo paireato
@@ -158,6 +178,7 @@ public class SensorFragment extends Fragment {
 
                         listaDispositiviBluetooth.setVisibility(View.GONE);
                         connettitiBtn.setVisibility(View.GONE);
+                        cosaFareTw.setVisibility(View.GONE);
                         temperaturaConserazione.setVisibility(View.VISIBLE);
                         torbidita.setVisibility(View.VISIBLE);
                         umidita.setVisibility(View.VISIBLE);
@@ -220,9 +241,9 @@ public class SensorFragment extends Fragment {
 
                     //Suddivido il messaggio attraverso il metodo splitted
                     String[] stringaSplittata = messaggioTemporaneo.split("!");
-                    torbidita.setText(R.string.torbidita+stringaSplittata[0]);
-                    temperaturaConserazione.setText(R.string.temperatura+stringaSplittata[1]);
-                    umidita.setText("Umidita' di conservazione: "+stringaSplittata[2]);
+                    torbidita.setText(getText(R.string.torbidita)+stringaSplittata[0]);
+                    temperaturaConserazione.setText(getText(R.string.temperatura)+stringaSplittata[1]);
+                    umidita.setText(getText(R.string.umidita)+stringaSplittata[2]);
 
                     break;
 
