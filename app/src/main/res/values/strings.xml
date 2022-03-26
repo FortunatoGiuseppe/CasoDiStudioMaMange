@@ -97,6 +97,7 @@
     <string name="cosaFareAssociazione">In order to view the characteristics of this wine, pair your device with the Cantina Bluetooth device</string>
     <string name="adessoConnettiti">Now press the connect button and select the Cantina device</string>
     <string name="associazioneFallita">You have not paired with the Cantina device. To be able to view the characteristics of the wine first pair your device</string>
+    <string name="riprova">Retry</string>
 
 
     <string name="question1">In which country is salmon caught the most?</string>

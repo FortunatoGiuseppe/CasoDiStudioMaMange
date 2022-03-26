@@ -97,7 +97,7 @@
     <string name="cosaFareAssociazione">Per poter visualizzare le caratteristiche di questo vino, associa il tuo dispositivo con il dispositivo Bluetooth Cantina</string>
     <string name="adessoConnettiti">Ora premi sul tasto connetti e seleziona il dispositivo cantina</string>
     <string name="associazioneFallita">Non ti sei associato al dispositivo Cantina. Per poter visualizzare le caratteristiche del vino prima associa il tuo dispositivo</string>
-
+    <string name="riprova">Riprova</string>
 
 
 
