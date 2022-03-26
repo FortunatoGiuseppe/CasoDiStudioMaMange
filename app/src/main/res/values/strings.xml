@@ -92,7 +92,11 @@
     <string name="temperatura">Storage temperature:  </string>
     <string name="umidita">Storage humidity:  </string>
     <string name="connetti">Connect</string>
+    <string name="associa">Pair</string>
     <string name="statoConnessione">Connection status</string>
+    <string name="cosaFareAssociazione">In order to view the characteristics of this wine, pair your device with the Cantina Bluetooth device</string>
+    <string name="adessoConnettiti">Now press the connect button and select the Cantina device</string>
+    <string name="associazioneFallita">You have not paired with the Cantina device. To be able to view the characteristics of the wine first pair your device</string>
 
 
     <string name="question1">In which country is salmon caught the most?</string>
