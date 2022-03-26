@@ -88,6 +88,12 @@
     <string name="piattiDi"> plates of</string>
     <string name="Guest"> (Guest) </string>
     <string name="ispirazioneLastOrder">Are you looking for ideas? Click on _ and search for →insert last order← to load the dishes of the last order!</string>
+    <string name="torbidita">Turbidity of the drink: </string>
+    <string name="temperatura">Storage temperature:  </string>
+    <string name="umidita">Storage humidity:  </string>
+    <string name="connetti">Connect</string>
+    <string name="statoConnessione">Connection status</string>
+
 
     <string name="question1">In which country is salmon caught the most?</string>
     <string name="question1option1">Finland</string>

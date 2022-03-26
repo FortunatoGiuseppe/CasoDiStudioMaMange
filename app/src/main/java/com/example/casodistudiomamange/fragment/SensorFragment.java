@@ -220,8 +220,8 @@ public class SensorFragment extends Fragment {
 
                     //Suddivido il messaggio attraverso il metodo splitted
                     String[] stringaSplittata = messaggioTemporaneo.split("!");
-                    torbidita.setText("Torbidita' della bevanda: "+stringaSplittata[0]);
-                    temperaturaConserazione.setText("Temperatura di conservazione: "+stringaSplittata[1]);
+                    torbidita.setText(R.string.torbidita+stringaSplittata[0]);
+                    temperaturaConserazione.setText(R.string.temperatura+stringaSplittata[1]);
                     umidita.setText("Umidita' di conservazione: "+stringaSplittata[2]);
 
                     break;

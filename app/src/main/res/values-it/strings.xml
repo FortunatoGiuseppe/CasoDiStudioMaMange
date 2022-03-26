@@ -88,6 +88,12 @@
     <string name="piattiDi">piatti di</string>
     <string name="Guest"> (Ospite) </string>
     <string name="ispirazioneLastOrder">Sei in cerca di idee? Clicca su _ e cerca →inserire ultimo ordine← per caricare i piatti dello scorso ordine!</string>
+    <string name="torbidita">Torbidità della bevanda: </string>
+    <string name="temperatura">Temperatura di conservazione:  </string>
+    <string name="umidita">Umidità di conservazione:   </string>
+    <string name="connetti">Connetti</string>
+    <string name="statoConnessione">Stato connessione</string>
+
 
 
     <string name="question1">In quale nazione il salmone è maggiormente pescato?</string>

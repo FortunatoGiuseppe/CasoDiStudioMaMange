@@ -54,10 +54,10 @@
             android:layout_width="325dp"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
-
-            android:text="Umidita'"
+            android:text="@string/umidita"
             android:textColor="@color/white"
             android:textSize="14sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/torbidita" />
@@ -68,10 +68,10 @@
             android:layout_height="60dp"
             android:layout_marginTop="12dp"
             android:gravity="left"
-
-            android:text="Torbidita'"
+            android:text="@string/torbidita"
             android:textColor="@color/white"
             android:textSize="14sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/temperatura" />
@@ -82,10 +82,10 @@
             android:layout_height="60dp"
             android:layout_marginTop="68dp"
             android:gravity="left"
-
-            android:text="Temperatura"
+            android:text="@string/temperatura"
             android:textColor="@color/white"
             android:textSize="14sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imagePlate" />
@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Connetti"
+            android:text="@string/connetti"
             app:layout_constraintBottom_toTopOf="@+id/statoConnessione"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.857"
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="16dp"
-            android:text="Stato connessione"
+            android:text="@string/statoConnessione"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
