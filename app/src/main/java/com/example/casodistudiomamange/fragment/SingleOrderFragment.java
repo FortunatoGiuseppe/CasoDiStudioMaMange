@@ -44,6 +44,7 @@ public class SingleOrderFragment extends Fragment {
     private ArrayList<SoPlate> soPlate;
     private boolean wantsLastOrder=false;   //variabile che serve a determinare se l'utente vuole vedere il single order caricato dal file oppure quello fatto al momento
     private boolean isSingleOrderEmpty=true; //variabile che serve a capire se il isingle order che si vuole confermare è vuoto o pieno
+    private boolean canShowSuggerim;  //variabile che serve a capire se il suggerimento di caricare l'ultimo ordine può essere mostrato o meno
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +79,12 @@ public class SingleOrderFragment extends Fragment {
             //se è vero allora voglio caricare l'ultimo ordine
             wantsLastOrder=true;
         }
+
+        /*
+        Se tasto inserisci ultimo ordine è abilitato posso mostrare il suggerimento perché l'utente non ha ancora usufruito della funzionalità
+        altrimenti non può farlo.
+         */
+        canShowSuggerim = ((MaMangeNavigationActivity) getContext()).lastOrderItem.isEnabled();
 
         caricaOrdinazione(v);
 
@@ -195,7 +202,7 @@ public class SingleOrderFragment extends Fragment {
                             ((MaMangeNavigationActivity) getContext()).lastOrderItem.setIcon(R.drawable.ic_ordine_ultimo);
                             wantsLastOrder=false;
                         }
-                    else if (isSingleOrderEmpty && !wantsLastOrder){
+                    else if (canShowSuggerim && isSingleOrderEmpty){
 
                         //imposto suggerimento per caricare ordine vecchio
                         ImageSpan is = new ImageSpan(((MaMangeNavigationActivity) getContext()), R.drawable.ic_menu);
