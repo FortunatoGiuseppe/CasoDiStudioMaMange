@@ -4,6 +4,8 @@ import android.Manifest;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -11,14 +13,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -110,7 +116,7 @@ public class SensorFragment extends Fragment {
         cosaFareTw = v.findViewById(R.id.cosaFareBluetoothTW);
         associaBtn = v.findViewById(R.id.pair);
         connettitiBtn = v.findViewById(R.id.connect);
-        listaDispositiviBluetooth = v.findViewById(R.id.listaDispositiviBluetooth);
+
         temperaturaConserazione = v.findViewById(R.id.temperatura);
         statoConnessione = v.findViewById(R.id.statoConnessione);
         torbidita = v.findViewById(R.id.torbidita);
@@ -130,7 +136,7 @@ public class SensorFragment extends Fragment {
         connettitiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listaDispositiviBluetooth.setVisibility(View.VISIBLE);
+                //listaDispositiviBluetooth.setVisibility(View.VISIBLE);
                 //controllo se i permessi bluetooth sono stati dati
                 checkBTPermission();
 
@@ -139,6 +145,7 @@ public class SensorFragment extends Fragment {
                 Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
                 String[] strings=new String[pairedDevices.size()];
                 bluetoothDevice=new BluetoothDevice[pairedDevices.size()];
+                listaDispositiviBluetooth = new ListView(getContext());
                 int index=0;
 
                 if (pairedDevices.size() > 0) {
@@ -150,41 +157,45 @@ public class SensorFragment extends Fragment {
                         index++;
                     }
 
-                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strings){
-                        @Override
-                        public View getView(int position, View convertView, ViewGroup parent) {
-                            TextView textView = (TextView) super.getView(position, convertView, parent);
-                            textView.setTextColor(Color.WHITE);
-                            return textView;
-                        }
-                    };
+                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strings);
                     listaDispositiviBluetooth.setAdapter(arrayAdapter);
+                    listaDispositiviBluetooth.setBackgroundResource(R.drawable.dialog_bg);
 
+                    Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Dialog);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(listaDispositiviBluetooth);
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.getWindow().setGravity(Gravity.CENTER);
+
+                    dialog.show();
+                    dialog.getWindow().setGravity(Gravity.CENTER);
+                    dialog.setCancelable(false);
+
+                    //se viene cliccato un nome di un dispositivo paireato
+                    //istanzio una classe client e provo a connettermi
+                    //al server selezionato
+                    listaDispositiviBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            dialog.dismiss();
+                            Message message=Message.obtain();
+                            message.what= STATO_IN_ASCOLTO;
+                            handler.sendMessage(message);
+
+                            Client client = new Client(bluetoothDevice[i], handler,SensorFragment.this);
+                            client.start();
+
+                            listaDispositiviBluetooth.setVisibility(View.GONE);
+                            connettitiBtn.setVisibility(View.GONE);
+                            cosaFareTw.setVisibility(View.GONE);
+
+                        }
+                    });
                 }
 
-                //se viene cliccato un nome di un dispositivo paireato
-                //istanzio una classe client e provo a connettermi
-                //al server selezionato
-                listaDispositiviBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                        Message message=Message.obtain();
-                        message.what= STATO_IN_ASCOLTO;
-                        handler.sendMessage(message);
-
-                        Client client = new Client(bluetoothDevice[i], handler,SensorFragment.this);
-                        client.start();
-
-                        listaDispositiviBluetooth.setVisibility(View.GONE);
-                        connettitiBtn.setVisibility(View.GONE);
-                        cosaFareTw.setVisibility(View.GONE);
-                        temperaturaConserazione.setVisibility(View.VISIBLE);
-                        torbidita.setVisibility(View.VISIBLE);
-                        umidita.setVisibility(View.VISIBLE);
-
-                    }
-                });
 
             }
         });
@@ -226,6 +237,14 @@ public class SensorFragment extends Fragment {
                     break;
                 case STATO_CONNESSIONE_FALLITO:
                     statoConnessione.setText(R.string.connessioneFallita);
+                    associaBtn.setHint(R.string.riprova);
+                    associaBtn.setVisibility(View.VISIBLE);
+                    cosaFareTw.setText(R.string.associazioneFallita);
+                    cosaFareTw.setVisibility(View.VISIBLE);
+                    temperaturaConserazione.setVisibility(View.GONE);
+                    torbidita.setVisibility(View.GONE);
+                    umidita.setVisibility(View.GONE);
+
                     break;
                 //se il messaggio è ricevuto
                 case STATO_MESSAGGIO_RICEVUTO:
@@ -241,9 +260,13 @@ public class SensorFragment extends Fragment {
 
                     //Suddivido il messaggio attraverso il metodo splitted
                     String[] stringaSplittata = messaggioTemporaneo.split("!");
-                    torbidita.setText(getText(R.string.torbidita)+stringaSplittata[0]);
-                    temperaturaConserazione.setText(getText(R.string.temperatura)+stringaSplittata[1]);
-                    umidita.setText(getText(R.string.umidita)+stringaSplittata[2]);
+                    temperaturaConserazione.setVisibility(View.VISIBLE);
+                    torbidita.setVisibility(View.VISIBLE);
+                    umidita.setVisibility(View.VISIBLE);
+
+                    torbidita.setText(getText(R.string.torbidita)+" "+stringaSplittata[0]);
+                    temperaturaConserazione.setText(getText(R.string.temperatura)+" "+stringaSplittata[1]);
+                    umidita.setText(getText(R.string.umidita)+" "+stringaSplittata[2]);
 
                     break;
 
