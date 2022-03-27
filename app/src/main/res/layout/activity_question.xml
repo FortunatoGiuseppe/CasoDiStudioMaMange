@@ -7,36 +7,21 @@
     tools:context=".activity.QuestionActivity">
 
     <TextView
-        android:id="@+id/textQuestionNo"
-        android:layout_width="148dp"
-        android:layout_height="42dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:text="Question n.1"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/progressbar_timerview"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.036" />
-
-    <TextView
         android:id="@+id/textScore"
-        android:layout_width="108dp"
-        android:layout_height="36dp"
-        android:layout_below="@id/textQuestionNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="10dp"
-        android:text="Score:0"
-        android:textColor="@color/black"
-        android:textSize="17sp"
+        android:text="Score :"
+        android:textColor="@color/primaryColor"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textQuestionNo" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.110000014" />
 
     <ProgressBar
         android:id="@+id/progressbar1_timerview"
@@ -94,6 +79,18 @@
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent">
 
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progressDrawable="@drawable/progress_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNext"
+            app:layout_constraintVertical_bias="0.77" />
+
         <TextView
             android:id="@+id/textQuestion"
             android:layout_width="wrap_content"
@@ -111,12 +108,13 @@
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.04000002" />
+            app:layout_constraintVertical_bias="0.01999998" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/imageCostraint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="@drawable/categories_background"
             android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
@@ -152,18 +150,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.90999997" />
+            app:layout_constraintVertical_bias="0.85" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toTopOf="@+id/btnNext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textQuestion"
-            app:layout_constraintVertical_bias="0.873">
+            app:layout_constraintVertical_bias="0.89">
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -173,7 +172,6 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
                 android:background="@drawable/categories_background"
-                android:padding="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -183,35 +181,121 @@
                     android:id="@+id/rb1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
                     android:text="Option 1"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <RadioButton
                     android:id="@+id/rb2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
                     android:text="Option 2"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <RadioButton
                     android:id="@+id/rb3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
                     android:text="Option 3"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </RadioGroup>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/textQuestionNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Question n°:"
+            android:textColor="@color/white"
+            android:textStyle="italic"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toTopOf="@+id/progress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNext" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/imageCostraint2"
+        android:layout_width="163dp"
+        android:layout_height="78dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toStartOf="@+id/progressbar_timerview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textScore">
+
+        <ImageView
+            android:id="@+id/imageScore5"
+            android:layout_width="40dp"
+            android:layout_height="29dp"
+            android:background="@drawable/scheda_rotonda"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageScore2"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/nigiri" />
+
+        <ImageView
+            android:id="@+id/imageScore4"
+            android:layout_width="40dp"
+            android:layout_height="29dp"
+            android:background="@drawable/scheda_rotonda"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageScore2"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/nigiri" />
+
+        <ImageView
+            android:id="@+id/imageScore3"
+            android:layout_width="40dp"
+            android:layout_height="29dp"
+            android:background="@drawable/scheda_rotonda"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/nigiri" />
+
+        <ImageView
+            android:id="@+id/imageScore2"
+            android:layout_width="40dp"
+            android:layout_height="29dp"
+            android:background="@drawable/scheda_rotonda"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/nigiri" />
+
+        <ImageView
+            android:id="@+id/imageScore1"
+            android:layout_width="40dp"
+            android:layout_height="29dp"
+            android:background="@drawable/scheda_rotonda"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/nigiri" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

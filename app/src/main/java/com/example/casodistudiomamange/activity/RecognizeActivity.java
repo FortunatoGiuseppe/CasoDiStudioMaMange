@@ -29,7 +29,7 @@ import java.util.Random;
 public class RecognizeActivity extends AppCompatActivity {
 
     private static final int DOMANDE = 2;
-    private TextView tvTimer, tvScore, NoQuestion, Question;
+    private TextView tvScore, NoQuestion, Question;
     private EditText op1;
     private List<RecognizeModel> questionList;
     int totalQuestion = 5;
@@ -37,10 +37,13 @@ public class RecognizeActivity extends AppCompatActivity {
     int score;
     int wrongAnswer;
     int i=0;
-    int width=370;
-    int height=370;
+    int width=350;
+    int height=350;
     View viewCostraint;
     ColorStateList dfRbColor;
+
+    private int currentProgress =60;
+    private ProgressBar progressBar;
 
     ProgressBar mProgressBar, mProgressBar1;
 
@@ -52,7 +55,7 @@ public class RecognizeActivity extends AppCompatActivity {
     boolean answered;
     private RecognizeModel currentQuestion;
     private Button btnNext;
-    private ImageView img1;
+    private ImageView img1,score1,score2,score3,score4,score5;
     private List<RecognizeModel> Questions= new ArrayList<>();
 
 
@@ -65,7 +68,14 @@ public class RecognizeActivity extends AppCompatActivity {
         viewCostraint = findViewById(R.id.imageCostraint);
         img1 = findViewById(R.id.img1);
         op1 = findViewById(R.id.insertValue2);
-        //tvTimer = findViewById(R.id.textTimer);
+
+        score1 =  findViewById(R.id.imageScore1);
+        score2 = findViewById(R.id.imageScore2);
+        score3 = findViewById(R.id.imageScore3);
+        score4 = findViewById(R.id.imageScore4);
+        score5 = findViewById(R.id.imageScore5);
+
+        progressBar = findViewById(R.id.progress);
 
         textViewShowTime = (TextView)
                 findViewById(R.id.textView_timerview_time);
@@ -87,6 +97,22 @@ public class RecognizeActivity extends AppCompatActivity {
         score = intent.getIntExtra("score",0);
         wrongAnswer= intent.getIntExtra("wrongAnswer",wrongAnswer);
 
+
+        if(score==2){
+            score1.setVisibility(score1.VISIBLE);
+            score2.setVisibility(score2.VISIBLE);
+            score3.setVisibility(score3.GONE);
+            score4.setVisibility(score4.GONE);
+            score5.setVisibility(score5.GONE);
+        }
+        else if(score==3){
+            score1.setVisibility(score1.VISIBLE);
+            score2.setVisibility(score2.VISIBLE);
+            score3.setVisibility(score3.VISIBLE);
+            score4.setVisibility(score4.GONE);
+            score5.setVisibility(score5.GONE);
+        }
+
         addQuestion();
         getQuizRandom();
         showNextQuestion();
@@ -98,6 +124,9 @@ public class RecognizeActivity extends AppCompatActivity {
                     if(op1.getText().length()>0 ){
                         checkAnswer();
                         countDownTimer.cancel();
+                        currentProgress += 20;
+                        progressBar.setProgress(currentProgress);
+                        progressBar.setMax(100);
                     } else{
                         Toast.makeText(RecognizeActivity.this, R.string.inserireValore, Toast.LENGTH_SHORT).show();
                     }
@@ -117,6 +146,16 @@ public class RecognizeActivity extends AppCompatActivity {
             op1.setEnabled(false);
             score++;
             tvScore.setText("Score: " +score);
+
+            if(score==3){
+                score3.setVisibility(score3.VISIBLE);
+            }
+            if(score==4){
+                score4.setVisibility(score4.VISIBLE);
+            }
+            if(score==5){
+                score5.setVisibility(score5.VISIBLE);
+            }
         }else{
             wrongAnswer++;
         }
@@ -136,7 +175,6 @@ public class RecognizeActivity extends AppCompatActivity {
         op1.setText("");
         op1.setTextColor(dfRbColor);
         Question.setText(R.string.questionR);
-        tvScore.setText("Score: " +score);
 
         if(wrongAnswer>=2){
             String usernameInserito = getIntent().getStringExtra("UsernameInserito");
@@ -212,7 +250,7 @@ public class RecognizeActivity extends AppCompatActivity {
         questionList.add(new RecognizeModel("salmone","salmon",R.drawable.salmonee));
         questionList.add(new RecognizeModel("ramen","ramen",R.drawable.ramen));
         questionList.add(new RecognizeModel("edamame","edamame", R.drawable.edamame));
-        questionList.add(new RecognizeModel("involtini di primavera","spring rolls",R.drawable.involtini));
+        questionList.add(new RecognizeModel("involtini primavera","spring rolls",R.drawable.involtini));
         questionList.add(new RecognizeModel("poke","poke",R.drawable.poke));
     }
 

@@ -28,6 +28,7 @@
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/categories_background.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/ic_baseline_public_24.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/insert_rounded_white.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/progress_background.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/round_back.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/scheda_rotonda.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_about.xml" value="0.25" />
@@ -37,6 +38,7 @@
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_ma_mange_navigation.xml" value="0.264" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_profile.xml" value="0.2359375" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_qrcode.xml" value="0.25" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_question.xml" value="0.264" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_recognize.xml" value="0.25" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_support.xml" value="0.4" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_switch_login_signup_guest.xml" value="0.25" />

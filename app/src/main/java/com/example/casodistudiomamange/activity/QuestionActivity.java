@@ -28,15 +28,17 @@ import java.util.Random;
 public class QuestionActivity extends AppCompatActivity {
 
     private TextView tvQuestion;
-    private TextView tvScore;
     private TextView tvQuestionNo;
     private RadioGroup radioGroup;
     private RadioButton rb1,rb2,rb3;
     private Button btnNext;
-    private ImageView img;
+    private ImageView img,score1,score2,score3;
 
-    int width=350;
-    int height=350;
+    private int currentProgress =0;
+    private ProgressBar progressBar;
+
+    int width=330;
+    int height=330;
     Bitmap bmp;
     int totalQuestions;
     int qCounter=0;
@@ -67,8 +69,10 @@ public class QuestionActivity extends AppCompatActivity {
 
         questionsList=new ArrayList<>();
         tvQuestion=findViewById(R.id.textQuestion);
-        tvScore=findViewById(R.id.textScore);
         tvQuestionNo=findViewById(R.id.textQuestionNo);
+
+        progressBar = findViewById(R.id.progress);
+        progressBar.setProgress(currentProgress);
 
         textViewShowTime = (TextView)
                 findViewById(R.id.textView_timerview_time);
@@ -78,6 +82,10 @@ public class QuestionActivity extends AppCompatActivity {
 
         viewCostraint = findViewById(R.id.imageCostraint);
         img = findViewById(R.id.img1);
+        score1 = findViewById(R.id.imageScore1);
+        score2 = findViewById(R.id.imageScore2);
+        score3 = findViewById(R.id.imageScore3);
+
         radioGroup=findViewById(R.id.radioGroup);
         rb1=findViewById(R.id.rb1);
         rb2=findViewById(R.id.rb2);
@@ -97,6 +105,9 @@ public class QuestionActivity extends AppCompatActivity {
                     if(rb1.isChecked() || rb2.isChecked() || rb3.isChecked()){
                         checkAnswer();
                         countDownTimer.cancel();
+                        currentProgress += 20;
+                        progressBar.setProgress(currentProgress);
+                        progressBar.setMax(100);
                     }else{
                         Toast.makeText(QuestionActivity.this, R.string.selezionaOpzione, Toast.LENGTH_SHORT).show();
                     }
@@ -114,7 +125,16 @@ public class QuestionActivity extends AppCompatActivity {
         int answerNo = radioGroup.indexOfChild(rbSelected) + 1;
         if(answerNo == currentQuestion.getCorrectAnsNo()){
             score++;
-            tvScore.setText("Score:"+score);
+            //tvScore.setText("Score:"+score);
+            if(score==1){
+                score1.setVisibility(score1.VISIBLE);
+            }
+            if(score==2){
+                score2.setVisibility(score2.VISIBLE);
+            }
+            if(score==3){
+                score3.setVisibility(score3.VISIBLE);
+            }
         }else{
             wrongAnswer++;
         }
