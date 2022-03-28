@@ -98,6 +98,8 @@
     <string name="adessoConnettiti">Now press the connect button and select the Cantina device</string>
     <string name="associazioneFallita">You have not paired with the Cantina device. To be able to view the characteristics of the wine first pair your device</string>
     <string name="riprova">Retry</string>
+    <string name="annulla">Cancel</string>
+
 
 
     <string name="question1">In which country is salmon caught the most?</string>
@@ -144,6 +146,7 @@
     <string name="question11option1">Sellers along the way</string>
     <string name="question11option2">Soldiers</string>
     <string name="question11option3">Royalty</string>
+
 
 
 

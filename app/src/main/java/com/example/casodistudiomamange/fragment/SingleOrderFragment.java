@@ -140,6 +140,12 @@ public class SingleOrderFragment extends Fragment {
                         }
                     }
                 });
+                richiestaSicuro.setNegativeButton((getResources().getString(R.string.annulla)), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //non fare niente
+                    }
+                });
                 AlertDialog dialog = richiestaSicuro.create();
                 dialog.show();
             }
