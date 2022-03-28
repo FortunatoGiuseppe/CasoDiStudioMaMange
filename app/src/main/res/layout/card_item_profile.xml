@@ -31,7 +31,7 @@
                 android:paddingBottom="16dp"
                 android:text="Profilo1"
                 android:textAlignment="center"
-                android:textColor="@color/primaryColor"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

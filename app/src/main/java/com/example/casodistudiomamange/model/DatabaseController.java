@@ -49,7 +49,7 @@ public class DatabaseController {
     }
 
     /*Metodo per la creazione del GroupOrder e SingleOrder*/
-    public void createOrdersFirestore(String usernameInserito, String codiceTavolo, metododiCallback mycallBack){
+    public void createOrdersFirestore(String codiceTavolo, metododiCallback mycallBack){
         
         DocumentReference docRef = df.collection("TAVOLI").document(codiceTavolo);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
