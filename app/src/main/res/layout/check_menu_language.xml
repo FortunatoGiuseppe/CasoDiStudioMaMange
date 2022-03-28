@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Don't show this message again"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="17dp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 

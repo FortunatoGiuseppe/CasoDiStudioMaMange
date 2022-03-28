@@ -138,7 +138,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
 
                 }
             });
-            mBuilder.setNegativeButton("CONTINUE", new DialogInterface.OnClickListener() {
+            mBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 
