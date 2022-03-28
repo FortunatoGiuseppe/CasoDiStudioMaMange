@@ -13,6 +13,8 @@
         android:background="@drawable/edit_text_bg"
         android:hint="@string/password"
         android:importantForAutofill="no"
+        android:drawableRight="@drawable/ic_baseline_visibility_off_24"
+        android:longClickable="false"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:paddingStart="20dp"

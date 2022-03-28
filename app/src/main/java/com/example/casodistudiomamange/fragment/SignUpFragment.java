@@ -1,15 +1,21 @@
 package com.example.casodistudiomamange.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.casodistudiomamange.R;
@@ -22,12 +28,15 @@ import java.util.regex.Pattern;
 
 public class SignUpFragment extends Fragment {
     TextView email;
-    TextView pass;
-    TextView passconf;
+    EditText pass;
+    EditText passconf;
     Button signup;
     private FirebaseAuth rAuth;
     final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+    boolean passwordVisible;
+    boolean passConfVisible;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,6 +48,49 @@ public class SignUpFragment extends Fragment {
         passconf = root.findViewById(R.id.passconf);
         signup = root.findViewById(R.id.registerBtn);
         rAuth = FirebaseAuth.getInstance();
+
+
+        pass.setOnTouchListener((view, motionEvent) -> {
+            final int right =2;
+            if(motionEvent.getAction()== MotionEvent.ACTION_UP){
+                if(motionEvent.getRawX()>=pass.getRight()-pass.getCompoundDrawables()[right].getBounds().width()){
+                    int selection = pass.getSelectionEnd();
+                    if(passwordVisible){
+                        pass.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.ic_baseline_visibility_off_24,0);
+                        pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        passwordVisible=false;
+                    }else{
+                        pass.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.ic_baseline_visibility_24,0);
+                        pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        passwordVisible=true;
+                    }
+                    pass.setSelection(selection);
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        passconf.setOnTouchListener((view, motionEvent) -> {
+            final int right =2;
+            if(motionEvent.getAction()==MotionEvent.ACTION_UP){
+                if(motionEvent.getRawX()>=passconf.getRight()-passconf.getCompoundDrawables()[right].getBounds().width()){
+                    int selection = passconf.getSelectionEnd();
+                    if(passConfVisible){
+                        passconf.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.ic_baseline_visibility_off_24,0);
+                        passconf.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        passConfVisible=false;
+                    }else{
+                        passconf.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.ic_baseline_visibility_24,0);
+                        passconf.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        passConfVisible=true;
+                    }
+                    passconf.setSelection(selection);
+                    return true;
+                }
+            }
+            return false;
+        });
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
