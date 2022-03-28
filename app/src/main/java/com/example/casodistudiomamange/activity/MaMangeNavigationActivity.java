@@ -291,25 +291,37 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         editor.apply();
     }
 
-    //Badge che mostra numero di piatti aggiunti in single order fragment, da spostare
+    /**
+     * Metodo che permette di mostrare il numero dei piatti aggiunti all'ordine
+     * @param numberToShow numero dei piatti da mostrare
+     */
     public void showBadge(int numberToShow) {
+        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.single_order);
         if(numberToShow!=0){
-            BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.single_order);
             badge.setVisible(true);
             badge.setVerticalOffset(dpToPx(MaMangeNavigationActivity.this,3));
             badge.setNumber(numberToShow);
             badge.setBackgroundColor(getResources().getColor(R.color.primaryColor));
             badge.setBadgeTextColor(getResources().getColor(R.color.white));
+        }else{
+            badge.setVisible(false);
         }
     }
 
+    /**
+     * Metodo che permette di aggiornare la quantità mostrata
+     */
     public void updateQuantityOnBadge() {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
+
+        //Dal conteggio dei piatti nello shared preferences devo togliere tutti i piatti che hanno quantità =0
+        //questi piatti erano stati aggiunti e poi rimossi dall'ordine, non devo quindi contarli
+
         Map<String, ?> savedPlates= sharedPreferences.getAll();
         Collection<?> values =savedPlates.values();
         while (values.contains(0)){
             values.remove(0);
         }
-        showBadge(values.size());
+        showBadge(values.size()); //chiamo il metodo per mostare il numero
     }
 }

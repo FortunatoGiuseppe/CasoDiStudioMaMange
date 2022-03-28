@@ -101,6 +101,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 } else {
                     //passo true per indicare che deve essere aggiornato il fragment
                     ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username, ((MaMangeNavigationActivity) context),true);
+                    ((MaMangeNavigationActivity) context).updateQuantityOnBadge();
                     holder.addMoreLayout.setVisibility(View.GONE);
                     holder.itemView.setVisibility(View.GONE);
 
