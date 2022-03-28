@@ -142,10 +142,16 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 }
 
                 //imposto stampa quantità del piatto
-                holder.tvCount.setText(total.get(position).toString());
-                holder.addMoreLayout.setVisibility(View.VISIBLE);
-                holder.addMoreLayout.setEnabled(true);
-                holder.addPlateBtn.setVisibility(View.GONE);
+                if(total.get(position)<=0){
+                    holder.addMoreLayout.setVisibility(View.GONE);
+                    holder.addPlateBtn.setVisibility(View.VISIBLE);
+                }else{
+                    holder.tvCount.setText(total.get(position).toString());
+                    holder.addMoreLayout.setVisibility(View.VISIBLE);
+                    holder.addMoreLayout.setEnabled(true);
+                    holder.addPlateBtn.setVisibility(View.GONE);
+                }
+
             } else {
                 //Se non sta nel file dell'ultimo ordine è probabile che l'utente abbia aggiunto il piatto dopo aver caricato l'ordine, quindi lo trovo nello shared
                 //Se nello shared preferences c'è il piatto corrente (cioè se ha quantità diversa da 0)
@@ -153,10 +159,17 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                     total.add(position, ((MaMangeNavigationActivity) context).getQuantityForParameterPlateSharedPreferences(plate.getNome())); //aggiungo la quantità al totale
 
                     //imposto stampa quantità del piatto
-                    holder.tvCount.setText(total.get(position).toString());
-                    holder.addMoreLayout.setVisibility(View.VISIBLE);
-                    holder.addMoreLayout.setEnabled(true);
-                    holder.addPlateBtn.setVisibility(View.GONE);
+
+                    //imposto stampa quantità del piatto
+                    if(total.get(position)<=0){
+                        holder.addMoreLayout.setVisibility(View.GONE);
+                        holder.addPlateBtn.setVisibility(View.VISIBLE);
+                    }else{
+                        holder.tvCount.setText(total.get(position).toString());
+                        holder.addMoreLayout.setVisibility(View.VISIBLE);
+                        holder.addMoreLayout.setEnabled(true);
+                        holder.addPlateBtn.setVisibility(View.GONE);
+                    }
 
                 }else{
                     //se non sta allora devo mettere 0, cioè il piatto non è mai stato selezionato dall'utente (nè in ordine vecchio nè in quello dopo aver caricato ordine vecchio)
@@ -301,45 +314,17 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         }
     }
 
-    //metodo per salvare nello shared preferences la quantità relativa al piatto passato come parametro
-    public void saveDataSharedPreferences(String nomePiatto, int total) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putInt(nomePiatto,total);   //salvataggio nello shared preference del piatto la quantità
-        editor.apply();
-    }
-
-    //metodo per caricare dallo shared preferences la quantità relativa al piatto passato come parametro
-    public int getQuantityForParameterPlateSharedPreferences(String nomePiatto) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
-        //0 è il valore passato di default, cioè se nello shared preferences non esiste una quantità precedentemente aggiunta per quel piatto
-        return sharedPreferences.getInt(nomePiatto,0);
-    }
-
     private void prepareModel(String trans,TextView holder){
-
-
-
-
-                Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-                        holder.setText(s);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        holder.setText(trans);
-                    }
-                });
-
-
+        Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                holder.setText(s);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                holder.setText(trans);
+            }
+        });
     }
-
-
-
-
-
-
 }
