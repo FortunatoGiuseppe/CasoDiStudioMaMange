@@ -172,6 +172,7 @@ public class SingleOrderFragment extends Fragment {
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                         soPlate.add(documentSnapshot.toObject(SoPlate.class));
                         isSingleOrderEmpty=false; //se trovo piatti lo imposto a falso, che indica che contiene piatti
+                        ((MaMangeNavigationActivity) getActivity()).showBadge(soPlate.size());
                     }
 
                     /* Se l'utente vuole caricare l'ultimo ordine e non aveva aggiunto piatti allora può farlo, quindi carico piatti salvati */

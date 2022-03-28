@@ -27,6 +27,9 @@ import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -141,15 +144,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         bottomNavigationView.setOnItemSelectedListener(this);
 
-        /*
-        Badge che mostra numero di piatti aggiunti in single order fragment, da spostare
-         */
-        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.single_order);
-        badge.setVisible(true);
-        badge.setVerticalOffset(dpToPx(MaMangeNavigationActivity.this,3));
-        badge.setNumber(12);
-        badge.setBackgroundColor(getResources().getColor(R.color.primaryColor));
-        badge.setBadgeTextColor(getResources().getColor(R.color.white));
+        showBadge(0);
     }
 
     public static int dpToPx(Context context, int dp){
@@ -294,5 +289,27 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
+    }
+
+    //Badge che mostra numero di piatti aggiunti in single order fragment, da spostare
+    public void showBadge(int numberToShow) {
+        if(numberToShow!=0){
+            BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.single_order);
+            badge.setVisible(true);
+            badge.setVerticalOffset(dpToPx(MaMangeNavigationActivity.this,3));
+            badge.setNumber(numberToShow);
+            badge.setBackgroundColor(getResources().getColor(R.color.primaryColor));
+            badge.setBadgeTextColor(getResources().getColor(R.color.white));
+        }
+    }
+
+    public void updateQuantityOnBadge() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
+        Map<String, ?> savedPlates= sharedPreferences.getAll();
+        Collection<?> values =savedPlates.values();
+        while (values.contains(0)){
+            values.remove(0);
+        }
+        showBadge(values.size());
     }
 }

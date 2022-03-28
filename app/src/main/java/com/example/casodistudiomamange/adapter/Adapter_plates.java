@@ -228,6 +228,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 total.set(position, total.get(position)+1);
                 //salvo la quantità nello shared preferences
                 ((MaMangeNavigationActivity) context).saveDataSharedPreferences(plate.getNome(),total.get(position));
+                ((MaMangeNavigationActivity) context).updateQuantityOnBadge();
             }
         });
 
@@ -243,6 +244,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                     holder.tvCount.setText(total.get(position) +"");
                 } else {
                     ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username,((MaMangeNavigationActivity) context),false);
+                    ((MaMangeNavigationActivity) context).updateQuantityOnBadge();
                     holder.addMoreLayout.setVisibility(View.GONE);
                     holder.addPlateBtn.setVisibility(View.VISIBLE);
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
