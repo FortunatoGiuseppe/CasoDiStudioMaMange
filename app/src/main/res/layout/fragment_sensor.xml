@@ -140,6 +140,22 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <Button
+            android:id="@+id/indietro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:hint="@string/indietro"
+            android:textColorHint="#c62828"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/connect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
             android:id="@+id/statoConnessione"
             android:layout_width="wrap_content"
