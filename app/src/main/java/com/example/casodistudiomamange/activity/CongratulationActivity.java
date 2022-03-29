@@ -20,7 +20,7 @@ import java.util.Random;
 public class CongratulationActivity extends AppCompatActivity {
 
     private final int lengthCodeTv = 7;
-    private TextView congratulationsTv,codeTv,homeTv;
+    private TextView congratulationsTv,codeTv,homeTv, textRating;
     private View congcostr;
     private RatingBar rating;
     private int max = 5;
@@ -39,6 +39,14 @@ public class CongratulationActivity extends AppCompatActivity {
         codeTv=findViewById(R.id.CodeTv);
         codeTv.setText(getRandomString(lengthCodeTv));
         codeTv.setVisibility(codeTv.GONE);
+
+        textRating = findViewById(R.id.textRating);
+        if(score>=4){
+            textRating.setText(R.string.ratingW);
+        }
+        else{
+            textRating.setText(R.string.ratingL);
+        }
 
         congratulationsTv=findViewById(R.id.congratulationsTv);
         homeTv=findViewById(R.id.textHome);
@@ -59,7 +67,7 @@ public class CongratulationActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
 
-                int rating = (int) v;
+                final int rating = (int) v;
                 String message = null;
 
                 if(score==max || score==max-1){
@@ -78,28 +86,34 @@ public class CongratulationActivity extends AppCompatActivity {
 
                     case 1:
                         message = "Pessimo";
+                        isIndicator();
                         break;
 
                     case 2:
                         message = "Mediocre";
+                        isIndicator();
                         break;
 
                     case 3:
                         message = "Sufficiente";
+                        isIndicator();
                         break;
 
                     case 4:
                         message = "Ottimo";
+                        isIndicator();
                         break;
 
                     case 5:
                         message = "Perfetto";
+                        isIndicator();
                         break;
 
                 }
                 Toast.makeText(CongratulationActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     /**
@@ -133,6 +147,10 @@ public class CongratulationActivity extends AppCompatActivity {
     protected void onStop() {
         unregisterReceiver(networkChangedListener);
         super.onStop();
+    }
+
+    private void isIndicator(){
+        rating.setIsIndicator(true);
     }
 
 }

@@ -202,5 +202,7 @@
     <string name="nordinazione">Ordinazione Tavolo: </string>
     <string name="shareW">Condividi il tuo risultato</string>
 
-    <string name="rating">Inserire la valutazione per avere il codice sconto:</string>
+    <string name="ratingW">Complimenti hai vinto al quiz!! Inserire la valutazione per avere il codice sconto:</string>
+    <string name="ratingL">Ci dispiace hai perso al quiz!! Se vuole può valutare la nostra app qui sotto:</string>
+    <string name="question">Domanda: </string>
 </resources>

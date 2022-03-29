@@ -200,7 +200,8 @@ public class RecognizeActivity extends AppCompatActivity {
 
                 i++;
                 qCounter++;
-                NoQuestion.setText("Question: "+ qCounter+" / "+ totalQuestion);
+                NoQuestion.setText(R.string.question);
+                NoQuestion.append(qCounter+"/"+totalQuestion);
                 answered = false;
                 btnNext.setText(R.string.Invia);
             }

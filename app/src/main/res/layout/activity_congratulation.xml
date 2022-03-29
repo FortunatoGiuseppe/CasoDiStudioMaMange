@@ -139,7 +139,6 @@
                 android:id="@+id/textRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/rating"
                 android:textColor="@color/white"
                 android:textSize="19sp"
                 android:textStyle="italic"

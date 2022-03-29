@@ -199,7 +199,8 @@ public class QuestionActivity extends AppCompatActivity {
 
                 qCounter++;
                 btnNext.setText(R.string.invia);
-                tvQuestionNo.setText("Question:"+" "+qCounter+"/"+totalQuestions);
+                tvQuestionNo.setText(R.string.question);
+                tvQuestionNo.append(qCounter+"/"+totalQuestions);
                 answered=false;
             }else{
                 String usernameInserito = getIntent().getStringExtra("UsernameInserito");
@@ -253,7 +254,7 @@ public class QuestionActivity extends AppCompatActivity {
         questionsList.add(new Question(R.string.question6,R.string.question6option1,R.string.question6option2,R.string.question6option3,1, R.drawable.sushi));
         questionsList.add(new Question(R.string.question7,R.string.question7option1,R.string.question7option2,R.string.question7option3,3, R.drawable.sushi));
         questionsList.add(new Question(R.string.question8,R.string.question8option1,R.string.question8option2,R.string.question8option3,1, R.drawable.sake));
-        questionsList.add(new Question(R.string.question9,R.string.question9option1,R.string.question9option2,R.string.question9option3,1, R.drawable.wasabi));
+        questionsList.add(new Question(R.string.question9,R.string.question9option1,R.string.question9option2,R.string.question9option3,1, R.drawable.bacchette));
         questionsList.add(new Question(R.string.question10,R.string.question10option1,R.string.question10option2,R.string.question10option3,2, R.drawable.preparazione));
         questionsList.add(new Question(R.string.question11,R.string.question11option1,R.string.question11option2,R.string.question11option3,1, R.drawable.sushi));
 
