@@ -179,7 +179,7 @@ public class SingleOrderFragment extends Fragment {
                         soPlate.add(documentSnapshot.toObject(SoPlate.class));
                         isSingleOrderEmpty=false; //se trovo piatti lo imposto a falso, che indica che contiene piatti
                     }
-                    ((MaMangeNavigationActivity) getActivity()).updateQuantityOnBadge();
+                    ((MaMangeNavigationActivity) getActivity()).showBadge(soPlate.size());
 
                     /* Se l'utente vuole caricare l'ultimo ordine e non aveva aggiunto piatti allora può farlo, quindi carico piatti salvati */
                     if(wantsLastOrder && isSingleOrderEmpty){
@@ -187,13 +187,14 @@ public class SingleOrderFragment extends Fragment {
                         //carico l'array globale plates con i nomi dei piatti letti dal file
                         FileOrderManager fileOrderManager= new FileOrderManager();
                         fileOrderManager.loadPlateLastOrder((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
-                        ((MaMangeNavigationActivity) getActivity()).updateQuantityOnBadge(); //aggiorno quantità del badge
+
 
                         //Se ho caricato l'ultimo ordine salvato allora devo aggiungere nello shared preferences i piatti letti
                         for (int i = 0; i < soPlate.size(); i++) {
                             ((MaMangeNavigationActivity) getContext()).saveDataSharedPreferences(soPlate.get(i).getNomePiatto(), (int) soPlate.get(i).getQuantita());
                         }
 
+                        ((MaMangeNavigationActivity) getActivity()).showBadge(soPlate.size()); //aggiorno quantità del badge
                         isSingleOrderEmpty=false;   //ho aggiunto piatti quindi single order non è più vuoto
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
