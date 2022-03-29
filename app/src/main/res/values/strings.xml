@@ -99,6 +99,7 @@
     <string name="associazioneFallita">You have not paired with the Cantina device. To be able to view the characteristics of the wine first pair your device</string>
     <string name="riprova">Retry</string>
     <string name="annulla">Cancel</string>
+    <string name="indietro">Back</string>
 
 
 
