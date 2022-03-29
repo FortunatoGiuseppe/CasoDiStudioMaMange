@@ -15,7 +15,7 @@ import com.example.casodistudiomamange.R;
 public class SupportActivity extends AppCompatActivity {
     EditText etSubject, etMessage;
     TextView etTo;
-    Button btSend;
+    View send;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,9 +25,10 @@ public class SupportActivity extends AppCompatActivity {
         etTo = findViewById(R.id.et_to);
         etSubject = findViewById(R.id.et_subject);
         etMessage = findViewById(R.id.et_message);
-        btSend = findViewById(R.id.bt_send);
+        send = findViewById(R.id.constraintSend);
 
-        btSend.setOnClickListener(new View.OnClickListener() {
+        etMessage.getBackground().setAlpha(128);
+        send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String recipientList = etTo.getText().toString();

@@ -206,4 +206,5 @@
     <string name="ratingW">Congratulations you won the quiz !! Enter the evaluation to get the discount code:</string>
     <string name="ratingL">Sorry you missed the quiz !! If you want, you can rate our app below:</string>
     <string name="question">Question: </string>
+    <string name="mex">Insert message...</string>
 </resources>
