@@ -93,6 +93,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             acc_regItem.setEnabled(false);
             acc_regItem.getIcon().setAlpha(130);
         }
+        clearSharedPreferencesQuantities();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -309,7 +310,8 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     }
 
     /**
-     * Metodo che permette di aggiornare la quantità mostrata
+     * Metodo che permette di aggiornare la quantità mostrata prendendo il numero dallo shared preferences
+     * Viene usato negli adapter perché lì non ho la lista intera, allora posso leggerla dallo shared
      */
     public void updateQuantityOnBadge() {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
