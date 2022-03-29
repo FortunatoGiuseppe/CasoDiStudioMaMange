@@ -175,10 +175,6 @@ public class SensorFragment extends Fragment {
                 //listaDispositiviBluetooth.setVisibility(View.VISIBLE);
                 //controllo se i permessi bluetooth sono stati dati
                 checkBTPermission();
-
-                //prendo dal bluetooth adapter la lista dei dispositivi paireati
-                //così da poter selezionare il server a cui connettermi
-
                 Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
                 String[] strings=new String[pairedDevices.size()];
                 bluetoothDevice=new BluetoothDevice[pairedDevices.size()];
@@ -195,47 +191,45 @@ public class SensorFragment extends Fragment {
                     }
                 }
 
-                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strings);
-                    listaDispositiviBluetooth.setAdapter(arrayAdapter);
-                    listaDispositiviBluetooth.setBackgroundResource(R.drawable.dialog_bg);
+                //prendo dal bluetooth adapter la lista dei dispositivi paireati
+                //così da poter selezionare il server a cui connettermi
+                ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strings);
+                listaDispositiviBluetooth.setAdapter(arrayAdapter);
+                listaDispositiviBluetooth.setBackgroundResource(R.drawable.dialog_bg);
 
-                    Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Dialog);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(listaDispositiviBluetooth);
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.getWindow().setGravity(Gravity.CENTER);
+                Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Dialog);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(listaDispositiviBluetooth);
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().setGravity(Gravity.CENTER);
+                dialog.show();
+                dialog.getWindow().setGravity(Gravity.CENTER);
+                dialog.setCancelable(false);
 
-                    dialog.show();
-                    dialog.getWindow().setGravity(Gravity.CENTER);
-                    dialog.setCancelable(false);
+                //se viene cliccato un nome di un dispositivo paireato
+                //istanzio una classe client e provo a connettermi
+                //al server selezionato
+                listaDispositiviBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    //se viene cliccato un nome di un dispositivo paireato
-                    //istanzio una classe client e provo a connettermi
-                    //al server selezionato
-                    listaDispositiviBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        dialog.dismiss();
+                        Message message=Message.obtain();
+                        message.what= STATO_IN_ASCOLTO;
+                        handler.sendMessage(message);
 
-                            dialog.dismiss();
-                            Message message=Message.obtain();
-                            message.what= STATO_IN_ASCOLTO;
-                            handler.sendMessage(message);
+                        Client client = new Client(bluetoothDevice[i], handler,SensorFragment.this);
+                        client.start();
 
-                            Client client = new Client(bluetoothDevice[i], handler,SensorFragment.this);
-                            client.start();
+                        listaDispositiviBluetooth.setVisibility(View.GONE);
+                        connettitiBtn.setVisibility(View.GONE);
+                        cosaFareTw.setVisibility(View.GONE);
 
-                            listaDispositiviBluetooth.setVisibility(View.GONE);
-                            connettitiBtn.setVisibility(View.GONE);
-                            cosaFareTw.setVisibility(View.GONE);
-
-                        }
-                    });
-                }
-
-
-
+                    }
+                });
+            }
         });
 
         return v;
