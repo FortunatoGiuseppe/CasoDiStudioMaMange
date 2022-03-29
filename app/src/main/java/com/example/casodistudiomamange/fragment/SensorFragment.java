@@ -255,6 +255,12 @@ public class SensorFragment extends Fragment {
 
     }
 
+    /**
+     * Metodo con il quale controllo se il dispositivo è già associato
+     * al dispositivo Cantina
+     * @param dispositivi
+     * @return
+     */
     public boolean isCantinaPair(BluetoothDevice[] dispositivi){
         checkBTPermission();
         for(int i = 0; i < dispositivi.length; i++){
