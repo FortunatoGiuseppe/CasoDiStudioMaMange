@@ -223,7 +223,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 holder.addMoreLayout.setVisibility(View.VISIBLE);
                 holder.addPlateBtn.setVisibility(View.GONE);
 
-                //siccome ho potuto cliccare sul tasto aggiungi vuol dire che prima la quantità era 0 perciò ora è sicuramente 1
+
                 holder.tvCount.setText(String.valueOf(total.get(position)+1));
                 total.set(position, total.get(position)+1);
                 //salvo la quantità nello shared preferences
