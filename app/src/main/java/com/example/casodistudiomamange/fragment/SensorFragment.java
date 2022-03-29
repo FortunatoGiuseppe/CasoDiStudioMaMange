@@ -9,8 +9,11 @@ import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -32,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.adapter.Adapter_plates;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -73,7 +77,7 @@ public class SensorFragment extends Fragment {
     BluetoothAdapter bluetoothAdapter;
     BluetoothDevice[] bluetoothDevice;
     ListView listaDispositiviBluetooth;
-    Button connettitiBtn, associaBtn;
+    Button connettitiBtn, associaBtn, indietro;
     TextView temperaturaConserazione, torbidita, statoConnessione, umidita, cosaFareTw;
 
     /*variabili della bevanda selezionata*/
@@ -116,11 +120,35 @@ public class SensorFragment extends Fragment {
         cosaFareTw = v.findViewById(R.id.cosaFareBluetoothTW);
         associaBtn = v.findViewById(R.id.pair);
         connettitiBtn = v.findViewById(R.id.connect);
+        indietro = v.findViewById(R.id.indietro);
 
         temperaturaConserazione = v.findViewById(R.id.temperatura);
         statoConnessione = v.findViewById(R.id.statoConnessione);
         torbidita = v.findViewById(R.id.torbidita);
         umidita = v.findViewById(R.id.umidita);
+
+        checkBTPermission();
+        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+        String[] strings=new String[pairedDevices.size()];
+        bluetoothDevice=new BluetoothDevice[pairedDevices.size()];
+        listaDispositiviBluetooth = new ListView(getContext());
+        int index=0;
+
+        if (pairedDevices.size() > 0) {
+            //per ogni device paireato lo aggiungo nella lista dei bluetooth device
+            //ed aggiungo il nome del dispositivo per visualizzarlo all'inerno della listView
+            for (BluetoothDevice device : pairedDevices) {
+                bluetoothDevice[index] = device;
+                strings[index] = device.getName();
+                index++;
+            }
+        }
+
+        if(isCantinaPair(bluetoothDevice)){
+            associaBtn.setVisibility(View.GONE);
+            connettitiBtn.setVisibility(View.VISIBLE);
+            cosaFareTw.setText(R.string.adessoConnettiti);
+        }
 
         associaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +161,14 @@ public class SensorFragment extends Fragment {
             }
         });
 
+        indietro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new RestaurantFragment();
+                ((MaMangeNavigationActivity)getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            }
+        });
+
         connettitiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,6 +178,7 @@ public class SensorFragment extends Fragment {
 
                 //prendo dal bluetooth adapter la lista dei dispositivi paireati
                 //così da poter selezionare il server a cui connettermi
+
                 Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
                 String[] strings=new String[pairedDevices.size()];
                 bluetoothDevice=new BluetoothDevice[pairedDevices.size()];
@@ -156,6 +193,7 @@ public class SensorFragment extends Fragment {
                         strings[index] = device.getName();
                         index++;
                     }
+                }
 
                     ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strings);
                     listaDispositiviBluetooth.setAdapter(arrayAdapter);
@@ -197,7 +235,7 @@ public class SensorFragment extends Fragment {
                 }
 
 
-            }
+
         });
 
         return v;
@@ -215,6 +253,16 @@ public class SensorFragment extends Fragment {
             startActivityForResult(richiesta, REQUEST_ENABLE_BLUETOOTH);
         }
 
+    }
+
+    public boolean isCantinaPair(BluetoothDevice[] dispositivi){
+        checkBTPermission();
+        for(int i = 0; i < dispositivi.length; i++){
+            if(dispositivi[i].getName().contains("Cantina")){
+                return  true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -237,13 +285,13 @@ public class SensorFragment extends Fragment {
                     break;
                 case STATO_CONNESSIONE_FALLITO:
                     statoConnessione.setText(R.string.connessioneFallita);
-                    associaBtn.setHint(R.string.riprova);
-                    associaBtn.setVisibility(View.VISIBLE);
-                    cosaFareTw.setText(R.string.associazioneFallita);
-                    cosaFareTw.setVisibility(View.VISIBLE);
                     temperaturaConserazione.setVisibility(View.GONE);
                     torbidita.setVisibility(View.GONE);
                     umidita.setVisibility(View.GONE);
+                    indietro.setVisibility(View.VISIBLE);
+                    indietro.setHint(R.string.retry);
+                    cosaFareTw.setText(R.string.associazioneFallita);
+
 
                     break;
                 //se il messaggio è ricevuto
