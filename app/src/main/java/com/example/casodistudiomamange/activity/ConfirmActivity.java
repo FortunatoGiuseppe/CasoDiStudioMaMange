@@ -63,7 +63,7 @@ public class ConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ConfirmActivity.this, QRCodeActivity.class);
-                intent.putExtra("UsernameInserito",usernameInserito);
+                intent.putExtra("UsernameInserito",usernameInserito.substring(0,usernameInserito.length()-3));
                 startActivity(intent);
             }
         });
