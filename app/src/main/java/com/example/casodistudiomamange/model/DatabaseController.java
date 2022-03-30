@@ -1,12 +1,9 @@
 package com.example.casodistudiomamange.model;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
@@ -23,14 +20,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class DatabaseController {
     
@@ -48,7 +40,12 @@ public class DatabaseController {
         this.df= FirebaseFirestore.getInstance();
     }
 
-    /*Metodo per la creazione del GroupOrder e SingleOrder*/
+
+    /**
+     * Metodo per la creazione del GroupOrder e SingleOrder
+     * @param codiceTavolo
+     * @param mycallBack
+     */
     public void createOrdersFirestore(String codiceTavolo, metododiCallback mycallBack){
         
         DocumentReference docRef = df.collection("TAVOLI").document(codiceTavolo);
@@ -193,7 +190,16 @@ public class DatabaseController {
         });
     }
 
-    /*Metodo che associa il piatto selezionato al codice del singleOrder*/
+
+    /**
+     * Metodo che scrive nel DB il piatto selezionato, legato agli identificatori passati come parametro
+     * @param plate nome del piatto
+     * @param codiceSingleOrder codice dell'ordine singolo dell'utente corrente
+     * @param codiceGroupOrder codice dell'ordine del gruppo
+     * @param codiceTavolo codice del tavolo
+     * @param username username dell'utente corrente
+     * @param quantita numerosità del piatto ordinato
+     */
     public void orderPlate(String plate, String codiceSingleOrder, String codiceGroupOrder, String codiceTavolo,String username,Long quantita){
         
         df.collection("SO-PIATTO")
@@ -215,13 +221,20 @@ public class DatabaseController {
                     df.collection("SO-PIATTO").add(creaSoPiatto);
                     
                 }
-                
             }
-                
         });
     }
 
-    /*Metodo che aumenta la quantita del piatto aggiunto in base al codice del SingleOrder*/
+
+    /**
+     * Metodo che aumenta la quantita del piatto aggiunto
+     * @param plate
+     * @param codiceSingleOrder
+     * @param codiceGroupOrder
+     * @param codiceTavolo
+     * @param username
+     * @param quantita
+     */
     public void incrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo,String username, long quantita){
        
         df.collection("SO-PIATTO")
@@ -250,7 +263,16 @@ public class DatabaseController {
         });
     }
 
-    /*Metodo che diminuisce la quantita del piatto in base al codice del SingleOrder*/
+
+    /**
+     * Metodo che diminuisce la quantita del piatto
+     * @param plate
+     * @param codiceSingleOrder
+     * @param codiceGroupOrder
+     * @param codiceTavolo
+     * @param username
+     * @param quantita
+     */
     public void decrementQuantityPlateOrdered(String plate, String codiceSingleOrder,String codiceGroupOrder, String codiceTavolo,String username,long quantita){
 
         df.collection("SO-PIATTO")
@@ -327,9 +349,18 @@ public class DatabaseController {
 
     /*Metodo che permette di:
         1. conferma il singleOrder
-        2. libera il tavolo nel caso in cui l'odine che si sta confermando sia l'ultimo ad essere
-         confermato nell'intera ordinazione di gruppo
+        2.
         3. Invia l'ordinazione di gruppo alla cucina
+     */
+
+    /**
+     * Metodo che permette:
+     * 1) la conferma del singleOrder (imposta confermato sul DB)
+     * 2) permette di capire se tutti hanno confermato, attraverso i callback comunica l'esito
+     * @param codiceSingleOrder
+     * @param codiceGroupOrder
+     * @param codiceTavolo
+     * @param callback è true se tutti i single order sono stati confermati, quindi posso impostare il tavolo a libero e inviare l'ordine alla cucina, è false altrimenti
      */
     public void setSingleOrderConfirmed(String codiceSingleOrder,String codiceGroupOrder,String codiceTavolo, metododiCallbackAllSingleOrderConfirmed callback){
         /* Vado a confermare il singleOrder*/
@@ -392,7 +423,10 @@ public class DatabaseController {
     }
 
 
-   /* Metodo che setta il campo del tavolo a true cioè libero*/
+    /**
+     * Metodo che imposta il tavolo a libero
+     * @param codiceTavolo
+     */
     private void setTableFreeOnDB(String codiceTavolo) {
         df.collection("TAVOLI").whereEqualTo("codiceTavolo", codiceTavolo)
                 .get()
@@ -412,8 +446,12 @@ public class DatabaseController {
     }
 
 
-    /* Metodo che invia l'ordinazione di gruppo alla cucina*/
-    public void sendOrderToTheKitchen(String codiceSingleOrder, String codiceGroupOrder, String codiceTavolo, Context context){
+    /**
+     * Metodo che invia l'ordinazione di gruppo alla cucina, cioè scrive il file contenente tutti i piatti ordinati con username e quantità) nel DB
+     * @param codiceGroupOrder
+     * @param codiceTavolo
+     */
+    public void sendOrderToTheKitchen(String codiceGroupOrder, String codiceTavolo){
         /*
         1. Seleziono tutti gli So-Piatto che hanno stesso codice groupOrder e stesso codice tavolo
         2. Salvo in una lista di So-piatto il risultato della query

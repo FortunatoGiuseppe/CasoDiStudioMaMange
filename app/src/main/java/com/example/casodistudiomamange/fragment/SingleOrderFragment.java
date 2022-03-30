@@ -118,7 +118,7 @@ public class SingleOrderFragment extends Fragment {
                                 @Override
                                 public void onCallback(boolean areAllSingleOrderConfirmed) {
                                     if (areAllSingleOrderConfirmed) { //SE TUTTI I SINGLE ORDER SONO COMFERMATI MANDO L'ORDINE TOTALE ALLA CUCINA
-                                        ((MaMangeNavigationActivity) getActivity()).dbc.sendOrderToTheKitchen(codiceSingleOrder, codiceGroupOrder, codiceTavolo, ((MaMangeNavigationActivity) getContext()));
+                                        ((MaMangeNavigationActivity) getActivity()).dbc.sendOrderToTheKitchen(codiceGroupOrder, codiceTavolo);
                                     }
                                 }
                             });
