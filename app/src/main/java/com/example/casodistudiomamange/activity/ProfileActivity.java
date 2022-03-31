@@ -31,16 +31,12 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         getSupportActionBar().hide();
 
-        Button logout = findViewById(R.id.logout);
-        Button changePsw = findViewById(R.id.changePsw);
+        View logout = findViewById(R.id.back);
+        View changePsw = findViewById(R.id.change);
         lAuth = FirebaseAuth.getInstance();
-        TextView name = findViewById(R.id.nomeUtente);
         TextView email = findViewById(R.id.showEmailUtente);
 
-        Intent intent = getIntent();
-        String usernameInserito = intent.getStringExtra("username");
         String emailInserito = getEmail();
-        name.setText(usernameInserito);
         email.setText(emailInserito);
 
         changePsw.setOnClickListener(new View.OnClickListener() {
