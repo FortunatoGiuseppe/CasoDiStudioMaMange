@@ -60,7 +60,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/change"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
             android:layout_marginEnd="100dp"
             android:background="@drawable/round_back"
@@ -103,7 +103,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/back"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
             android:layout_marginEnd="100dp"
             android:background="@drawable/round_back"
@@ -133,8 +133,8 @@
                 android:id="@+id/imgBack"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@drawable/logout"
                 android:backgroundTint="#c62828"
+                android:src="@drawable/logout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.43"
