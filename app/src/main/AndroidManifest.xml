@@ -41,6 +41,7 @@
             android:exported="true" />
         <activity
             android:name=".activity.ConfirmActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true" />
         <activity
             android:name=".activity.ProfileActivity"
