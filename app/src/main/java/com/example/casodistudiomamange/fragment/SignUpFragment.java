@@ -118,7 +118,7 @@ public class SignUpFragment extends Fragment {
             email.requestFocus();
             return;
         }
-        if(pass.getText().toString().trim().length() < 6){
+        if(pass.getText().toString().trim().length() < 8){
             pass.setError("Enter at least six character");
             pass.requestFocus();
             return;
