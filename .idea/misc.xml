@@ -66,6 +66,11 @@
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/dialog_bg.xml" value="0.303" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/ic_menu.xml" value="0.308" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/listview_device_pair_background.xml" value="0.303" />
+        <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_profile.xml" value="0.29365079365079366" />
+        <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_support.xml" value="0.29365079365079366" />
+        <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/fragment_sensor.xml" value="0.25" />
+        <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/fragment_sign_up.xml" value="0.29365079365079366" />
+        <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-sw600dp/fragment_sensor.xml" value="0.26015625" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_logged_user.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_ma_mange_navigation.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_profile.xml" value="0.2713541666666667" />
@@ -75,6 +80,7 @@
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/check_internet_dialog.xml" value="0.3625" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_category.xml" value="0.328125" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_group_order.xml" value="0.3625" />
+        <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_restaurant.xml" value="0.346875" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_sensor.xml" value="0.34782608695652173" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_sign_up.xml" value="0.3046875" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_single_order.xml" value="0.1" />
@@ -112,9 +118,7 @@
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_congratulation.xml" value="0.31040564373897706" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_qrcode.xml" value="0.25" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_question.xml" value="0.31040564373897706" />
-        <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_recognize.xml" value="0.31040564373897706" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/fragment_login.xml" value="0.18645833333333334" />
-        <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/fragment_sensor.xml" value="0.31040564373897706" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/fragment_sign_up.xml" value="0.31040564373897706" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/fragment_single_order.xml" value="0.31040564373897706" />
         <entry key="..\:/Users/miche/StudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_confirm.xml" value="0.36666666666666664" />
