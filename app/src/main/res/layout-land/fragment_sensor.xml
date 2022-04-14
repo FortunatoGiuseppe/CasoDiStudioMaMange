@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.SensorFragment">
@@ -82,7 +80,7 @@
             android:text="@string/umidita"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/torbidita" />
@@ -96,7 +94,7 @@
             android:text="@string/torbidita"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/temperatura" />
@@ -110,7 +108,7 @@
             android:text="@string/temperatura"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imagePlate" />
@@ -122,11 +120,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:backgroundTint="@color/white"
-            android:visibility="gone"
             android:hint="@string/connetti"
             android:textColorHint="#c62828"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toTopOf="@+id/statoConnessione"
             app:layout_constraintEnd_toEndOf="parent"
@@ -157,7 +155,7 @@
             android:textColorHint="#c62828"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/connect"
             app:layout_constraintEnd_toEndOf="parent"

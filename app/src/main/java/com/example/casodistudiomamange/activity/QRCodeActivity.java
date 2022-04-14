@@ -287,4 +287,10 @@ public class QRCodeActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent1 = new Intent(this, SwitchLoginSignupGuestActivity.class);
+        startActivity(intent1);
+    }
 }
