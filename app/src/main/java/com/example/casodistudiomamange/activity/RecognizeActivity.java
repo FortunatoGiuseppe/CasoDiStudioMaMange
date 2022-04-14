@@ -276,4 +276,6 @@ public class RecognizeActivity extends AppCompatActivity {
 
 
     }
+
+
 }

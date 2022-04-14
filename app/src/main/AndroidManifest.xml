@@ -32,12 +32,14 @@
             android:exported="true" />
         <activity
             android:name=".activity.RecognizeActivity"
+            android:configChanges="locale|keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:exported="true" />
         <activity
             android:name=".activity.CongratulationActivity"
             android:exported="true" />
         <activity
             android:name=".activity.QuestionActivity"
+            android:configChanges="locale|keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:exported="true" />
         <activity
             android:name=".activity.ConfirmActivity"

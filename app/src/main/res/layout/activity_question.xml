@@ -1,298 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.QuestionActivity">
 
-    <TextView
-        android:id="@+id/textScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:text="Score :"
-        android:textColor="@color/primaryColor"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-        app:layout_constraintEnd_toStartOf="@+id/progressbar_timerview"
-        app:layout_constraintHorizontal_bias="0.58"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.110000014" />
 
-    <ProgressBar
-        android:id="@+id/progressbar1_timerview"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:indeterminate="false"
-        android:progressDrawable="@drawable/circleshape1_timerview"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/progressbar_timerview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.97"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView_timerview_time"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:alpha="0.6"
-        android:gravity="center"
-        android:text="00:20"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/progressbar_timerview"
-        app:layout_constraintEnd_toEndOf="@+id/progressbar_timerview"
-        app:layout_constraintStart_toStartOf="@+id/progressbar_timerview"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progressbar_timerview"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="207dp"
-        android:layout_height="136dp"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="4dp"
-        android:indeterminate="false"
-        android:progressDrawable="@drawable/circleshape2_timerview"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.98"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/scheda_rotonda"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".8"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="match_parent"
 
-        <ProgressBar
-            android:id="@+id/progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:progressDrawable="@drawable/progress_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnNext"
-            app:layout_constraintVertical_bias="0.77" />
+        tools:context=".activity.QuestionActivity">
 
         <TextView
-            android:id="@+id/textQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:text="Question will be here..."
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="23sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.01999998" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/imageCostraint"
+            android:id="@+id/textScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/categories_background"
-            android:padding="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:text="Score :"
+            android:textColor="@color/primaryColor"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintEnd_toStartOf="@+id/progressbar_timerview"
+            app:layout_constraintHorizontal_bias="0.58"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textQuestion">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.110000014" />
 
-            <ImageView
-                android:id="@+id/img1"
+        <ProgressBar
+            android:id="@+id/progressbar1_timerview"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circleshape1_timerview"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/progressbar_timerview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.97"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_timerview_time"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="0.6"
+            android:gravity="center"
+            android:text="00:20"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/progressbar_timerview"
+            app:layout_constraintEnd_toEndOf="@+id/progressbar_timerview"
+            app:layout_constraintStart_toStartOf="@+id/progressbar_timerview"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressbar_timerview"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="207dp"
+            android:layout_height="136dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="4dp"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circleshape2_timerview"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.98"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/scheda_rotonda"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".8"
+            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progressDrawable="@drawable/progress_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnNext"
+                app:layout_constraintVertical_bias="0.77" />
+
+            <TextView
+                android:id="@+id/textQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:text="Question will be here..."
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="23sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.01999998" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/imageCostraint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/categories_background"
+                android:padding="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textQuestion">
+
+                <ImageView
+                    android:id="@+id/img1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:background="@drawable/round_back"
+                android:backgroundTint="@color/white"
+                android:padding="10dp"
+                android:text="@string/prossimaDomanda"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="20sp"
+                android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintVertical_bias="0.85" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnNext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:background="@drawable/round_back"
-            android:backgroundTint="@color/white"
-            android:padding="10dp"
-            android:text="@string/prossimaDomanda"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="20sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.85" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnNext"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textQuestion"
-            app:layout_constraintVertical_bias="0.89">
-
-            <RadioGroup
-                android:id="@+id/radioGroup"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:background="@drawable/categories_background"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/btnNext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textQuestion"
+                app:layout_constraintVertical_bias="0.89">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="50dp"
+                    android:background="@drawable/categories_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/rb1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Option 1"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Option 2"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Option 3"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textQuestionNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Question n°:"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toTopOf="@+id/progress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnNext" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/imageCostraint2"
+            android:layout_width="163dp"
+            android:layout_height="78dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintEnd_toStartOf="@+id/progressbar_timerview"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textScore">
+
+            <ImageView
+                android:id="@+id/imageScore5"
+                android:layout_width="40dp"
+                android:layout_height="29dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageScore2"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/nigiri" />
+
+            <ImageView
+                android:id="@+id/imageScore4"
+                android:layout_width="40dp"
+                android:layout_height="29dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.25"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageScore2"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/nigiri" />
+
+            <ImageView
+                android:id="@+id/imageScore3"
+                android:layout_width="40dp"
+                android:layout_height="29dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/nigiri" />
+
+            <ImageView
+                android:id="@+id/imageScore2"
+                android:layout_width="40dp"
+                android:layout_height="29dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/nigiri" />
 
-                <RadioButton
-                    android:id="@+id/rb1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Option 1"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-                <RadioButton
-                    android:id="@+id/rb2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Option 2"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-                <RadioButton
-                    android:id="@+id/rb3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Option 3"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-            </RadioGroup>
+            <ImageView
+                android:id="@+id/imageScore1"
+                android:layout_width="40dp"
+                android:layout_height="29dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/nigiri" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/textQuestionNo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Question n°:"
-            android:textColor="@color/white"
-            android:textStyle="italic"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toTopOf="@+id/progress"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnNext" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/imageCostraint2"
-        android:layout_width="163dp"
-        android:layout_height="78dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-        app:layout_constraintEnd_toStartOf="@+id/progressbar_timerview"
-        app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textScore">
-
-        <ImageView
-            android:id="@+id/imageScore5"
-            android:layout_width="40dp"
-            android:layout_height="29dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.75"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageScore2"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/nigiri" />
-
-        <ImageView
-            android:id="@+id/imageScore4"
-            android:layout_width="40dp"
-            android:layout_height="29dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.25"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageScore2"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/nigiri" />
-
-        <ImageView
-            android:id="@+id/imageScore3"
-            android:layout_width="40dp"
-            android:layout_height="29dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/nigiri" />
-
-        <ImageView
-            android:id="@+id/imageScore2"
-            android:layout_width="40dp"
-            android:layout_height="29dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/nigiri" />
-
-        <ImageView
-            android:id="@+id/imageScore1"
-            android:layout_width="40dp"
-            android:layout_height="29dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/nigiri" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
