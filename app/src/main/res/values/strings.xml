@@ -18,6 +18,11 @@
     <string name="emailLinkResetFailed">Error! Reset Link is Not Sent</string>
     <string name="emailValidaErr">Please provide valid email!</string>
     <string name="ottoCaratteriErr">Enter at least eight character</string>
+    <string name="regolePassword">"Password Rule:\n" +
+    "At least one capital letter\n" +
+    "At least one number\n" +
+    "At least one symbol"</string>
+
     <string name="stessaPassErr">Password does not coincide!</string>
     <string name="logout">Logout</string>
     <string name="cerca">Search a restaurant</string>
@@ -77,6 +82,8 @@
     <string name="nessunPiatto">You haven\'t add any plate!</string>
     <string name="loggedIn">Logged in successfully!</string>
     <string name="loggedInFailed">Failed to login</string>
+    <string name="registerAcepted">User has been registered successfully!</string>
+    <string name="registerInFailed">Failed to register</string>
     <string name="inAscolto">Listening</string>
     <string name="connesso">Connected</string>
     <string name="connessioneFallita">Connection Failed</string>

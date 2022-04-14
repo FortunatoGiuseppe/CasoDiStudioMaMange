@@ -104,22 +104,22 @@ public class SignUpFragment extends Fragment {
     private void register(){
 
         if(email.getText().toString().trim().isEmpty()){
-            email.setError("email is required");
+            email.setError(getText(R.string.emailRichiestaErr));
             email.requestFocus();
             return;
         }
         if(pass.getText().toString().trim().isEmpty()){
-            pass.setError("password is required");
+            pass.setError(getText(R.string.passwordRichiestaErr));
             pass.requestFocus();
             return;
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
-            email.setError("Please provide valid email!");
+            email.setError(getText(R.string.emailValidaErr));
             email.requestFocus();
             return;
         }
         if(pass.getText().toString().trim().length() < 8){
-            pass.setError("Enter at least six character");
+            pass.setError(getText(R.string.ottoCaratteriErr));
             pass.requestFocus();
             return;
         }else{
@@ -127,17 +127,14 @@ public class SignUpFragment extends Fragment {
                 pass.setTextColor(Color.GREEN);
             } else {
                 pass.setTextColor(Color.RED);
-                pass.setError("Password Rule:\n" +
-                        "At least one capital letter\n" +
-                        "At least one number\n" +
-                        "At least one symbol");
+                pass.setError(getText(R.string.regolePassword));
                 pass.requestFocus();
                 return;
             }
         }
 
         if(!passconf.getText().toString().trim().contains(pass.getText().toString().trim())){
-            passconf.setError("Enter the same password");
+            passconf.setError(getText(R.string.stessaPassErr));
             passconf.requestFocus();
             return;
         }
@@ -147,10 +144,10 @@ public class SignUpFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(getActivity(),"User has been registered successfully!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),getText(R.string.registerAcepted),Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getActivity(), SwitchLoginSignupGuestActivity.class));
                         } else {
-                            Toast.makeText(getActivity(),"Failed to register",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),getText(R.string.registerInFailed),Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

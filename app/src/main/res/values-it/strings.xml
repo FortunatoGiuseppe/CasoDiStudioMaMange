@@ -18,6 +18,10 @@
     <string name="emailLinkResetFailed">Errore! Link di reset non inviato</string>
     <string name="emailValidaErr">Fornisci una mail valida!</string>
     <string name="ottoCaratteriErr">Inserisci almeno otto caratteri</string>
+    <string name="regolePassword">"Regola Password:\n" +
+    "Almeno una lettera maiuscola\n" +
+    "Almeno un numbero\n" +
+    "Almeno un simbolo"</string>
     <string name="stessaPassErr">Le due password non combaciano</string>
     <string name="logout">Logout</string>
     <string name="cerca">Cerca</string>
@@ -77,6 +81,8 @@
     <string name="nessunPiatto">Non hai aggiunto nessun piatto al tuo ordine!</string>
     <string name="loggedIn">Loggato correttamente!</string>
     <string name="loggedInFailed">Login fallito</string>
+    <string name="registerAcepted">Utente è stato registrato con successo</string>
+    <string name="registerInFailed">Registrazione fallita</string>
     <string name="inAscolto">Ascoltando</string>
     <string name="connesso">Connesso</string>
     <string name="connessioneFallita">Connessione fallita</string>
