@@ -41,6 +41,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -198,11 +199,18 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     }
 
     private boolean loadFragment(Fragment fragment) {
-        if(fragment != null){
+        List<Fragment> allCurrentFragments=getSupportFragmentManager().getFragments();
+        if(allCurrentFragments.size()==0){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             return true;
+        }else {
+            Fragment currentFragment = allCurrentFragments.get(allCurrentFragments.size() - 1);
+            if (fragment != null && currentFragment.getClass() != fragment.getClass()) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                return true;
+            }
         }
-        return false;
+        return true;
     }
 
 
