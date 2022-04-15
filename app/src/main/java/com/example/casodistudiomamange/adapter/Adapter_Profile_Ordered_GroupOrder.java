@@ -76,6 +76,7 @@ public class Adapter_Profile_Ordered_GroupOrder extends RecyclerView.Adapter<Ada
      * @param holder Textview in cui sarà caricata la stringa tradotta
      * @param trans stringa tradotta
      */
+
     private void prepareModelTranslation(String trans,TextView holder){
 
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
