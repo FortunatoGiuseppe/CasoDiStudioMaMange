@@ -68,6 +68,7 @@
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/listview_device_pair_background.xml" value="0.303" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_profile.xml" value="0.29365079365079366" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_support.xml" value="0.29365079365079366" />
+        <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/fragment_login.xml" value="0.30687830687830686" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/fragment_sensor.xml" value="0.25" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/fragment_sign_up.xml" value="0.29365079365079366" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-sw600dp/fragment_sensor.xml" value="0.26015625" />
@@ -80,6 +81,7 @@
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/check_internet_dialog.xml" value="0.3625" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_category.xml" value="0.328125" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_group_order.xml" value="0.3625" />
+        <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_login.xml" value="0.3625" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_restaurant.xml" value="0.346875" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_sensor.xml" value="0.34782608695652173" />
         <entry key="..\:/Users/fortu/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/fragment_sign_up.xml" value="0.3046875" />
