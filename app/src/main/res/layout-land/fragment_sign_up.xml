@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<androidx.constraintlayout.widget.ConstraintLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -35,13 +34,14 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/edit_text_bg"
         android:drawableRight="@drawable/ic_baseline_visibility_off_24"
-        android:longClickable="false"
         android:hint="@string/password"
         android:inputType="textPassword"
+        android:longClickable="false"
         android:minHeight="48dp"
         android:paddingVertical="10dp"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
+        android:paddingRight="8dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,14 +55,15 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/edit_text_bg"
         android:drawableRight="@drawable/ic_baseline_visibility_off_24"
-        android:longClickable="false"
         android:hint="@string/passconf"
         android:inputType="textPassword"
+        android:longClickable="false"
         android:minHeight="48dp"
         android:paddingVertical="10dp"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
 
+        android:paddingRight="8dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
