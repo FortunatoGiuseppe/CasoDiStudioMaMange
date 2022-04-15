@@ -481,13 +481,57 @@ public class DatabaseController {
                 });
     }
 
-    /*Interfaccia che permette di chiamare il metodo di Callback*/
+    public void deleteAllDataOfUser(String codiceTavolo, String codiceGroupOrder, String codiceSingleOrder, String username){
+                df.collection("SO-PIATTO")
+                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
+                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+                .whereEqualTo("codiceTavolo", codiceTavolo)
+                .whereEqualTo("username",username)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if(task.isSuccessful()){
+
+                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                df.collection("SO-PIATTO").document(documentSnapshot.getId()).delete();
+                            }
+
+                        }
+                    }
+                });
+
+        df.collection("SINGLE ORDERS")
+                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
+                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+                .whereEqualTo("codiceTavolo", codiceTavolo)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if(task.isSuccessful()){
+
+                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                df.collection("SINGLE ORDERS").document(documentSnapshot.getId()).delete();
+                            }
+
+                        }
+                    }
+                });
+
+    }
+
+    /**Interfaccia che permette di chiamare il metodo di Callback**/
     public interface metododiCallback{
         //metodo che permette di utilizzare il codiceSingleOrder e codiceGroupOrder letto dal db
         void onCallback(String codiceSingleOrderCheMiServe,String codiceGroupOrder);
     }
 
-    /*Interfaccia che permette di chiamare il metodo di Callback AllSingleOrderConfirmed*/
+    /**Interfaccia che permette di chiamare il metodo di Callback AllSingleOrderConfirmed**/
     public interface metododiCallbackAllSingleOrderConfirmed{
         //metodo che permette di utilizzare il codiceSingleOrder e codiceGroupOrder letto dal db
         void onCallback(boolean areAllSingleOrderConfirmed);

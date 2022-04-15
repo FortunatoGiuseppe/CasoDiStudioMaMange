@@ -1,22 +1,33 @@
 package com.example.casodistudiomamange.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Toast;
+
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.connection.NetworkChangedListener;
 import com.example.casodistudiomamange.fragment.GroupOrderFragment;
@@ -27,6 +38,7 @@ import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Collection;
 import java.util.Map;
@@ -44,6 +56,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     public String username;
     public String codiceTavolo;
     private FirebaseAuth lAuth;
+
     NetworkChangedListener networkChangedListener = new NetworkChangedListener();
     public String codiceSingleOrder;
     public String codiceGroupOrder;
@@ -52,6 +65,8 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     private MenuItem profileItem;
     public MenuItem lastOrderItem;
     private MenuItem acc_regItem;
+
+    private int count = 0;
 
     public static final String SHARED_PREFS = "sharedPrefs";
 
@@ -196,6 +211,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
         //Una volta entrato nella sezione menù non è più possibile tornare indietro alla selezione del tavolo
         if(bottomNavigationView.getSelectedItemId()==R.id.restaurant_menu){
+            count++;
             bottomNavigationView.setSelectedItemId(R.id.restaurant_menu);
         }
 
@@ -209,6 +225,40 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         //Una volta entrato nella categoria di un piatto nel momento in cui clicco "Indietro" vengo riendirizzato alla sezione menù
         if(bottomNavigationView.getSelectedItemId()==R.id.recycleview_plates){
             bottomNavigationView.setSelectedItemId(R.id.restaurant_menu);
+        }
+
+        if(count > 1){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this
+            );
+            builder.setTitle("Sei sicuro che vuoi uscire?");
+            builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dbc.deleteAllDataOfUser(codiceTavolo,codiceGroupOrder,codiceSingleOrder,username);
+                    if(lAuth.getCurrentUser() != null){
+                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.loggedIn),Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),LoggedUser.class));
+                        finish();
+                    } else {
+                        startActivity(new Intent(getApplicationContext(),SwitchLoginSignupGuestActivity.class));
+                        finish();
+                    }
+                    username = null;
+                    codiceGroupOrder = null;
+                    codiceSingleOrder = null;
+                    codiceTavolo = null;
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    count = 0;
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
         }
     }
 
