@@ -30,7 +30,7 @@ public class ConfirmActivity extends AppCompatActivity {
         String usernameInserito = getIntent().getStringExtra("UsernameInserito");
         quizCostraint=findViewById(R.id.QuizConstraint);
         quiz=findViewById(R.id.QuizImg);
-
+        //Mostro l'icona del quiz
         quizCostraint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,6 +59,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
         homeconstr=findViewById(R.id.HomeCostr);
         homeTv=findViewById(R.id.textHome);
+        //mostro il tasto per tornare alla schermata di inserimento tavolo
         homeconstr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,10 +72,14 @@ public class ConfirmActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //disabilitazione tasto "Indietro"
     }
+
+
 
     @Override
     protected void onStart(){
+        //verifica della presenza della connessione internet
         IntentFilter filter= new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangedListener, filter);
         super.onStart();
@@ -82,6 +87,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        //verifica della presenza della connessione internet
         unregisterReceiver(networkChangedListener);
         super.onStop();
     }

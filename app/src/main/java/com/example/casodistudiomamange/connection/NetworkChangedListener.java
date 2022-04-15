@@ -1,5 +1,7 @@
 package com.example.casodistudiomamange.connection;
-
+/**
+ * Classe che gestice l'assenza di connessione internet
+ */
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -26,11 +28,10 @@ public class NetworkChangedListener extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (!Common.isConnectedToInternet(context)) {
-            //internet is not connected
-
-
+            //internet on è connesso
             Dialog dialog = new Dialog(context, android.R.style.Theme_Dialog);
-
+            //viene mostrato un alert in cui viene chiesto di collegarsi ad internet.
+            //Questo alert non va via fin quando non si è ristabilita una connessione
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(LayoutInflater.from(context).inflate(R.layout.check_internet_dialog, null));
             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

@@ -41,6 +41,7 @@ public class CongratulationActivity extends AppCompatActivity {
         codeTv.setVisibility(codeTv.GONE);
 
         textRating = findViewById(R.id.textRating);
+        //verifico il punteggio raggiunto dall'utente
         if(score>=4){
             textRating.setText(R.string.ratingW);
         }
@@ -56,6 +57,7 @@ public class CongratulationActivity extends AppCompatActivity {
         homeconstr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //mostro il tasto per tornare alla schermata di inserimento tavolo
                 String usernameInserito = getIntent().getStringExtra("UsernameInserito");
                 Intent intent = new Intent(CongratulationActivity.this, QRCodeActivity.class);
                 intent.putExtra("UsernameInserito",usernameInserito);
@@ -132,12 +134,13 @@ public class CongratulationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        //disabilitazione tasto "Indietro"
 
     }
 
     @Override
     protected void onStart(){
+        //verifica della presenza della connessione internet
         IntentFilter filter= new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangedListener, filter);
         super.onStart();
@@ -145,6 +148,7 @@ public class CongratulationActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        //verifica della presenza della connessione internet
         unregisterReceiver(networkChangedListener);
         super.onStop();
     }
