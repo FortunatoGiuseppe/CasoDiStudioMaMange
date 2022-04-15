@@ -248,6 +248,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
     @Override
     protected void onStart(){
+        //verifica della presenza della connessione internet
         IntentFilter filter= new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangedListener, filter);
         super.onStart();
@@ -255,6 +256,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
     @Override
     protected void onStop() {
+        //verifica della presenza della connessione internet
         unregisterReceiver(networkChangedListener);
         super.onStop();
     }

@@ -103,6 +103,7 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!answered){
                     if(rb1.isChecked() || rb2.isChecked() || rb3.isChecked()){
+                        //controllo delle risposte e arresto del timer nel momento in cui l'uutente clicca una delle opzioni di risposta
                         checkAnswer();
                         countDownTimer.cancel();
                         currentProgress += 20;
@@ -118,14 +119,17 @@ public class QuestionActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * metodo per verificare la correttezza di una risposta
+     */
     private void checkAnswer() {
 
         answered=true;
         RadioButton rbSelected= findViewById(radioGroup.getCheckedRadioButtonId());
         int answerNo = radioGroup.indexOfChild(rbSelected) + 1;
+        //verifica la correttezza della risposta
         if(answerNo == currentQuestion.getCorrectAnsNo()){
             score++;
-            //tvScore.setText("Score:"+score);
             if(score==1){
                 score1.setVisibility(score1.VISIBLE);
             }
@@ -138,9 +142,11 @@ public class QuestionActivity extends AppCompatActivity {
         }else{
             wrongAnswer++;
         }
+        //se la risposta è sbagliata cambia colore in rosso, altrimenti in verde
         rb1.setTextColor(Color.RED);
         rb2.setTextColor(Color.RED);
         rb3.setTextColor(Color.RED);
+
         switch(currentQuestion.getCorrectAnsNo()){
             case 1:
                 rb1.setTextColor(Color.GREEN);
@@ -152,7 +158,7 @@ public class QuestionActivity extends AppCompatActivity {
                 rb3.setTextColor(Color.GREEN);
                 break;
         }
-
+        //Verifica se si è arrivati all'ultima domanda
         if(qCounter<totalQuestions){
             btnNext.setText(R.string.prossimaDomanda);
         }else{
@@ -161,12 +167,17 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * metodo per mostrare la domanda seguente
+     */
     private void showNextQuestion() {
         radioGroup.clearCheck();
         rb1.setTextColor(dfRbColor);
         rb2.setTextColor(dfRbColor);
         rb3.setTextColor(dfRbColor);
+        //reimposta le scritte in nero
 
+        //controlla se l'utente ha sbagliato più di 2 domande
         if(wrongAnswer>=2){
             String usernameInserito = getIntent().getStringExtra("UsernameInserito");
             Intent intent = new Intent(QuestionActivity.this, CongratulationActivity.class);
@@ -174,7 +185,7 @@ public class QuestionActivity extends AppCompatActivity {
             startActivity(intent);
         }else{
             if(qCounter<DOMANDE){
-
+                //settaggio della prossima domanda
                 setTimer();
                 mProgressBar.setVisibility(View.INVISIBLE);
 
@@ -183,6 +194,7 @@ public class QuestionActivity extends AppCompatActivity {
 
                 currentQuestion=Questions.get(qCounter);
                 img.setImageResource(currentQuestion.getImage());
+                //se nella domanda non è presente l'immagine viene tolto lo spazio
                 if(currentQuestion.getImage()==0){
                     viewCostraint.setVisibility(View.GONE);
                 }
@@ -216,20 +228,22 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * metodo per la creazione del timer
+     */
     private void timer() {
         countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 long seconds = leftTimeInMilliseconds / 1000;
                 mProgressBar1.setProgress((int) (leftTimeInMilliseconds));
-
                 textViewShowTime.setText(String.format("%02d", seconds / 60)
                         + ":" + String.format("%02d", seconds % 60));
 
             }
             @Override
             public void onFinish() {
-
+                //se nessuna opzione è stata premuta allo scadere del tempo allora la risposta è sbagliata
                 if(!rb1.isChecked() && !rb2.isChecked() && !rb3.isChecked()){
                     wrongAnswer++;
                 }
@@ -238,12 +252,19 @@ public class QuestionActivity extends AppCompatActivity {
         }.start();
     }
 
+    /**
+     * metodo per settare il tempo ad ogni domanda
+     */
     private void setTimer(){
         int time = 21;
         totalTimeCountInMilliseconds =  time * 1000;
         mProgressBar1.setMax( time * 1000);
     }
 
+
+    /**
+     * metodo per inizializzare le domande che appariranno nel quiz
+     */
     private void addQuestions() {
 
         questionsList.add(new Question(R.string.question1,R.string.question1option1,R.string.question1option2,R.string.question1option3,2,R.drawable.bandiere));
@@ -257,8 +278,6 @@ public class QuestionActivity extends AppCompatActivity {
         questionsList.add(new Question(R.string.question9,R.string.question9option1,R.string.question9option2,R.string.question9option3,1, R.drawable.bacchette));
         questionsList.add(new Question(R.string.question10,R.string.question10option1,R.string.question10option2,R.string.question10option3,2, R.drawable.preparazione));
         questionsList.add(new Question(R.string.question11,R.string.question11option1,R.string.question11option2,R.string.question11option3,1, R.drawable.sushi));
-
-
         questionsList.add(new Question(R.string.question12,R.string.question12option1,R.string.question12option2,R.string.question12option3,1, R.drawable.alga));
         questionsList.add(new Question(R.string.question13,R.string.question13option1,R.string.question13option2,R.string.question13option3,3, R.drawable.temaki));
         questionsList.add(new Question(R.string.question13,R.string.question14option1,R.string.question14option2,R.string.question14option3,2, R.drawable.sashimi));
@@ -270,12 +289,16 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * metodo per effettuare la generazione di domande del quiz in modo randomico
+     * e senza ripetizioni
+     */
     private void getQuizRandom(){
 
         List<Question> trueList=new ArrayList<Question>();
 
         trueList.addAll(questionsList);
+        //copio tutta la lista delle domande
         final int min = 0;
 
         for(int i=0;i<DOMANDE;i++){
@@ -283,14 +306,14 @@ public class QuestionActivity extends AppCompatActivity {
             final int random = new Random().nextInt((max - min) + 1) + min;
             Questions.add(trueList.get(random));
             trueList.remove(random);
-
+            //vado a togliere randomicamente 5 domande dalla lista copiata così che non possano essere mostrate domande duplicate
+            //ad ogni iterata diminuisco la dimensione della lista contenente le domande per la generazione randomica dell'indice
         }
     }
 
     @Override
     public void onBackPressed() {
-
-
+        //disabilitazione tasto "Indietro"
     }
 
 

@@ -58,12 +58,12 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Category category= categoryArrayList.get(position);
-
-        if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
+        //controllo della lingua del dispositivo
+        if(!Locale.getDefault().getLanguage().equals((new Locale("it").getLanguage()))){
             holder.categoryTv.setText(category.getNome());
         }else{
 
-
+                //traduzione menù se la lingua non è italiano
                 prepareModelName(category.getNome(), new metododiCallbackTransaltion() {
                     @Override
                     public void onCallback(String stringaTradotta) {
@@ -73,8 +73,6 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
 
 
         }
-
-
 
         Picasso.get().load(category.getImg()).into(holder.imageView);
 
@@ -106,22 +104,26 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
         }
     }
 
-
+    /**
+     * Metodo che effettua la traduzione del menù
+     * @param stringaTradotta metodo di callback per gestire asincronismo
+     * @param trans stringa tradotta
+     */
     private void prepareModelName(String trans,metododiCallbackTransaltion stringaTradotta){
 
-                    Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
+        Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
 
-                        public void onSuccess(String s) {
+            public void onSuccess(String s) {
 
-                            stringaTradotta.onCallback(s);
+                stringaTradotta.onCallback(s);
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            stringaTradotta.onCallback(trans);
-                        }
-                    });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                stringaTradotta.onCallback(trans);
+            }
+        });
 
     }
 

@@ -46,10 +46,11 @@ public class Adapter_Profile_Ordered_GroupOrder extends RecyclerView.Adapter<Ada
 
     @Override
     public void onBindViewHolder(@NonNull Adapter_Profile_Ordered_GroupOrderViewHolder holder, int position) {
-
-        if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
+        //controllo della lingua del dispositivo
+        if(!Locale.getDefault().getLanguage().equals((new Locale("it").getLanguage()))){
             holder.plateName.setText(soPlateList.get(position).getNomePiatto());
         }else{
+            //traduzione menù
             prepareModelTranslation(soPlateList.get(position).getNomePiatto(),holder.plateName);
         }
         holder.tvCount.setText(Integer.toString((int)soPlateList.get(position).getQuantita()));
@@ -70,9 +71,12 @@ public class Adapter_Profile_Ordered_GroupOrder extends RecyclerView.Adapter<Ada
         }
     }
 
+    /**
+     * Metodo che effettua la traduzione del menù
+     * @param holder Textview in cui sarà caricata la stringa tradotta
+     * @param trans stringa tradotta
+     */
     private void prepareModelTranslation(String trans,TextView holder){
-
-
 
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override

@@ -86,6 +86,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
 
     @Override
     protected void onStart(){
+        //verifica la presenza di connessione internet
         IntentFilter filter= new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangedListener, filter);
         super.onStart();
@@ -93,6 +94,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        //verifica la presenza di connessione internet
         unregisterReceiver(networkChangedListener);
         super.onStop();
     }
@@ -109,8 +111,8 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
     }
 
     /**
-     * da commentare
-     * @return
+     * Metodo che all'avvio dell'app non in lingua italiana fa ritornare lo stato dell'alert mostrato per il download del pacchetto di traduzione
+     * @return stato dello shared preferences
      */
     private boolean getDialogStatus(){
         SharedPreferences mSharedPreferences = getSharedPreferences("CheckItem", MODE_PRIVATE);
@@ -118,7 +120,9 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
     }
 
     /**
-     * DA COMMENTARE
+     * Metodo che verifica la lingua del dispositivo. S questa non è in italiano viene chiesto all'utente
+     * di scaricare un pacchetto di traduzione del menù attraverso un alert.
+     * L'utente può decidere di scaricarlo o meno
      */
     private void ManageDownload(){
         if(!Locale.getDefault().getLanguage().equals((new Locale("it").getLanguage()))){
@@ -134,8 +138,6 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     progressBar();
                     downloadModel();
-
-
                 }
             });
             mBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -150,6 +152,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
             mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    //verifica che la chechbox "non mostrare più" sia stata premuta
                     if(compoundButton.isChecked()){
                         storeDialogStatus(true);
                     }else{
@@ -168,7 +171,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
     }
 
     /**
-     * DA COMMENTARE
+     * Metodo nel quale avviene il download del pacchetto di traduzione
      */
     private void downloadModel(){
         DownloadConditions conditions = new DownloadConditions.Builder()
@@ -176,6 +179,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
         Translator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void v) {
+                //se il pacchetto viene scaricato il messaggio del rilevamento lingua non viene più visualizzato
                 progdialog.dismiss();
                 storeDialogStatus(true);
             }
@@ -188,7 +192,8 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
     }
 
     /**
-     *  DA COMMENTARE
+     *  Metodo che permette di creare graficamente una progress bar d'attesa durante il download del pacchetto.
+     *  Questa progress bar rimane fin quando il pacchetto non viene scaricato
      */
     private void progressBar(){
         progdialog = new Dialog(this, android.R.style.Theme_Dialog);

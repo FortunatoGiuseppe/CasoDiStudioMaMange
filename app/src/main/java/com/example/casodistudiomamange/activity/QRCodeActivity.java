@@ -194,6 +194,7 @@ public class QRCodeActivity extends AppCompatActivity {
 
     @Override
     protected void onStart(){
+        //verifica della presenza della connessione internet
         IntentFilter filter= new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangedListener, filter);
         super.onStart();
@@ -201,6 +202,7 @@ public class QRCodeActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        //verifica della presenza della connessione internet
         unregisterReceiver(networkChangedListener);
         super.onStop();
     }
@@ -290,6 +292,7 @@ public class QRCodeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //Reindirizzamento pagina del tasto "Indietro"
         Intent intent1 = new Intent(this, SwitchLoginSignupGuestActivity.class);
         startActivity(intent1);
     }

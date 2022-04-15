@@ -1,5 +1,5 @@
 package com.example.casodistudiomamange.model;
-
+//model delle domande
 public class Question {
 
     private int question, option1, option2, option3;

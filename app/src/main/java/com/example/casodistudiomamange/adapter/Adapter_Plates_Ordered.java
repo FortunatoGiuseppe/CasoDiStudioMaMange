@@ -62,9 +62,11 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     @Override
     public void onBindViewHolder(@NonNull Adapter_Plates_Ordered.myViewHolder holder,@SuppressLint("RecyclerView") int position) {
         SoPlate soplate = plateArrayList.get(position);
-        if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
+        //controllo della lingua del dispositivo
+        if(!Locale.getDefault().getLanguage().equals((new Locale("it").getLanguage()))){
             holder.textView_plate.setText(soplate.getNomePiatto());
         }else{
+            //traduzione menù
             prepareModelTranslation(soplate.getNomePiatto(),holder.textView_plate);
         }
 
@@ -183,13 +185,16 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
         return sharedPreferences.getInt(nomePiatto,0);
     }
 
-
+    /**
+     * Metodo che effettua la traduzione del menù
+     * @param holder Textview in cui sarà caricata la stringa tradotta
+     * @param trans stringa tradotta
+     */
     private void prepareModelTranslation(String trans,TextView holder){
 
                 Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override
                     public void onSuccess(String s) {
-                        Log.d("TAG",s);
                         holder.setText(s);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
