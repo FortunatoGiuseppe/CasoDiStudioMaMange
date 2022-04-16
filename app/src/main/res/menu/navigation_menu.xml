@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/menuProfile"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:title="@string/profile"/>
 
-    <item
-        android:id="@+id/lastOrder"
-        android:icon="@drawable/ic_ordine_ultimo"
-        android:title="@string/ultimo_ordine"/>
+    <item android:title="@string/soloxregi">
+
+        <menu>
+
+            <item
+                android:id="@+id/menuProfile"
+                android:icon="@drawable/ic_baseline_person_24"
+                android:title="@string/profile"/>
+
+            <item
+                android:id="@+id/lastOrder"
+                android:icon="@drawable/ic_ordine_ultimo"
+                android:title="@string/ultimo_ordine"/>
+
+        </menu>
+
+    </item>
+
 
     <item android:title="@string/others">
 
@@ -27,11 +37,5 @@
         </menu>
 
     </item>
-
-    <item
-        android:id="@+id/acc_reg"
-        android:visible="false"
-        android:icon="@drawable/ic_profilo_utente"
-        android:title="@string/acc_reg"/>
 
 </menu>
