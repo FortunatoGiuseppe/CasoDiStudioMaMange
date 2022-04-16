@@ -162,23 +162,37 @@ public class DatabaseController {
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             
                                             if(task.isSuccessful()){
-                                                
-                                                singleOrder=(task.getResult().toObjects(SingleOrder.class)).get(0);
-                                                codiceSingleOrder=Integer.parseInt(task.getResult().toObjects(SingleOrder.class).get(0).getCodiceSingleOrder().substring(2));
-                                                codiceSingleOrder+=1;
-                                                singleOrder.setCodiceSingleOrder("SO"+String.valueOf(codiceSingleOrder));
-                                                
-                                                //creo single order
-                                                Map<String, Object> nuovoSingleOrder = new HashMap<>();
-                                                nuovoSingleOrder.put("codiceSingleOrder", singleOrder.getCodiceSingleOrder());
-                                                nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder());
-                                                nuovoSingleOrder.put("codiceTavolo",codiceTavolo);
-                                                nuovoSingleOrder.put("singleOrderConfirmed",false);
-                                                df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
 
-                                                //Assegno al metodo di CallBack il codice del SingleOrder e GroupOrder
-                                                mycallBack.onCallback(singleOrder.getCodiceSingleOrder(),groupOrder.getCodice());
-                                                
+                                                if (task.getResult().isEmpty()){
+                                                    //creo single order supponendo che il primo single order abbia come codice "SO0"
+                                                    singleOrder = new SingleOrder();
+                                                    singleOrder.setCodiceSingleOrder("SO0");
+                                                    singleOrder.setCodiceGroupOrder(groupOrder.getCodice());
+                                                    singleOrder.setCodiceTavolo(codiceTavolo);
+                                                    Map<String, Object> nuovoSingleOrder = new HashMap<>();
+                                                    nuovoSingleOrder.put("codiceSingleOrder", singleOrder.getCodiceSingleOrder());
+                                                    nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder());
+                                                    nuovoSingleOrder.put("codiceTavolo",singleOrder.getCodiceTavolo());
+                                                    nuovoSingleOrder.put("singleOrderConfirmed",false);
+                                                    df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
+
+                                                } else {
+                                                    singleOrder=(task.getResult().toObjects(SingleOrder.class)).get(0);
+                                                    codiceSingleOrder=Integer.parseInt(task.getResult().toObjects(SingleOrder.class).get(0).getCodiceSingleOrder().substring(2));
+                                                    codiceSingleOrder+=1;
+                                                    singleOrder.setCodiceSingleOrder("SO"+String.valueOf(codiceSingleOrder));
+
+                                                    //creo single order
+                                                    Map<String, Object> nuovoSingleOrder = new HashMap<>();
+                                                    nuovoSingleOrder.put("codiceSingleOrder", singleOrder.getCodiceSingleOrder());
+                                                    nuovoSingleOrder.put("codiceGroupOrder", singleOrder.getCodiceGroupOrder());
+                                                    nuovoSingleOrder.put("codiceTavolo",codiceTavolo);
+                                                    nuovoSingleOrder.put("singleOrderConfirmed",false);
+                                                    df.collection("SINGLE ORDERS").add(nuovoSingleOrder);
+
+                                                    //Assegno al metodo di CallBack il codice del SingleOrder e GroupOrder
+                                                    mycallBack.onCallback(singleOrder.getCodiceSingleOrder(),groupOrder.getCodice());
+                                                }
                                             }
                                         }
                                 });
