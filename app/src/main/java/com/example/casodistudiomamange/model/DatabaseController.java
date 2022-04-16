@@ -33,6 +33,7 @@ public class DatabaseController {
     private SoPlate singleOrderPlate;
     private int codiceGroupOrder;
     private int codiceSingleOrder;
+    private int contaSingleOrder = 0;
 
     private boolean alreadyExists=false;
     
@@ -496,26 +497,27 @@ public class DatabaseController {
     }
 
     public void deleteAllDataOfUser(String codiceTavolo, String codiceGroupOrder, String codiceSingleOrder, String username){
-                df.collection("SO-PIATTO")
-                .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
-                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
-                .whereEqualTo("codiceTavolo", codiceTavolo)
-                .whereEqualTo("username",username)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+        df.collection("SO-PIATTO")
+        .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
+        .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+        .whereEqualTo("codiceTavolo", codiceTavolo)
+        .whereEqualTo("username",username)
+        .get()
+        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
-                        if(task.isSuccessful()){
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                                df.collection("SO-PIATTO").document(documentSnapshot.getId()).delete();
-                            }
+                if(task.isSuccessful()){
 
-                        }
+                    for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                        df.collection("SO-PIATTO").document(documentSnapshot.getId()).delete();
                     }
-                });
+
+                }
+            }
+        });
 
         df.collection("SINGLE ORDERS")
                 .whereEqualTo("codiceSingleOrder",codiceSingleOrder)
@@ -530,12 +532,63 @@ public class DatabaseController {
                         if(task.isSuccessful()){
 
                             for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+
                                 df.collection("SINGLE ORDERS").document(documentSnapshot.getId()).delete();
                             }
-
                         }
                     }
                 });
+
+        df.collection("SINGLE ORDERS")
+                .whereEqualTo("codiceGroupOrder", codiceGroupOrder)
+                .whereEqualTo("codiceTavolo", codiceTavolo)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if(task.isSuccessful()){
+
+                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                contaSingleOrder++;
+                            }
+
+                            if(contaSingleOrder <= 1){
+                                for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                    df.collection("GROUP ORDERS")
+                                    .whereEqualTo("codice",codiceGroupOrder)
+                                    .whereEqualTo("codiceTavolo",codiceTavolo)
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if(task.isSuccessful()){
+                                                for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                                    df.collection("GROUP ORDERS").document(documentSnapshot.getId()).delete();
+                                                }
+                                            }
+                                        }
+                                    });
+                                    df.collection("TAVOLI")
+                                            .whereEqualTo("codiceTavolo",codiceTavolo)
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if(task.isSuccessful()){
+                                                        for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                                            df.collection("TAVOLI").document(documentSnapshot.getId()).update("tableFree",true);
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                }
+                            }
+                        }
+                    }
+                });
+
 
     }
 
