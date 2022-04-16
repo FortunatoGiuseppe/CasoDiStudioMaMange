@@ -51,8 +51,6 @@ public class QRCodeActivity extends AppCompatActivity {
         insertQrCode = findViewById(R.id.insertQrCode);
         TextView benvenuto = findViewById(R.id.textView_benvenuto);
 
-        checkCameraPermission();//controllo se i permessi della fotocamera sono stati dati
-
         Intent intent = getIntent();
         usernameInserito = intent.getStringExtra("UsernameInserito");
         if (usernameInserito==null){
@@ -65,7 +63,6 @@ public class QRCodeActivity extends AppCompatActivity {
         scanQrCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkCameraPermission();
                 scanQrCode();
             }
         });
@@ -84,11 +81,11 @@ public class QRCodeActivity extends AppCompatActivity {
      *
      */
     private void scanQrCode(){
-
+        checkCameraPermission();
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setCaptureActivity(CaptureAct.class);
-        integrator.setOrientationLocked(false);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setOrientationLocked(true);
+        //integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
         integrator.setPrompt(getText(R.string.scannerizzaQr).toString());
         integrator.initiateScan();
     }
