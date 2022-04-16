@@ -65,7 +65,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     //elementi del menu che compare quando si clicca sulle 3 linette
     private MenuItem profileItem;
     public MenuItem lastOrderItem;
-    private MenuItem acc_regItem;
 
     private int count = 0;
 
@@ -104,10 +103,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             lastOrderItem.setEnabled(false);
             lastOrderItem.getIcon().setAlpha(130);
 
-            acc_regItem = navigationView.getMenu().findItem(R.id.acc_reg);
-            acc_regItem.setVisible(true);   //rendo visibile la scritta che suggerisce di loggarsi per accedere a profilo e caricare ultimo ordine
-            acc_regItem.setEnabled(false);
-            acc_regItem.getIcon().setAlpha(130);
         }
         clearSharedPreferencesQuantities();
 
