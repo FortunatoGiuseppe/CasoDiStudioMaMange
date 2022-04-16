@@ -76,7 +76,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ma_mange_navigation);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+
         lAuth = FirebaseAuth.getInstance();
 
         Intent intent = getIntent();
@@ -152,8 +152,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
                 username = username+codiceSingleOrder;
             }
         });
-
-        Objects.requireNonNull(getSupportActionBar()).hide();
 
         Fragment fragment;
         fragment = new RestaurantFragment();
