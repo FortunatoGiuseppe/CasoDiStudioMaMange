@@ -123,13 +123,6 @@ public class SingleOrderFragment extends Fragment {
                                 }
                             });
 
-                            /*Avviso l'utente che l'ordinazione è stata confermata*/
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle(getResources().getString(R.string.ordineSalvato));
-                            builder.setMessage(" ");
-                            AlertDialog dialogConfermato = builder.create();
-                            dialogConfermato.show();
-
                             //pulisco shared delle quantità
                             ((MaMangeNavigationActivity)getContext()).clearSharedPreferencesQuantities();
 
