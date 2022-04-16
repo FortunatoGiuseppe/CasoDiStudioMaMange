@@ -237,8 +237,8 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this
             );
-            builder.setTitle("Sei sicuro che vuoi uscire?");
-            builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            builder.setTitle(getText(R.string.uscire));
+            builder.setPositiveButton(getText(R.string.si), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dbc.deleteAllDataOfUser(codiceTavolo,codiceGroupOrder,codiceSingleOrder,username);
