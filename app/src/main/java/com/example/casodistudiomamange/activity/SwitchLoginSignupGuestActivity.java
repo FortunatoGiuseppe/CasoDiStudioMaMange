@@ -67,8 +67,6 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
         viewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this);
         ManageDownload();
 
-        getSupportActionBar().hide();
-
         viewPager2.setAdapter(viewPagerFragmentAdapter);
         if(lAuth.getCurrentUser() != null){
             Toast.makeText(this,getResources().getString(R.string.loggedIn),Toast.LENGTH_SHORT).show();

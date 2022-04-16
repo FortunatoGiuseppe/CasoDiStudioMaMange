@@ -53,8 +53,6 @@ public class QRCodeActivity extends AppCompatActivity {
 
         checkCameraPermission();//controllo se i permessi della fotocamera sono stati dati
 
-        getSupportActionBar().hide();
-
         Intent intent = getIntent();
         usernameInserito = intent.getStringExtra("UsernameInserito");
         if (usernameInserito==null){
