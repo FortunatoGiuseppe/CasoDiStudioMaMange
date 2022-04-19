@@ -1,5 +1,9 @@
 package com.example.casodistudiomamange.activity;
 
+/**
+ * activity in cui viene gestita la prima parte del quiz
+ */
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
