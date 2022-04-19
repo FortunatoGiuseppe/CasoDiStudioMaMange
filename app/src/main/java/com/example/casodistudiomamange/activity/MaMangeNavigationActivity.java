@@ -64,6 +64,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ma_mange_navigation);
+        bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
 
         lAuth = FirebaseAuth.getInstance();
 
@@ -124,8 +125,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         intent = getIntent();
         codiceTavolo =intent.getStringExtra("CodiceTavolo");
 
-        bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
-
+        /*Creazione dell'oggetto dbc il quale permette la manipolazione dei dati con il database*/
         dbc = new DatabaseController();
         dbc.createOrdersFirestore(codiceTavolo, new DatabaseController.metododiCallback() {
             @Override
@@ -142,7 +142,6 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         loadFragment(fragment);
 
         bottomNavigationView.setOnItemSelectedListener(this);
-
         showBadge(0);
     }
 
@@ -164,6 +163,8 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     }
 
     public Fragment fragment = null;
+
+    /**Metodo per la navigazione tra gli item della bottomNavigationBar**/
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
