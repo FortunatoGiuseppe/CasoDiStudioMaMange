@@ -3,43 +3,41 @@ package com.example.casodistudiomamange.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.casodistudiomamange.R;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
-import com.example.casodistudiomamange.fragment.SingleOrderFragment;
 import com.example.casodistudiomamange.model.SoPlate;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.nl.translate.TranslateLanguage;
 import com.google.mlkit.nl.translate.Translation;
-import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+/** Classe che fornisce un'adattatore alla RecyclerView dei piatti ordinati
+ * Proprietà:
+ * -SHARED_PREFS (shared preferences per il salvataggio in locale della quantità del piatto)
+ * -Context (il contesto)
+ * -plateArrayList (lista di tutti i piatti ordinati)
+ * -total(lista delle quantità del piatto)
+ */
 public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_Ordered.myViewHolder> {
 
     public static final String SHARED_PREFS = "sharedPrefs";
     private Context context;
     private ArrayList<SoPlate> plateArrayList;
     private ArrayList<Integer> total= new ArrayList<>();
-    private View v_gen;
+
     TranslatorOptions options =
             new TranslatorOptions.Builder()
                     .setSourceLanguage(TranslateLanguage.ITALIAN)
@@ -55,7 +53,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     @NonNull
     @Override
     public Adapter_Plates_Ordered.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        v_gen = LayoutInflater.from(context).inflate(R.layout.single_plate_ordered,parent,false);
+       View v_gen = LayoutInflater.from(context).inflate(R.layout.single_plate_ordered,parent,false);
         return new myViewHolder(v_gen);
     }
 
@@ -90,6 +88,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
             }
         }
 
+        /**decremento quantità del piatto**/
         holder.imageMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,11 +97,21 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 //salvo la nuova quantità nello shared preferences
                 saveDataSharedPref(soplate.getNomePiatto(),total.get(position));
                 if(total.get(position) > 0 ) {
-                    ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username,total.get(position));
+                    ((MaMangeNavigationActivity) context).dbc
+                            .decrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context)
+                                    .codiceSingleOrder,((MaMangeNavigationActivity) context)
+                                    .codiceGroupOrder,((MaMangeNavigationActivity) context)
+                                    .codiceTavolo,((MaMangeNavigationActivity) context)
+                                    .username,total.get(position));
                     holder.tvCount.setText(total.get(position) +"");
                 } else {
                     //passo true per indicare che deve essere aggiornato il fragment
-                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username, ((MaMangeNavigationActivity) context),true);
+                    ((MaMangeNavigationActivity) context).dbc
+                            .deletePlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context)
+                                    .codiceSingleOrder,((MaMangeNavigationActivity) context)
+                                    .codiceGroupOrder,((MaMangeNavigationActivity) context)
+                                    .codiceTavolo,((MaMangeNavigationActivity) context)
+                                    .username, ((MaMangeNavigationActivity) context),true);
                     ((MaMangeNavigationActivity) context).updateQuantityOnBadge();
                     holder.addMoreLayout.setVisibility(View.GONE);
                     holder.itemView.setVisibility(View.GONE);
@@ -117,6 +126,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
             }
         });
 
+        /**Incremento quantità del piatto**/
         holder.imageAddOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +135,12 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                 //salvo la nuova quantità nello shared preferences
                 saveDataSharedPref(soplate.getNomePiatto(),total.get(position));
                 if(total.get(position) <= 10 ) {
-                    ((MaMangeNavigationActivity) context).dbc.incrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username, total.get(position));
+                    ((MaMangeNavigationActivity) context).dbc
+                            .incrementQuantityPlateOrdered(soplate.getNomePiatto(),((MaMangeNavigationActivity) context)
+                                    .codiceSingleOrder,((MaMangeNavigationActivity) context)
+                                    .codiceGroupOrder,((MaMangeNavigationActivity) context)
+                                    .codiceTavolo,((MaMangeNavigationActivity) context)
+                                    .username, total.get(position));
                     //aggiorno visualizzatore contatore quantità
                     holder.tvCount.setText(total.get(position) +"");
                 }else{
