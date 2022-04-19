@@ -1,5 +1,10 @@
 package com.example.casodistudiomamange.model;
 
+/** Modello di dati per il tavolo
+ * Proprietà:
+ * - codiceTavolo identificativo del tavolo
+ * - tableFree flag che indica se il tavolo è libero
+ * **/
 public class Table {
     private String codiceTavolo;
     private boolean tableFree;
