@@ -61,7 +61,7 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recognize);
+        setContentView(R.layout.actvity_quiz);
 
         Question = findViewById(R.id.question);
         viewCostraint = findViewById(R.id.imageCostraint);
