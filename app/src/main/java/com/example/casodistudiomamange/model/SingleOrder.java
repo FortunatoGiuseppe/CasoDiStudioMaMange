@@ -1,5 +1,12 @@
 package com.example.casodistudiomamange.model;
 
+/** Modello di dati dell'ordinazione singola
+ * Proprietà:
+ * - codiceSingleOrder identificativo dell'ordinazione singola
+ * - codiceGroupOrder identificativo dell'ordinazione di gruppo
+ * - codiceTavolo identificativo del tavolo
+ * - singleorderConfirmed flag boolean che indica se l'ordinazione è confermata
+ * **/
 public class SingleOrder {
     private String codiceSingleOrder;
     private String codiceGroupOrder;
