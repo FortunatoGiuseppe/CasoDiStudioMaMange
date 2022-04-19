@@ -28,11 +28,15 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Locale;
 
-
+/**Classe che implementa un'adattatore per la RecyclerView delle categorie
+ * Proprietà:
+ * -Context
+ * -Array di Category (lista delle categorie)
+ * **/
 public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myViewHolder> {
 
     private Context context;
-    private ArrayList<Category>  categoryArrayList;
+    private ArrayList<Category>categoryArrayList;
 
 
     TranslatorOptions options =
@@ -51,7 +55,6 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.card_item_category,parent,false);
-
         return  new myViewHolder(v);
     }
 
@@ -62,20 +65,19 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
         if(!Locale.getDefault().getLanguage().equals((new Locale("it").getLanguage()))){
             holder.categoryTv.setText(category.getNome());
         }else{
-
-                //traduzione menù se la lingua non è italiano
-                prepareModelName(category.getNome(), new metododiCallbackTransaltion() {
-                    @Override
-                    public void onCallback(String stringaTradotta) {
-                        holder.categoryTv.setText(stringaTradotta);
-                    }
-                });
-
-
+            //traduzione menù se la lingua non è italiano
+            prepareModelName(category.getNome(), new metododiCallbackTransaltion() {
+                @Override
+                public void onCallback(String stringaTradotta) {
+                    holder.categoryTv.setText(stringaTradotta);
+                }
+            });
         }
 
+        //metodo per caricare l'immagine della catogoria
         Picasso.get().load(category.getImg()).into(holder.imageView);
 
+        //quando viene cliccata l'immagine deve mostrare i piatti relativi a quella categoria
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +96,7 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
         return categoryArrayList.size();
     }
 
+    /** Classe che estende la ViewHolder della RecyclerView**/
     public  static  class myViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
         TextView categoryTv;
@@ -128,7 +131,7 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
     }
 
 
-    /*Interfaccia che permette di chiamare il metodo di Callback delle stringhe tradotte*/
+    /**Interfaccia che permette di chiamare il metodo di Callback delle stringhe tradotte**/
     public interface metododiCallbackTransaltion{
         //metodo che permette di utilizzare ile stringhe tradotte
         void onCallback(String stringaTradotta);
