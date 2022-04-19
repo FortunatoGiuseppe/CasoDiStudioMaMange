@@ -63,6 +63,8 @@ public class SingleOrderFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_single_order, null);
         getActivity().setTitle("Single Order");
 
+        ((MaMangeNavigationActivity)getContext()).topBarTitle.setText(R.string.SingleOrder);
+
         username_tv = v.findViewById(R.id.usernameTextView);
         String ordinazione = getResources().getString(R.string.ordinazione);
         String usernameInserito = ((MaMangeNavigationActivity) getActivity()).username;

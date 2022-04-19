@@ -42,6 +42,7 @@ public class RestaurantFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_restaurant,null);
         getActivity().setTitle("Menu");
+        ((MaMangeNavigationActivity)getContext()).topBarTitle.setText("Menu");
 
         recyclerView = v.findViewById(R.id.recycleview);
         recyclerView.setHasFixedSize(true);

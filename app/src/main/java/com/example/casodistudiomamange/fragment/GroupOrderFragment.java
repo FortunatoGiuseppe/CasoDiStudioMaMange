@@ -57,6 +57,8 @@ public class GroupOrderFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_group_order,null);
         getActivity().setTitle("Group Order");
         table = v.findViewById(R.id.TavoloText);
+
+        ((MaMangeNavigationActivity)getContext()).topBarTitle.setText(R.string.GroupOrder);
         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
 
         table.setText(getContext().getResources().getString(R.string.nordinazione)+" "+codiceTavolo);

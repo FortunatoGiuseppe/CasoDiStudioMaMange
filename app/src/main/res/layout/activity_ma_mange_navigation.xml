@@ -66,7 +66,7 @@
                 android:src="@drawable/ic_menu" />
 
             <TextView
-                android:id="@+id/textTitle"
+                android:id="@+id/topBarTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
