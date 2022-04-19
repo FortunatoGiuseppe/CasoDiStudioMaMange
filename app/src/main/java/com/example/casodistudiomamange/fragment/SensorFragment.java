@@ -342,19 +342,21 @@ public class SensorFragment extends Fragment {
             //altrimenti mostra il razionale, ovvero il perchè è importante dare i seguenti permessi
         } else if(shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION) && shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle(R.string.importanzaDeiPermessi);
-            builder.setMessage(getText(R.string.messaggioPermessi)+"\n"+getText(R.string.richiestaPermessi));
+            AlertDialog.Builder dialogRichiestaPermesso = new AlertDialog.Builder(getContext());
+            dialogRichiestaPermesso.setCancelable(true);
+            dialogRichiestaPermesso.setTitle(R.string.importanzaDeiPermessi);
+            dialogRichiestaPermesso.setMessage(getText(R.string.messaggioPermessi)+"\n"+getText(R.string.richiestaPermessi));
 
-            builder.setPositiveButton(
+            dialogRichiestaPermesso.setPositiveButton(
                     "Si",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            //l'utente è sicuro di non voler chieder epiù i permessi
+
+
                         }
                     });
 
-            builder.setNegativeButton(
+            dialogRichiestaPermesso.setNegativeButton(
                     "Annulla",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -364,8 +366,9 @@ public class SensorFragment extends Fragment {
                         }
                     });
 
-            AlertDialog dialog = builder.create();
+            AlertDialog dialog = dialogRichiestaPermesso.create();
             dialog.show();
+
 
         } else {
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -398,8 +401,9 @@ public class SensorFragment extends Fragment {
                         grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     attivaBluetooth();
 
-                }  else {
+                }  else if (grantResults.length >0 ) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setCancelable(true);
                     builder.setTitle(R.string.importanzaDeiPermessi);
                     builder.setMessage(R.string.messaggioPermessi);
                     AlertDialog dialog = builder.create();
@@ -438,7 +442,6 @@ public class SensorFragment extends Fragment {
             }
         });
     }
-
 }
 
 
