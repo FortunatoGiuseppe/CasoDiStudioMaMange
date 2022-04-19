@@ -627,7 +627,9 @@ public class DatabaseController {
     }
 
     /**
-     * Metodo per il caricamento di categorie. Preleva le categorie dal DB e carica un'arraylist di category
+     * Metodo che preleva le categorie dal DB e le carica nell'arraylist di categorie
+     * @param categories lista delle categorie
+     * @param adapter_category adattatore per la recyclerView delle categorie
      */
     public void caricaCategorie(ArrayList<Category> categories, Adapter_category adapter_category){
         df.collection("CATEGORIE")
