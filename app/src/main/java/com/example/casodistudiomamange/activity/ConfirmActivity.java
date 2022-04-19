@@ -1,6 +1,9 @@
 package com.example.casodistudiomamange.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -18,9 +21,10 @@ import com.example.casodistudiomamange.model.FileOrderManager;
 public class ConfirmActivity extends AppCompatActivity {
 
     ImageView quiz,share;
-    View quizCostraint, shareCostraint, homeconstr,homeTv;
+    View quizCostraint, shareCostraint;
     private static final String FILE_NAME = "lastOrder.txt";
     NetworkChangedListener networkChangedListener = new NetworkChangedListener();
+    int countClicksOnBackButton=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,22 +61,31 @@ public class ConfirmActivity extends AppCompatActivity {
             }
         });
 
-        homeconstr=findViewById(R.id.HomeCostr);
-        homeTv=findViewById(R.id.textHome);
-        //mostro il tasto per tornare alla schermata di inserimento tavolo
-        homeconstr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ConfirmActivity.this, QRCodeActivity.class);
-                intent.putExtra("UsernameInserito",usernameInserito.substring(0,usernameInserito.length()-3));
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
     public void onBackPressed() {
-        //disabilitazione tasto "Indietro"
+        countClicksOnBackButton++;
+        if(countClicksOnBackButton > 1) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this
+            );
+            builder.setTitle(getText(R.string.uscire));
+            builder.setPositiveButton(getText(R.string.si), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finishAffinity(); //elimina tutto lo stack delle activity attive
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    countClicksOnBackButton = 0;
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
 
