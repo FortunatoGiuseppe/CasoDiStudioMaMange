@@ -61,7 +61,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
     public void onBindViewHolder(@NonNull Adapter_Plates_Ordered.myViewHolder holder,@SuppressLint("RecyclerView") int position) {
         SoPlate soplate = plateArrayList.get(position);
         //controllo della lingua del dispositivo
-        if(!Locale.getDefault().getLanguage().equals((new Locale("it").getLanguage()))){
+        if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
             holder.textView_plate.setText(soplate.getNomePiatto());
         }else{
             //traduzione menù

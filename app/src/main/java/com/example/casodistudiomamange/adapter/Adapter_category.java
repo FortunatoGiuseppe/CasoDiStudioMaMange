@@ -62,7 +62,7 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
     public void onBindViewHolder(@NonNull myViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Category category= categoryArrayList.get(position);
         //controllo della lingua del dispositivo
-        if(!Locale.getDefault().getLanguage().equals((new Locale("it").getLanguage()))){
+        if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
             holder.categoryTv.setText(category.getNome());
         }else{
             //traduzione menù se la lingua non è italiano

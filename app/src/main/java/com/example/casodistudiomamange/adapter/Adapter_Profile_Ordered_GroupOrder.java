@@ -47,7 +47,7 @@ public class Adapter_Profile_Ordered_GroupOrder extends RecyclerView.Adapter<Ada
     @Override
     public void onBindViewHolder(@NonNull Adapter_Profile_Ordered_GroupOrderViewHolder holder, int position) {
         //controllo della lingua del dispositivo
-        if(!Locale.getDefault().getLanguage().equals((new Locale("it").getLanguage()))){
+        if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
             holder.plateName.setText(soPlateList.get(position).getNomePiatto());
         }else{
             //traduzione menù
