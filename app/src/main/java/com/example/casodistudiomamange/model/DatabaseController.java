@@ -600,6 +600,9 @@ public class DatabaseController {
 
     /**
      * Metodo che permette di caricare la lista dei piatti letti dal database
+     * @param categoryKey nome della categoria scelta di cui si vuole caricare i piatti
+     * @param plates lista dei piatti
+     * @param adapter_plates adattatore per la recyclerView dei piatti
      */
     public void caricaPiatti(String categoryKey,ArrayList<Plate> plates, Adapter_plates adapter_plates){
         df.collection("PIATTI")
