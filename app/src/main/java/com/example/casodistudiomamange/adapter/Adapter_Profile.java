@@ -1,6 +1,5 @@
 package com.example.casodistudiomamange.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,11 @@ import com.example.casodistudiomamange.model.SoPlate;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Classe che fornisce un'adattatore alla RecyclerView degli utenti
+ * Proprietà:
+ * - profileList (Lista di utenti)
+ * - soPlates (Lista di ordinazioni)
+ */
 public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myViewHolder> {
 
     private List<Profile> profileList;
@@ -57,6 +61,7 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
         holder.recyclerViewPlate.setHasFixedSize(true);
         holder.recyclerViewPlate.setAdapter(adapter);
 
+        //quando viene cliccato l'utente, il layout deve espandersi con la lista dei piatti ordinati
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,6 +81,7 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
         return profileList.size();
     }
 
+    /**Classe che estende la ViewHolder della RecyclerView**/
     public class myViewHolder extends RecyclerView.ViewHolder {
 
         TextView nomeProfilo;
