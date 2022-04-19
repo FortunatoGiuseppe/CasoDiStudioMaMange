@@ -42,7 +42,15 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-
+/**
+ * Classe che fornisce un'adattatore alla RecyclerView dei piatti
+ * Proprietà:
+ * -SHARED_PREFS (shared preferences per il salvataggio in locale della quantità del piatto)
+ * -Context (il contesto)
+ * -plateArrayList (lista di tutti i piatti della categoria)
+ * -total(lista delle quantità del piatto)
+ * -File_NAME (file in cui verrà salvato l'ordinazione)
+ */
 public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHolder> {
 
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -86,15 +94,12 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
 
         }
 
-
+        //caricamento dell'immagine del piatto
         Picasso.get().load(plate.getImg()).into(holder.imageView_plate);
-
 
         //invece di aggiungere quantità a 0 a priori dovrei leggere quantità per i piatti che sono stati caricati da file locale
         Map<String,Long> mapPlateQuantity = new HashMap<>();    //  creo mappa che contiene nome piatto e quantità relativa ordinata nell'ordine salvato
         FileOrderManager fileOrderManager=new FileOrderManager();
-
-
 
         //Se non ho caricato l'ultimo ordine salvato (cioè il tasto per caricarlo è ancora abilitato)
         if(((MaMangeNavigationActivity)context).lastOrderItem.isEnabled()){
@@ -212,19 +217,21 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             });
         }
 
-
+        /**aggiunta del piatto**/
         holder.addPlateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Aggiunta del piatto nel DB
-
-                ((MaMangeNavigationActivity) context).dbc.orderPlate(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username, (long)1);
-
+                ((MaMangeNavigationActivity) context).dbc
+                        .orderPlate(plate.getNome(),((MaMangeNavigationActivity) context)
+                                .codiceSingleOrder,((MaMangeNavigationActivity) context)
+                                .codiceGroupOrder,((MaMangeNavigationActivity) context)
+                                .codiceTavolo,((MaMangeNavigationActivity) context)
+                                .username, (long)1);
                 //aggiornamento icona aggiunta
                 holder.addMoreLayout.setVisibility(View.VISIBLE);
                 holder.addPlateBtn.setVisibility(View.GONE);
-
-
+                //aggiornamento quantità
                 holder.tvCount.setText(String.valueOf(total.get(position)+1));
                 total.set(position, total.get(position)+1);
                 //salvo la quantità nello shared preferences
@@ -233,6 +240,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             }
         });
 
+        /**rimozione del piatto**/
         holder.imageMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,10 +249,20 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 //salvo la nuova quantità nello shared preferences
                 ((MaMangeNavigationActivity) context).saveDataSharedPreferences(plate.getNome(),total.get(position));
                 if(total.get(position) > 0 ) {
-                    ((MaMangeNavigationActivity) context).dbc.decrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username,total.get(position));
+                    ((MaMangeNavigationActivity) context).dbc
+                            .decrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context)
+                                    .codiceSingleOrder,((MaMangeNavigationActivity) context)
+                                    .codiceGroupOrder,((MaMangeNavigationActivity) context)
+                                    .codiceTavolo,((MaMangeNavigationActivity) context)
+                                    .username,total.get(position));
                     holder.tvCount.setText(total.get(position) +"");
                 } else {
-                    ((MaMangeNavigationActivity) context).dbc.deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username,((MaMangeNavigationActivity) context),false);
+                    ((MaMangeNavigationActivity) context).dbc.
+                            deletePlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context)
+                                    .codiceSingleOrder,((MaMangeNavigationActivity) context)
+                                    .codiceGroupOrder,((MaMangeNavigationActivity) context)
+                                    .codiceTavolo,((MaMangeNavigationActivity) context)
+                                    .username,((MaMangeNavigationActivity) context),false);
                     ((MaMangeNavigationActivity) context).updateQuantityOnBadge();
                     holder.addMoreLayout.setVisibility(View.GONE);
                     holder.addPlateBtn.setVisibility(View.VISIBLE);
@@ -257,6 +275,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
             }
         });
 
+        /**Incremento della quantità del piatto**/
         holder.imageAddOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -265,7 +284,12 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
                 //salvo la nuova quantità nello shared preferences
                 ((MaMangeNavigationActivity) context).saveDataSharedPreferences(plate.getNome(),total.get(position));
                 if(total.get(position) <= 10 ) {
-                    ((MaMangeNavigationActivity) context).dbc.incrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context).codiceSingleOrder,((MaMangeNavigationActivity) context).codiceGroupOrder,((MaMangeNavigationActivity) context).codiceTavolo,((MaMangeNavigationActivity) context).username,total.get(position));
+                    ((MaMangeNavigationActivity) context).dbc
+                            .incrementQuantityPlateOrdered(plate.getNome(),((MaMangeNavigationActivity) context)
+                                    .codiceSingleOrder,((MaMangeNavigationActivity) context)
+                                    .codiceGroupOrder,((MaMangeNavigationActivity) context)
+                                    .codiceTavolo,((MaMangeNavigationActivity) context)
+                                    .username,total.get(position));
                     //aggiorno visualizzatore contatore quantità
                     holder.tvCount.setText(total.get(position) +"");
                 }else{
@@ -287,6 +311,7 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         return  plateArrayList.size();
     }
 
+    /**Classe che estende la ViewHolder della RecyclerView**/
     public  static  class myViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView_plate;
         TextView textView_plate;
