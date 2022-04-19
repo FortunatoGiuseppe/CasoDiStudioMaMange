@@ -30,7 +30,7 @@ public class CategoryFragment extends Fragment {
     private RecyclerView recyclerView_plates;
     private ArrayList<Plate> plates;    //lista dei piatti disponibili per la categoria
     private Adapter_plates adapter_plates;
-    //private FirebaseFirestore db;
+
     String categoryKey;
 
 
@@ -41,7 +41,6 @@ public class CategoryFragment extends Fragment {
         Bundle bundle = getArguments();
         categoryKey = bundle.getString("CategoryKey");
 
-        //db = FirebaseFirestore.getInstance();
         plates= new ArrayList<>();
         adapter_plates = new Adapter_plates(getContext(), plates);
     }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
+import com.example.casodistudiomamange.adapter.Adapter_category;
 import com.example.casodistudiomamange.adapter.Adapter_plates;
 import com.example.casodistudiomamange.fragment.SingleOrderFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -620,6 +621,29 @@ public class DatabaseController {
                                 }
                             }
                             adapter_plates.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
+    /**
+     * Metodo per il caricamento di categorie. Preleva le categorie dal DB e carica un'arraylist di category
+     */
+    public void caricaCategorie(ArrayList<Category> categories, Adapter_category adapter_category){
+        df.collection("CATEGORIE")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.e("Firestone error", error.getMessage());
+                            return;
+                        }
+
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            if (dc.getType() == DocumentChange.Type.ADDED) {
+                                categories.add(dc.getDocument().toObject(Category.class));
+                            }
+                            adapter_category.notifyDataSetChanged();
                         }
                     }
                 });
