@@ -218,9 +218,15 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     @Override
     public void onBackPressed() {
 
+        // prendo la lista dei fragment attivi
+        List<Fragment> allCurrentFragments=getSupportFragmentManager().getFragments();
+        Fragment currentFragment = allCurrentFragments.get(allCurrentFragments.size() - 1);
+
         //Una volta entrato nella sezione menù non è più possibile tornare indietro alla selezione del tavolo
         if(bottomNavigationView.getSelectedItemId()==R.id.restaurant_menu){
-            countClicksOnBackButton++;
+            if(currentFragment.getClass()== RestaurantFragment.class) { //solo se sono nel fragment di visualizzazione categorie del menu
+                countClicksOnBackButton++;
+            }
             bottomNavigationView.setSelectedItemId(R.id.restaurant_menu);
         }
 
@@ -235,6 +241,8 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         if(bottomNavigationView.getSelectedItemId()==R.id.recycleview_plates){
             bottomNavigationView.setSelectedItemId(R.id.restaurant_menu);
         }
+
+
 
         //Se clicco due volte sul tasto back allora è probabile che si vuole chiudere l'app
         if(countClicksOnBackButton > 1){
