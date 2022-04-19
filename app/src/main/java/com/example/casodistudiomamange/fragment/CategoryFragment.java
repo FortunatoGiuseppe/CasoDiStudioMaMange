@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
 import com.example.casodistudiomamange.adapter.Adapter_plates;
 import com.example.casodistudiomamange.model.Plate;
 import com.google.firebase.firestore.DocumentChange;
@@ -29,8 +30,8 @@ public class CategoryFragment extends Fragment {
     private RecyclerView recyclerView_plates;
     private ArrayList<Plate> plates;    //lista dei piatti disponibili per la categoria
     private Adapter_plates adapter_plates;
-    private FirebaseFirestore db;
-    String CategoryKey;
+    //private FirebaseFirestore db;
+    String categoryKey;
 
 
     @Override
@@ -38,12 +39,11 @@ public class CategoryFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getArguments();
-        CategoryKey = bundle.getString("CategoryKey");
+        categoryKey = bundle.getString("CategoryKey");
 
-        db = FirebaseFirestore.getInstance();
+        //db = FirebaseFirestore.getInstance();
         plates= new ArrayList<>();
         adapter_plates = new Adapter_plates(getContext(), plates);
-
     }
 
     @Override
@@ -59,42 +59,14 @@ public class CategoryFragment extends Fragment {
 
         recyclerView_plates.setAdapter(adapter_plates);
 
-        //Carica la lista con i piatti letti dal DB, presi in base alla categoria selezoionata
-        caricaPiatti();
+        //Carica la lista dei piatti letti dal DB, presi in base alla categoria selezionata
+        ((MaMangeNavigationActivity) getActivity()).dbc.caricaPiatti(categoryKey,plates,adapter_plates);
 
         return v;
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-
-
-    /**
-     * Metodo che carica la lista con i piatti letti dal DB, presi in base alla categoria selezionata
-     */
-    public void caricaPiatti() {
-
-        db.collection("PIATTI")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            Log.e("Firestone error", error.getMessage());
-                            return;
-                        }
-
-                        for (DocumentChange dc : value.getDocumentChanges()) {
-                            if (dc.getType() == DocumentChange.Type.ADDED) {
-                                if(dc.getDocument().get("categoria")!=null && dc.getDocument().get("categoria").equals(CategoryKey)) {
-                                    plates.add(dc.getDocument().toObject(Plate.class));
-                                }
-                            }
-                            adapter_plates.notifyDataSetChanged();
-                        }
-                    }
-                });
     }
 }

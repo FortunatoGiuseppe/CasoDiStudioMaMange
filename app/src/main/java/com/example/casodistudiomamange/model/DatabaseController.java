@@ -1,19 +1,25 @@
 package com.example.casodistudiomamange.model;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
+import com.example.casodistudiomamange.adapter.Adapter_plates;
 import com.example.casodistudiomamange.fragment.SingleOrderFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -590,6 +596,30 @@ public class DatabaseController {
                 });
 
 
+    }
+
+    /**
+     * Metodo che permette di caricare la lista dei piatti letti dal database
+     */
+    public void caricaPiatti(String categoryKey,ArrayList<Plate> plates, Adapter_plates adapter_plates){
+        df.collection("PIATTI")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.e("Firestone error", error.getMessage());
+                            return;
+                        }
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            if (dc.getType() == DocumentChange.Type.ADDED) {
+                                if(dc.getDocument().get("categoria")!=null && dc.getDocument().get("categoria").equals(categoryKey)) {
+                                    plates.add(dc.getDocument().toObject(Plate.class));
+                                }
+                            }
+                            adapter_plates.notifyDataSetChanged();
+                        }
+                    }
+                });
     }
 
     /**Interfaccia che permette di chiamare il metodo di Callback**/
