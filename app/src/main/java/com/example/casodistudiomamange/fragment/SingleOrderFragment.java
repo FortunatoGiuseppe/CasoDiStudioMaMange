@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/** Fragment che si occupa della visulizzazione dell'ordine personale dell'utente **/
 public class SingleOrderFragment extends Fragment {
 
     private static final String FILE_NAME = "lastOrder.txt";
