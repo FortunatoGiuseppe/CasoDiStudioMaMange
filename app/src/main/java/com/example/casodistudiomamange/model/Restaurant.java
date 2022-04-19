@@ -1,5 +1,9 @@
 package com.example.casodistudiomamange.model;
 
+/** Modelli di dati delle categorie
+ * Proprietà:
+ * - img stringa che contiene l'url dell'immagine della categoria
+ * **/
 public class Restaurant {
     private String img;
 
