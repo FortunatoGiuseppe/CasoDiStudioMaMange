@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/** Fragment che si occupa della visulizzazione dell'ordine personale dell'utente **/
 public class SingleOrderFragment extends Fragment {
 
     private static final String FILE_NAME = "lastOrder.txt";
@@ -61,6 +62,8 @@ public class SingleOrderFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_single_order, null);
         getActivity().setTitle("Single Order");
+
+        ((MaMangeNavigationActivity)getContext()).topBarTitle.setText(R.string.SingleOrder);
 
         username_tv = v.findViewById(R.id.usernameTextView);
         String ordinazione = getResources().getString(R.string.ordinazione);

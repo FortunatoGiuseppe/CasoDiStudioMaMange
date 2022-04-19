@@ -2,6 +2,12 @@ package com.example.casodistudiomamange.model;
 
 import java.util.ArrayList;
 
+/** Modello di dati degli utenti
+ * Proprietà:
+ * -nomeProfilo stringa che indica il nome dell'utente
+ * -expandable flag che indica se è espandibile
+ * -soPlates lista di ordinazioni
+ * **/
 public class Profile {
 
     private String nomeProfilo;

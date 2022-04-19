@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.connection.NetworkChangedListener;
@@ -42,6 +43,7 @@ import java.util.Map;
  */
 public class MaMangeNavigationActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener{
     public DatabaseController dbc;  //istanza per utilizzare metodi relativi al DB
+    public TextView topBarTitle;
     BottomNavigationView bottomNavigationView;  //riferimento utilizzato per accedere alla barra in alto con le 3 linee orizzontali
     public String username;
     public String codiceTavolo;
@@ -65,6 +67,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ma_mange_navigation);
         bottomNavigationView=findViewById(R.id.bottom_navigation_bar);
+        topBarTitle =findViewById(R.id.topBarTitle);
 
         lAuth = FirebaseAuth.getInstance();
 
@@ -218,9 +221,15 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
     @Override
     public void onBackPressed() {
 
+        // prendo la lista dei fragment attivi
+        List<Fragment> allCurrentFragments=getSupportFragmentManager().getFragments();
+        Fragment currentFragment = allCurrentFragments.get(allCurrentFragments.size() - 1);
+
         //Una volta entrato nella sezione menù non è più possibile tornare indietro alla selezione del tavolo
         if(bottomNavigationView.getSelectedItemId()==R.id.restaurant_menu){
-            countClicksOnBackButton++;
+            if(currentFragment.getClass()== RestaurantFragment.class) { //solo se sono nel fragment di visualizzazione categorie del menu
+                countClicksOnBackButton++;
+            }
             bottomNavigationView.setSelectedItemId(R.id.restaurant_menu);
         }
 
@@ -235,6 +244,8 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
         if(bottomNavigationView.getSelectedItemId()==R.id.recycleview_plates){
             bottomNavigationView.setSelectedItemId(R.id.restaurant_menu);
         }
+
+
 
         //Se clicco due volte sul tasto back allora è probabile che si vuole chiudere l'app
         if(countClicksOnBackButton > 1){

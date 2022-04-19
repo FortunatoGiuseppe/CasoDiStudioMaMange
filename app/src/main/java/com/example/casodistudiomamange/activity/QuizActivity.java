@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.casodistudiomamange.R;
-import com.example.casodistudiomamange.model.Question;
 import com.example.casodistudiomamange.model.RecognizeModel;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class RecognizeActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity {
 
     private static final int DOMANDE = 2;
     private TextView tvScore, NoQuestion, Question;
@@ -62,7 +61,7 @@ public class RecognizeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recognize);
+        setContentView(R.layout.actvity_quiz);
 
         Question = findViewById(R.id.question);
         viewCostraint = findViewById(R.id.imageCostraint);
@@ -128,7 +127,7 @@ public class RecognizeActivity extends AppCompatActivity {
                         progressBar.setProgress(currentProgress);
                         progressBar.setMax(100);
                     } else{
-                        Toast.makeText(RecognizeActivity.this, R.string.inserireValore, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuizActivity.this, R.string.inserireValore, Toast.LENGTH_SHORT).show();
                     }
                 } else{
                     showNextQuestion();
@@ -178,7 +177,7 @@ public class RecognizeActivity extends AppCompatActivity {
 
         if(wrongAnswer>=2){
             String usernameInserito = getIntent().getStringExtra("UsernameInserito");
-            Intent intent = new Intent(RecognizeActivity.this, CongratulationActivity.class);
+            Intent intent = new Intent(QuizActivity.this, CongratulationActivity.class);
             intent.putExtra("UsernameInserito",usernameInserito);
             startActivity(intent);
         }else{
@@ -207,7 +206,7 @@ public class RecognizeActivity extends AppCompatActivity {
             }
             else{
                 String usernameInserito = getIntent().getStringExtra("UsernameInserito");
-                Intent intent = new Intent(RecognizeActivity.this, CongratulationActivity.class);
+                Intent intent = new Intent(QuizActivity.this, CongratulationActivity.class);
                 intent.putExtra("score", score);
                 intent.putExtra("UsernameInserito",usernameInserito);
                 startActivity(intent);

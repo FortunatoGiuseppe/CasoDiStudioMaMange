@@ -217,7 +217,7 @@ public class QuestionActivity extends AppCompatActivity {
             }else{
                 String usernameInserito = getIntent().getStringExtra("UsernameInserito");
 
-                Intent intent = new Intent(QuestionActivity.this, RecognizeActivity.class);
+                Intent intent = new Intent(QuestionActivity.this, QuizActivity.class);
                 intent.putExtra("score", score);
                 intent.putExtra("UsernameInserito",usernameInserito);
                 intent.putExtra("wrongAnswer",wrongAnswer);

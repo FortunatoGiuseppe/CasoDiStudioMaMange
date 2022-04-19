@@ -30,6 +30,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Fragment nel quale viene mostrato il group Order**/
 public class GroupOrderFragment extends Fragment {
 
     RecyclerView recyclerView;
@@ -56,6 +57,8 @@ public class GroupOrderFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_group_order,null);
         getActivity().setTitle("Group Order");
         table = v.findViewById(R.id.TavoloText);
+
+        ((MaMangeNavigationActivity)getContext()).topBarTitle.setText(R.string.GroupOrder);
         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
 
         table.setText(getContext().getResources().getString(R.string.nordinazione)+" "+codiceTavolo);
@@ -68,6 +71,7 @@ public class GroupOrderFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter_profile);
 
+        //leggo le ordinazioni
         leggiUsername(new metododiCallbackListaProfili() {
             @Override
             public void onCallback(List<Profile> profili) {
@@ -84,6 +88,7 @@ public class GroupOrderFragment extends Fragment {
             }
         });
 
+        //Quando viene fatto lo swipe bisogna ricaricare la fragment per permettere di visualizzare i dati aggiornati
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -91,11 +96,10 @@ public class GroupOrderFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
         return v;
     }
 
-    /*metodo che ricarica questa fragment*/
+    /**metodo che ricarica GroupOrderFragment**/
     private void reloadFragment(){
         Fragment fragment=new GroupOrderFragment();
         FragmentManager manager = this.getActivity().getSupportFragmentManager();
@@ -103,12 +107,14 @@ public class GroupOrderFragment extends Fragment {
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
-    /*Metodo che serve a leggere ogni username del GroupOrder corrente ed ad inserirlo in una lista di profili*/
+
+    /**Metodo che serve per leggere ogni username del GroupOrder corrente ed ad inserirlo in una lista di profili
+     * @param profilicallback metodo che permette di aggiornare la lista degli utenti**/
     private void leggiUsername(metododiCallbackListaProfili profilicallback){
 
         String groupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
-        ArrayList<SoPlate> listaUtentiDelGroupOrder = new ArrayList<>(); //lista che conterrà i document di soplate letti dal db
+        ArrayList<SoPlate> listaOrdinazioni = new ArrayList<>(); //lista che conterrà i document di soplate letti dal db
         //Query 1: dobbiamo selezionare tutti gli utenti di quel group order
         //Query 2: Per ogni utente dobbiamo selezionare tutti gli so-plate associati a lui che ha ordinato
 
@@ -121,26 +127,25 @@ public class GroupOrderFragment extends Fragment {
 
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                        if (listaUtentiDelGroupOrder.size() == 0) { //se è vuota aggiungi quello appena letto
-                            listaUtentiDelGroupOrder.add(documentSnapshot.toObject(SoPlate.class));
+                        if (listaOrdinazioni.size() == 0) { //se la lista di soPlate è vuota aggiungi quello appena letto
+                            listaOrdinazioni.add(documentSnapshot.toObject(SoPlate.class));
                             Profile profile = new Profile();
                             profile.setNomeProfilo(documentSnapshot.toObject(SoPlate.class).getUsername());
                             profileList.add(profile);
                             profilicallback.onCallback(profileList);
                             adapter_profile.notifyDataSetChanged();
-                        } else {
-                            //variabile che serve a capire se esiste già nella lista un username
+                        } else { //se la lista di soPlate non è vuota allora controllo se in questa lista quindi
+                            //flag che serve a capire se esiste già nella lista un username
                             boolean trovato = false;
-                            //per tutti gli elementi della lista vedi se esiste un document di soplate che ha come username
-                            // quello del document che si ha appena letto
-                            for (int j = 0; j < listaUtentiDelGroupOrder.size(); j++) {
-                                if (listaUtentiDelGroupOrder.get(j).getUsername().equals(documentSnapshot.toObject(SoPlate.class).getUsername())) {
+                            //per tutti gli elementi della lista di soPlate vedi se esiste un document di soplate(quindi un piatto ordinato) che ha come username quello del document che si è appena letto
+                            for (int j = 0; j < listaOrdinazioni.size(); j++) {
+                                if (listaOrdinazioni.get(j).getUsername().equals(documentSnapshot.toObject(SoPlate.class).getUsername())) {
                                     trovato = true;
                                 }
                             }
                             //se non esiste un suddetto documento allora quello appena letto va aggiunto alla lista
                             if (!trovato) {
-                                listaUtentiDelGroupOrder.add(documentSnapshot.toObject(SoPlate.class));
+                                listaOrdinazioni.add(documentSnapshot.toObject(SoPlate.class));
                                 Profile profile = new Profile();
                                 profile.setNomeProfilo(documentSnapshot.toObject(SoPlate.class).getUsername());
                                 profileList.add(profile);
@@ -154,8 +159,14 @@ public class GroupOrderFragment extends Fragment {
         });
     }
 
-    /*Metodo che serve a leggere ogni SoPlate del GroupOrder corrente ed ad inserire
-    * ogni lista di SoPlate di un utente in una lista di SoPlate generica di tutti gli utenti*/
+    /**Metodo che permette di leggere ogni ordinazione del GroupOrder.
+     * 1. Legge dal db tutte le ordinazioni del grouporder associato al tavolo
+     * 2. Per ogni utente crea la lista della propria ordinazione (listaordiniutente)
+     * 3. Aggiorna la lista contenente tutte le ordinazioni(listadiliste) con la lista delle ordinazioni per utente(listaordiniutente)
+     *
+     * @param profileList lista di utenti
+     * @param listadiListeCallBack metodo per aggiornare la lista di tutte le ordinazioni di tutti gli utenti
+     * */
     private void leggiOrdinazioni(List<Profile> profileList, metododiCallbackListadiListe listadiListeCallBack){
         String groupOrder = ((MaMangeNavigationActivity) getActivity()).codiceGroupOrder;
         String codiceTavolo = ((MaMangeNavigationActivity) getActivity()).codiceTavolo;
@@ -187,18 +198,20 @@ public class GroupOrderFragment extends Fragment {
                 }
             });
         }
-    }
 
-    /*Interfaccia che permette di chiamare il metodo di Callback*/
+    /**Interfaccia che permette di chiamare il metodo di Callback dei profili**/
     interface metododiCallbackListaProfili{
         //metodo che permette di utilizzare il codiceSingleOrder e codiceGroupOrder letto dal db
         void onCallback(List<Profile> profili);
     }
 
-    /*Interfaccia che permette di chiamare il metodo di Callback*/
+    /**Interfaccia che permette di chiamare il metodo di Callback della lista di tutte le ordinazioni**/
     interface metododiCallbackListadiListe{
         //metodo che permette di utilizzare il codiceSingleOrder e codiceGroupOrder letto dal db
         void onCallback(ArrayList<ArrayList<SoPlate>> listadiListeCallBack);
     }
+}
+
+
 
 

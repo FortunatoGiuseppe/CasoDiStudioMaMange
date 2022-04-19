@@ -1,5 +1,14 @@
 package com.example.casodistudiomamange.model;
 
+/** Modello di dati per le ordinazioni
+ * Proprietà:
+ * - codiceSingleOrder identificativo dell'ordinazione singola
+ * - nomePiatto stringa che indica il nome del piatto
+ * - quantità numero intero che indica la quantità dei piatti ordinati
+ * - codiceGroupOrder identificativo dell'ordinazione di gruppo
+ * - codiceTavolo identificativo del tavolo
+ * - username stringa che indica il nome inserito dall'utente per potersi identificare nell'ordine
+ * **/
 public class SoPlate {
     private String codiceSingleOrder;
     private String nomePiatto;

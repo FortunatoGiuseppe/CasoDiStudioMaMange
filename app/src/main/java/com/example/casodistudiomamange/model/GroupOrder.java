@@ -1,5 +1,11 @@
 package com.example.casodistudiomamange.model;
 
+/** Modello di dati GroupOrder
+ * Proprietà:
+ * - codice stringa univoca che identifica il GroupOrder
+ * - tableFree flag che indica se il tavolo è libero
+ * - codiceTavolo stringa univoca che identifica il Tavolo
+ */
 public class GroupOrder {
     private String codice;
     private boolean tableFree;

@@ -22,17 +22,17 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
+/** Fragment che si occupa della visualizzazione delle categorie del menu del ristornate*/
 public class RestaurantFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ArrayList<Category> categories;    //lista che conterrà i nomi delle categorie
     private Adapter_category adapter_category;
-    private FirebaseFirestore db;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = FirebaseFirestore.getInstance();
         categories= new ArrayList<>();
         adapter_category = new Adapter_category(getContext(), categories);
     }
@@ -42,13 +42,14 @@ public class RestaurantFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_restaurant,null);
         getActivity().setTitle("Menu");
+        ((MaMangeNavigationActivity)getContext()).topBarTitle.setText("Menu");
 
         recyclerView = v.findViewById(R.id.recycleview);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2 , LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter_category);
-        caricaCategorie();
+        ((MaMangeNavigationActivity) getActivity()).dbc.caricaCategorie(categories,adapter_category);
 
         return v;
     }
@@ -58,26 +59,5 @@ public class RestaurantFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    /**
-     * Metodo per il caricamento di categorie. Preleva le categorie dal DB e carica un'arraylist di category
-     */
-    public void caricaCategorie(){
-        db.collection("CATEGORIE")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            Log.e("Firestone error", error.getMessage());
-                            return;
-                        }
 
-                        for (DocumentChange dc : value.getDocumentChanges()) {
-                            if (dc.getType() == DocumentChange.Type.ADDED) {
-                                categories.add(dc.getDocument().toObject(Category.class));
-                            }
-                            adapter_category.notifyDataSetChanged();
-                        }
-                    }
-                });
-    }
 }
