@@ -133,7 +133,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             public void onCallback(String codiceSingleOrderCheMiServe, String codiceGroupOrderCheMiServe) {
                 codiceSingleOrder = codiceSingleOrderCheMiServe;
                 codiceGroupOrder = codiceGroupOrderCheMiServe;
-                username = username+codiceSingleOrder;
+                username = username+" "+codiceSingleOrder;
             }
         });
 
