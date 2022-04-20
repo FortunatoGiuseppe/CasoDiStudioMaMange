@@ -184,20 +184,30 @@ public class SingleOrderFragment extends Fragment {
                         FileOrderManager fileOrderManager= new FileOrderManager();
                         fileOrderManager.loadPlateLastOrder((MaMangeNavigationActivity) getActivity(), FILE_NAME,soPlate);
 
+                        //Se ho letto dei piatti allora devo stamparli, altrimenti avviso che non ci sono piatti
+                        if(soPlate.size()>0){
+                            //Se ho caricato l'ultimo ordine salvato allora devo aggiungere nello shared preferences i piatti letti
+                            for (int i = 0; i < soPlate.size(); i++) {
+                                ((MaMangeNavigationActivity) getContext()).saveDataSharedPreferences(soPlate.get(i).getNomePiatto(), (int) soPlate.get(i).getQuantita());
+                            }
 
-                        //Se ho caricato l'ultimo ordine salvato allora devo aggiungere nello shared preferences i piatti letti
-                        for (int i = 0; i < soPlate.size(); i++) {
-                            ((MaMangeNavigationActivity) getContext()).saveDataSharedPreferences(soPlate.get(i).getNomePiatto(), (int) soPlate.get(i).getQuantita());
+                            ((MaMangeNavigationActivity) getActivity()).showBadge(soPlate.size()); //aggiorno quantità del badge
+                            isSingleOrderEmpty=false;   //ho aggiunto piatti quindi single order non è più vuoto
+
+                            AlertDialog.Builder builderCaricato = new AlertDialog.Builder(getActivity());
+                            builderCaricato.setTitle(getResources().getString(R.string.ordineCaricato));
+                            builderCaricato.setMessage(" ");
+                            AlertDialog dialogCaricato = builderCaricato.create();
+                            dialogCaricato.show();
+                        }else{
+                            AlertDialog.Builder builderNonCaricato = new AlertDialog.Builder(getActivity());
+                            builderNonCaricato.setTitle(getResources().getString(R.string.ordineNonCaricato));
+                            builderNonCaricato.setMessage(" ");
+                            AlertDialog dialogNonCaricato = builderNonCaricato.create();
+                            dialogNonCaricato.show();
                         }
 
-                        ((MaMangeNavigationActivity) getActivity()).showBadge(soPlate.size()); //aggiorno quantità del badge
-                        isSingleOrderEmpty=false;   //ho aggiunto piatti quindi single order non è più vuoto
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle(getResources().getString(R.string.ordineCaricato));
-                        builder.setMessage(" ");
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
 
                     }else if (!isSingleOrderEmpty && wantsLastOrder){
                             //se vuole caricare ordine ma ha già aggiunto piatti allora devo comunicare che non può farlo
