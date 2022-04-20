@@ -60,6 +60,7 @@
     <string name="filename">lastOrder</string>
     <string name="ordineSalvato">Your order has been confirmed!</string>
     <string name="ordineCaricato">Your last order has been loaded!</string>
+    <string name="ordineNonCaricato">There is no saved order!</string>
     <string name="acc_reg">Login to unlock</string>
     <string name="attenzione">Warning!</string>
     <string name="msgAttenzione">You are saving your order and you will no longer be able to modify it. Would you proceed?</string>
