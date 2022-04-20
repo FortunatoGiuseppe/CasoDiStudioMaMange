@@ -1,5 +1,9 @@
 package com.example.casodistudiomamange.adapter;
 
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +48,14 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
     @Override
     public void onBindViewHolder(@NonNull Adapter_Profile.myViewHolder holder, int position) {
         Profile profile = profileList.get(position);
-        holder.nomeProfilo.setText(profile.getNomeProfilo());
+
+        //Prossime righe utili solo per cambiare colore a codice SO
+        String nomeProfiloDaStampare=profile.getNomeProfilo();
+        Spannable spannable = new SpannableString(nomeProfiloDaStampare);
+        spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#8C7C7C")), nomeProfiloDaStampare.length()-3, nomeProfiloDaStampare.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.nomeProfilo.setText(spannable, TextView.BufferType.SPANNABLE);
+
+
         boolean isExpandible = profileList.get(position).isExpandable();
         holder.expandableLayout.setVisibility(isExpandible ? View.VISIBLE : View.GONE);
 
