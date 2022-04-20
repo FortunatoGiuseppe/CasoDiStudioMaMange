@@ -107,7 +107,8 @@
     <string name="annulla">Annulla</string>
     <string name="indietro">Indietro</string>
     <string name="soloxregi">Solo per utenti registrati</string>
-    <string name="uscire">Uscire dall\'applicazione?</string>
+    <string name="uscire">Sei sicuro di voler uscire dall\'applicazione?</string>
+    <string name="uscireMsg">Se confermi, cancellerai la tua ordinazione corrente.</string>
 
 
 

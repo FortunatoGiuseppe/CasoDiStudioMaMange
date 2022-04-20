@@ -253,6 +253,7 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
             AlertDialog.Builder builder = new AlertDialog.Builder(this
             );
             builder.setTitle(getText(R.string.uscire));
+            builder.setMessage(getText(R.string.uscireMsg));
             builder.setPositiveButton(getText(R.string.si), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
