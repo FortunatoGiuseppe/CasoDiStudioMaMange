@@ -213,6 +213,11 @@ public class MaMangeNavigationActivity extends AppCompatActivity implements Bott
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
                 return true;
             }
+
+            if (currentFragment.getClass()==SingleOrderFragment.class){
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                return true;
+            }
         }
         return true;
     }
