@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.casodistudiomamange.activity.SwitchLoginSignupGuestActivity;
 import com.example.casodistudiomamange.fragment.SensorFragment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -86,11 +87,16 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
         if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
             holder.textView_plate.setText(plate.getNome());
             holder.textView_plate_description.setText(plate.getDescrizione());
-
         }else{
-            //traduzione del menù
-            prepareModel(plate.getNome(),holder.textView_plate);
-            prepareModel(plate.getDescrizione(),holder.textView_plate_description);
+            if(SwitchLoginSignupGuestActivity.controlValue==1){
+                holder.textView_plate.setText(plate.getNome());
+                holder.textView_plate_description.setText(plate.getDescrizione());
+            }else{
+                //traduzione del menù
+                prepareModel(plate.getNome(),holder.textView_plate);
+                prepareModel(plate.getDescrizione(),holder.textView_plate_description);
+            }
+
 
         }
 
@@ -348,15 +354,18 @@ public class Adapter_plates extends RecyclerView.Adapter<Adapter_plates.myViewHo
      * @param trans stringa tradotta
      */
     private void prepareModel(String trans,TextView holder){
+
         Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
             @Override
             public void onSuccess(String s) {
                 holder.setText(s);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 holder.setText(trans);
+
             }
         });
     }
