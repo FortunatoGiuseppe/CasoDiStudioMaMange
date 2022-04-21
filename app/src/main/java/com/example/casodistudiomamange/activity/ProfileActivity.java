@@ -21,38 +21,49 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
+/*
+ * Activity nel quale viene mostrata l'email dell'utente
+ * e permette a quest'ultimo di poter modificare la sua password
+ * e di fare logout
+ */
 public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth lAuth;
     NetworkChangedListener networkChangedListener = new NetworkChangedListener();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        getSupportActionBar().hide();
 
         View logout = findViewById(R.id.back);
         View changePsw = findViewById(R.id.change);
         lAuth = FirebaseAuth.getInstance();
         TextView email = findViewById(R.id.showEmailUtente);
 
-        String emailInserito = getEmail();
+        String emailInserito = getEmail(); //metodo per ottenere l'email dell'utente loggato
         email.setText(emailInserito);
 
         changePsw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ChangePassword();
+                ChangePassword(); //metodo usato per modificare la password dell'utente loggato
             }
         });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logout();
+                logout(); //metodo usato per permettere all'utente loggato di fare logout
             }
         });
     }
 
+
+    /*
+     * Metodo usato per modificare la password dell'utente loggato
+     */
     private void ChangePassword(){
         EditText resetEmail = new EditText(ProfileActivity.this);
         AlertDialog.Builder passResetDialog = new AlertDialog.Builder(ProfileActivity.this);
@@ -88,12 +99,19 @@ public class ProfileActivity extends AppCompatActivity {
         passResetDialog.create().show();
     }
 
+
+    /*
+     * Metodo usato per permettere all'utente loggato di fare logout
+     */
     public void logout(){
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(this,SwitchLoginSignupGuestActivity.class));
         finish();
     }
 
+    /*
+     * Metodo per ottenere l'email dell'utente loggato
+     */
     private String getEmail(){
         if(lAuth.getCurrentUser()!=null){
             return lAuth.getCurrentUser().getEmail();
@@ -103,7 +121,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onStart(){
-        //verifica della presenza della connessione internet
         IntentFilter filter= new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangedListener, filter);
         super.onStart();
@@ -111,7 +128,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        //verifica della presenza della connessione internet
         unregisterReceiver(networkChangedListener);
         super.onStop();
     }

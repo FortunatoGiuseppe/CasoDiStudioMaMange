@@ -12,6 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.casodistudiomamange.R;
 
+/*
+ * Activity che permette all'utente di poter mandare un email
+ * agli sviluppatori per un supporto riguardante l'app
+ */
 public class SupportActivity extends AppCompatActivity {
     EditText etSubject, etMessage;
     TextView etTo;
@@ -31,12 +35,20 @@ public class SupportActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Viene inserito nell'array ,che servirà
+                // nella creazione dell'email, il destinario
                 String recipientList = etTo.getText().toString();
                 String[] recipients = recipientList.split(",");
 
+                //Viene salvato l'oggetto e il
+                // il contenuto dell'email
                 String subject = etSubject.getText().toString();
                 String message = etMessage.getText().toString();
 
+                //Viene creata l'email con
+                //il destinatario, il soggetto,
+                // e il messaggio di richiesta
+                //da parte dell'utente
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_EMAIL, recipients);
                 intent.putExtra(Intent.EXTRA_SUBJECT, subject);

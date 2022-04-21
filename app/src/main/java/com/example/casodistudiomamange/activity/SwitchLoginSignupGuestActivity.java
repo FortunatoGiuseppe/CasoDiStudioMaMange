@@ -47,6 +47,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
     ViewPagerFragmentAdapter viewPagerFragmentAdapter;
     TabLayout tabLayout;
     ViewPager2 viewPager2;
+    public static int controlValue=0;
     private final String[] titles = {"Guest", "Login", "Signup"};
     private final String[] titles_it = {"Ospite", "Accedi", "Registrati"};
     TranslatorOptions options =
@@ -136,12 +137,13 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     progressBar();
                     downloadModel();
+                    controlValue=0;
                 }
             });
             mBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-
+                    controlValue=1;
                 }
             });
 

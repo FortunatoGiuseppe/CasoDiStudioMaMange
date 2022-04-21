@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.casodistudiomamange.activity.SwitchLoginSignupGuestActivity;
 import com.example.casodistudiomamange.fragment.CategoryFragment;
 import com.example.casodistudiomamange.model.Category;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -66,12 +67,17 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
             holder.categoryTv.setText(category.getNome());
         }else{
             //traduzione menù se la lingua non è italiano
-            prepareModelName(category.getNome(), new metododiCallbackTransaltion() {
-                @Override
-                public void onCallback(String stringaTradotta) {
-                    holder.categoryTv.setText(stringaTradotta);
-                }
-            });
+            if(SwitchLoginSignupGuestActivity.controlValue==1){
+                holder.categoryTv.setText(category.getNome());
+            }else{
+                prepareModelName(category.getNome(), new metododiCallbackTransaltion() {
+                    @Override
+                    public void onCallback(String stringaTradotta) {
+                        holder.categoryTv.setText(stringaTradotta);
+                    }
+                });
+            }
+
         }
 
         //metodo per caricare l'immagine della catogoria
