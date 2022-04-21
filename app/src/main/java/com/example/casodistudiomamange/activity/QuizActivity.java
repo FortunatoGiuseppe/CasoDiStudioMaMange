@@ -7,8 +7,10 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.casodistudiomamange.R;
+import com.example.casodistudiomamange.model.Question;
 import com.example.casodistudiomamange.model.RecognizeModel;
 
 import java.util.ArrayList;
@@ -31,13 +34,13 @@ public class QuizActivity extends AppCompatActivity {
     private TextView tvScore, NoQuestion, Question;
     private EditText op1;
     private List<RecognizeModel> questionList;
-    int totalQuestion = 5;
-    int qCounter = 3;
-    int score;
-    int wrongAnswer;
-    int i=0;
-    int width=350;
-    int height=350;
+    private int totalQuestion = 5;
+    private int qCounter = 3;
+    private int score, Ftime;
+    private int wrongAnswer;
+    private int i=0;
+    private int width=350;
+    private int height=350;
     View viewCostraint;
     ColorStateList dfRbColor;
 
@@ -48,7 +51,8 @@ public class QuizActivity extends AppCompatActivity {
 
     private TextView textViewShowTime;
     private CountDownTimer countDownTimer;
-    private long totalTimeCountInMilliseconds;
+    private static final long START_TIME = 21000;
+    private long timeLeft = START_TIME;
 
     Bitmap bmp;
     boolean answered;
@@ -81,6 +85,8 @@ public class QuizActivity extends AppCompatActivity {
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar_timerview);
         mProgressBar1 = (ProgressBar) findViewById(R.id.progressbar1_timerview);
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mProgressBar1.setVisibility(View.VISIBLE);
 
         tvScore = findViewById(R.id.textScore);
         NoQuestion = findViewById(R.id.textQuestionNo);
@@ -112,9 +118,12 @@ public class QuizActivity extends AppCompatActivity {
             score5.setVisibility(score5.GONE);
         }
 
-        addQuestion();
-        getQuizRandom();
-        showNextQuestion();
+        if((savedInstanceState==null) || (savedInstanceState.size() == 0)){
+            addQuestion();
+            getQuizRandom();
+            showNextQuestion();
+        }
+
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,15 +131,25 @@ public class QuizActivity extends AppCompatActivity {
                 if(answered == false){
                     if(op1.getText().length()>0 ){
                         checkAnswer();
+                        Ftime = (int) timeLeft;
                         countDownTimer.cancel();
                         currentProgress += 20;
                         progressBar.setProgress(currentProgress);
                         progressBar.setMax(100);
+                        timeLeft = START_TIME;
+
                     } else{
                         Toast.makeText(QuizActivity.this, R.string.inserireValore, Toast.LENGTH_SHORT).show();
                     }
                 } else{
+                    if(savedInstanceState!=null){
+                        savedInstanceState.clear();
+                        addQuestion();
+                        getQuizRandom();
+                    }
+
                     showNextQuestion();
+
                     op1.setEnabled(true);
                 }
             }
@@ -184,10 +203,10 @@ public class QuizActivity extends AppCompatActivity {
             if(qCounter < totalQuestion){
 
                 setTimer();
-                mProgressBar.setVisibility(View.INVISIBLE);
 
-                timer();
-                mProgressBar1.setVisibility(View.VISIBLE);
+                startTimer();
+
+                updateCountDownText();
 
                 currentQuestion = Questions.get(i);
 
@@ -211,37 +230,54 @@ public class QuizActivity extends AppCompatActivity {
                 intent.putExtra("UsernameInserito",usernameInserito);
                 startActivity(intent);
             }
-
         }
-
-
     }
 
-    private void timer() {
-        countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(timeLeft, 1) {
             @Override
-            public void onTick(long leftTimeInMilliseconds) {
-                long seconds = leftTimeInMilliseconds / 1000;
-                mProgressBar1.setProgress((int) (leftTimeInMilliseconds));
-
-                textViewShowTime.setText(String.format("%02d", seconds / 60)
-                        + ":" + String.format("%02d", seconds % 60));
+            public void onTick(long millisUntilFinished) {
+                timeLeft = millisUntilFinished;
+                mProgressBar1.setProgress((int) (timeLeft));
+                updateCountDownText();
             }
+
             @Override
             public void onFinish() {
-
                 if(!(op1.getText().length()>0)){
                     wrongAnswer++;
                 }
+                timeLeft = START_TIME;
+                currentProgress += 20;
+                progressBar.setProgress(currentProgress);
+                progressBar.setMax(100);
                 showNextQuestion();
             }
         }.start();
     }
 
+    private void updateCountDownText() {
+        int minutes = (int) (timeLeft / 1000) / 60;
+        int seconds = (int) (timeLeft / 1000) % 60;
+
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+        textViewShowTime.setText(timeLeftFormatted);
+    }
+
+    private void updateFinishedTimerText(){
+        int minutes = (int) (Ftime / 1000) / 60;
+        int seconds = (int) (Ftime / 1000) % 60;
+
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+        textViewShowTime.setText(timeLeftFormatted);
+    }
+
     private void setTimer(){
         int time = 21;
-        totalTimeCountInMilliseconds =  time * 1000;
-        mProgressBar1.setMax( time * 1000);
+        int totalTimeCount =  time * 1000;
+        mProgressBar1.setMax( totalTimeCount);
     }
 
     private void addQuestion() {
@@ -272,9 +308,109 @@ public class QuizActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-
     }
 
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save custom values into the bundle
+        savedInstanceState.putBoolean("Answered",answered);
+        savedInstanceState.putInt("score",score);
+        savedInstanceState.putInt("wrongAnswer",wrongAnswer);
+        savedInstanceState.putInt("qCounter",qCounter);
+        savedInstanceState.putString("CorrectIT",currentQuestion.getCorrectIT());
+        savedInstanceState.putString("CorrectEn",currentQuestion.getCorrectEN());
+        savedInstanceState.putInt("image",currentQuestion.getImg1());
+        savedInstanceState.putInt("progress",currentProgress);
+        progressBar.setProgress(currentProgress);
+        progressBar.setMax(100);
+
+        if (answered == false){
+            savedInstanceState.putLong("millisLeft", timeLeft);
+
+            countDownTimer.cancel();
+        }
+        else {
+            savedInstanceState.putString("Risposta", op1.getText().toString());
+            savedInstanceState.putInt("FTime",Ftime);
+        }
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        answered = savedInstanceState.getBoolean("Answered");
+        score = savedInstanceState.getInt("score");
+        wrongAnswer = savedInstanceState.getInt("wrongAnswer");
+        qCounter = savedInstanceState.getInt("qCounter");
+        String correctIT = savedInstanceState.getString("CorrectIT");
+        String correctEn = savedInstanceState.getString("CorrectEn");
+        int image = savedInstanceState.getInt("image");
+        currentProgress = savedInstanceState.getInt("progress");
+
+        currentQuestion = new RecognizeModel(correctIT, correctEn, image);
+
+        img1.setImageResource(currentQuestion.getImg1());
+        viewCostraint.setVisibility(View.VISIBLE);
+        bmp= BitmapFactory.decodeResource(getResources(),currentQuestion.getImg1());//image is your image
+        bmp= Bitmap.createScaledBitmap(bmp, width,height, true);
+        img1.setImageBitmap(bmp);
+
+        NoQuestion.setText(R.string.question);
+        NoQuestion.append(qCounter+"/"+totalQuestion);
+
+        if(answered == false){
+            timeLeft = savedInstanceState.getLong("millisLeft");
+
+            updateCountDownText();
+            setTimer();
+            startTimer();
+
+            if(qCounter<5){
+                btnNext.setText(R.string.prossimaDomanda);
+            }else{
+                btnNext.setText(R.string.fine);
+            }
+        }
+        else{
+            Ftime = savedInstanceState.getInt("FTime");
+
+            setTimer();
+            updateFinishedTimerText();
+            mProgressBar1.setProgress(Ftime);
+
+            op1.setText(savedInstanceState.getString("Risposta"));
+            String stringa =op1.getText().toString().toLowerCase(Locale.ROOT);
+            if(stringa.equals(currentQuestion.getCorrectEN())|| stringa.equals(currentQuestion.getCorrectIT())){
+                op1.setTextColor(Color.GREEN);
+                op1.setEnabled(false);
+                tvScore.setText("Score: " +score);
+
+                if(score==3){
+                    score3.setVisibility(score3.VISIBLE);
+                }
+                if(score==4){
+                    score4.setVisibility(score4.VISIBLE);
+                }
+                if(score==5){
+                    score5.setVisibility(score5.VISIBLE);
+                }
+            }
+            else{
+                op1.setTextColor(Color.RED);
+                op1.setEnabled(false);
+            }
+
+            if(qCounter<5){
+                btnNext.setText(R.string.prossimaDomanda);
+            }else{
+                btnNext.setText(R.string.fine);
+            }
+        }
+    }
 }

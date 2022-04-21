@@ -24,9 +24,11 @@ import android.widget.Toast;
 
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.model.Question;
+import com.example.casodistudiomamange.model.RecognizeModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class QuestionActivity extends AppCompatActivity {
@@ -44,9 +46,9 @@ public class QuestionActivity extends AppCompatActivity {
     int width=330;
     int height=330;
     Bitmap bmp;
-    int totalQuestions;
+    private int totalQuestions = 5;
     int qCounter=0;
-    int score =0;
+    int score =0, Ftime;
     int wrongAnswer=0;
     int DOMANDE=3;
 
@@ -54,16 +56,16 @@ public class QuestionActivity extends AppCompatActivity {
 
     private TextView textViewShowTime;
     private CountDownTimer countDownTimer;
-    private long totalTimeCountInMilliseconds;
+    private static final long START_TIME = 21000;
+    private long timeLeft = START_TIME;
+    //private long totalTimeCountInMilliseconds;
 
     View viewCostraint;
     ColorStateList dfRbColor;
     boolean answered;
 
     private Question currentQuestion;
-
     private List<Question> questionsList;
-
     private List<Question> Questions= new ArrayList<>();
 
     @Override
@@ -83,6 +85,8 @@ public class QuestionActivity extends AppCompatActivity {
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar_timerview);
         mProgressBar1 = (ProgressBar) findViewById(R.id.progressbar1_timerview);
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mProgressBar1.setVisibility(View.VISIBLE);
 
         viewCostraint = findViewById(R.id.imageCostraint);
         img = findViewById(R.id.img1);
@@ -98,10 +102,28 @@ public class QuestionActivity extends AppCompatActivity {
 
         dfRbColor=rb1.getTextColors();
 
-        addQuestions();
-        getQuizRandom();
-        totalQuestions=5;
-        showNextQuestion();
+        if(score==1){
+            score1.setVisibility(score1.VISIBLE);
+            score2.setVisibility(score2.GONE);
+            score3.setVisibility(score3.GONE);
+        }
+        if(score==2){
+            score1.setVisibility(score1.VISIBLE);
+            score2.setVisibility(score2.VISIBLE);
+            score3.setVisibility(score3.GONE);
+        }
+        else if(score==3){
+            score1.setVisibility(score1.VISIBLE);
+            score2.setVisibility(score2.VISIBLE);
+            score3.setVisibility(score3.VISIBLE);
+        }
+
+        if((savedInstanceState==null) || (savedInstanceState.size() == 0)){
+            addQuestions();
+            getQuizRandom();
+            showNextQuestion();
+        }
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,14 +131,21 @@ public class QuestionActivity extends AppCompatActivity {
                     if(rb1.isChecked() || rb2.isChecked() || rb3.isChecked()){
                         //controllo delle risposte e arresto del timer nel momento in cui l'uutente clicca una delle opzioni di risposta
                         checkAnswer();
+                        Ftime = (int) timeLeft;
                         countDownTimer.cancel();
                         currentProgress += 20;
                         progressBar.setProgress(currentProgress);
                         progressBar.setMax(100);
+                        timeLeft = START_TIME;
                     }else{
                         Toast.makeText(QuestionActivity.this, R.string.selezionaOpzione, Toast.LENGTH_SHORT).show();
                     }
                 }else{
+                    if(savedInstanceState!=null){
+                        savedInstanceState.clear();
+                        addQuestions();
+                        getQuizRandom();
+                    }
                     showNextQuestion();
                 }
             }
@@ -191,23 +220,18 @@ public class QuestionActivity extends AppCompatActivity {
             if(qCounter<DOMANDE){
                 //settaggio della prossima domanda
                 setTimer();
-                mProgressBar.setVisibility(View.INVISIBLE);
 
-                timer();
-                mProgressBar1.setVisibility(View.VISIBLE);
+                startTimer();
+
+                updateCountDownText();
 
                 currentQuestion=Questions.get(qCounter);
                 img.setImageResource(currentQuestion.getImage());
-                //se nella domanda non è presente l'immagine viene tolto lo spazio
-                if(currentQuestion.getImage()==0){
-                    viewCostraint.setVisibility(View.GONE);
-                }
-                else{
-                    viewCostraint.setVisibility(View.VISIBLE);
-                    bmp= BitmapFactory.decodeResource(getResources(),currentQuestion.getImage());//image is your image
-                    bmp= Bitmap.createScaledBitmap(bmp, width,height, true);
-                    img.setImageBitmap(bmp);
-                }
+                viewCostraint.setVisibility(View.VISIBLE);
+                bmp= BitmapFactory.decodeResource(getResources(),currentQuestion.getImage());//image is your image
+                bmp= Bitmap.createScaledBitmap(bmp, width,height, true);
+                img.setImageBitmap(bmp);
+
                 tvQuestion.setText(currentQuestion.getQuestion());
                 rb1.setText(currentQuestion.getOption1());
                 rb2.setText(currentQuestion.getOption2());
@@ -232,10 +256,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * metodo per la creazione del timer
-     */
-    private void timer() {
+    /*private void timer() {
         countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
@@ -254,15 +275,62 @@ public class QuestionActivity extends AppCompatActivity {
                 showNextQuestion();
             }
         }.start();
+    }*/
+
+
+    /**
+     * metodo per la creazione del timer
+     */
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(timeLeft, 1) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeft = millisUntilFinished;
+                mProgressBar1.setProgress((int) (timeLeft));
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                //se nessuna opzione è stata premuta allo scadere del tempo allora la risposta è sbagliata
+                if(!rb1.isChecked() && !rb2.isChecked() && !rb3.isChecked()){
+                    wrongAnswer++;
+                }
+                timeLeft = START_TIME;
+                currentProgress += 20;
+                progressBar.setProgress(currentProgress);
+                progressBar.setMax(100);
+                showNextQuestion();
+            }
+        }.start();
     }
+
+    private void updateCountDownText() {
+        int minutes = (int) (timeLeft / 1000) / 60;
+        int seconds = (int) (timeLeft / 1000) % 60;
+
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+        textViewShowTime.setText(timeLeftFormatted);
+    }
+
+    private void updateFinishedTimerText(){
+        int minutes = (int) (Ftime / 1000) / 60;
+        int seconds = (int) (Ftime / 1000) % 60;
+
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+        textViewShowTime.setText(timeLeftFormatted);
+    }
+
 
     /**
      * metodo per settare il tempo ad ogni domanda
      */
     private void setTimer(){
         int time = 21;
-        totalTimeCountInMilliseconds =  time * 1000;
-        mProgressBar1.setMax( time * 1000);
+        int totalTimeCount =  time * 1000;
+        mProgressBar1.setMax( totalTimeCount);
     }
 
 
@@ -321,4 +389,134 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save custom values into the bundle
+        savedInstanceState.putBoolean("Answered",answered);
+        savedInstanceState.putInt("score",score);
+        savedInstanceState.putInt("wrongAnswer",wrongAnswer);
+        savedInstanceState.putInt("qCounter",qCounter);
+        savedInstanceState.putInt("question",currentQuestion.getQuestion());
+        savedInstanceState.putInt("op1",currentQuestion.getOption1());
+        savedInstanceState.putInt("op2",currentQuestion.getOption2());
+        savedInstanceState.putInt("op3",currentQuestion.getOption3());
+        savedInstanceState.putInt("currentAnsNo",currentQuestion.getCorrectAnsNo());
+        savedInstanceState.putInt("image",currentQuestion.getImage());
+        //savedInstanceState.putString("CorrectIT",currentQuestion.getCorrectIT());
+        //savedInstanceState.putString("CorrectEn",currentQuestion.getCorrectEN());
+        //savedInstanceState.putInt("image",currentQuestion.getImg1());
+        savedInstanceState.putInt("progress",currentProgress);
+        progressBar.setProgress(currentProgress);
+        progressBar.setMax(100);
+
+        if (answered == false){
+            savedInstanceState.putLong("millisLeft", timeLeft);
+
+            countDownTimer.cancel();
+        }
+        else {
+            if(rb1.isChecked()){
+                savedInstanceState.putInt("scelta",1);
+            }
+            else if(rb2.isChecked()){
+                savedInstanceState.putInt("scelta",2);
+            }
+            else if(rb3.isChecked()){
+                savedInstanceState.putInt("scelta",3);
+            }
+            savedInstanceState.putInt("FTime",Ftime);
+        }
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        answered = savedInstanceState.getBoolean("Answered");
+        score = savedInstanceState.getInt("score");
+        wrongAnswer = savedInstanceState.getInt("wrongAnswer");
+        qCounter = savedInstanceState.getInt("qCounter");
+        int question = savedInstanceState.getInt("question");
+        int op1 = savedInstanceState.getInt("op1");
+        int op2 = savedInstanceState.getInt("op2");
+        int op3 = savedInstanceState.getInt("op3");
+        int correctAns = savedInstanceState.getInt("currentAnsNo");
+        int image = savedInstanceState.getInt("image");
+        currentProgress = savedInstanceState.getInt("progress");
+
+        currentQuestion = new Question(question, op1, op2, op3, correctAns, image);
+
+        img.setImageResource(currentQuestion.getImage());
+        viewCostraint.setVisibility(View.VISIBLE);
+        bmp= BitmapFactory.decodeResource(getResources(),currentQuestion.getImage());//image is your image
+        bmp= Bitmap.createScaledBitmap(bmp, width,height, true);
+        img.setImageBitmap(bmp);
+
+        tvQuestionNo.setText(R.string.question);
+        tvQuestionNo.append(qCounter+"/"+totalQuestions);
+
+        if(score==1){
+            score1.setVisibility(score1.VISIBLE);
+            score2.setVisibility(score2.GONE);
+            score3.setVisibility(score3.GONE);
+        }
+        if(score==2){
+            score1.setVisibility(score1.VISIBLE);
+            score2.setVisibility(score2.VISIBLE);
+            score3.setVisibility(score3.GONE);
+        }
+        else if(score==3){
+            score1.setVisibility(score1.VISIBLE);
+            score2.setVisibility(score2.VISIBLE);
+            score3.setVisibility(score3.VISIBLE);
+        }
+
+        rb1.setText(op1);
+        rb2.setText(op2);
+        rb3.setText(op3);
+
+        if(answered == false){
+            timeLeft = savedInstanceState.getLong("millisLeft");
+
+            updateCountDownText();
+            setTimer();
+            startTimer();
+
+            if(qCounter<5){
+                btnNext.setText(R.string.prossimaDomanda);
+            }else{
+                btnNext.setText(R.string.fine);
+            }
+        }
+        else{
+            Ftime = savedInstanceState.getInt("FTime");
+
+            setTimer();
+            updateFinishedTimerText();
+            mProgressBar1.setProgress(Ftime);
+
+            int scelta = savedInstanceState.getInt("scelta");
+            if(scelta==1){
+                rb1.setChecked(true);
+                rb1.setTextColor(Color.GREEN);
+            }
+            else if(scelta == 2){
+                rb2.setChecked(true);
+                rb2.setTextColor(Color.GREEN);
+            }
+            else if(scelta == 3){
+                rb3.setChecked(true);
+                rb3.setTextColor(Color.GREEN);
+            }
+
+            if(qCounter<5){
+                btnNext.setText(R.string.prossimaDomanda);
+            }else{
+                btnNext.setText(R.string.fine);
+            }
+        }
+    }
 }

@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.example.casodistudiomamange.R;
 
+/*
+ * Activity che da informazioni generali suul'app
+ * e sul gruppo di sviluppatori
+ */
 public class AboutActivity extends AppCompatActivity {
 
     TextView info, developers;
@@ -34,6 +38,7 @@ public class AboutActivity extends AppCompatActivity {
         back = findViewById(R.id.back);
         back.setText(R.string.back);
 
+        //Dopo aver premuto il bottone si passa all'activity incentrata sul supporto
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +47,8 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
 
+
+        //Dopo aver premuto il bottone si chiude l'activity
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
