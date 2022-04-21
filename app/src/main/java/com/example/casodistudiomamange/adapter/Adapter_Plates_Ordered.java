@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.activity.MaMangeNavigationActivity;
+import com.example.casodistudiomamange.activity.SwitchLoginSignupGuestActivity;
 import com.example.casodistudiomamange.model.SoPlate;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -64,8 +65,13 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
         if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
             holder.textView_plate.setText(soplate.getNomePiatto());
         }else{
-            //traduzione menù
-            prepareModelTranslation(soplate.getNomePiatto(),holder.textView_plate);
+            if(SwitchLoginSignupGuestActivity.controlValue==1){
+                holder.textView_plate.setText(soplate.getNomePiatto());
+            }else{
+                //traduzione menù
+                prepareModelTranslation(soplate.getNomePiatto(),holder.textView_plate);
+            }
+
         }
 
 

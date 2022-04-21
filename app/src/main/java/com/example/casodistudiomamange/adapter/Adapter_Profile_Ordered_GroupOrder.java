@@ -11,6 +11,7 @@ import com.example.casodistudiomamange.R;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.casodistudiomamange.activity.SwitchLoginSignupGuestActivity;
 import com.example.casodistudiomamange.model.SoPlate;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -50,8 +51,13 @@ public class Adapter_Profile_Ordered_GroupOrder extends RecyclerView.Adapter<Ada
         if(Locale.getDefault().getDisplayLanguage().equals("italiano")){
             holder.plateName.setText(soPlateList.get(position).getNomePiatto());
         }else{
-            //traduzione menù
-            prepareModelTranslation(soPlateList.get(position).getNomePiatto(),holder.plateName);
+            if(SwitchLoginSignupGuestActivity.controlValue==1){
+                holder.plateName.setText(soPlateList.get(position).getNomePiatto());
+            }else{
+                //traduzione menù
+                prepareModelTranslation(soPlateList.get(position).getNomePiatto(),holder.plateName);
+            }
+
         }
         holder.tvCount.setText(Integer.toString((int)soPlateList.get(position).getQuantita()));
     }
