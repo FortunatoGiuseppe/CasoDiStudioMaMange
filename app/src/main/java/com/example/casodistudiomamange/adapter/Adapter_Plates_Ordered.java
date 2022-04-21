@@ -88,7 +88,7 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
             }
         }
 
-        /**decremento quantità del piatto**/
+        // decremento quantità del piatto
         holder.imageMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,11 +122,10 @@ public class Adapter_Plates_Ordered extends RecyclerView.Adapter<Adapter_Plates_
                     AlertDialog alert = builder1.create();
                     alert.show();
                 }
-
             }
         });
 
-        /**Incremento quantità del piatto**/
+        // Incremento quantità del piatto
         holder.imageAddOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -269,14 +269,18 @@ public class SingleOrderFragment extends Fragment {
 
             //rimuovo piatto dalla lista
             soPlate.remove(soPlate.get(posDeleted));
-
+            //informo utente
+            AlertDialog.Builder plateCanceled = new AlertDialog.Builder(((MaMangeNavigationActivity)getContext()));
+            plateCanceled.setMessage(R.string.piattoRimosso);
+            plateCanceled.setCancelable(true);
+            AlertDialog alertPlateCanceled = plateCanceled.create();
+            alertPlateCanceled.show();
             //aggiorno badge
             ((MaMangeNavigationActivity) getContext()).updateQuantityOnBadge();
             //salvo nuova quantità cioè 0 sullo shared preferences
             ((MaMangeNavigationActivity) getContext()).saveDataSharedPreferences(plate,0);
             //elimino piatto dal DB
             ((MaMangeNavigationActivity)getContext()).dbc.deletePlateOrdered(plate,codiceSingleOrder,codiceGroupOrder,codiceTavolo,username, ((MaMangeNavigationActivity) getContext()),true);
-
         }
     };
 }
