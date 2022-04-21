@@ -3,6 +3,8 @@ package com.example.casodistudiomamange.adapter;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,12 +51,13 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
     public void onBindViewHolder(@NonNull Adapter_Profile.myViewHolder holder, int position) {
         Profile profile = profileList.get(position);
 
-        //Prossime righe utili solo per cambiare colore a codice SO
+        /**Prossime righe utili solo per cambiare colore e dimensione a codice SO **/
         String nomeProfiloDaStampare=profile.getNomeProfilo();
-        Spannable spannable = new SpannableString(nomeProfiloDaStampare);
-        spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#8C7C7C")), nomeProfiloDaStampare.length()-3, nomeProfiloDaStampare.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        holder.nomeProfilo.setText(spannable, TextView.BufferType.SPANNABLE);
+        Spannable spannableNomeProfilo = new SpannableString(nomeProfiloDaStampare);
+        spannableNomeProfilo.setSpan(new ForegroundColorSpan(Color.parseColor("#8C7C7C")), nomeProfiloDaStampare.length()-3, nomeProfiloDaStampare.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableNomeProfilo.setSpan(new AbsoluteSizeSpan(40),nomeProfiloDaStampare.length()-3, nomeProfiloDaStampare.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
+        holder.nomeProfilo.setText(spannableNomeProfilo, TextView.BufferType.SPANNABLE);
 
         boolean isExpandible = profileList.get(position).isExpandable();
         holder.expandableLayout.setVisibility(isExpandible ? View.VISIBLE : View.GONE);

@@ -3,8 +3,13 @@ package com.example.casodistudiomamange.fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,12 +68,21 @@ public class SingleOrderFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_single_order, null);
         getActivity().setTitle("Single Order");
 
+        /** imposto titolo top bar**/
         ((MaMangeNavigationActivity)getContext()).topBarTitle.setText(R.string.SingleOrder);
 
+
+        /** Prossime righe utili solo per cambiare colore e dimensione a codice SO**/
         username_tv = v.findViewById(R.id.usernameTextView);
         String ordinazione = getResources().getString(R.string.ordinazione);
         String usernameInserito = ((MaMangeNavigationActivity) getActivity()).username;
-        username_tv.setText(ordinazione + " " + usernameInserito);
+        String intestazioneDaStampare=ordinazione + " " + usernameInserito;
+        Spannable spannableIntestazione = new SpannableString(intestazioneDaStampare);
+        spannableIntestazione.setSpan(new ForegroundColorSpan(Color.parseColor("#8C7C7C")), intestazioneDaStampare.length()-3, intestazioneDaStampare.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableIntestazione.setSpan(new AbsoluteSizeSpan(40),intestazioneDaStampare.length()-3, intestazioneDaStampare.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+
+        username_tv.setText(spannableIntestazione, TextView.BufferType.SPANNABLE);
+
 
         recyclerView_plates = v.findViewById(R.id.recyclerViewSingleOrderPlates);
         recyclerView_plates.setHasFixedSize(true);
