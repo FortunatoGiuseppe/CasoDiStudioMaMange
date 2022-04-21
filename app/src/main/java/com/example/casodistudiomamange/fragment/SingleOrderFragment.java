@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.casodistudiomamange.R;
@@ -44,7 +45,7 @@ public class SingleOrderFragment extends Fragment {
 
     private static final String FILE_NAME = "lastOrder.txt";
     private RecyclerView recyclerView_plates;
-    private Adapter_Plates_Ordered adapter_plates;
+    private Adapter_Plates_Ordered adapter_plates_ordered;
     private TextView username_tv;
     private FirebaseFirestore db;
     private ArrayList<SoPlate> soPlate;
@@ -58,7 +59,7 @@ public class SingleOrderFragment extends Fragment {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
         soPlate = new ArrayList<>();
-        adapter_plates = new Adapter_Plates_Ordered(getContext(), soPlate);
+        adapter_plates_ordered = new Adapter_Plates_Ordered(getContext(), soPlate);
     }
 
     @Nullable
@@ -85,10 +86,11 @@ public class SingleOrderFragment extends Fragment {
 
 
         recyclerView_plates = v.findViewById(R.id.recyclerViewSingleOrderPlates);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView_plates);
         recyclerView_plates.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, LinearLayoutManager.VERTICAL, false);
         recyclerView_plates.setLayoutManager(gridLayoutManager);
-        recyclerView_plates.setAdapter(adapter_plates);
+        recyclerView_plates.setAdapter(adapter_plates_ordered);
 
 
         //Vedo se sono arrivato qui da una chiamata dal tasto inserisci ultimo ordine
@@ -242,9 +244,39 @@ public class SingleOrderFragment extends Fragment {
                         suggerimento.setText(spannableText);
                         suggerimento.setVisibility(View.VISIBLE);
                     }
-                    adapter_plates.notifyDataSetChanged();
+                    adapter_plates_ordered.notifyDataSetChanged();
                 }
             }
         });
     }
+
+    /** Implementazione swipe per cancellazione piatto*/
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            int posDeleted =viewHolder.getAbsoluteAdapterPosition(); //prendo la posizione dell'elemento su cui ho fatto lo swipe
+            //prendo informazioni piatto
+            String plate= soPlate.get(posDeleted).getNomePiatto();
+            String codiceSingleOrder= soPlate.get(posDeleted).getCodiceSingleOrder();
+            String codiceGroupOrder= soPlate.get(posDeleted).getCodiceGroupOrder();
+            String codiceTavolo= soPlate.get(posDeleted).getCodiceTavolo();
+            String username= soPlate.get(posDeleted).getUsername();
+
+            //rimuovo piatto dalla lista
+            soPlate.remove(soPlate.get(posDeleted));
+
+            //aggiorno badge
+            ((MaMangeNavigationActivity) getContext()).updateQuantityOnBadge();
+            //salvo nuova quantità cioè 0 sullo shared preferences
+            ((MaMangeNavigationActivity) getContext()).saveDataSharedPreferences(plate,0);
+            //elimino piatto dal DB
+            ((MaMangeNavigationActivity)getContext()).dbc.deletePlateOrdered(plate,codiceSingleOrder,codiceGroupOrder,codiceTavolo,username, ((MaMangeNavigationActivity) getContext()),true);
+
+        }
+    };
 }
