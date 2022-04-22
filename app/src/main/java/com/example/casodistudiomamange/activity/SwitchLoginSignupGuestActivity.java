@@ -130,7 +130,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
             CheckBox mCheckBox = mView.findViewById(R.id.checkBox);
             mBuilder.setCancelable(false);
             mBuilder.setTitle("Menù language choice");
-            mBuilder.setMessage("You're not italian. Want to download the english menù or continue with the italian menù?");
+            mBuilder.setMessage("We detect that your system is in English. Do you want to download the english menù or continue with the italian menù?");
             mBuilder.setView(mView);
             mBuilder.setPositiveButton("DOWNLOAD", new DialogInterface.OnClickListener() {
                 @Override
