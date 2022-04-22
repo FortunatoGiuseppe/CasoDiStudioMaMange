@@ -20,42 +20,90 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logomamange" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/scheda_rotonda"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView8">
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="45dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8">
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/scheda_rotonda"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent=".8"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            android:layout_height="wrap_content">
 
+            <Button
+                android:id="@+id/connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:hint="@string/connetti"
+                android:textColorHint="#c62828"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:cornerRadius="10dp"
+                tools:layout_editor_absoluteX="206dp"
+                tools:layout_editor_absoluteY="655dp" />
 
             <TextView
-                android:id="@+id/nomePiatto"
-                android:layout_width="match_parent"
+                android:id="@+id/descrizione"
+                android:layout_width="199dp"
+                android:layout_height="102dp"
+                android:gravity="left"
+                android:text="Descrizione"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                tools:layout_editor_absoluteX="169dp"
+                tools:layout_editor_absoluteY="60dp" />
+
+            <ImageView
+                android:id="@+id/imagePlate"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/white"
+                tools:layout_editor_absoluteX="43dp"
+                tools:layout_editor_absoluteY="77dp"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/umidita"
+                android:layout_width="325dp"
                 android:layout_height="60dp"
-                android:gravity="center"
-                android:text="NOME_PIATTO"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:text="@string/umidita"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                tools:layout_editor_absoluteY="333dp" />
+
+            <TextView
+                android:id="@+id/statoConnessione"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/statoConnessione"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/cosaFareBluetoothTW"
@@ -65,60 +113,26 @@
                 android:text="@string/cosaFareAssociazione"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.49"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/umidita"
-                app:layout_constraintVertical_bias="0.387" />
-
-            <ImageView
-                android:id="@+id/imagePlate"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.138"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomePiatto"
-                app:layout_constraintVertical_bias="0.031"
-                tools:src="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/descrizione"
-                android:layout_width="199dp"
-                android:layout_height="102dp"
-                android:layout_marginBottom="532dp"
-                android:gravity="left"
-                android:text="Descrizione"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.376"
-                app:layout_constraintStart_toEndOf="@+id/imagePlate"
-                app:layout_constraintTop_toBottomOf="@+id/nomePiatto"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <TextView
-                android:id="@+id/umidita"
-                android:layout_width="325dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/umidita"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/torbidita" />
+                tools:layout_editor_absoluteY="405dp" />
+
+            <Button
+                android:id="@+id/indietro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:hint="@string/indietro"
+                android:textColorHint="#c62828"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:cornerRadius="10dp" />
 
             <TextView
                 android:id="@+id/torbidita"
                 android:layout_width="325dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="12dp"
                 android:gravity="left"
                 android:text="@string/torbidita"
                 android:textColor="@color/white"
@@ -126,13 +140,12 @@
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/temperatura" />
+                tools:layout_editor_absoluteY="264dp" />
 
             <TextView
                 android:id="@+id/temperatura"
                 android:layout_width="325dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="68dp"
                 android:gravity="left"
                 android:text="@string/temperatura"
                 android:textColor="@color/white"
@@ -140,24 +153,17 @@
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imagePlate" />
+                tools:layout_editor_absoluteY="188dp" />
 
-
-            <Button
-                android:id="@+id/connect"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:backgroundTint="@color/white"
-                android:hint="@string/connetti"
-                android:textColorHint="#c62828"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/statoConnessione"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/nomePiatto"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="NOME_PIATTO"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/pair"
@@ -170,38 +176,9 @@
                 android:textStyle="bold"
 
                 app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/connect"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <Button
-                android:id="@+id/indietro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:hint="@string/indietro"
-                android:textColorHint="#c62828"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/connect"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/statoConnessione"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="@string/statoConnessione"
-                android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="494dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
