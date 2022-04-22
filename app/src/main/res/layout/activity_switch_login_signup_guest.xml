@@ -40,7 +40,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tabIndicatorColor="@color/white"
             app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="@color/white">
+            app:tabTextColor="@color/white"
+            tools:ignore="SpeakableTextPresentCheck">
 
         </com.google.android.material.tabs.TabLayout>
 
