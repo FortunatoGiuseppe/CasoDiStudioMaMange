@@ -145,7 +145,7 @@ public class SensorFragment extends Fragment {
     private void inizializzaBt(View v) {
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            if(shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_CONNECT)){
+            if (shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_CONNECT)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setCancelable(true);
                 builder.setTitle(R.string.importanzaDeiPermessi);
@@ -153,7 +153,7 @@ public class SensorFragment extends Fragment {
                 builder.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT},REQUEST_ENABLE_BT_CONNECT);
+                        requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_ENABLE_BT_CONNECT);
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -166,40 +166,10 @@ public class SensorFragment extends Fragment {
                 dialog.show();
             }
         }
-        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-        String[] strings = new String[pairedDevices.size()];
-        bluetoothDevice = new BluetoothDevice[pairedDevices.size()];
-        listaDispositiviBluetooth = new ListView(getContext());
-
-        int index = 0;
-
-        if (pairedDevices.size() > 0) {
-            //per ogni device paireato lo aggiungo nella lista dei bluetooth device
-            //ed aggiungo il nome del dispositivo per visualizzarlo all'inerno della listView
-            for (BluetoothDevice device : pairedDevices) {
-                bluetoothDevice[index] = device;
-                strings[index] = device.getName();
-                index++;
-            }
-        }
-
-        if (isCantinaPair(bluetoothDevice)) {
-            associaBtn.setVisibility(View.GONE);
-            connettitiBtn.setVisibility(View.VISIBLE);
-            cosaFareTw.setText(R.string.adessoConnettiti);
-        } else{
-            associaBtn.setVisibility(View.VISIBLE);
-        }
-
-
         associaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS));
-
-                associaBtn.setVisibility(View.GONE);
-                connettitiBtn.setVisibility(View.VISIBLE);
-                cosaFareTw.setText(R.string.adessoConnettiti);
             }
         });
 
@@ -214,12 +184,8 @@ public class SensorFragment extends Fragment {
         connettitiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //listaDispositiviBluetooth.setVisibility(View.VISIBLE);
-                //controllo se i permessi bluetooth sono stati dati
-
-
-                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    if(shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_CONNECT)){
+               if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_CONNECT)) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder.setCancelable(true);
                         builder.setTitle(R.string.importanzaDeiPermessi);
@@ -227,7 +193,7 @@ public class SensorFragment extends Fragment {
                         builder.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT},REQUEST_ENABLE_BT_CONNECT);
+                                requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_ENABLE_BT_CONNECT);
                             }
                         });
                         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -301,6 +267,7 @@ public class SensorFragment extends Fragment {
     }
 
 
+
     /**
      * Metodo che controlla se il bluetooth è già attivo
      * Altrimenti controlla se i permessi sono stati dati
@@ -312,6 +279,7 @@ public class SensorFragment extends Fragment {
             Intent richiesta = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(richiesta, REQUEST_ENABLE_BLUETOOTH);
 
+
         }
 
     }
@@ -322,45 +290,130 @@ public class SensorFragment extends Fragment {
 
     }
 
-        /**
-     * Metodo con il quale controllo se il dispositivo è già associato
-     * al dispositivo Cantina
-     * @param dispositivi
-     * @return
-     */
-    public boolean isCantinaPair(BluetoothDevice[] dispositivi) {
 
-        for (int i = 0; i < dispositivi.length; i++) {
-            //bluetooth connect
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
 
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
 
-                if(shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_CONNECT)){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setCancelable(true);
-                    builder.setTitle(R.string.importanzaDeiPermessi);
-                    builder.setMessage(R.string.messaggioPermessi);
-                    builder.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT},REQUEST_ENABLE_BT_CONNECT);
-                        }
-                    });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_CONNECT)) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setCancelable(true);
+                        builder.setTitle(R.string.importanzaDeiPermessi);
+                        builder.setMessage(R.string.messaggioPermessi);
+                        builder.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_ENABLE_BT_CONNECT);
+                            }
+                        });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
-            }
-            if (dispositivi[i].getName().contains("Cantina")) {
-                return true;
+                Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+                String[] strings = new String[pairedDevices.size()];
+                bluetoothDevice = new BluetoothDevice[pairedDevices.size()];
+                listaDispositiviBluetooth = new ListView(getContext());
+
+                int index = 0;
+                int count= 0;
+                if (pairedDevices.size() > 0) {
+                    //per ogni device paireato lo aggiungo nella lista dei bluetooth device
+                    //ed aggiungo il nome del dispositivo per visualizzarlo all'inerno della listView
+                    for (BluetoothDevice device : pairedDevices) {
+                        bluetoothDevice[index] = device;
+                        //bluetooth connect
+                        strings[index] = device.getName();
+                        if(strings[index].contains("Cantina")){
+                            count++;
+
+                        }
+                        index++;
+                    }
+                    if(count >= 1){
+                        connettitiBtn.setVisibility(View.VISIBLE);
+                        System.out.println("Associato");
+                    }
+                    else {
+                        associaBtn.setVisibility(View.VISIBLE);
+                        System.out.println("Non associato");
+                    }
+                }
+
+
+
             }
         }
-        return false;
+    };
+
+    public void discoverDevice(View v) {
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_SCAN)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setTitle(R.string.importanzaDeiPermessi);
+                builder.setMessage(R.string.messaggioPermessi);
+                builder.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        requestPermissions(new String[]{Manifest.permission.BLUETOOTH_SCAN}, REQUEST_ENABLE_BT_CONNECT);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        }
+        bluetoothAdapter.startDiscovery();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        getContext().registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        getContext().registerReceiver(broadcastReceiver, intentFilter);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        getContext().registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    /**metodo che ricarica GroupOrderFragment**/
+    private void reloadFragment(){
+        Fragment fragment=new SensorFragment();
+        FragmentManager manager = this.getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = manager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
     }
 
     /**
@@ -434,6 +487,7 @@ public class SensorFragment extends Fragment {
         if(getContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
 
             if(isBluetoothEnabled()){
+                discoverDevice(v);
                 inizializzaBt(v);
             } else{
                 attivaBluetooth();
@@ -452,6 +506,7 @@ public class SensorFragment extends Fragment {
 
         if (requestCode == REQUEST_ENABLE_BLUETOOTH) {
             if (resultCode == getActivity().RESULT_OK) {
+                discoverDevice(getView());
                 inizializzaBt(getView());
             }
         }
@@ -529,6 +584,7 @@ public class SensorFragment extends Fragment {
 
                 if(hasAllPermissionsGranted(grantResults)){
                     if(isBluetoothEnabled()){
+                        discoverDevice(getView());
                         inizializzaBt(getView());
                     } else{
                         attivaBluetooth();
