@@ -1,11 +1,21 @@
 package com.example.casodistudiomamange.thread;
 
 import static com.example.casodistudiomamange.fragment.SensorFragment.MY_UUID;
+
+import android.Manifest;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+
+import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.fragment.SensorFragment;
+
 import java.io.IOException;
 
 /**
@@ -33,7 +43,28 @@ public class Client extends Thread {
         this.sensorFragment = sensorFragment;
 
         try {
-            sensorFragment.checkBTPermission();//controllo che i permessi sono stati dati
+            if (ActivityCompat.checkSelfPermission(sensorFragment.getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                if(sensorFragment.shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_CONNECT)){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(sensorFragment.getContext());
+                    builder.setCancelable(true);
+                    builder.setTitle(R.string.importanzaDeiPermessi);
+                    builder.setMessage(R.string.messaggioPermessi);
+                    builder.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sensorFragment.requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT},SensorFragment.REQUEST_ENABLE_BT_CONNECT);
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
             socket = device.createRfcommSocketToServiceRecord(MY_UUID);//ottengo il socket del device chiamando questo metodo
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,7 +74,30 @@ public class Client extends Thread {
 
     public void run() {
         try {
-            sensorFragment.checkBTPermission();//controllo che i permessi sono stati dati
+
+
+            if (ActivityCompat.checkSelfPermission(sensorFragment.getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                if(sensorFragment.shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_CONNECT)){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(sensorFragment.getContext());
+                    builder.setCancelable(true);
+                    builder.setTitle(R.string.importanzaDeiPermessi);
+                    builder.setMessage(R.string.messaggioPermessi);
+                    builder.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sensorFragment.requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT},SensorFragment.REQUEST_ENABLE_BT_CONNECT);
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
             socket.connect();//mi connetto al socket ottenuto precedentemente
             Message message=Message.obtain();
             message.what= STATO_CONNESSO;
