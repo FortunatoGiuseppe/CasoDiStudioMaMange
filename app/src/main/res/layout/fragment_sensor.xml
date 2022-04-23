@@ -81,8 +81,9 @@
 
             <TextView
                 android:id="@+id/descrizione"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="120dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="40dp"
                 android:gravity="left"
@@ -90,6 +91,8 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imagePlate"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -99,8 +102,6 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="16dp"
                 android:background="@color/white"
-                app:layout_constraintEnd_toStartOf="@+id/descrizione"
-                app:layout_constraintHorizontal_bias="0.111"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ImageContrastCheck"
@@ -108,9 +109,11 @@
 
             <TextView
                 android:id="@+id/umidita"
-                android:layout_width="325dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="40dp"
                 android:text="@string/umidita"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -128,8 +131,10 @@
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pair" />
+                app:layout_constraintTop_toBottomOf="@+id/pair"
+                app:layout_constraintVertical_bias="0.919" />
 
             <TextView
                 android:id="@+id/cosaFareBluetoothTW"
@@ -165,9 +170,11 @@
 
             <TextView
                 android:id="@+id/torbidita"
-                android:layout_width="325dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="40dp"
                 android:gravity="left"
                 android:text="@string/torbidita"
                 android:textColor="@color/white"
@@ -179,9 +186,11 @@
 
             <TextView
                 android:id="@+id/temperatura"
-                android:layout_width="325dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="40dp"
                 android:gravity="left"
                 android:text="@string/temperatura"
                 android:textColor="@color/white"
