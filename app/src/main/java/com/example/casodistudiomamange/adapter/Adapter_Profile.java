@@ -51,11 +51,11 @@ public class Adapter_Profile extends RecyclerView.Adapter<Adapter_Profile.myView
     public void onBindViewHolder(@NonNull Adapter_Profile.myViewHolder holder, int position) {
         Profile profile = profileList.get(position);
 
-        /**Prossime righe utili solo per cambiare colore e dimensione a codice SO **/
+        // Prossime righe utili solo per cambiare colore e dimensione a codice SO
         String nomeProfiloDaStampare=profile.getNomeProfilo();
         Spannable spannableNomeProfilo = new SpannableString(nomeProfiloDaStampare);
-        spannableNomeProfilo.setSpan(new ForegroundColorSpan(Color.parseColor("#8C7C7C")), nomeProfiloDaStampare.length()-3, nomeProfiloDaStampare.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableNomeProfilo.setSpan(new AbsoluteSizeSpan(40),nomeProfiloDaStampare.length()-3, nomeProfiloDaStampare.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableNomeProfilo.setSpan(new ForegroundColorSpan(Color.parseColor("#8C7C7C")), nomeProfiloDaStampare.length()-4, nomeProfiloDaStampare.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableNomeProfilo.setSpan(new AbsoluteSizeSpan(40),nomeProfiloDaStampare.length()-4, nomeProfiloDaStampare.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
         holder.nomeProfilo.setText(spannableNomeProfilo, TextView.BufferType.SPANNABLE);
 

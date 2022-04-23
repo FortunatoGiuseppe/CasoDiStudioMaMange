@@ -69,18 +69,18 @@ public class SingleOrderFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_single_order, null);
         getActivity().setTitle("Single Order");
 
-        /** imposto titolo top bar**/
+        // imposto titolo top bar
         ((MaMangeNavigationActivity)getContext()).topBarTitle.setText(R.string.SingleOrder);
 
 
-        /** Prossime righe utili solo per cambiare colore e dimensione a codice SO**/
+        // Prossime righe utili solo per cambiare colore e dimensione a codice SO
         username_tv = v.findViewById(R.id.usernameTextView);
         String ordinazione = getResources().getString(R.string.ordinazione);
         String usernameInserito = ((MaMangeNavigationActivity) getActivity()).username;
         String intestazioneDaStampare=ordinazione + " " + usernameInserito;
         Spannable spannableIntestazione = new SpannableString(intestazioneDaStampare);
-        spannableIntestazione.setSpan(new ForegroundColorSpan(Color.parseColor("#8C7C7C")), intestazioneDaStampare.length()-3, intestazioneDaStampare.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableIntestazione.setSpan(new AbsoluteSizeSpan(40),intestazioneDaStampare.length()-3, intestazioneDaStampare.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableIntestazione.setSpan(new ForegroundColorSpan(Color.parseColor("#8C7C7C")), intestazioneDaStampare.length()-4, intestazioneDaStampare.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableIntestazione.setSpan(new AbsoluteSizeSpan(40),intestazioneDaStampare.length()-4, intestazioneDaStampare.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
         username_tv.setText(spannableIntestazione, TextView.BufferType.SPANNABLE);
 
