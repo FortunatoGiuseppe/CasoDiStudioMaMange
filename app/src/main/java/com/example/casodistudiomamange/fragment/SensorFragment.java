@@ -20,9 +20,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.browser.browseractions.BrowserActionsIntent;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -58,6 +60,7 @@ import com.example.casodistudiomamange.thread.Client;
 import com.squareup.picasso.Picasso;
 
 import java.security.Permission;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
@@ -397,6 +400,7 @@ public class SensorFragment extends Fragment {
 
         IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         getContext().registerReceiver(broadcastReceiver, intentFilter);
+        //reloadFragment();
 
     }
 
@@ -482,22 +486,87 @@ public class SensorFragment extends Fragment {
      * precisa ed approssimativa.
      */
     public boolean checkBTPermission(View v){
-
-
-        if(getContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-
-            if(isBluetoothEnabled()){
-                discoverDevice(v);
-                inizializzaBt(v);
+        ArrayList<String> permissions = new ArrayList<>();
+        int count = 0;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_DENIED) {
+                permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
             } else{
-                attivaBluetooth();
+                count++;
             }
-            return true;
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_SCAN)
+                    == PackageManager.PERMISSION_DENIED) {
+                permissions.add(Manifest.permission.BLUETOOTH_SCAN);
+            } else{
+                count++;
+            }
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT)
+                    == PackageManager.PERMISSION_DENIED) {
+                permissions.add(Manifest.permission.BLUETOOTH_CONNECT);
+            }else {
+                count++;
+            }
+            if (permissions.size() != 0) {
+                System.out.println("Missing the following permissions: " + permissions.toString());
+                requestPermissions(permissions.toArray(new String[0]),REQUEST_ENABLE_PERMISSION);
+
+                return false;
+            }
+            if(count == 3){
+                if(isBluetoothEnabled()){
+                    discoverDevice(getView());
+                    inizializzaBt(getView());
+                } else{
+                    attivaBluetooth();
+                }
+            }
+
+
+        } else if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.P){
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_ADVERTISE)
+                    == PackageManager.PERMISSION_DENIED) {
+                permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            } else{
+                count++;
+            }
+            if (permissions.size() != 0) {
+                System.out.println("Missing the following permissions: " + permissions.toString());
+                requestPermissions(permissions.toArray(new String[0]),REQUEST_ENABLE_PERMISSION);
+
+                return false;
+            }
+            if(count == 1){
+                if(isBluetoothEnabled()){
+                    discoverDevice(getView());
+                    inizializzaBt(getView());
+                } else{
+                    attivaBluetooth();
+                }
+            }
         } else {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_ENABLE_PERMISSION);
-            return false;
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_ADVERTISE)
+                    == PackageManager.PERMISSION_DENIED) {
+                permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            } else{
+                count++;
+            }
+            if (permissions.size() != 0) {
+                System.out.println("Missing the following permissions: " + permissions.toString());
+                requestPermissions(permissions.toArray(new String[0]),REQUEST_ENABLE_PERMISSION);
+                return false;
+            }
+            if(count == 1){
+                if(isBluetoothEnabled()){
+                    discoverDevice(getView());
+                    inizializzaBt(getView());
+                } else{
+                    attivaBluetooth();
+                }
+            }
         }
 
+        return true;
     }
 
     @Override
@@ -540,7 +609,12 @@ public class SensorFragment extends Fragment {
                 //gestore delle app.
 
                 if(hasAllPermissionsGranted(grantResults)){
-
+                    if(isBluetoothEnabled()){
+                        discoverDevice(getView());
+                        inizializzaBt(getView());
+                    } else{
+                        attivaBluetooth();
+                    }
                 }else if(shouldShowRequestPermissionRationale(permissions[0])){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setCancelable(true);
