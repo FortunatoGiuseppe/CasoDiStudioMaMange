@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.CongratulationActivity">
@@ -43,16 +41,16 @@
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
             android:isIndicator="false"
             android:numStars="5"
             android:progressTint="#FFFF00"
             android:rating="0"
             android:stepSize="0.5"
-            app:layout_constraintBottom_toTopOf="@+id/HomeCostr"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CongCostr"
-            app:layout_constraintVertical_bias="0.81"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,10 +62,10 @@
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintHorizontal_bias="0.86"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.29000002">
+            app:layout_constraintVertical_bias="0.057">
 
             <TextView
                 android:id="@+id/CodeTv"
@@ -85,6 +83,7 @@
                 app:layout_constraintVertical_bias="0.692" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/HomeCostr"
             android:layout_width="230dp"
@@ -94,9 +93,10 @@
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.792"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CongCostr"
-            app:layout_constraintVertical_bias="0.73">
+            app:layout_constraintVertical_bias="0.252">
 
             <TextView
                 android:id="@+id/textHome"
@@ -126,20 +126,22 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/CongCostr"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.038"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintRating"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_width="553dp"
+            android:layout_height="75dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CongCostr">
+            app:layout_constraintTop_toBottomOf="@+id/CongCostr"
+            app:layout_constraintVertical_bias="0.25">
 
             <TextView
                 android:id="@+id/textRating"
