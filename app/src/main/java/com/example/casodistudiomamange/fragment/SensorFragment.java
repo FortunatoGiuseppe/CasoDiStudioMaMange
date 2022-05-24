@@ -108,6 +108,7 @@ public class SensorFragment extends Fragment {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 
+
     }
 
     @Override
@@ -169,10 +170,11 @@ public class SensorFragment extends Fragment {
                 dialog.show();
             }
         }
+
         associaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS));
+                startActivityForResult(new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS),REQUEST_PAIR);
             }
         });
 
@@ -209,61 +211,65 @@ public class SensorFragment extends Fragment {
                         dialog.show();
                     }
                 }
-                Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-                String[] strings = new String[pairedDevices.size()];
-                bluetoothDevice = new BluetoothDevice[pairedDevices.size()];
-                listaDispositiviBluetooth = new ListView(getContext());
-                int index = 0;
+               if(isBluetoothEnabled()){
+                   Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+                   String[] strings = new String[pairedDevices.size()];
+                   bluetoothDevice = new BluetoothDevice[pairedDevices.size()];
+                   listaDispositiviBluetooth = new ListView(getContext());
+                   int index = 0;
 
-                if (pairedDevices.size() > 0) {
-                    //per ogni device paireato lo aggiungo nella lista dei bluetooth device
-                    //ed aggiungo il nome del dispositivo per visualizzarlo all'inerno della listView
-                    for (BluetoothDevice device : pairedDevices) {
-                        bluetoothDevice[index] = device;
-                        //bluetooth connect
-                        strings[index] = device.getName();
-                        index++;
-                    }
-                }
+                   if (pairedDevices.size() > 0) {
+                       //per ogni device paireato lo aggiungo nella lista dei bluetooth device
+                       //ed aggiungo il nome del dispositivo per visualizzarlo all'inerno della listView
+                       for (BluetoothDevice device : pairedDevices) {
+                           bluetoothDevice[index] = device;
+                           //bluetooth connect
+                           strings[index] = device.getName();
+                           index++;
+                       }
+                   }
 
-                //prendo dal bluetooth adapter la lista dei dispositivi paireati
-                //così da poter selezionare il server a cui connettermi
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strings);
-                listaDispositiviBluetooth.setAdapter(arrayAdapter);
-                listaDispositiviBluetooth.setBackgroundResource(R.drawable.dialog_bg);
+                   //prendo dal bluetooth adapter la lista dei dispositivi paireati
+                   //così da poter selezionare il server a cui connettermi
+                   ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strings);
+                   listaDispositiviBluetooth.setAdapter(arrayAdapter);
+                   listaDispositiviBluetooth.setBackgroundResource(R.drawable.dialog_bg);
 
-                Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Dialog);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(listaDispositiviBluetooth);
-                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.getWindow().setGravity(Gravity.CENTER);
-                dialog.show();
-                dialog.getWindow().setGravity(Gravity.CENTER);
-                dialog.setCancelable(false);
+                   Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Dialog);
+                   dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                   dialog.setContentView(listaDispositiviBluetooth);
+                   dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                   dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                   dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                   dialog.getWindow().setGravity(Gravity.CENTER);
+                   dialog.show();
+                   dialog.getWindow().setGravity(Gravity.CENTER);
+                   dialog.setCancelable(false);
 
-                //se viene cliccato un nome di un dispositivo paireato
-                //istanzio una classe client e provo a connettermi
-                //al server selezionato
-                listaDispositiviBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                   //se viene cliccato un nome di un dispositivo paireato
+                   //istanzio una classe client e provo a connettermi
+                   //al server selezionato
+                   listaDispositiviBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                       @Override
+                       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                        dialog.dismiss();
-                        Message message = Message.obtain();
-                        message.what = STATO_IN_ASCOLTO;
-                        handler.sendMessage(message);
-                        System.out.println("Salvo è scemo3");
-                        Client client = new Client(bluetoothDevice[i], handler, SensorFragment.this);
-                        client.start();
+                           dialog.dismiss();
+                           Message message = Message.obtain();
+                           message.what = STATO_IN_ASCOLTO;
+                           handler.sendMessage(message);
+                           Client client = new Client(bluetoothDevice[i], handler, SensorFragment.this);
+                           client.start();
 
-                        listaDispositiviBluetooth.setVisibility(View.GONE);
-                        connettitiBtn.setVisibility(View.GONE);
-                        cosaFareTw.setVisibility(View.GONE);
+                           listaDispositiviBluetooth.setVisibility(View.GONE);
+                           connettitiBtn.setVisibility(View.GONE);
+                           cosaFareTw.setVisibility(View.GONE);
 
-                    }
-                });
+                       }
+                   });
+               } else {
+                   attivaBluetooth();
+               }
+
             }
         });
 
@@ -281,8 +287,6 @@ public class SensorFragment extends Fragment {
         if (!bluetoothAdapter.isEnabled()) {
             Intent richiesta = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(richiesta, REQUEST_ENABLE_BLUETOOTH);
-
-
         }
 
     }
@@ -293,12 +297,12 @@ public class SensorFragment extends Fragment {
 
     }
 
-
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+
+            if (BluetoothDevice.ACTION_FOUND.equals(action) && isBluetoothEnabled()) {
 
                 if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
 
@@ -339,7 +343,6 @@ public class SensorFragment extends Fragment {
                         strings[index] = device.getName();
                         if(strings[index].contains("Cantina")){
                             count++;
-
                         }
                         index++;
                     }
@@ -352,9 +355,6 @@ public class SensorFragment extends Fragment {
                         System.out.println("Non associato");
                     }
                 }
-
-
-
             }
         }
     };
@@ -384,40 +384,6 @@ public class SensorFragment extends Fragment {
             }
         }
         bluetoothAdapter.startDiscovery();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        getContext().registerReceiver(broadcastReceiver, intentFilter);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        getContext().registerReceiver(broadcastReceiver, intentFilter);
-        //reloadFragment();
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        getContext().registerReceiver(broadcastReceiver, intentFilter);
-    }
-
-    /**metodo che ricarica GroupOrderFragment**/
-    private void reloadFragment(){
-        Fragment fragment=new SensorFragment();
-        FragmentManager manager = this.getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = manager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();
     }
 
     /**
@@ -578,13 +544,12 @@ public class SensorFragment extends Fragment {
                 discoverDevice(getView());
                 inizializzaBt(getView());
             }
+        } else if(requestCode == REQUEST_PAIR){
+            associaBtn.setVisibility(View.GONE);
+            discoverDevice(getView());
         }
 
     }
-
-
-
-
 
     /**
      * Metodo che viene invocato per ogni chiamata su requestPermissions
@@ -715,8 +680,6 @@ public class SensorFragment extends Fragment {
 
 
     private void prepareModelDescription(String trans){
-
-
 
         Translator.downloadModelIfNeeded().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
