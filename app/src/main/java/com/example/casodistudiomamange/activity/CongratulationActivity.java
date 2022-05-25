@@ -3,6 +3,9 @@ package com.example.casodistudiomamange.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.connection.NetworkChangedListener;
+import com.example.casodistudiomamange.model.RecognizeModel;
+
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -157,4 +163,20 @@ public class CongratulationActivity extends AppCompatActivity {
         rating.setIsIndicator(true);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save custom values into the bundle
+        savedInstanceState.putCharSequence("CodeTv",codeTv.getText());
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        codeTv.setText(savedInstanceState.getCharSequence("CodeTv"));
+    }
 }
