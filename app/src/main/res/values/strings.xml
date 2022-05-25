@@ -109,7 +109,7 @@
     <string name="annulla">Cancel</string>
     <string name="indietro">Back</string>
     <string name="soloxregi">For registered users only</string>
-    <string name="uscire">Exit the application?</string>
+    <string name="uscire">Are you sure you want to quit the application?</string>
     <string name="uscireMsg">If you confirm, you will cancel your current order.</string>
 
 
