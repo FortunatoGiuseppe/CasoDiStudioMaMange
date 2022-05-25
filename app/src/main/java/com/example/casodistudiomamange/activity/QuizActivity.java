@@ -87,6 +87,7 @@ public class QuizActivity extends AppCompatActivity {
         mProgressBar1 = (ProgressBar) findViewById(R.id.progressbar1_timerview);
         mProgressBar.setVisibility(View.INVISIBLE);
         mProgressBar1.setVisibility(View.VISIBLE);
+        progressBar.setProgress(currentProgress);
 
         tvScore = findViewById(R.id.textScore);
         NoQuestion = findViewById(R.id.textQuestionNo);
@@ -247,6 +248,9 @@ public class QuizActivity extends AppCompatActivity {
                 if(!(op1.getText().length()>0)){
                     wrongAnswer++;
                 }
+                else{
+                    checkAnswer();
+                }
                 timeLeft = START_TIME;
                 currentProgress += 20;
                 progressBar.setProgress(currentProgress);
@@ -352,6 +356,8 @@ public class QuizActivity extends AppCompatActivity {
         String correctEn = savedInstanceState.getString("CorrectEn");
         int image = savedInstanceState.getInt("image");
         currentProgress = savedInstanceState.getInt("progress");
+        addQuestion();
+        getQuizRandom();
 
         currentQuestion = new RecognizeModel(correctIT, correctEn, image);
 
@@ -381,6 +387,7 @@ public class QuizActivity extends AppCompatActivity {
             Ftime = savedInstanceState.getInt("FTime");
 
             setTimer();
+            //startTimer();
             updateFinishedTimerText();
             mProgressBar1.setProgress(Ftime);
 

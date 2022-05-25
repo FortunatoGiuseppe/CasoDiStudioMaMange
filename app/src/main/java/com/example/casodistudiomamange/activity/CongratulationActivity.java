@@ -27,7 +27,7 @@ import java.util.Random;
 public class CongratulationActivity extends AppCompatActivity {
 
     private final int lengthCodeTv = 7;
-    private TextView congratulationsTv,codeTv,homeTv, textRating;
+    private TextView congratulationsTv,codeTv, textRating;
     private View congcostr;
     private RatingBar rating;
     private int max = 5;
@@ -57,7 +57,7 @@ public class CongratulationActivity extends AppCompatActivity {
         }
 
         congratulationsTv=findViewById(R.id.congratulationsTv);
-        homeTv=findViewById(R.id.textHome);
+
         rating = findViewById(R.id.ratingBar);
 
         homebutton=findViewById(R.id.homeButton);
@@ -65,9 +65,9 @@ public class CongratulationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //mostro il tasto per tornare alla schermata di inserimento tavolo
-                String usernameInserito = getIntent().getStringExtra("UsernameInserito");
+
                 Intent intent = new Intent(CongratulationActivity.this, SwitchLoginSignupGuestActivity.class);
-                //intent.putExtra("UsernameInserito",usernameInserito);
+
                 startActivity(intent);
             }
         });

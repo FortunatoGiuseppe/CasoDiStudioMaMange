@@ -84,34 +84,25 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/HomeCostr"
-            android:layout_width="230dp"
-            android:layout_height="49dp"
-            android:background="@drawable/categories_background"
+        <android.widget.Button
+            android:id="@+id/homeButton"
+            android:layout_width="267dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/round_back"
+            android:backgroundTint="@color/white"
             android:foregroundGravity="center"
+            android:text="@string/backhome"
             android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.792"
+            app:layout_constraintHorizontal_bias="0.76"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CongCostr"
-            app:layout_constraintVertical_bias="0.252">
-
-            <TextView
-                android:id="@+id/textHome"
-                android:layout_width="143dp"
-                android:layout_height="37dp"
-                android:gravity="center"
-                android:text="@string/backhome"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintVertical_bias="0.32" />
 
         <TextView
             android:id="@+id/congratulationsTv"

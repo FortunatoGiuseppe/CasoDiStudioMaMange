@@ -212,9 +212,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         //controlla se l'utente ha sbagliato più di 2 domande
         if(wrongAnswer>=2){
-            String usernameInserito = getIntent().getStringExtra("UsernameInserito");
             Intent intent = new Intent(QuestionActivity.this, CongratulationActivity.class);
-            intent.putExtra("UsernameInserito",usernameInserito);
             startActivity(intent);
         }else{
             if(qCounter<DOMANDE){
@@ -247,7 +245,7 @@ public class QuestionActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(QuestionActivity.this, QuizActivity.class);
                 intent.putExtra("score", score);
-                intent.putExtra("UsernameInserito",usernameInserito);
+                //intent.putExtra("UsernameInserito",usernameInserito);
                 intent.putExtra("wrongAnswer",wrongAnswer);
                 startActivity(intent);
             }
@@ -296,7 +294,10 @@ public class QuestionActivity extends AppCompatActivity {
                 if(!rb1.isChecked() && !rb2.isChecked() && !rb3.isChecked()){
                     wrongAnswer++;
                 }
-                timeLeft = START_TIME;
+                else{
+                    checkAnswer();
+                }
+                timeLeft = 21000;
                 currentProgress += 20;
                 progressBar.setProgress(currentProgress);
                 progressBar.setMax(100);
@@ -446,6 +447,8 @@ public class QuestionActivity extends AppCompatActivity {
         int correctAns = savedInstanceState.getInt("currentAnsNo");
         int image = savedInstanceState.getInt("image");
         currentProgress = savedInstanceState.getInt("progress");
+        addQuestions();
+        getQuizRandom();
 
         currentQuestion = new Question(question, op1, op2, op3, correctAns, image);
 
@@ -455,6 +458,7 @@ public class QuestionActivity extends AppCompatActivity {
         bmp= Bitmap.createScaledBitmap(bmp, width,height, true);
         img.setImageBitmap(bmp);
 
+        tvQuestion.setText(currentQuestion.getQuestion());
         tvQuestionNo.setText(R.string.question);
         tvQuestionNo.append(qCounter+"/"+totalQuestions);
 
@@ -495,6 +499,7 @@ public class QuestionActivity extends AppCompatActivity {
             Ftime = savedInstanceState.getInt("FTime");
 
             setTimer();
+            //startTimer();
             updateFinishedTimerText();
             mProgressBar1.setProgress(Ftime);
 
