@@ -197,7 +197,7 @@
 
 
 
-    <string name="backhome">Torna all\' inserimento del tavolo</string>
+    <string name="backhome">Torna all inserimento dello username</string>
     <string name="Invia">Invia</string>
     <string name="inserireValore">Per favore inserire valore</string>
     <string name="connessione_assente">Nessuna connessione ad internet</string>

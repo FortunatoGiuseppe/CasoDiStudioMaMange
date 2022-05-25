@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -31,7 +32,7 @@ public class CongratulationActivity extends AppCompatActivity {
     private RatingBar rating;
     private int max = 5;
     private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
-    private View homeconstr;
+    private Button homebutton;
     NetworkChangedListener networkChangedListener = new NetworkChangedListener();
 
     @Override
@@ -59,14 +60,14 @@ public class CongratulationActivity extends AppCompatActivity {
         homeTv=findViewById(R.id.textHome);
         rating = findViewById(R.id.ratingBar);
 
-        homeconstr=findViewById(R.id.HomeCostr);
-        homeconstr.setOnClickListener(new View.OnClickListener() {
+        homebutton=findViewById(R.id.homeButton);
+        homebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //mostro il tasto per tornare alla schermata di inserimento tavolo
                 String usernameInserito = getIntent().getStringExtra("UsernameInserito");
-                Intent intent = new Intent(CongratulationActivity.this, QRCodeActivity.class);
-                intent.putExtra("UsernameInserito",usernameInserito);
+                Intent intent = new Intent(CongratulationActivity.this, SwitchLoginSignupGuestActivity.class);
+                //intent.putExtra("UsernameInserito",usernameInserito);
                 startActivity(intent);
             }
         });

@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.example.casodistudiomamange.R;
 import com.example.casodistudiomamange.connection.NetworkChangedListener;
@@ -20,7 +21,7 @@ import com.example.casodistudiomamange.model.FileOrderManager;
  */
 public class ConfirmActivity extends AppCompatActivity {
 
-    ImageView quiz,share;
+    ImageButton quiz,share;
     View quizCostraint, shareCostraint;
     private static final String FILE_NAME = "lastOrder.txt";
     NetworkChangedListener networkChangedListener = new NetworkChangedListener();
@@ -35,7 +36,7 @@ public class ConfirmActivity extends AppCompatActivity {
         quizCostraint=findViewById(R.id.QuizConstraint);
         quiz=findViewById(R.id.QuizImg);
         //Mostro l'icona del quiz
-        quizCostraint.setOnClickListener(new View.OnClickListener() {
+        quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ConfirmActivity.this, QuestionActivity.class);
@@ -46,7 +47,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
         shareCostraint =findViewById(R.id.Shareconstraint);
         share = findViewById(R.id.ShareImg);
-        shareCostraint.setOnClickListener(new View.OnClickListener() {
+        share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

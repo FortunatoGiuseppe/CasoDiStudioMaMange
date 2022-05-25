@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
-<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ConfirmActivity">
@@ -32,17 +29,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".8"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.956">
+        app:layout_constraintVertical_bias="1.0">
 
 
         <TextView
             android:id="@+id/confirmTxt"
-            android:layout_width="338dp"
-            android:layout_height="104dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="405dp"
+            android:layout_height="89dp"
+            android:layout_marginTop="24dp"
             android:background="@color/primaryColor"
             android:paddingTop="16dp"
             android:text="@string/ConfSO"
@@ -51,7 +48,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent=".8"
@@ -61,23 +58,26 @@
             android:id="@+id/Shareconstraint"
             android:layout_width="150dp"
             android:layout_height="150dp"
+            android:layout_marginStart="180dp"
             android:background="@drawable/categories_background"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.247"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmTxt"
             app:layout_constraintVertical_bias="0.0">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/ShareImg"
                 android:layout_width="110dp"
                 android:layout_height="94dp"
                 android:layout_marginTop="16dp"
+                android:adjustViewBounds="true"
+                android:backgroundTint="@color/white"
+                android:scaleType="fitCenter"
                 android:src="@drawable/share"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
@@ -100,22 +100,25 @@
             android:id="@+id/QuizConstraint"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginStart="432dp"
+            android:layout_marginEnd="188dp"
             android:background="@drawable/categories_background"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmTxt"
             app:layout_constraintVertical_bias="0.0">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/QuizImg"
                 android:layout_width="110dp"
                 android:layout_height="94dp"
                 android:layout_marginTop="16dp"
+
+                android:backgroundTint="@color/white"
                 android:src="@drawable/dice"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
@@ -133,8 +136,15 @@
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/QuizConstraint"
+            app:layout_constraintStart_toEndOf="@+id/Shareconstraint"
+            app:layout_constraintTop_toBottomOf="@+id/confirmTxt" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>

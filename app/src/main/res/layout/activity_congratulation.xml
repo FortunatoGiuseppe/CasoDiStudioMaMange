@@ -42,11 +42,12 @@
             android:progressTint="#FFFF00"
             android:rating="0"
             android:stepSize="0.5"
-            app:layout_constraintBottom_toTopOf="@+id/HomeCostr"
+            app:layout_constraintBottom_toTopOf="@+id/homeButton"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CongCostr"
-            app:layout_constraintVertical_bias="0.81"
+            app:layout_constraintVertical_bias="0.692"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,34 +78,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.692" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/HomeCostr"
-            android:layout_width="230dp"
-            android:layout_height="49dp"
-            android:background="@drawable/categories_background"
-            android:foregroundGravity="center"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CongCostr"
-            app:layout_constraintVertical_bias="0.73">
-
-            <TextView
-                android:id="@+id/textHome"
-                android:layout_width="143dp"
-                android:layout_height="37dp"
-                android:gravity="center"
-                android:text="@string/backhome"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -147,6 +120,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <android.widget.Button
+            android:id="@+id/homeButton"
+            android:layout_width="267dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/round_back"
+            android:backgroundTint="@color/white"
+            android:foregroundGravity="center"
+            android:text="@string/backhome"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CongCostr"
+            app:layout_constraintVertical_bias="0.749" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
