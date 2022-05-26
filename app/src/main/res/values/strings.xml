@@ -90,7 +90,7 @@
     <string name="connessioneFallita">Connection Failed</string>
     <string name="importanzaDeiPermessi">Importance of permissions</string>
     <string name="messaggioPermessi">Accept permissions to access this feature</string>
-    <string name="richiestaPermessi">Are you sure you do not want to accept the permissions?</string>
+    <string name="richiestaPermessi">Accept permissions to access this feature. Do you want to accept the permissions?</string>
     <string name="scannerizzaQr">Scanning QRcode</string>
     <string name="lastOrderCaricamento">Delete the dishes you have already chosen to load the saved order</string>
     <string name="piattiDi"> plates of</string>
@@ -111,6 +111,7 @@
     <string name="soloxregi">For registered users only</string>
     <string name="uscire">Are you sure you want to quit the application?</string>
     <string name="uscireMsg">If you confirm, you will cancel your current order.</string>
+    <string name="permessoMancante">Missing the following permissions: </string>
 
 
 

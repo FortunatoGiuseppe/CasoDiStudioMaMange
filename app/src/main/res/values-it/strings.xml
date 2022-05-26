@@ -89,7 +89,7 @@
     <string name="connessioneFallita">Connessione fallita</string>
     <string name="importanzaDeiPermessi">Importanza dei permessi</string>
     <string name="messaggioPermessi">Accettare i permessi per accedere a questa funzionalità</string>
-    <string name="richiestaPermessi">Sei sicuro di non voler accettare i permessi?</string>
+    <string name="richiestaPermessi">Accettare i permessi per accedere a questa funzionalità. Vuoi accettare i permessi?</string>
     <string name="scannerizzaQr">Scannerizza QRcode</string>
     <string name="lastOrderCaricamento">Cancella i piatti che hai già scelto per caricare l\'ordine salvato</string>
     <string name="piattiDi">piatti di</string>
@@ -110,6 +110,7 @@
     <string name="soloxregi">Solo per utenti registrati</string>
     <string name="uscire">Sei sicuro di voler uscire dall\'applicazione?</string>
     <string name="uscireMsg">Se confermi, cancellerai la tua ordinazione corrente.</string>
+    <string name="permessoMancante">Manca il seguente permesso: </string>
 
 
 

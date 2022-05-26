@@ -107,8 +107,6 @@ public class SensorFragment extends Fragment {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-
-
     }
 
     @Override
@@ -348,11 +346,9 @@ public class SensorFragment extends Fragment {
                     }
                     if(count >= 1){
                         connettitiBtn.setVisibility(View.VISIBLE);
-                        System.out.println("Associato");
                     }
                     else {
                         associaBtn.setVisibility(View.VISIBLE);
-                        System.out.println("Non associato");
                     }
                 }
             }
@@ -412,8 +408,6 @@ public class SensorFragment extends Fragment {
                     indietro.setVisibility(View.VISIBLE);
                     indietro.setHint(R.string.retry);
                     cosaFareTw.setText(R.string.associazioneFallita);
-
-
                     break;
                 //se il messaggio è ricevuto
                 case STATO_MESSAGGIO_RICEVUTO:
@@ -474,9 +468,8 @@ public class SensorFragment extends Fragment {
                 count++;
             }
             if (permissions.size() != 0) {
-                System.out.println("Missing the following permissions: " + permissions.toString());
+                System.out.println(getText(R.string.permessoMancante)  + permissions.toString());
                 requestPermissions(permissions.toArray(new String[0]),REQUEST_ENABLE_PERMISSION);
-
                 return false;
             }
             if(count == 3){
@@ -497,7 +490,7 @@ public class SensorFragment extends Fragment {
                 count++;
             }
             if (permissions.size() != 0) {
-                System.out.println("Missing the following permissions: " + permissions.toString());
+                System.out.println(getText(R.string.permessoMancante)  + permissions.toString());
                 requestPermissions(permissions.toArray(new String[0]),REQUEST_ENABLE_PERMISSION);
 
                 return false;
@@ -518,7 +511,7 @@ public class SensorFragment extends Fragment {
                 count++;
             }
             if (permissions.size() != 0) {
-                System.out.println("Missing the following permissions: " + permissions.toString());
+                System.out.println(getText(R.string.permessoMancante)  + permissions.toString());
                 requestPermissions(permissions.toArray(new String[0]),REQUEST_ENABLE_PERMISSION);
                 return false;
             }
@@ -593,7 +586,7 @@ public class SensorFragment extends Fragment {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setCancelable(true);
                     builder.setTitle(R.string.importanzaDeiPermessi);
-                    builder.setMessage(R.string.messaggioPermessi);
+                    builder.setMessage(R.string.richiestaPermessi);
                     builder.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -609,7 +602,6 @@ public class SensorFragment extends Fragment {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 } else {
-                    Toast.makeText(getContext(), "Ok3", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder ad = new AlertDialog.Builder(getActivity())
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
@@ -618,8 +610,8 @@ public class SensorFragment extends Fragment {
                                 }
                             });
                     ad.setCancelable(false);
-                    ad.setTitle("Razionale");
-                    ad.setMessage("Messaggio razionale");
+                    ad.setTitle(R.string.importanzaDeiPermessi);
+                    ad.setMessage(R.string.messaggioPermessi);
                     ad.create();
                     ad.show();
                 }
@@ -641,7 +633,8 @@ public class SensorFragment extends Fragment {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setCancelable(true);
                     builder.setTitle(R.string.importanzaDeiPermessi);
-                    builder.setMessage(R.string.messaggioPermessi);
+                    builder.setMessage(R.string.richiestaPermessi);
+
                     builder.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -657,7 +650,6 @@ public class SensorFragment extends Fragment {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 } else {
-                    Toast.makeText(getContext(), "Ok3", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder ad = new AlertDialog.Builder(getActivity())
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
@@ -666,8 +658,8 @@ public class SensorFragment extends Fragment {
                                 }
                             });
                     ad.setCancelable(false);
-                    ad.setTitle("Razionale");
-                    ad.setMessage("Messaggio razionale");
+                    ad.setTitle(R.string.importanzaDeiPermessi);
+                    ad.setMessage(R.string.messaggioPermessi);
                     ad.create();
                     ad.show();
                 }
