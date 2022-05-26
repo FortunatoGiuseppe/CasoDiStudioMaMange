@@ -551,6 +551,32 @@ public class SensorFragment extends Fragment {
 
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        getContext().registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    /*@Override
+    public void onResume() {
+        super.onResume();
+
+        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        getContext().registerReceiver(broadcastReceiver, intentFilter);
+        //reloadFragment();
+
+    }*/
+
+    /*@Override
+    public void onPause() {
+        super.onPause();
+        IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        getContext().registerReceiver(broadcastReceiver, intentFilter);
+    }*/
+
     /**
      * Metodo che viene invocato per ogni chiamata su requestPermissions
      *
