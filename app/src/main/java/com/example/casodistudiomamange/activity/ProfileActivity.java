@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,14 @@ public class ProfileActivity extends AppCompatActivity {
         View changePsw = findViewById(R.id.change);
         lAuth = FirebaseAuth.getInstance();
         TextView email = findViewById(R.id.showEmailUtente);
+        ImageView img = findViewById(R.id.imageView12);
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         String emailInserito = getEmail(); //metodo per ottenere l'email dell'utente loggato
         email.setText(emailInserito);

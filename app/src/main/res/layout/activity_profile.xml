@@ -9,42 +9,30 @@
     android:padding="16dp"
     tools:context=".activity.ProfileActivity">
 
-    <LinearLayout
-        android:id="@+id/layoutToolBar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="#c62828"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/topBarTitle"
+        android:layout_width="336dp"
+        android:layout_height="32dp"
+        android:text="@string/profile"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/imageView12"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/topBarTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:text="@string/profile"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:id="@+id/constraintMessage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/insert_rounded_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutToolBar">
+        app:layout_constraintTop_toBottomOf="@+id/topBarTitle">
 
         <ImageView
             android:id="@+id/imageView11"
@@ -168,7 +156,6 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/round_back"
-            android:padding="8dp"
             android:text="bbbbbbbbbbbbb@gmail.com"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -179,5 +166,16 @@
             app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="18dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/constraintMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_send" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
