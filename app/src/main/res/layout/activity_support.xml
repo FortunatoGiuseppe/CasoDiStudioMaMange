@@ -85,6 +85,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_subject">
 
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/et_message"
+            app:layout_constraintStart_toStartOf="@+id/et_message"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logotrasparente" />
+
         <EditText
             android:id="@+id/et_message"
             android:layout_width="match_parent"
@@ -92,7 +102,6 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:background="@drawable/logotrasparente"
             android:gravity="top"
             android:hint="@string/mex"
             android:padding="10dp"

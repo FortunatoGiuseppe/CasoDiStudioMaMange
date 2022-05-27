@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ public class SupportActivity extends AppCompatActivity {
     EditText etSubject, etMessage;
     TextView etTo;
     View send;
+    ImageView imageView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,8 +32,11 @@ public class SupportActivity extends AppCompatActivity {
         etSubject = findViewById(R.id.et_subject);
         etMessage = findViewById(R.id.et_message);
         send = findViewById(R.id.constraintSend);
+        imageView = findViewById(R.id.imageView10);
 
-        etMessage.getBackground().setAlpha(128);
+
+        imageView.setImageAlpha(128);
+
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
