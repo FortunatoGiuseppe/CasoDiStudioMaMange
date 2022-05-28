@@ -52,7 +52,7 @@
     <string name="profile">Profilo</string>
     <string name="ultimo_ordine">Inserire ultimo ordine</string>
     <string name="others">Altro</string>
-    <string name="support">Oggetto: Supporto</string>
+    <string name="support">Supporto</string>
     <string name="about_us">Chi siamo</string>
     <string name="codice_tavolo">Codice Tavolo</string>
     <string name="ordinazione">Ordine di </string>
@@ -217,4 +217,5 @@
     <string name="ratingL">Ci dispiace hai perso al quiz!! Se vuole può valutare la nostra app qui sotto:</string>
     <string name="question">Domanda: </string>
     <string name="mex">Inserire messaggio...</string>
+    <string name="object">Inserire Oggetto....</string>
 </resources>

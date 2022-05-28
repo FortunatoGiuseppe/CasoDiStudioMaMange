@@ -21,7 +21,7 @@ public class SupportActivity extends AppCompatActivity {
     EditText etSubject, etMessage;
     TextView etTo;
     View send;
-    ImageView imageView;
+    ImageView imageView,imageView2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +33,14 @@ public class SupportActivity extends AppCompatActivity {
         etMessage = findViewById(R.id.et_message);
         send = findViewById(R.id.constraintSend);
         imageView = findViewById(R.id.imageView10);
+        imageView2 = findViewById(R.id.imageView13);
+
+        imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
         imageView.setImageAlpha(128);

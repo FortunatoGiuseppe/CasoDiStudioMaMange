@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.casodistudiomamange.R;
@@ -17,7 +18,8 @@ import com.example.casodistudiomamange.R;
 public class AboutActivity extends AppCompatActivity {
 
     TextView info, developers;
-    Button send, back;
+    Button send;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,7 @@ public class AboutActivity extends AppCompatActivity {
         send = findViewById(R.id.sendEmail);
         send.setText(R.string.sendEmail);
 
-        back = findViewById(R.id.back);
-        back.setText(R.string.back);
+        back = findViewById(R.id.back2);
 
         //Dopo aver premuto il bottone si passa all'activity incentrata sul supporto
         send.setOnClickListener(new View.OnClickListener() {
