@@ -11,8 +11,8 @@
 
     <TextView
         android:id="@+id/topBarTitle"
-        android:layout_width="336dp"
-        android:layout_height="32dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="@string/profile"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -172,10 +172,9 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginBottom="18dp"
-        android:rotation="180"
         app:layout_constraintBottom_toTopOf="@+id/constraintMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_send" />
+        app:srcCompat="@drawable/ic_back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

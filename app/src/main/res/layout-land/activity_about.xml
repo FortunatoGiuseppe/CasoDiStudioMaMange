@@ -14,20 +14,19 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginBottom="18dp"
-        android:rotation="180"
-        app:layout_constraintBottom_toTopOf="@+id/constraintMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_send" />
+        app:srcCompat="@drawable/ic_back" />
 
     <TextView
         android:id="@+id/topBarTitle3"
-        android:layout_width="336dp"
-        android:layout_height="32dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="@string/about_us"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/back2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
