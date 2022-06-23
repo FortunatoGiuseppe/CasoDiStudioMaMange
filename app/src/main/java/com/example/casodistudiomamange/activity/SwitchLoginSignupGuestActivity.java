@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
     ViewPagerFragmentAdapter viewPagerFragmentAdapter;
     TabLayout tabLayout;
     ViewPager2 viewPager2;
-    public static int controlValue=0;
+    public static int controlValue;
     private final String[] titles = {"Guest", "Login", "Signup"};
     private final String[] titles_it = {"Ospite", "Accedi", "Registrati"};
     TranslatorOptions options =
@@ -66,6 +67,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
         viewPager2=findViewById(R.id.view_pager);
         tabLayout=findViewById(R.id.tab_layout);
         viewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this);
+        Log.d("TAG", String.valueOf(controlValue));
         ManageDownload();
 
         viewPager2.setAdapter(viewPagerFragmentAdapter);
@@ -102,10 +104,11 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
      * Metodo che permette di salvare lo stato dell'alert che gestisce il download della lingua
      * @param isChecked indica se è stato già scaricato o no
      */
-    private void storeDialogStatus(boolean isChecked){
+    private void storeDialogStatus(boolean isChecked,int v){
         SharedPreferences mSharedPreferences = getSharedPreferences("CheckItem", MODE_PRIVATE);
         SharedPreferences.Editor mEditor = mSharedPreferences.edit();
         mEditor.putBoolean("item", isChecked);
+        mEditor.putInt("value", v);
         mEditor.apply();
     }
 
@@ -119,7 +122,16 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
     }
 
     /**
-     * Metodo che verifica la lingua del dispositivo. S questa non è in italiano viene chiesto all'utente
+     * Metodo che all'avvio dell'app non in lingua italiana fa ritornare lo stato dell'alert mostrato per il download del pacchetto di traduzione
+     * @return stato dello shared preferences
+     */
+    private int getDialogStatusTrans(){
+        SharedPreferences mSharedPreferences = getSharedPreferences("CheckItem", MODE_PRIVATE);
+        return mSharedPreferences.getInt("value", controlValue);
+    }
+
+    /**
+     * Metodo che verifica la lingua del dispositivo. Se questa non è in italiano viene chiesto all'utente
      * di scaricare un pacchetto di traduzione del menù attraverso un alert.
      * L'utente può decidere di scaricarlo o meno
      */
@@ -154,14 +166,16 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     //verifica che la chechbox "non mostrare più" sia stata premuta
                     if(compoundButton.isChecked()){
-                        storeDialogStatus(true);
+                        storeDialogStatus(true,1);
+
                     }else{
-                        storeDialogStatus(false);
+                        storeDialogStatus(false,1);
                     }
                 }
             });
 
-            if(getDialogStatus()){
+            if(getDialogStatus() && getDialogStatusTrans()==1){
+                controlValue=1;
                 mDialog.hide();
             }else{
                 mDialog.show();
@@ -181,7 +195,7 @@ public class SwitchLoginSignupGuestActivity extends AppCompatActivity {
             public void onSuccess(Void v) {
                 //se il pacchetto viene scaricato il messaggio del rilevamento lingua non viene più visualizzato
                 progdialog.dismiss();
-                storeDialogStatus(true);
+                storeDialogStatus(true,0);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

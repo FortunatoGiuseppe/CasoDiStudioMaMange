@@ -40,12 +40,7 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
     private ArrayList<Category>categoryArrayList;
 
 
-    TranslatorOptions options =
-            new TranslatorOptions.Builder()
-                    .setSourceLanguage(TranslateLanguage.ITALIAN)
-                    .setTargetLanguage(TranslateLanguage.ENGLISH)
-                    .build();
-    final Translator Translator = Translation.getClient(options);
+
 
 
     public  Adapter_category(Context context, ArrayList<Category> categories){
@@ -119,6 +114,13 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.myVi
      * @param trans stringa tradotta
      */
     private void prepareModelName(String trans,metododiCallbackTransaltion stringaTradotta){
+
+        TranslatorOptions options =
+                new TranslatorOptions.Builder()
+                        .setSourceLanguage(TranslateLanguage.ITALIAN)
+                        .setTargetLanguage(TranslateLanguage.ENGLISH)
+                        .build();
+        final Translator Translator = Translation.getClient(options);
 
         Translator.translate(trans).addOnSuccessListener(new OnSuccessListener<String>() {
 
