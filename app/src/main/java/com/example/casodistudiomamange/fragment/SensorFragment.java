@@ -346,9 +346,11 @@ public class SensorFragment extends Fragment {
                     }
                     if(count >= 1){
                         connettitiBtn.setVisibility(View.VISIBLE);
+                        cosaFareTw.setText(R.string.adessoConnettiti);
                     }
                     else {
                         associaBtn.setVisibility(View.VISIBLE);
+                        cosaFareTw.setText(R.string.cosaFareAssociazione);
                     }
                 }
             }
