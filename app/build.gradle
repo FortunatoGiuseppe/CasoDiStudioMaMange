@@ -30,31 +30,33 @@ android {
 
 dependencies {
 
-    implementation "androidx.activity:activity:1.4.0"
-    implementation "androidx.fragment:fragment:1.4.1"
-        
-
-    /*aggiunte*/
-    implementation 'com.google.firebase:firebase-storage:20.0.0'
-    implementation 'com.firebaseui:firebase-ui-database:8.0.0'
-    implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.google.firebase:firebase-firestore:24.0.1'
-
-    implementation 'com.google.mlkit:translate:17.0.0'/*aggiunte*/
-
-    implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
-    implementation 'com.google.firebase:firebase-database:20.0.3'//collegamento con firebase auth
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    implementation 'com.journeyapps:zxing-android-embedded:3.4.0' //libreria per qrcode
-
-    implementation 'com.google.android.material:material:1.2.0-alpha02'
+    implementation "androidx.activity:activity:1.4.0"
+    implementation "androidx.fragment:fragment:1.4.1"
+    implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc03'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc03'
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    testImplementation 'junit:junit:4.+'
+
+    /*Firebase*/
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation 'com.firebaseui:firebase-ui-database:8.0.0'
+
+    implementation 'com.google.firebase:firebase-firestore:24.0.1'
+    implementation 'com.google.mlkit:translate:17.0.0'
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.firebase:firebase-database:20.0.3'
+
+    /*QrCode Zxing*/
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0' //libreria per qrcode
+
+    /*Picasso immagini*/
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }
