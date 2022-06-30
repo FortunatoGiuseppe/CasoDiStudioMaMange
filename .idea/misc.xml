@@ -38,6 +38,8 @@
         <entry key="..\:/MaMange/app/src/main/res/layout/single_plate_ordered_grouporder.xml" value="0.19537037037037036" />
         <entry key="..\:/MaMange/app/src/main/res/menu/bottom_navigation_bar.xml" value="0.371875" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/categories_background.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/circleshape1_timerview.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/circleshape2_timerview.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/ic_baseline_public_24.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/insert_rounded_white.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/lock_reset.xml" value="0.26614583333333336" />
@@ -45,7 +47,9 @@
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/progress_background.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/round_back.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/drawable/scheda_rotonda.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_about.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_congratulation.xml" value="0.2890625" />
+        <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_profile.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout-land/activity_support.xml" value="0.284375" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_about.xml" value="0.25" />
         <entry key="..\:/Users/Angelo/AndroidStudioProjects/CasoDiStudioMaMange/app/src/main/res/layout/activity_confirm.xml" value="0.25" />

@@ -218,4 +218,6 @@
     <string name="question">Domanda: </string>
     <string name="mex">Inserire messaggio...</string>
     <string name="object">Inserire Oggetto....</string>
+    <string name="fareLogout">Premere per logout</string>
+    <string name="cambiaPassw">Cambia Password</string>
 </resources>

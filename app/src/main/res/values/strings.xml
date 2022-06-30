@@ -221,4 +221,6 @@
     <string name="question">Question: </string>
     <string name="mex">Insert message...</string>
     <string name="object">Insert Object....</string>
+    <string name="fareLogout">Press to logout</string>
+    <string name="cambiaPassw">Change Password</string>
 </resources>
