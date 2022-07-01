@@ -47,6 +47,7 @@
             android:exported="true" />
         <activity
             android:name=".activity.ProfileActivity"
+            android:noHistory="true"
             android:exported="true" />
         <activity
             android:name=".activity.SupportActivity"

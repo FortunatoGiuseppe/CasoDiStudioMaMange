@@ -114,7 +114,10 @@ public class ProfileActivity extends AppCompatActivity {
      */
     public void logout(){
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(this,SwitchLoginSignupGuestActivity.class));
+        Intent intent=new Intent(this,SwitchLoginSignupGuestActivity.class);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
     }
 
@@ -139,5 +142,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onStop() {
         unregisterReceiver(networkChangedListener);
         super.onStop();
+
     }
+
 }
