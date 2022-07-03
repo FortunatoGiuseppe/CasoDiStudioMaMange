@@ -76,29 +76,36 @@ public class ProfileActivity extends AppCompatActivity {
     private void ChangePassword(){
         EditText resetEmail = new EditText(ProfileActivity.this);
         AlertDialog.Builder passResetDialog = new AlertDialog.Builder(ProfileActivity.this);
-        passResetDialog.setTitle("Change Password?");
-        passResetDialog.setMessage("Enter your email to recived reset link");
+        passResetDialog.setTitle(R.string.passwordReset);
+        passResetDialog.setMessage(R.string.emailReset);
         passResetDialog.setView(resetEmail);
 
-        passResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        passResetDialog.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String mail = resetEmail.getText().toString();
-                lAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(ProfileActivity.this,"Reset Link Sent To Your Email",Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ProfileActivity.this,"Error! Reset Link is Not Sent"+ e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                });
+                String emailReset = resetEmail.getText().toString();
+                //controllo che l'email inserita nell'Alert non sia vuota
+                if(!emailReset.equals("")){
+                    lAuth.sendPasswordResetEmail(emailReset).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(ProfileActivity.this,R.string.emailLinkReset,Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ProfileActivity.this,R.string.emailLinkResetFailed,Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(ProfileActivity.this,R.string.emailValidaErr,Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 
-        passResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        passResetDialog.setNegativeButton(getText(R.string.annulla), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 

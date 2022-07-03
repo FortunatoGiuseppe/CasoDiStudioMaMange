@@ -18,6 +18,7 @@
     <string name="emailLinkResetFailed">Error! Reset Link is Not Sent</string>
     <string name="emailValidaErr">Please provide valid email!</string>
     <string name="ottoCaratteriErr">Enter at least eight character</string>
+    <string name="emailReset">Enter the email to get the password reset link</string>
     <string name="regolePassword">"Password Rule:\n" +
     "At least one capital letter\n" +
     "At least one number\n" +

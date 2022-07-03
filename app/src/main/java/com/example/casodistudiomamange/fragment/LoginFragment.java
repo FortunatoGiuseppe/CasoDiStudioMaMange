@@ -140,6 +140,7 @@ public class LoginFragment extends Fragment {
         EditText resetEmail = new EditText(getView().getContext());
         AlertDialog.Builder passResetDialog = new AlertDialog.Builder(getView().getContext());
         passResetDialog.setTitle(R.string.passwordReset);
+        passResetDialog.setMessage(R.string.emailReset);
         passResetDialog.setView(resetEmail);
 
         passResetDialog.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
@@ -167,7 +168,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        passResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        passResetDialog.setNegativeButton(getString(R.string.annulla), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
             }

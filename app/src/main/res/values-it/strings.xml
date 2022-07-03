@@ -14,6 +14,7 @@
     <string name="emailRichiestaErr">Email richiesta</string>
     <string name="passwordRichiestaErr">Password richiesta</string>
     <string name="passwordReset">Vuoi resettare la password?</string>
+    <string name="emailReset">Inserire la email per ottenere il link per il reset della password</string>
     <string name="emailLinkReset">Abbiamo inviato un link di reset nella tua email</string>
     <string name="emailLinkResetFailed">Errore! Link di reset non inviato</string>
     <string name="emailValidaErr">Fornisci una mail valida!</string>
@@ -218,6 +219,6 @@
     <string name="question">Domanda: </string>
     <string name="mex">Inserire messaggio...</string>
     <string name="object">Inserire Oggetto....</string>
-    <string name="fareLogout">Premere per logout</string>
+    <string name="fareLogout">Disconnettersi</string>
     <string name="cambiaPassw">Cambia Password</string>
 </resources>
